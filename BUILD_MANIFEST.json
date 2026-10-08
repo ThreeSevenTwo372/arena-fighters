@@ -1,9 +1,9 @@
 {
   "schema": "arena-fighters.local-release.v1",
   "status": "complete",
-  "version": "0.9.0",
-  "createdAt": "2026-10-08T17:31:45.823Z",
-  "directory": "releases/Arena_Fighters_v0.9.0_v001",
+  "version": "0.9.1",
+  "createdAt": "2026-10-08T18:14:29.435Z",
+  "directory": "releases/Arena_Fighters_v0.9.1_v001",
   "identity": {
     "active": {
       "version": "v013",
@@ -17,11 +17,11 @@
   "provenance": [
     {
       "chatId": "01a11c7b-e6ec-7503-8396-2679f20d2469",
-      "note": "User-authorized pixel menu over exact cinematic final frame, public spectators, living leaderboard, authenticated death archive and phased alpha roadmap"
+      "note": "User-authorized continuation: strategic dagger/Riposte, additive registered equipment, conditional previews and revealed playback; hosting remains free as requested"
     },
     {
-      "chatId": "01a11bff-c95f-75b1-9d32-8c59124aad2f",
-      "note": "Preserved temporary hosting and durable localhost from v0.8.6"
+      "chatId": "01a11c7b-e6ec-7503-8396-2679f20d2469",
+      "note": "Preserves v0.9.0 pixel menu, cinematic final frame, observers, leaderboard and guest death archives"
     }
   ],
   "entries": [
@@ -74,8 +74,8 @@
     "copiedBytesVerified": true,
     "catalogReferencesVerified": true
   },
-  "fileCount": 1356,
-  "totalBytes": 51578214,
+  "fileCount": 1370,
+  "totalBytes": 51695091,
   "catalogs": [
     {
       "path": "assets/clean-gladiator/v013/manifest.json",
@@ -195,8 +195,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 13043,
-      "sha256": "ea43e1c650f4ccba83f9be61fadfbd459a2121d346cf99df9561e2e98ebf37e5"
+      "bytes": 13424,
+      "sha256": "55dffc8aa07832aa8624eab4214d252d5eb3393faaa824c1af5a9c2674745eb0"
     },
     {
       "path": "ART_DIRECTION.md",
@@ -215,8 +215,8 @@
     },
     {
       "path": "CURRENT_VERSION.md",
-      "bytes": 9947,
-      "sha256": "4c411b424ec7c5e335c4e003b3be5e0fd84b67fb43b8a4327d58cb1f0b84c0db"
+      "bytes": 11374,
+      "sha256": "2ca4db46ec2e2949e270a9b26b1926e0c8b50d7bbc944faaa041f3a4d1ec68de"
     },
     {
       "path": "DARK_ART.md",
@@ -225,23 +225,23 @@
     },
     {
       "path": "DESIGN.md",
-      "bytes": 20036,
-      "sha256": "69e29d28b38780998681c287690abfe029ed0c18bd885c07b24a62eb6ad41934"
+      "bytes": 21475,
+      "sha256": "732a620c82ef437b31c9ca79eb83ecaf16235d7537fd72ddd77b9afc66b498f8"
     },
     {
       "path": "HOSTING.md",
-      "bytes": 6104,
-      "sha256": "995b95b788145f0118df76e48cfa0f2d9a26ef59dfa6d2e4e8012a54400a8f22"
+      "bytes": 6572,
+      "sha256": "23aee0ef5aacdf20ab2f1afe7f695524f148f67e0c4d6ba549ca6b41e3f3c476"
     },
     {
       "path": "ONLINE_DUELS.md",
-      "bytes": 15860,
-      "sha256": "5b6778f6442fd7bb245e0269d1540a5e00bb68bfbe32e7d84219a7968ccf1e2c"
+      "bytes": 16914,
+      "sha256": "4511cde75a2bbfc64e1c39092992d62940aaaaeaaa4981f5de2f6ca800e0e1e8"
     },
     {
       "path": "README.md",
-      "bytes": 11981,
-      "sha256": "bd1c6d44217663c39cffa762c6fe9ea89f57bd4a9a154fb5cec7995049979412"
+      "bytes": 13039,
+      "sha256": "99e5f24e340409d5e5eaa803d43dab560fef8c8d1efee5a34230e2e97661ffe1"
     },
     {
       "path": "Start-Prototype.ps1",
@@ -2192,6 +2192,56 @@
       "path": "assets/clean-gladiator/v013/manifest.json",
       "bytes": 21644,
       "sha256": "bd03009bf50e5910fc1c186a6b5b50dd72b755df6640983fafcadb09f38fcbce"
+    },
+    {
+      "path": "assets/clean-gladiator/v014-equipment/PREPARATION_RECEIPT.json",
+      "bytes": 964,
+      "sha256": "aa10a30ab0cb87577f0fcb196b4fa7c3dee4e12f3b1fc9ad4e5763bbe62c3980"
+    },
+    {
+      "path": "assets/clean-gladiator/v014-equipment/README.md",
+      "bytes": 1789,
+      "sha256": "0be985814f3b60f93e71129e1632be2717cfb8b61408d0c9979dc55055b9aeb6"
+    },
+    {
+      "path": "assets/clean-gladiator/v014-equipment/REGISTRATION_RECEIPT.json",
+      "bytes": 25240,
+      "sha256": "ee7025af8e5abac0982169959d7b3f6294e5a7d798f627c9db9299ec46e1ceb0"
+    },
+    {
+      "path": "assets/clean-gladiator/v014-equipment/dagger.source.json",
+      "bytes": 3086,
+      "sha256": "624a6fcfc856e89f47c85403a26ebab9865d872b06fa552f0f7e49ccb77d9f67"
+    },
+    {
+      "path": "assets/clean-gladiator/v014-equipment/dagger.source.svg",
+      "bytes": 15463,
+      "sha256": "bafbf76d6f0fffb829695915e1e9b32d2399dc2d5c24380afef33eb195cc2f21"
+    },
+    {
+      "path": "assets/clean-gladiator/v014-equipment/manifest.json",
+      "bytes": 957,
+      "sha256": "d7603b3b25cb7f910e8ebba9769cd799981efea8c3f61d70a2dafdb984556aa1"
+    },
+    {
+      "path": "assets/clean-gladiator/v014-equipment/prepare-dagger.mjs",
+      "bytes": 3649,
+      "sha256": "2976a4e28d1b3db19a2a136931242a435dfc0d9b25940da9a7ca7a373b574d08"
+    },
+    {
+      "path": "assets/clean-gladiator/v014-equipment/render-controls.mjs",
+      "bytes": 4245,
+      "sha256": "6db4f3049b1d23718b424c34da74604302b8a8d1e5e1147267a3ab23a3e70283"
+    },
+    {
+      "path": "assets/clean-gladiator/v014-equipment/verify-preservation.mjs",
+      "bytes": 2978,
+      "sha256": "0c24c36f1fd63f64d4ff3e3cc4bd1fc611fbe41af38ad5dfe8821a25f72c1a16"
+    },
+    {
+      "path": "assets/clean-gladiator/v014-equipment/weapons/dagger.png",
+      "bytes": 254,
+      "sha256": "45ed99b54ca5fa56bbb0c3d4209b229cc41df1942a0c57bd6b15f6d623fdedae"
     },
     {
       "path": "assets/dpixel-avatar/v001/README.md",
@@ -6515,8 +6565,8 @@
     },
     {
       "path": "online/tournament-bots.mjs",
-      "bytes": 2475,
-      "sha256": "9f114e74c8dea4a54b82480421614f1c782519bbefd3e2d5bba44d1f1c686d5c"
+      "bytes": 2485,
+      "sha256": "52ca0e1c57a1e8833262d8cc51e101fc4b5115925d163d37b939557208a3ed60"
     },
     {
       "path": "online/tournament-store.mjs",
@@ -6525,8 +6575,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 400,
-      "sha256": "2433311ea5c6e827e55a7636bb61e2c9287bd159604c2bb5d8af0e1fb182b4b5"
+      "bytes": 386,
+      "sha256": "ce2f20f2a322bcffa2df94d1c5b420f64c8750bfdb34065f770b5b6bd0280736"
     },
     {
       "path": "public/cinematics/arrival-v001/PREPARATION_RECEIPT.json",
@@ -6580,13 +6630,13 @@
     },
     {
       "path": "src/app.js",
-      "bytes": 103610,
-      "sha256": "ad783ceb71de13ccd3020ef0ef0496685af1746e768f89df7088895590e2a24b"
+      "bytes": 103867,
+      "sha256": "d36ff3c136ae4c79d75df1edc051eb96e84f5c4e37260adc56fdfcb3ad25a51d"
     },
     {
       "path": "src/arena-avatar.js",
-      "bytes": 15679,
-      "sha256": "ec1ae4ed5dfc34c6a3fffd778e137c4fdd86423054a0493dec99ec9b660509da"
+      "bytes": 17590,
+      "sha256": "001963ead11237969c4bef909c6cee29b107b8df8161fca48359d36d73fe067a"
     },
     {
       "path": "src/arena.js",
@@ -6595,13 +6645,13 @@
     },
     {
       "path": "src/armory.css",
-      "bytes": 12321,
-      "sha256": "7937fc2b262d600fb504302e333d9eec2388355b73ef193e77450e703c7ad20b"
+      "bytes": 12469,
+      "sha256": "2b168b68567d76ecf7ddccc015843c7c20bb270f48b90e892df6ee773dac8557"
     },
     {
       "path": "src/armory.js",
-      "bytes": 7870,
-      "sha256": "c1e0ea2b99863c5bab8c4dd875957a1adb187f1c0c722d2bc1b98c06fae5d426"
+      "bytes": 8044,
+      "sha256": "dcff8fd75c93542d0923d9034913c8caae3324d0e7ad53b923e0f40adef3ed81"
     },
     {
       "path": "src/arrival.css",
@@ -6625,18 +6675,18 @@
     },
     {
       "path": "src/battle-animation.css",
-      "bytes": 9147,
-      "sha256": "943fd6b88f431186ff783bf6cc281991f43f13a7525c5e89f05e5f7fbb44d6b6"
+      "bytes": 9913,
+      "sha256": "b10466fc095842685b8325bf47ee5205caefcce37088e3917ab47d1f33fd30fb"
     },
     {
       "path": "src/battle-animation.js",
-      "bytes": 7621,
-      "sha256": "5a4ab681c2b8233b83d224253818b5cfa26447cd23dce81917f3a9150aceca93"
+      "bytes": 8353,
+      "sha256": "21aed2f80dd02406b620017664ec3f980fab998ce71586bee2759e5225c58b8d"
     },
     {
       "path": "src/battle-presentation.js",
-      "bytes": 4310,
-      "sha256": "bd0d7f061fb9c4020733d33922ce3161ab9dbd252dee70e09d898cfba25eac97"
+      "bytes": 4771,
+      "sha256": "c433354c424d7a2e55c70beabd308cb3fa2cfa92d49a5f278669ba6e283be847"
     },
     {
       "path": "src/battle-ui.css",
@@ -6650,13 +6700,13 @@
     },
     {
       "path": "src/combat.js",
-      "bytes": 24328,
-      "sha256": "694ce177e3a4d3364009f6598d9c5f00b3d9221b66bcbbe3171bde3005cfe8a6"
+      "bytes": 27464,
+      "sha256": "8b5406610a9488ccf9ae7a39ef948275e903038651c854baab85c5df447d4adf"
     },
     {
       "path": "src/current-avatar.js",
-      "bytes": 2054,
-      "sha256": "b71ecea9e78e079e2776f17aa7d0acd837271875ffc03325dc96394c233ca95f"
+      "bytes": 2177,
+      "sha256": "75acb4691662efe3ebf59a3bcbbcecfa11dea21c6ea4ef2264688422ee4a254f"
     },
     {
       "path": "src/dark-identity.js",
@@ -6675,8 +6725,8 @@
     },
     {
       "path": "src/execution-animation.js",
-      "bytes": 9815,
-      "sha256": "1372ae300964ddbc078b9c0c092ef98a0247bf37d2cd178b8e09dd2074a04429"
+      "bytes": 9848,
+      "sha256": "202dd87f1102cc3c93b9dab1afa2718e0f8e8e4f6fb0b21ed07050806294ee54"
     },
     {
       "path": "src/face-presets.js",
@@ -6800,8 +6850,8 @@
     },
     {
       "path": "tests/combat.test.js",
-      "bytes": 33245,
-      "sha256": "942a44469de82c2e3dcae4c38392b3840dfa3cc7e87a569cad75ec32a229abf9"
+      "bytes": 34338,
+      "sha256": "781a8922436bf8ea525310125e6eff70aa5840b87b19e5f44958a68253855e55"
     },
     {
       "path": "tests/crowd-vote.test.js",
@@ -6812,6 +6862,26 @@
       "path": "tests/current-avatar.test.js",
       "bytes": 7893,
       "sha256": "cddcfb4bfb573d2778eacbc11e5a11cedc761ce22bf858bc105dc4034d3eb445"
+    },
+    {
+      "path": "tests/dagger-combat.test.js",
+      "bytes": 17086,
+      "sha256": "631600c491c5eae79dc2acbfdacc5adc4f354564f912200291c968c843a45e7b"
+    },
+    {
+      "path": "tests/dagger-online.test.js",
+      "bytes": 12166,
+      "sha256": "f1b2daa14881d671bcc3ce5fd28544b3a49e7632b217aa29176a152242250f2d"
+    },
+    {
+      "path": "tests/dagger-presentation.test.js",
+      "bytes": 4951,
+      "sha256": "70e7504d8fec790578231cf6948614c5a32ff8ecdce15d8826cea174e4d61c33"
+    },
+    {
+      "path": "tests/dagger-renderer.test.js",
+      "bytes": 8729,
+      "sha256": "89e5a5caa76c94a6d936526bc8a156ecec9f58d0755509db049fdc3a822650b0"
     },
     {
       "path": "tests/dark-identity-assets.test.js",
@@ -6825,8 +6895,8 @@
     },
     {
       "path": "tests/dark-rig.test.js",
-      "bytes": 13117,
-      "sha256": "88302d3c19404b1f100f1d7975a29189c9de403fb765aba96246e7f572c4e1c5"
+      "bytes": 13550,
+      "sha256": "30af483ee03fd97fea9f0c55d676eed7cd44776e68b91b899211cadce333a412"
     },
     {
       "path": "tests/execution-animation.test.js",
@@ -6945,8 +7015,8 @@
     },
     {
       "path": "tests/tournament-ui.test.js",
-      "bytes": 50172,
-      "sha256": "3158810d2eb37fddabd21989c971d7f9428c88c1d270c992ccbecb31d10cfecb"
+      "bytes": 50402,
+      "sha256": "436aae3f7c8513f0c589259edc3232f5ad9716879b3bcb4abf0bf63236b5a3f6"
     },
     {
       "path": "tests/tournament-view.test.js",

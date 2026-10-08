@@ -46,6 +46,18 @@
 .arena-fighter[data-animation="attack"][data-weapon="greatsword"] .fighter-weapon-motion {
   animation: gladiator-greatsword-cut 665ms steps(7, end) both;
 }
+.arena-fighter[data-animation="attack"][data-weapon="dagger"] .fighter-weapon-motion {
+  animation: gladiator-dagger-thrust 665ms steps(7, end) both;
+}
+.arena-fighter[data-animation="attack"][data-weapon="dagger"] .fighter-motion {
+  animation-name: gladiator-spear-lunge;
+}
+.arena-fighter[data-riposting="true"] .fighter-weapon-motion {
+  transform: rotate(-18deg);
+}
+.arena-fighter[data-animation="riposte"] .fighter-motion {
+  animation: gladiator-guard-brace 420ms steps(4, end) both;
+}
 .arena-fighter[data-animation="hit"] .fighter-motion {
   animation: gladiator-hit-recoil 380ms steps(5, end) both;
 }
@@ -114,6 +126,13 @@
   20% { transform: rotate(-35deg); }
   44% { transform: rotate(105deg); }
   65% { transform: rotate(86deg); }
+}
+@keyframes gladiator-dagger-thrust {
+  /* The complete figure lunges; the blade rotates around the unchanged hand grip. */
+  0%, 100% { transform: rotate(0); }
+  18% { transform: rotate(-12deg); }
+  40%, 57% { transform: rotate(20deg); }
+  76% { transform: rotate(4deg); }
 }
 @keyframes gladiator-sword-feint {
   0%, 100% { transform: rotate(0); }

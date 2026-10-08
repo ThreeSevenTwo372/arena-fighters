@@ -210,7 +210,8 @@ test('roster position maps to its local equipment slot, locked gear cannot chang
   assert.equal(ui.view.you, 1);
   assert.equal(ui.state.profiles[1].character.id, raw.players[6].character.id);
   assert.match(ui.app.innerHTML, /Equip Nessa\./);
-  assert.equal((ui.app.innerHTML.match(/data-action="weapon"/g) ?? []).length, 7);
+  assert.equal((ui.app.innerHTML.match(/data-action="weapon"/g) ?? []).length, Object.keys(combat.WEAPONS).length);
+  assert.match(ui.app.innerHTML, /data-action="weapon"[^>]*data-value="dagger"/);
   await ui.click('weapon', { index: '0', value: 'axe' });
   assert.notEqual(ui.state.loadouts[1].weapon, 'axe', 'rival slot cannot alter own gear');
   await ui.click('weapon', { index: '1', value: 'halberd' });
@@ -359,7 +360,8 @@ test('a spectator carries the newest next-match equipment view through the previ
   assert.equal(ui.state.picker, 1);
   assert.equal(ui.view.you, 1);
   assert.equal(ui.state.profiles[1].character.id, raw.players[6].character.id);
-  assert.equal((ui.app.innerHTML.match(/data-action="weapon"/g) ?? []).length, 7);
+  assert.equal((ui.app.innerHTML.match(/data-action="weapon"/g) ?? []).length, Object.keys(combat.WEAPONS).length);
+  assert.match(ui.app.innerHTML, /data-action="weapon"[^>]*data-value="dagger"/);
   assert.doesNotMatch(ui.app.innerHTML, /data-action="fight"/);
 });
 

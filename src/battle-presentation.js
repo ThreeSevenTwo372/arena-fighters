@@ -40,7 +40,9 @@ export function roundSummary(duel) {
   const moves = events.flatMap(event => {
     if (event.actor !== 0 && event.actor !== 1) return [];
     const name = fighterName(duel, event.actor);
-    if (event.type === 'attack') return [`${name} dealt ${event.damage} damage`];
+    if (event.type === 'attack') return [`${name} ${event.counter ? 'countered for' : 'dealt'} ${event.damage} damage${event.parried ? ' after a parry' : ''}`];
+    if (event.type === 'riposte') return [`${name} readied Riposte`];
+    if (event.type === 'riposte-miss') return [`${name}'s Riposte found no opening`];
     if (event.type === 'guard') return [`${name} guarded`];
     if (event.type === 'recover') return [`${name} restored ${event.restored} stamina`];
     if (event.type === 'skipped') return [`${name} was defeated before acting`];
@@ -52,6 +54,10 @@ export function roundSummary(duel) {
 
 /** All numbers come from the authoritative option; Guard never implies zero damage. */
 export function actionPreview(option) {
+  if (option.conditional === 'riposte') return {
+    label: `Counter: ${option.damage} damage`,
+    detail: 'Halves an incoming Strike · Counter only if you survive · Techniques, Guard and Recover prevent the counter',
+  };
   if (option.id === 'recover') return {
     label: `Up to +${option.recovery} SP`,
     detail: 'Acts last · Capped at maximum stamina',

@@ -185,8 +185,8 @@ test('new weapon power has initiative and stamina tradeoffs, preserving the orig
   assert.ok(mace[0].damage < axe[0].damage && mace[0].cost < axe[0].cost);
   assert.ok(greatsword[0].damage > axe[0].damage && greatsword[0].cost > axe[0].cost);
   assert.ok(WEAPONS.greatsword.speedBonus < WEAPONS.axe.speedBonus);
-  assert.ok(Object.values(WEAPONS).every(weapon => weapon.speedBonus <= WEAPONS.spear.speedBonus));
-  assert.deepEqual(Object.keys(WEAPONS), ['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword']);
+  assert.ok(Object.entries(WEAPONS).filter(([id]) => id !== 'dagger').every(([, weapon]) => weapon.speedBonus <= WEAPONS.spear.speedBonus));
+  assert.deepEqual(Object.keys(WEAPONS), ['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword', 'dagger']);
 });
 
 test('full helmets are validated cosmetic choices and preserve all combat outcomes', () => {
@@ -410,10 +410,10 @@ test('default strong and swift builds each win across loadouts under two public 
     const [strike, technique] = getActionOptions(state, index);
     const target = state.fighters[1 - index];
     if (!strike.enabled) return 'recover';
-    if (technique.enabled && technique.priority > 0 && technique.damage >= target.hp) return 'technique';
+    if (technique.enabled && !technique.conditional && technique.priority > 0 && technique.damage >= target.hp) return 'technique';
     if (strike.damage >= target.hp) return 'strike';
     if (state.lastRound?.actions[1 - index] === 'guard' && technique.enabled && technique.guardedDamage === technique.damage) return 'technique';
-    if (technique.enabled && technique.damage / technique.cost >= strike.damage / strike.cost) return 'technique';
+    if (technique.enabled && !technique.conditional && technique.damage / technique.cost >= strike.damage / strike.cost) return 'technique';
     return 'strike';
   };
   for (const policy of [chooseCpuAction, pressure]) {
@@ -492,17 +492,23 @@ test('all five-stat allocations validate; boundary builds across equipment and t
   assert.ok(checked >= 1764);
 });
 
-test('representative offensive duels last several decision rounds without routinely reaching the round cap', () => {
+test('representative offensive duels last several decision rounds without routinely reaching the round cap', t => {
   const clever = { strength: 2, dexterity: 4, speed: 2, defense: 4, intelligence: 8 };
   const entries = [balanced, strong, swift, clever].flatMap(stats =>
     Object.keys(TRAITS).flatMap(trait => Object.keys(WEAPONS).flatMap(weapon =>
       Object.keys(ARMORS).map(armor => entry('Pacing', weapon, armor, stats, trait)))));
-  const attackWhenAffordable = action => (state, index) =>
-    getActionOptions(state, index).find(option => option.id === action).enabled ? action : 'recover';
+  const attackWhenAffordable = action => (state, index) => {
+    const options = getActionOptions(state, index), chosen = options.find(option => option.id === action);
+    // An offensive policy uses Strike instead of a stance which requires the
+    // rival's Strike. Mutual Riposte stalling is tested as a bounded draw.
+    const attack = chosen.conditional ? options.find(option => option.id === 'strike') : chosen;
+    return attack.enabled ? attack.id : 'recover';
+  };
   // Every weapon, armor, trait, and representative attribute build appears in
   // both seats. Include mirrors and two deterministic cross-build offsets.
   for (const [label, policy] of [['CPU', chooseCpuAction], ['Strike', attackWhenAffordable('strike')], ['Technique', attackWhenAffordable('technique')]]) {
     const lengths = [];
+    const daggerLengths = [], legacyLengths = [];
     let knockouts = 0, capped = 0;
     for (let index = 0; index < entries.length; index += 1) for (const offset of [0, 137, 419]) {
       let state = createDuel([entries[index], entries[(index + offset) % entries.length]]), rounds = 0;
@@ -511,11 +517,19 @@ test('representative offensive duels last several decision rounds without routin
         rounds += 1;
       }
       lengths.push(rounds);
+      (state.fighters.some(fighter => fighter.weapon === 'dagger') ? daggerLengths : legacyLengths).push(rounds);
       if (state.result.reason === 'knockout') knockouts += 1;
       if (rounds === RULES.MAX_ROUNDS) capped += 1;
     }
     lengths.sort((a, b) => a - b);
     const median = lengths[Math.floor(lengths.length / 2)];
+    const metrics = values => {
+      values.sort((a, b) => a - b);
+      return { duels: values.length, capped: values.filter(value => value === RULES.MAX_ROUNDS).length,
+        capRate: values.filter(value => value === RULES.MAX_ROUNDS).length / values.length,
+        minimum: values[0], median: values[Math.floor(values.length / 2)], maximum: values.at(-1) };
+    };
+    t.diagnostic(JSON.stringify({ policy: label, full: metrics(lengths), legacy: metrics(legacyLengths), dagger: metrics(daggerLengths) }));
     assert.ok(median >= 8 && median <= 12, `${label} median ${median} rounds`);
     assert.ok(knockouts / lengths.length >= 0.97, `${label} must usually finish by knockout`);
     assert.ok(capped / lengths.length <= 0.02, `${label} must rarely hit the time limit`);

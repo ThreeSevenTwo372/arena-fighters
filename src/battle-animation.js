@@ -1,6 +1,6 @@
 /** Playback uses resolved public events. It never resolves combat or reads a secret choice. */
 const FIGHTER_INDICES = new Set([0, 1]);
-const WEAPON_IDS = new Set(['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword']);
+const WEAPON_IDS = new Set(['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword', 'dagger']);
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
 /** Derive visible actions from this round's authoritative events, including canceled moves. */
@@ -26,6 +26,8 @@ export function buildAnimationSteps(before, after, _pending) {
     if (event.type === 'guard') {
       guarding[actor] = true;
       steps.push({ ...common, type: 'guard' });
+    } else if (event.type === 'riposte' || event.type === 'riposte-miss') {
+      steps.push({ ...common, type: event.type });
     } else if (event.type === 'recover') {
       steps.push({ ...common, type: 'recover', restored: event.restored });
     } else if (event.type === 'attack' && FIGHTER_INDICES.has(event.target) && health[actor] > 0) {
@@ -34,6 +36,7 @@ export function buildAnimationSteps(before, after, _pending) {
       steps.push({
         ...common, type: 'attack', target, action: event.action,
         damage: event.damage, guarded: guarding[target], bypassedGuard: !!event.bypassedGuard,
+        ...(event.parried ? { parried: true } : {}), ...(event.counter ? { counter: true } : {}),
         targetHp: health[target],
       });
       if (health[target] === 0 && !defeated.has(target)) {
@@ -129,8 +132,8 @@ export async function playBattleAnimation(container, steps, { signal, reducedMot
         if (!await pause(reduce ? 90 : 285, signal)) return false;
         const target = fighters[step.target];
         if (target) {
-          target.dataset.animation = step.guarded && !step.bypassedGuard ? 'blocked' : 'hit';
-          effect(target, `−${step.damage}`, step.bypassedGuard ? 'break' : step.guarded ? 'blocked' : 'hit');
+          target.dataset.animation = step.parried || (step.guarded && !step.bypassedGuard) ? 'blocked' : 'hit';
+          effect(target, `${step.parried ? 'PARRY ' : ''}−${step.damage}`, step.parried ? 'blocked' : step.bypassedGuard ? 'break' : step.guarded ? 'blocked' : 'hit');
         }
         if (!await pause(reduce ? 150 : 380, signal)) return false;
         if (target) delete target.dataset.animation;
@@ -138,6 +141,14 @@ export async function playBattleAnimation(container, steps, { signal, reducedMot
         fighter.dataset.guarding = 'true';
         effect(fighter, 'GUARD', 'guard');
         if (!await pause(reduce ? 180 : 420, signal)) return false;
+      } else if (step.type === 'riposte') {
+        fighter.dataset.riposting = 'true';
+        effect(fighter, 'RIPOSTE', 'guard');
+        if (!await pause(reduce ? 180 : 420, signal)) return false;
+      } else if (step.type === 'riposte-miss') {
+        delete fighter.dataset.riposting;
+        effect(fighter, 'NO COUNTER', 'guard');
+        if (!await pause(reduce ? 140 : 320, signal)) return false;
       } else if (step.type === 'recover') {
         effect(fighter, `+${step.restored} SP`, 'recover');
         if (!await pause(reduce ? 180 : 510, signal)) return false;
@@ -158,7 +169,7 @@ export async function playBattleAnimation(container, steps, { signal, reducedMot
     container.classList.remove('battle-playback', 'battle-playback-reduced');
     for (const fighter of fighters) {
       if (!fighter) continue;
-      for (const key of ['animation', 'combatAction', 'guarding', 'defeated']) delete fighter.dataset[key];
+      for (const key of ['animation', 'combatAction', 'guarding', 'riposting', 'defeated']) delete fighter.dataset[key];
     }
   }
 }

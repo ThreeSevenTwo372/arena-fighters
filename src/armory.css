@@ -15,14 +15,16 @@
 .armory-weapon-rack::before { left: -7px; }.armory-weapon-rack::after { right: -7px; }
 .armory-weapon,.armory-armor,.armory-helmet { position: relative; display: flex; flex-direction: column; align-items: center; color: #e4c895; padding: 0; border: 1px solid transparent; border-radius: 3px; background: transparent; transition: background .16s,border-color .16s,filter .16s; }
 .armory-weapon { justify-content: flex-end; min-width: 0; padding: 5px 2px 8px; }
-.armory-weapon:last-child { grid-column: 3 / 5; }
+.armory-weapon:last-child { grid-column: auto; }
 .armory-weapon:hover,.armory-armor:hover,.armory-helmet:hover { background: #e3aa4218; border-color: #ab895240; }
 .armory-weapon.is-selected,.armory-armor.is-selected,.armory-helmet.is-selected { background: radial-gradient(ellipse at center,#dcb1543d,#d4a3470b 70%); border-color: #c49b5a; box-shadow: inset 0 0 13px #e6b55215, 0 0 10px #f0b2461a; }
 .armory-room button:focus-visible { outline: 3px solid #ffe0a0; outline-offset: 3px; }
 .armory-weapon-hook { position: absolute; top: 11px; left: calc(50% - 4px); width: 8px; height: 10px; border: 2px solid #c6ab7e; border-top-color: #846b45; border-radius: 2px; box-shadow: 0 2px 4px #000; }
 .armory-weapon-silhouette { position: relative; display: flex; align-items: flex-start; justify-content: center; flex: 1; width: 100%; padding-top: 8px; }
 .armory-weapon--sword { --weapon-width:24; --weapon-height:63; }.armory-weapon--spear { --weapon-width:14; --weapon-height:95; }.armory-weapon--axe { --weapon-width:30; --weapon-height:58; }.armory-weapon--flail { --weapon-width:44; --weapon-height:65; }.armory-weapon--halberd { --weapon-width:32; --weapon-height:98; }.armory-weapon--mace { --weapon-width:17; --weapon-height:60; }.armory-weapon--greatsword { --weapon-width:34; --weapon-height:82; }
+.armory-weapon--dagger { --weapon-width:16; --weapon-height:36; }
 .armory-weapon-silhouette img { width: calc(var(--weapon-width) * 1.65px); height: calc(var(--weapon-height) * 1.65px); max-width: none; object-fit: contain; image-rendering: pixelated; filter: drop-shadow(2px 3px 2px #000b); }
+.armory-weapon--dagger .armory-weapon-silhouette img { width: 32px; height: 72px; }
 .armory-weapon--axe img { transform: rotate(-5deg); }.armory-weapon--flail img { transform: rotate(5deg); }.armory-weapon--greatsword img { transform: rotate(8deg); }
 .armory-nameplate { position: relative; display: flex; align-items: center; justify-content: center; gap: 5px; min-height: 27px; width: 100%; padding: 5px 2px; font-size: 9px; line-height: 1.3; color: #e7c88f; text-shadow: 0 1px 2px #000; background: linear-gradient(#36281cb3,#251a12e8); border-top: 1px solid #94734266; white-space: nowrap; }
 .armory-choice-check { display: inline-grid; place-items: center; flex-shrink: 0; width: 13px; height: 13px; font-size: 12px; color: #b29767; }
@@ -78,7 +80,7 @@
   .armory-live-avatar { margin: -6px 0 0 -27px; width: 320px; height: 256px; }.armory-fighter figcaption { margin-top: 7px; }.armory-fighter figcaption strong { font-size: 21px; margin: 5px 0; }
   .armory-fighter-floor { width: 70%; margin-top: -19px; height: 21px; }
   .armory-zone-title { margin-bottom: 9px; font-size: 14px; }
-  .armory-weapon-rack { grid-template-rows: 212px 172px; }.armory-nameplate { font-size: 9px; }.armory-weapon:last-child { grid-column: 3 / 5; }
+  .armory-weapon-rack { grid-template-rows: 212px 172px; }.armory-nameplate { font-size: 9px; }.armory-weapon:last-child { grid-column: auto; }
   .armory-wardrobe-zone { width: 100%; }.armory-mannequin { height: 161px; }.armory-mannequin img { height: 112px; }.armory-neck-cap { top: 16px; }
   .armory-helmet-zone { margin-top: 20px; }.armory-helmet-object { height: 65px; }
   .armory-selected-details { grid-template-columns: 1fr; }.armory-selected-details > section { padding: 17px 16px; }.armory-selected-details > section + section { border-left: 0; border-top: 1px solid #a9884838; }

@@ -1,5 +1,7 @@
 # Arena Fighters temporary hosting
 
+v0.9.1 adds the Dagger/Riposte weapon while retaining the existing free Render service and temporary-session contract. The user explicitly chose to keep hosting free on October 8, 2026. No paid plan, disk, database, billing change or persistent online progression was enabled. Durable localhost and its private saved data remain untouched. Current release/deployment evidence is in artifacts/Weapon_Dagger_v001/VERIFICATION.json; v0.9.0 is preserved as the rollback.
+
 The v0.9.0 Pixel Menu and Memorial update retains this hosting contract. Public match browsing and the living leaderboard need no guest creation; private graveyard reads require the existing guest bearer. Browsing menus or spectating heartbeats an existing guest. Neither the leaderboard nor graves are permanent on this temporary deployment. Persisted online ownership/save storage is a separate planned milestone before coins and unlocks. Current release/deployment evidence is in artifacts/Main_Menu_v001/VERIFICATION.json; historical v0.8.6 evidence below remains preserved.
 
 The hosting release is based on v0.8.5's complete Roman Manuscript game. All art, media, combat, mercy/crowd behavior and legacy appearance recipes remain preserved. The independent v0.8.5 release is the rollback version.

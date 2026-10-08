@@ -9,6 +9,7 @@ import { composePresetIdentityPixels, validatePresetCatalog } from './preset-ide
 const CATALOG = '/assets/clean-gladiator/v006/manifest.json';
 const PRESET_CATALOG = '/assets/clean-gladiator/v013/manifest.json';
 const WEAPONS = ['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword'];
+const OPTIONAL_WEAPONS = ['dagger'];
 const HELMETS = ['none', 'closed_bascinet', 'barbute', 'greathelm'];
 const MAX_RENDERS = 24, MAX_TEXTURE_BYTES = 16 * 1024 * 1024;
 let catalog, catalogPromise, baseUrl, textureBytes = 0;
@@ -24,7 +25,8 @@ function request(appearance, kind, loadout) {
   const a = presetMode ? normalizePresetAppearance(appearance) : normalizeAppearance(appearance);
   const armorId = id(loadout?.armor, 'light');
   const armor = ({ cloth: 'light', leather: 'medium', plate: 'heavy' })[armorId] ?? (['light', 'medium', 'heavy'].includes(armorId) ? armorId : 'light');
-  const weapon = WEAPONS.includes(id(loadout?.weapon, 'sword')) ? id(loadout?.weapon, 'sword') : 'sword';
+  const weaponId = id(loadout?.weapon, 'sword');
+  const weapon = WEAPONS.includes(weaponId) || OPTIONAL_WEAPONS.includes(weaponId) && catalog?.weapons?.[weaponId] ? weaponId : 'sword';
   const helmet = HELMETS.includes(id(loadout?.helmet, 'none')) ? id(loadout?.helmet, 'none') : 'none';
   // Creator, equipment and combat use exactly the same assembled pixels.
   const identityKey = presetMode ? [a.sex, a.facePreset, a.skin, a.hairColor, a.eyes].join('/') : `${appearanceSignature(a)}|${a.beard}`;
@@ -33,7 +35,7 @@ function request(appearance, kind, loadout) {
 function textureUrl(entry) {
   if (!entry || !Number.isInteger(entry.width) || !Number.isInteger(entry.height) || entry.width <= 0 || entry.height <= 0 || entry.width > 512 || entry.height > 512) throw new Error('Arena equipment dimensions are invalid.');
   const url = new URL(entry.url, baseUrl);
-  if (url.origin !== baseUrl.origin || !/^\/assets\/clean-gladiator\/v\d+\/[\w/-]+\.png$/.test(url.pathname) || url.search || url.hash) throw new Error('Arena equipment must use a preserved local asset package.');
+  if (url.origin !== baseUrl.origin || !/^\/assets\/clean-gladiator\/v\d+(?:-equipment)?\/[\w/-]+\.png$/.test(url.pathname) || url.search || url.hash) throw new Error('Arena equipment must use a preserved local asset package.');
   return url.href;
 }
 export async function preloadCleanArt(config = {}) {
@@ -67,6 +69,24 @@ export async function preloadCleanArt(config = {}) {
     for (const name of HELMETS.slice(1)) {
       const entry = data.helmets?.[name]; textureUrl(entry);
       if (entry.width !== 192 || entry.height !== 160) throw new Error('Arena helmet must use the registered source canvas.');
+    }
+    // Add new equipment without rewriting or requiring it in historical identity catalogs.
+    if (config.equipmentManifestUrl !== undefined) {
+      const equipmentUrl = new URL(config.equipmentManifestUrl, baseUrl);
+      if (equipmentUrl.origin !== baseUrl.origin || !/^\/assets\/clean-gladiator\/v\d+-equipment\/manifest\.json$/.test(equipmentUrl.pathname) || equipmentUrl.search || equipmentUrl.hash) throw new Error('Arena equipment overlay must use a local versioned equipment package.');
+      const equipmentResponse = await fetch(equipmentUrl);
+      if (!equipmentResponse.ok) throw new Error(`Arena equipment catalog could not load (${equipmentResponse.status}).`);
+      const equipment = await equipmentResponse.json();
+      const identityVersion = /^\/assets\/clean-gladiator\/(v\d+)\/manifest\.json$/.exec(url.pathname)?.[1];
+      if (equipment.schema !== 'last-laurel.arena-equipment.v1' || !equipment.compatibleIdentityCatalogs?.includes(identityVersion)
+        || !equipment.weapons || typeof equipment.weapons !== 'object' || Array.isArray(equipment.weapons)) throw new Error('Arena equipment overlay does not match this identity catalog.');
+      for (const [name, entry] of Object.entries(equipment.weapons)) {
+        if (!OPTIONAL_WEAPONS.includes(name) || Object.hasOwn(data.weapons, name)) throw new Error('Arena equipment overlay cannot replace a preserved weapon.');
+        textureUrl(entry);
+        if (!pair(entry.grip) || entry.grip.some((p, axis) => p < 0 || p >= [entry.width, entry.height][axis]) || entry.sourceFacing !== 'W' || entry.parts) throw new Error('Arena optional weapon registration is invalid.');
+      }
+      data.weapons = { ...data.weapons, ...equipment.weapons };
+      data.equipmentRevision = equipment.revision;
     }
     catalog = freeze({ ...data, identityTransform }); return catalog;
   })();

@@ -1,0 +1,28 @@
+{
+  "schema": "last-laurel.arena-equipment.v1",
+  "revision": "dagger-v001",
+  "compatibleIdentityCatalogs": [
+    "v006",
+    "v013"
+  ],
+  "weapons": {
+    "dagger": {
+      "url": "/assets/clean-gladiator/v014-equipment/weapons/dagger.png",
+      "width": 16,
+      "height": 36,
+      "grip": [
+        7,
+        29
+      ],
+      "sourceFacing": "W"
+    }
+  },
+  "provenance": {
+    "type": "original hand-authored vector pixel artwork",
+    "direction": "Compact leaf blade, readable central ridge, bronze guard and pommel, wrapped leather grip; original Roman gladiator game equipment.",
+    "sourceSearch": "No dagger or knife in the preserved browser export or the six accepted D-PIXEL linked-equipment registries. A Deicide 3D RangerDagger uasset was found but not used.",
+    "providerCalls": 0,
+    "imageEdits": 0,
+    "license": "Project-specific original artwork; no third-party stock or generated source, no new public-domain claim."
+  }
+}

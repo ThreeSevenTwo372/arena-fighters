@@ -1,10 +1,14 @@
-# Shared combat and retained online duels, current v0.8.4
+# Shared combat and retained online duels, current v0.9.1
+
+v0.9.1 adds Dagger/Riposte without changing the seven earlier weapons. Dagger favors Dexterity and grants +2 initiative with lower base damage. Riposte costs 5 base stamina, readies at priority +2, halves only an ordinary Strike after armor, then counters once if its fighter survives. Weapon techniques bypass it; Guard or Recover denies its opening. The counter is conditional, keeps full armor protection, and never charges twice. Both secret moves commit before the server determines a parry or counter. The stance expires at the end of the round.
+
+The user chose to retain free temporary hosting. Persistent online progression and coins remain deferred; durable localhost still uses the unchanged private save path. Current weapon evidence is in artifacts/Weapon_Dagger_v001; earlier pacing measurements below describe the seven-weapon baseline.
 
 The default site now runs the eight-player sequential tournament documented in [TOURNAMENTS.md](TOURNAMENTS.md). Its first-tab Flux arrival leads to naming, creation, automatic lobby entry, gate preparation, and live matches with member spectators. The attributes, traits, equipment, combat rules, mercy, and durable character records below are shared by tournaments and the retained duel modes.
 
 For a standalone two-player online duel, open `?duel-mode=1`, name and customize a fighter, create a room, and share its six-character code with a rival. Both players must visit the same running service using separate browser profiles or devices. Practice and Pass & play remain available. Surviving fighters keep their identity and skip naming. Two-player rematch controls apply to this retained flow; tournaments advance through their bracket instead.
 
-Run `node server.mjs` and open `http://127.0.0.1:4173`. For two devices on the same network, run `node server.mjs --host 0.0.0.0 --port 4173` and use this computer’s LAN address on both devices. Only one process should own the default data store. This is a locally verified service; a public HTTPS deployment and real-device internet testing remain pending.
+Run `node server.mjs` and open `http://127.0.0.1:4173`. For two devices on the same network, run `node server.mjs --host 0.0.0.0 --port 4173` and use this computer’s LAN address on both devices. Only one process should own the default data store. The temporary-session game is deployed at https://blackbook-arena-fighters.onrender.com and embedded on https://www.blackbooktattoo.com/arena-fighters. The user has tested it with a friend; current-release deployment and browser evidence are recorded separately in artifacts/Weapon_Dagger_v001/VERIFICATION.json.
 
 ## Attributes
 

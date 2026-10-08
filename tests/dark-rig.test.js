@@ -4,10 +4,11 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { decodeAvatarPng, normalizeAppearance } from '../src/avatar.js';
-import { WEAPONS, ARMORS, HELMETS } from '../src/combat.js';
+import { ARMORS, HELMETS } from '../src/combat.js';
 
 const project = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const manifest = JSON.parse(await fs.readFile(path.join(project, 'assets/clean-gladiator/v003/manifest.json'), 'utf8'));
+const historicalWeapons = ['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword'];
 let instance = 0;
 
 function localPath(input) {
@@ -34,16 +35,20 @@ function alphaBounds(image) {
   return { left, top, right: right + 1, bottom: bottom + 1, width: right - left + 1, height: bottom - top + 1 };
 }
 
-test('the shipped dark rig supports every weapon and armor with visible authored hand attachments', async () => {
+test('the preserved v003 dark rig supports its exact seven weapons and every armor with visible authored hand attachments', async () => {
   const renderer = await freshRenderer();
   assert.equal(manifest.styleVersion, 'dark-v1');
+  // The authored shield is an offhand attachment, not a selectable weapon.
+  assert.deepEqual(Object.keys(manifest.weapons).sort(), [...historicalWeapons, 'shield'].sort());
   for (const sex of ['male', 'female']) for (const armor of Object.keys(ARMORS)) {
     const body = manifest.bodies[sex][armor];
     const bodyPixels = await texture(body);
     const hands = await texture({ url: body.handsUrl });
     const appearance = normalizeAppearance({ sex, hairstyle: 'cropped', beard: 'none' });
     let bodyUrl;
-    for (const weapon of Object.keys(WEAPONS)) {
+    // Current additions use the separately tested equipment overlay; the
+    // historical source renderer and its authored catalog remain preserved.
+    for (const weapon of historicalWeapons) {
       const gear = { armor, weapon, helmet: 'none' };
       const image = await renderer.prepareCleanAvatar(appearance, 'battle', gear);
       assert.deepEqual([image.width, image.height], [192, 160]);

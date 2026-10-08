@@ -1,0 +1,726 @@
+{
+  "schema": "arena-equipment-registration-v1",
+  "weapon": "dagger",
+  "package": "/assets/clean-gladiator/v014-equipment/manifest.json",
+  "texture": "/assets/clean-gladiator/v014-equipment/weapons/dagger.png",
+  "canvas": [
+    16,
+    36
+  ],
+  "grip": [
+    7,
+    29
+  ],
+  "sourceFacing": "W",
+  "runtimePlacement": "Existing body.mainhandGrip; existing outward stow angle and mirror; no body, hand, head, or armor offsets.",
+  "preservedBaseline": "releases/Arena_Fighters_v0.9.0_v001",
+  "comparedFiles": 95,
+  "preservedFiles": [
+    {
+      "path": "assets/clean-gladiator/v003/bodies/female-heavy.png",
+      "sha256": "7e5de5ed72ce52564a8e1fa4df977d55044c2b311bd604b29043a3d37a57accc",
+      "bytes": 11883
+    },
+    {
+      "path": "assets/clean-gladiator/v003/bodies/female-light.png",
+      "sha256": "bf9579c41d4d41dbfc21148e9d645fdbf40526e8765328baac395fc4b93b598b",
+      "bytes": 10130
+    },
+    {
+      "path": "assets/clean-gladiator/v003/bodies/female-medium.png",
+      "sha256": "e8a34c01bfad5cc868f940a9af2dd953ac22cced0b13433c70fca440f0a833fb",
+      "bytes": 9730
+    },
+    {
+      "path": "assets/clean-gladiator/v003/bodies/male-heavy.png",
+      "sha256": "c0e45c1b7fcd23fa23b27a085618adc41d432be203cfed90d6e1197d6526cd24",
+      "bytes": 11968
+    },
+    {
+      "path": "assets/clean-gladiator/v003/bodies/male-light.png",
+      "sha256": "3bac0a9f425a533a4b32a0f233c22493486d4e4098f41df04ae6357809da9018",
+      "bytes": 10160
+    },
+    {
+      "path": "assets/clean-gladiator/v003/bodies/male-medium.png",
+      "sha256": "0e8133b9f9acdf2c0c8833655c22fc5ad9151be9aa1c94e0ae3368ee09f84287",
+      "bytes": 9706
+    },
+    {
+      "path": "assets/clean-gladiator/v003/hands/female-heavy.png",
+      "sha256": "4fd94a84010527504137c6a3356147a28a56f77a1e7265908b97f66214885714",
+      "bytes": 530
+    },
+    {
+      "path": "assets/clean-gladiator/v003/hands/female-light.png",
+      "sha256": "4366ba998b5200592bb66436eb4e05f92d6d3e163b699d74426219cbcfa69283",
+      "bytes": 556
+    },
+    {
+      "path": "assets/clean-gladiator/v003/hands/female-medium.png",
+      "sha256": "f4e27e43bb173e510361c3b16520d16332681c9f0d6278df6993117b960acf0e",
+      "bytes": 535
+    },
+    {
+      "path": "assets/clean-gladiator/v003/hands/male-heavy.png",
+      "sha256": "cef1d6448b4cc048b62918dcda14483f0aa766f76a7ae1db1a4754507f29bccf",
+      "bytes": 534
+    },
+    {
+      "path": "assets/clean-gladiator/v003/hands/male-light.png",
+      "sha256": "759c4266c1a080b75a2e3d012c1040ac98e1666567849464bc3678de1d6c5fcf",
+      "bytes": 566
+    },
+    {
+      "path": "assets/clean-gladiator/v003/hands/male-medium.png",
+      "sha256": "d95c1a2365c101efdb5a57968c3d6cc700125579db35731fc2d001c91440e1c0",
+      "bytes": 519
+    },
+    {
+      "path": "assets/clean-gladiator/v003/helmets/barbute-portrait.png",
+      "sha256": "206df5286f908717ec25a50ad3f666e935683e172077acc828b38c074b3d1268",
+      "bytes": 121762
+    },
+    {
+      "path": "assets/clean-gladiator/v003/helmets/barbute-world.png",
+      "sha256": "49f7f7e745371633427eec4d979321f95f4018da3f83baabbc5adbabeff17b9f",
+      "bytes": 2817
+    },
+    {
+      "path": "assets/clean-gladiator/v003/helmets/closed_bascinet-portrait.png",
+      "sha256": "fa28344086066464661a7668e8bc0d27dda4367cba09fc241437fd560e54d5f6",
+      "bytes": 128315
+    },
+    {
+      "path": "assets/clean-gladiator/v003/helmets/closed_bascinet-world.png",
+      "sha256": "253209e1b0250cdd450ae56196a14a9d0daee3b1657f678cf1316df20390de37",
+      "bytes": 2963
+    },
+    {
+      "path": "assets/clean-gladiator/v003/helmets/greathelm-portrait.png",
+      "sha256": "8b984b5c266afcf1e76af890f09431ab019362ef33cc1968d50657b9a71138d2",
+      "bytes": 135222
+    },
+    {
+      "path": "assets/clean-gladiator/v003/helmets/greathelm-world.png",
+      "sha256": "d088c7b98c4eaa880c03149215216ae8c9a243c0bcd88f681b95499663ffd7c4",
+      "bytes": 3085
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/beard-moustache_goatee-chibi.png",
+      "sha256": "14e26fadff09dd2a031d1e4d1f2b3a674a599f677487949f128060018524c909",
+      "bytes": 870
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/beard-moustache_goatee-portrait.png",
+      "sha256": "a06d7c551b4ef0bc27db190fc4bf341e4dd56d8b62579144af632bb2dc329f7b",
+      "bytes": 33756
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/beard-stubble-chibi.png",
+      "sha256": "5e377aa2e730ee00013d8d7e78fe87bf04099011188aa04f4bc3b183a52f0f12",
+      "bytes": 850
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/beard-stubble-portrait.png",
+      "sha256": "7829dce6d58c07c9f78bed5e4ca9187b16c6956cd323f1d82125178b15d298ae",
+      "bytes": 34406
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/beard-trimmed_full-chibi.png",
+      "sha256": "4ee360c98276d5e4ad7e659d66fa8775d5bd5b012bf1adf0b854f2dca670781c",
+      "bytes": 1029
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/beard-trimmed_full-portrait.png",
+      "sha256": "6e08e54a99abc7552ce0955a32a405042d09d59c2864f2d5cc1d59706e51fba4",
+      "bytes": 44465
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-braided_ponytail-chibi.png",
+      "sha256": "bbc1454b0cd412805683d5cc6543a7a085dfb66cf240370ff23c11e53efb8ce0",
+      "bytes": 4572
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-braided_ponytail-portrait.png",
+      "sha256": "9ee1e5f514017dddb39f28de0800beb173e2c3874bf403cc321a61ffa4659ec1",
+      "bytes": 137467
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-center_part_medium-chibi.png",
+      "sha256": "290506bc753895d56b9de63ed988fc86d2f289e41eee1345cc6d2644098fe98b",
+      "bytes": 4577
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-center_part_medium-portrait.png",
+      "sha256": "0d896d7804afe71480904b409133fae654c88da85c814e4e0cb60f14c9b1c1f2",
+      "bytes": 140521
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-cropped-chibi.png",
+      "sha256": "37a866224d50054d53573f18a36bea09f924af5323570c7a1d59bb98644279d0",
+      "bytes": 3313
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-cropped-portrait.png",
+      "sha256": "584b81bcc7c89b742b43e32f1db26e70167aea08af467c3fa55a1743d9ad070f",
+      "bytes": 99154
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-high_ponytail-chibi.png",
+      "sha256": "ddb0dd25d5ee90a68e8dd8ea6c0592578e2eb0ad2b70f23e82435945248f8069",
+      "bytes": 5498
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-high_ponytail-portrait.png",
+      "sha256": "e25d32c1862f4d80ef67e6aa33938c21a44f9ff16a28bf8a7fe685b29ada0ab8",
+      "bytes": 167926
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-none-chibi.png",
+      "sha256": "eb5d64902cef0d82eced92d27a3929f4d48e29b01b1e8df7b1fd650a2c276848",
+      "bytes": 2955
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-none-portrait.png",
+      "sha256": "0a29665af6c12359c7ee800208ef3ac91feab7e10c035a2124e35ed72b2def81",
+      "bytes": 84219
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-shag-chibi.png",
+      "sha256": "5deb772729ba962e32a5c75dc2ff61cc0cf6496a0ff870cebefda44cb34f5db4",
+      "bytes": 4371
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-shag-portrait.png",
+      "sha256": "1498710532986c12bd5044fc85c2150265b10125e850d6175b38db242a6f9b57",
+      "bytes": 127091
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-short_swept-chibi.png",
+      "sha256": "e50d6582420ad29f56ba5f153474fee6ee3a03d961435d01a0723deacf7effcd",
+      "bytes": 4087
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-short_swept-portrait.png",
+      "sha256": "e754077f210e92869c5a271c647ecd5a6ee0b859a2c9faa243da32e220980a52",
+      "bytes": 130454
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-shoulder_length_loose-chibi.png",
+      "sha256": "e2fc458cf980f71b4bad71fa9da3945a0c7361a1b69a62a6c8ad675ace1a2bfa",
+      "bytes": 5228
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-shoulder_length_loose-portrait.png",
+      "sha256": "78065ac7e274b8ed2be5592ec9f8042d177ac4b4f25a6e0fa51f502162f85d01",
+      "bytes": 163782
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-swept_back_undercut-chibi.png",
+      "sha256": "bc27f13a731e152b0c18361f75880d1204da58c2bf5a753d9e2210bde9f08b7d",
+      "bytes": 3784
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/female-swept_back_undercut-portrait.png",
+      "sha256": "7acc4cc7ae33157fddbde9ef6256aa417641610914be1128f297d7cd288ef84e",
+      "bytes": 113021
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-braided_ponytail-chibi.png",
+      "sha256": "5f72b8843704c3fa8945a63be29c83d0c475775bde54f2f45682c0b2cc0d6484",
+      "bytes": 3891
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-braided_ponytail-portrait.png",
+      "sha256": "c44a0ae7eb00b85fb13157c22db16a73be738549a58d34bce6151582096edfce",
+      "bytes": 124365
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-center_part_medium-chibi.png",
+      "sha256": "31f0bf4ef5a89bc5e91d9ca247102ac7ea86df1950ac433bebe8e9e5d3b88fb4",
+      "bytes": 3819
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-center_part_medium-portrait.png",
+      "sha256": "b656b56733c51d1472430f30f5d1b0366c81ab6b6deafe9608ab9ba57bd3b73e",
+      "bytes": 124850
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-cropped-chibi.png",
+      "sha256": "02b40a5c72590d39102d0b0ae8a46135f30278f57fd8c74543dd1b96ab26036f",
+      "bytes": 3034
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-cropped-portrait.png",
+      "sha256": "d9b6434bf890b319de7ebd60e2e5777a2ca04d28905a79c5cc38272f3397ab40",
+      "bytes": 98489
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-high_ponytail-chibi.png",
+      "sha256": "82d16c0eed59c21b4495da438d892d445c255ff8b6ac55a61d434de99421aea2",
+      "bytes": 4848
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-high_ponytail-portrait.png",
+      "sha256": "b9af3d8f477aada7d15f00f0834c084f8f80c65c060bff6ffaff3412298de51e",
+      "bytes": 155901
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-none-chibi.png",
+      "sha256": "848301179c84a64d6567744f7f813294ff2d222ffdbef4e9cbcd45f12f7f3265",
+      "bytes": 2777
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-none-portrait.png",
+      "sha256": "fdb4fafa1f34b5ba6ad7297298ff65d736e70032abfcd2241fa0d0f4f60295c6",
+      "bytes": 81889
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-shag-chibi.png",
+      "sha256": "ac66c6a5a2c15178a7c099f7b4baa403b471a28a1fba824f030f3867397f7fde",
+      "bytes": 3818
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-shag-portrait.png",
+      "sha256": "8b229db642607eb84f712a8ffd7612b9cc01159b4645207fca7c5ea954a71ce1",
+      "bytes": 115651
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-short_swept-chibi.png",
+      "sha256": "d8c743e95a3d17787465301e961552edddadd89ff703dbf69b5e1bd0d08415d9",
+      "bytes": 3489
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-short_swept-portrait.png",
+      "sha256": "6647aa8493509c575cf25a1bf12133aa32b97a535472a60741247b8830049906",
+      "bytes": 113125
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-shoulder_length_loose-chibi.png",
+      "sha256": "6b4521dab895e23705027e6c745eb161f8aa17101e8293bbf9801939f7503a9d",
+      "bytes": 4582
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-shoulder_length_loose-portrait.png",
+      "sha256": "cb8dd46221f0ecbeb1524d5509346a3220d6f497c53f55bd7426563a5e2389ed",
+      "bytes": 158176
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-swept_back_undercut-chibi.png",
+      "sha256": "63e1262459067952b3463df126511a3f12b874bda721f6a2c862b0d462c71f7e",
+      "bytes": 3444
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identities/male-swept_back_undercut-portrait.png",
+      "sha256": "697e3f60f7e89a570c475c170420e122f0969737c1e40c52799b738aaf6d676b",
+      "bytes": 114897
+    },
+    {
+      "path": "assets/clean-gladiator/v003/identity.json",
+      "sha256": "65b5ff55f9f148417f5f7920aa8105deb7a4e2c69ea5a7a1679244d28088c539",
+      "bytes": 32326
+    },
+    {
+      "path": "assets/clean-gladiator/v003/manifest.json",
+      "sha256": "f2a39ae6b46d46e31f74ced3e1b2e0375560e954f383f37855c47154f5a9a435",
+      "bytes": 8584
+    },
+    {
+      "path": "assets/clean-gladiator/v003/weapons/axe.png",
+      "sha256": "a7000a9078d46a72e7b328811e41b9597095b4220ab517bab9ffbb977944aa36",
+      "bytes": 4433
+    },
+    {
+      "path": "assets/clean-gladiator/v003/weapons/flail-chain.png",
+      "sha256": "4f6dbc6a61aae08ff29f8a2058ec0bf5c758062377f87d1ab19dbb412d7b3f59",
+      "bytes": 2324
+    },
+    {
+      "path": "assets/clean-gladiator/v003/weapons/flail-handle.png",
+      "sha256": "1a42f7b944d379913d72942f9f8a54ddb9c9d2da72e9066b1a35ee2381ccba11",
+      "bytes": 1811
+    },
+    {
+      "path": "assets/clean-gladiator/v003/weapons/flail-head.png",
+      "sha256": "dc7cf353b27f66d8ccfaf5e7c5077aafc215698e7e76e738a604e70ec88bcb39",
+      "bytes": 2612
+    },
+    {
+      "path": "assets/clean-gladiator/v003/weapons/flail.png",
+      "sha256": "b176c100a61a2f833d9e13a513a1b4b42540cb558c2035e0fe456f8cdb9c5cb7",
+      "bytes": 5817
+    },
+    {
+      "path": "assets/clean-gladiator/v003/weapons/greatsword.png",
+      "sha256": "9827bead410b05aa474cfdeb5a41133e796851263ae60eb060b05164aebe74f8",
+      "bytes": 5632
+    },
+    {
+      "path": "assets/clean-gladiator/v003/weapons/halberd.png",
+      "sha256": "58d4114f473176fd98ad7f262841f76f636f51e48f795df09f88c544a0cf4906",
+      "bytes": 6802
+    },
+    {
+      "path": "assets/clean-gladiator/v003/weapons/mace.png",
+      "sha256": "4f59fa3aced5b6ae72b6fab9f7248a0bf4e2673f764ac2630c61b1015fb7919b",
+      "bytes": 2725
+    },
+    {
+      "path": "assets/clean-gladiator/v003/weapons/shield.png",
+      "sha256": "f6831b0cff59b1392961d0de190d37c4405e06e03bb390c0623b1635715aeec3",
+      "bytes": 2353
+    },
+    {
+      "path": "assets/clean-gladiator/v003/weapons/spear.png",
+      "sha256": "e04c1a10a9bd44a04d3cef7905f68612b13c23d8b2579ac72d4bb3c24f10852a",
+      "bytes": 3364
+    },
+    {
+      "path": "assets/clean-gladiator/v003/weapons/sword.png",
+      "sha256": "e471172919bc4687047c1d0de2d706157ba035310e9b13c4bab79d899d342a09",
+      "bytes": 3280
+    },
+    {
+      "path": "assets/clean-gladiator/v006/manifest.json",
+      "sha256": "007fedd6696d7998339badabe60713d474d0c2db985ab48edd4778234e1654e5",
+      "bytes": 8410
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p01-materials.png",
+      "sha256": "9c6b573d243551ccd8ea61c04bddad033bb991d4d0de8ff6dd3a83518ad4debc",
+      "bytes": 439
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p01.png",
+      "sha256": "987e7766bb9ae628505ca0aabd391da23a5664061527fb02bc37831427199a84",
+      "bytes": 1853
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p02-materials.png",
+      "sha256": "0578833430cf552d9a5612b516f8d46b03f60a19e09bc626a7c3ad5c2e3d9fca",
+      "bytes": 439
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p02.png",
+      "sha256": "944aa156a791ac3dd87acbd3ede92689bd21e47cea97036de952b1ef07b8c182",
+      "bytes": 1785
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p03-materials.png",
+      "sha256": "47f6c9c6d9c0842cdb99071f050b5471483730fd2b5de5486500aa5c4f036e77",
+      "bytes": 386
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p03.png",
+      "sha256": "bf1741a147601048aaa0559ffd4a8836174c0e8ebd7ec1ba64caded4bd04bb28",
+      "bytes": 1664
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p04-materials.png",
+      "sha256": "cf1014fb1a03a6cb2614c88f305c013b5307fa25e44f2161159abbd747ca9215",
+      "bytes": 323
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p04.png",
+      "sha256": "9444040bc7e7d79303bae0125b5b719b1d133767bbde31e488cc40ac0036ac88",
+      "bytes": 1482
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p05-materials.png",
+      "sha256": "1486f4ecb8cbf1e0ecfdacfcb0c77673745764009baf66294f87d4c6da3bd739",
+      "bytes": 437
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p05.png",
+      "sha256": "e0f8be4b4de543140d778ac7e3dff4ab2b996c3e5074571e59ccf28fe3cff5b9",
+      "bytes": 1862
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p06-materials.png",
+      "sha256": "e4967be110d3b25d689e29a9d2fabbfe10845b84755b59f4bfb415c555ee8a29",
+      "bytes": 479
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p06.png",
+      "sha256": "7c1b8e0961df74c3548d98ade62efe2e80620fe004332927253c94660722b429",
+      "bytes": 1986
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p07-materials.png",
+      "sha256": "60a74b3ffd08fb20c12f7c0f73dd54054fece35c05c16570115069133b5de4e5",
+      "bytes": 453
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p07.png",
+      "sha256": "f6efb941c8ddc98d7840743b2ff5c2260246bdb452d1cba96f81789d28f61611",
+      "bytes": 2112
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p08-materials.png",
+      "sha256": "634c8be85f51000e006c3641aa93f3e58befcee72a3fe3e27d67dcacb1e6dcb3",
+      "bytes": 412
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p08.png",
+      "sha256": "f59852ba6dbc6e2f342f161c3481be346ff96e05af211246034f2d145c3c257d",
+      "bytes": 1806
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p09-materials.png",
+      "sha256": "9e55b66a403bd09da7795379e8bd4182aa05aab0db8ba391ad5f961a350f076d",
+      "bytes": 452
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p09.png",
+      "sha256": "2e94a4a153755cf190c13a04680e93b497d3e3f88960e1a8d297895ef0e6b132",
+      "bytes": 2016
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p10-materials.png",
+      "sha256": "988b441c5cdbe7304c5426ea3ed1c35d318ab8a09407ddc54108033649963420",
+      "bytes": 429
+    },
+    {
+      "path": "assets/clean-gladiator/v013/faces/female-p10.png",
+      "sha256": "f6cbddfa2de4d9ea02665c6fccd720d1f711ce9acccc18a806030765db5dee64",
+      "bytes": 1871
+    },
+    {
+      "path": "assets/clean-gladiator/v013/manifest.json",
+      "sha256": "bd03009bf50e5910fc1c186a6b5b50dd72b755df6640983fafcadb09f38fcbce",
+      "bytes": 21644
+    }
+  ],
+  "catalogs": [
+    {
+      "version": "v006",
+      "identityMode": "fixed-skull-v1",
+      "identityTransform": {
+        "scale": 0.84,
+        "sourceAnchor": [
+          96,
+          86
+        ],
+        "targetAnchor": [
+          93,
+          86
+        ],
+        "method": "Nearest-neighbor whole identity about the neck socket; shared by all hair, beard, sex, armor and helmet combinations"
+      },
+      "identityOffsetBySex": null,
+      "helmetTransformBySex": null,
+      "bodyRegistrations": {
+        "male": {
+          "light": {
+            "mainhandGrip": [
+              75,
+              108
+            ],
+            "offhandGrip": [
+              102,
+              109
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/male-light.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/male-light.png"
+          },
+          "medium": {
+            "mainhandGrip": [
+              73,
+              108
+            ],
+            "offhandGrip": [
+              101,
+              109
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/male-medium.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/male-medium.png"
+          },
+          "heavy": {
+            "mainhandGrip": [
+              72,
+              109
+            ],
+            "offhandGrip": [
+              102,
+              110
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/male-heavy.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/male-heavy.png"
+          }
+        },
+        "female": {
+          "light": {
+            "mainhandGrip": [
+              75,
+              107
+            ],
+            "offhandGrip": [
+              101,
+              108
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/female-light.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/female-light.png"
+          },
+          "medium": {
+            "mainhandGrip": [
+              73,
+              108
+            ],
+            "offhandGrip": [
+              101,
+              109
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/female-medium.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/female-medium.png"
+          },
+          "heavy": {
+            "mainhandGrip": [
+              72,
+              108
+            ],
+            "offhandGrip": [
+              101,
+              110
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/female-heavy.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/female-heavy.png"
+          }
+        }
+      }
+    },
+    {
+      "version": "v013",
+      "identityMode": "preset-faces-v1",
+      "identityTransform": {
+        "scale": 0.84,
+        "sourceAnchor": [
+          96,
+          86
+        ],
+        "targetAnchor": [
+          93,
+          86
+        ],
+        "method": "Nearest-neighbor whole identity about the neck socket; shared by all hair, beard, sex, armor and helmet combinations"
+      },
+      "identityOffsetBySex": {
+        "male": [
+          0,
+          3
+        ],
+        "female": [
+          0,
+          3
+        ]
+      },
+      "helmetTransformBySex": {
+        "male": {
+          "scale": 0.84,
+          "sourceAnchor": [
+            96,
+            86
+          ],
+          "targetAnchor": [
+            93,
+            86
+          ]
+        },
+        "female": {
+          "scale": 0.756,
+          "sourceAnchor": [
+            96,
+            86
+          ],
+          "targetAnchor": [
+            93,
+            86
+          ]
+        }
+      },
+      "bodyRegistrations": {
+        "male": {
+          "light": {
+            "mainhandGrip": [
+              75,
+              108
+            ],
+            "offhandGrip": [
+              102,
+              109
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/male-light.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/male-light.png"
+          },
+          "medium": {
+            "mainhandGrip": [
+              73,
+              108
+            ],
+            "offhandGrip": [
+              101,
+              109
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/male-medium.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/male-medium.png"
+          },
+          "heavy": {
+            "mainhandGrip": [
+              72,
+              109
+            ],
+            "offhandGrip": [
+              102,
+              110
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/male-heavy.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/male-heavy.png"
+          }
+        },
+        "female": {
+          "light": {
+            "mainhandGrip": [
+              75,
+              107
+            ],
+            "offhandGrip": [
+              101,
+              108
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/female-light.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/female-light.png"
+          },
+          "medium": {
+            "mainhandGrip": [
+              73,
+              108
+            ],
+            "offhandGrip": [
+              101,
+              109
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/female-medium.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/female-medium.png"
+          },
+          "heavy": {
+            "mainhandGrip": [
+              72,
+              108
+            ],
+            "offhandGrip": [
+              101,
+              110
+            ],
+            "url": "/assets/clean-gladiator/v003/bodies/female-heavy.png",
+            "handsUrl": "/assets/clean-gladiator/v003/hands/female-heavy.png"
+          }
+        }
+      }
+    }
+  ],
+  "review": {
+    "firstPair": "artifacts/Weapon_Dagger_v001/dagger-actual-renderer-first-pair.png",
+    "allArmors": "artifacts/Weapon_Dagger_v001/dagger-actual-renderer-all-armors.png",
+    "evidence": "Source assets byte-identical to the independent prior release. Whole-figure renderer rasters inspected at native and 2x sizes. Browser facing/attack checks and user art acceptance remain distinct."
+  }
+}

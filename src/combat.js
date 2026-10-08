@@ -83,6 +83,13 @@ export const WEAPONS = freeze({
     attack: 14, speedBonus: -4, strikeCost: 5,
     technique: { name: 'Cleaving Arc', description: 'Ignores half of armor protection. Favors Strength, with Dexterity and Intelligence support. Acts after ordinary attacks and drains stamina; Guard reduces it.', scaling: { strength: 1.25, dexterity: 0.75 }, cost: 8, priority: -1, multiplier: 1.1, ignoresGuard: false, armorFactor: 0.5 },
   },
+  dagger: {
+    name: 'Dagger',
+    description: 'Dexterity favors quick, lighter strikes. Riposte rewards predicting an ordinary Strike; techniques, Guard and Recover counter the stance.',
+    scaling: { strength: 0.5, dexterity: 1.5 }, heavyHandling: false,
+    attack: 7, speedBonus: 2, strikeCost: 3,
+    technique: { name: 'Riposte', description: 'Ready a counter before attacks. Halve an ordinary Strike, then counter once if you survive. Weapon Techniques bypass the stance; Guard, Recover and another Riposte cause no counter. Enemy armor protects fully. Pay stamina even when it misses.', scaling: { strength: 0.5, dexterity: 1.5 }, cost: 5, priority: 2, multiplier: 1, ignoresGuard: false, armorFactor: 1, conditional: 'riposte', trigger: 'strike', reduction: 0.5 },
+  },
 });
 
 export const ARMORS = freeze({
@@ -215,7 +222,7 @@ function actionDamage(attacker, defender, action, guarded = false) {
   return afterArmor;
 }
 
-/** Damage previews show an unguarded target; guardedDamage reports each weapon's counterplay. */
+/** Riposte damage is a possible counter, never a promise about a secret rival choice. */
 export function getActionOptions(state, index) {
   checkState(state, index);
   const fighter = state.fighters[index];
@@ -223,7 +230,7 @@ export function getActionOptions(state, index) {
   const opponent = state.fighters[1 - index];
   const options = [
     { id: 'strike', name: 'Strike', description: 'An ordinary attack, scaled by this weapon’s Strength and Dexterity affinities. Guard reduces its damage by 65%.', cost: fighter.strikeCost, priority: 0, damage: actionDamage(fighter, opponent, 'strike'), guardedDamage: actionDamage(fighter, opponent, 'strike', true) },
-    { id: 'technique', name: weapon.technique.name, description: weapon.technique.description, cost: fighter.techniqueCost, priority: weapon.technique.priority, damage: actionDamage(fighter, opponent, 'technique'), guardedDamage: actionDamage(fighter, opponent, 'technique', true) },
+    { id: 'technique', name: weapon.technique.name, description: weapon.technique.description, cost: fighter.techniqueCost, priority: weapon.technique.priority, damage: actionDamage(fighter, opponent, 'technique'), guardedDamage: weapon.technique.conditional === 'riposte' ? 0 : actionDamage(fighter, opponent, 'technique', true), ...(weapon.technique.conditional === 'riposte' ? { conditional: 'riposte', trigger: weapon.technique.trigger, reduction: weapon.technique.reduction } : {}) },
     { id: 'guard', name: 'Guard', description: 'Act first and reduce most attacks by 65% this round. Feint, Guard Break, and Chain Sweep bypass it.', cost: RULES.GUARD_COST, priority: 3, damage: 0, guardedDamage: 0 },
     { id: 'recover', name: 'Recover', description: `Restore up to ${fighter.recovery} stamina, including Intelligence. Acts last, leaving you open to attack.`, cost: 0, priority: -2, damage: 0, guardedDamage: 0, recovery: fighter.recovery },
   ];
@@ -280,7 +287,7 @@ export function resolveRound(state, actions) {
   const orderReason = !samePriority ? 'action priority' : first.speed !== second.speed ? 'speed' : 'the alternating speed tie';
   add('reveal', null, `${next.fighters[0].character.name}: ${selected[0].name}. ${next.fighters[1].character.name}: ${selected[1].name}.`, { actions: [...actions] });
   add('initiative', order[0], `${first.character.name} acts before ${second.character.name} by ${orderReason}.`, { order: [...order], reason: orderReason });
-  const guarded = [false, false];
+  const guarded = [false, false], riposteReady = [false, false];
   for (const index of order) {
     const fighter = next.fighters[index];
     const opponent = next.fighters[1 - index];
@@ -297,15 +304,40 @@ export function resolveRound(state, actions) {
       const restored = Math.min(option.recovery, fighter.maxStamina - fighter.stamina);
       fighter.stamina += restored;
       add('recover', index, `${fighter.character.name} recovers ${restored} stamina.`, { restored });
+    } else if (option.conditional === 'riposte') {
+      riposteReady[index] = true;
+      add('riposte', index, `${fighter.character.name} readies Riposte, spending ${option.cost} stamina.`);
+      // Both choices have already been revealed and validated. No private
+      // selection changes whether this command is offered or can be afforded.
+      if (selected[1 - index].id !== option.trigger) {
+        add('riposte-miss', index, `${fighter.character.name}'s Riposte finds no ordinary Strike to counter.`);
+      }
     } else {
-      const damage = actionDamage(fighter, opponent, option.id, guarded[1 - index]);
+      const target = 1 - index;
+      const parried = option.id === 'strike' && riposteReady[target];
+      let damage = actionDamage(fighter, opponent, option.id, guarded[target]);
+      if (parried) {
+        damage = Math.max(1, Math.floor(damage * (1 - selected[target].reduction)));
+        riposteReady[target] = false;
+      }
       const bypassed = guarded[1 - index] && option.id === 'technique' && WEAPONS[fighter.weapon].technique.ignoresGuard;
       opponent.hp = Math.max(0, opponent.hp - damage);
-      add('attack', index, `${fighter.character.name} uses ${option.name} for ${damage} damage${bypassed ? ', bypassing Guard' : guarded[1 - index] ? ' against Guard' : ''}, spending ${option.cost} stamina.`, { action: option.id, damage, target: 1 - index, bypassedGuard: bypassed });
+      add('attack', index, `${fighter.character.name} uses ${option.name} for ${damage} damage${bypassed ? ', bypassing Guard' : guarded[1 - index] ? ' against Guard' : parried ? ' against Riposte' : ''}, spending ${option.cost} stamina.`, { action: option.id, damage, target, bypassedGuard: bypassed, ...(parried ? { parried: true } : {}) });
       if (opponent.hp === 0) {
         next.status = 'complete';
         next.result = { winner: index, reason: 'knockout' };
         add('result', index, `${fighter.character.name} wins the duel. ${opponent.character.name} is defeated.`);
+      } else if (parried) {
+        // The counter is the already paid Riposte action, not a second turn.
+        // It never triggers another counter and armor retains its full effect.
+        const counterDamage = actionDamage(opponent, fighter, 'technique');
+        fighter.hp = Math.max(0, fighter.hp - counterDamage);
+        add('attack', target, `${opponent.character.name} counters with Riposte for ${counterDamage} damage.`, { action: 'technique', counter: true, target: index, damage: counterDamage });
+        if (fighter.hp === 0) {
+          next.status = 'complete';
+          next.result = { winner: target, reason: 'knockout' };
+          add('result', target, `${opponent.character.name} wins the duel. ${fighter.character.name} is defeated.`);
+        }
       }
     }
   }
@@ -332,15 +364,23 @@ export function chooseCpuAction(state, index) {
   const opponent = state.fighters[1 - index];
   const strike = legal('strike');
   const technique = legal('technique');
+  const directTechnique = technique?.conditional ? null : technique;
   if (!strike || fighter.stamina <= (strike?.cost ?? 0) + 1) return 'recover';
-  if (technique && technique.priority > 0 && technique.damage >= opponent.hp) return 'technique';
+  if (directTechnique && directTechnique.priority > 0 && directTechnique.damage >= opponent.hp) return 'technique';
   if (strike.damage >= opponent.hp) return 'strike';
   const lastOpponentAction = state.lastRound?.actions[1 - index];
   if (lastOpponentAction === 'guard' && technique && WEAPONS[fighter.weapon].technique.ignoresGuard) return 'technique';
   if (opponent.stamina < opponent.strikeCost) return 'strike';
-  if (technique && technique.damage > strike.damage + 1) return 'technique';
+  if (directTechnique && directTechnique.damage > strike.damage + 1) return 'technique';
   const rhythm = (state.round + index) % 5;
-  if (rhythm === 0 && technique) return 'technique';
+  if (WEAPONS[fighter.weapon].technique.conditional === 'riposte') {
+    // Keep pressure between occasional predictions. Mirrored dagger opponents
+    // must not endlessly repeat the same stance after seeing the same Strike.
+    if (technique && (lastOpponentAction === 'strike' && rhythm === 1
+      || rhythm === 0 && fighter.stamina >= technique.cost + strike.cost)) return 'technique';
+    return 'strike';
+  }
+  if (rhythm === 0 && directTechnique) return 'technique';
   if (rhythm === 3 && legal('guard') && opponent.stamina >= 6) return 'guard';
   if (rhythm === 4 && fighter.stamina < fighter.maxStamina / 2) return 'recover';
   return 'strike';

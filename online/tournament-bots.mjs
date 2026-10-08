@@ -46,6 +46,6 @@ export function createTournamentBot(players) {
 
 export function chooseTournamentBotLoadout(character) {
   const { strength, dexterity, speed } = character.stats;
-  const weapon = strength >= 6 ? pick(['axe', 'greatsword', 'halberd']) : dexterity > strength ? pick(['sword', 'spear']) : pick(['sword', 'flail']);
+  const weapon = strength >= 6 ? pick(['axe', 'greatsword', 'halberd']) : dexterity > strength ? pick(['sword', 'spear', 'dagger']) : pick(['sword', 'flail']);
   return { weapon, armor: speed >= 6 ? 'light' : character.stats.defense >= 6 ? 'heavy' : 'medium', helmet: 'none' };
 }

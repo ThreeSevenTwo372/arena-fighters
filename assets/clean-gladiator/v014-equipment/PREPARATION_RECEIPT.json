@@ -1,0 +1,29 @@
+{
+  "schema": "arena-dagger-preparation-v1",
+  "source": "dagger.source.json",
+  "sourceSvg": "dagger.source.svg",
+  "sourceSha256": "624a6fcfc856e89f47c85403a26ebab9865d872b06fa552f0f7e49ccb77d9f67",
+  "sourceSvgSha256": "bafbf76d6f0fffb829695915e1e9b32d2399dc2d5c24380afef33eb195cc2f21",
+  "textureSha256": "45ed99b54ca5fa56bbb0c3d4209b229cc41df1942a0c57bd6b15f6d623fdedae",
+  "authoredCanvas": [
+    16,
+    36
+  ],
+  "grip": [
+    7,
+    29
+  ],
+  "opaqueCells": 274,
+  "operations": [
+    "Map authored integer cells to exact RGBA samples",
+    "Emit matching integer-cell SVG source",
+    "Encode lossless RGBA PNG without resampling"
+  ],
+  "preserved": [
+    "All existing v003 weapon/body/hand assets",
+    "Exact v006 legacy identity dispatch",
+    "Exact v013 preset identity dispatch",
+    "All armor/head/helmet transforms"
+  ],
+  "evidence": "Source preparation and registration only; assembled browser review and human art judgment are separate."
+}
