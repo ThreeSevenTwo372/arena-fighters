@@ -1,0 +1,85 @@
+{
+  "schema": "arena-fighters.soundtrack.v1",
+  "menu": {
+    "id": "menu-where-the-stars-remember",
+    "title": "Where the Stars Remember",
+    "src": "/public/audio/soundtrack-v001/menu-where-the-stars-remember.mp3",
+    "durationSeconds": 188.32
+  },
+  "battles": [
+    {
+      "id": "beyond-the-last-lantern-day",
+      "title": "Beyond the Last Lantern (Day)",
+      "src": "/public/audio/soundtrack-v001/beyond-the-last-lantern-day.mp3",
+      "durationSeconds": 159.72
+    },
+    {
+      "id": "beyond-the-last-lantern-night",
+      "title": "Beyond the Last Lantern (Night)",
+      "src": "/public/audio/soundtrack-v001/beyond-the-last-lantern-night.mp3",
+      "durationSeconds": 187.2
+    },
+    {
+      "id": "embers-under-hollow-stone",
+      "title": "Embers Under Hollow Stone",
+      "src": "/public/audio/soundtrack-v001/embers-under-hollow-stone.mp3",
+      "durationSeconds": 193.16
+    },
+    {
+      "id": "circles-around-the-flame",
+      "title": "Circles Around the Flame",
+      "src": "/public/audio/soundtrack-v001/circles-around-the-flame.mp3",
+      "durationSeconds": 194.56
+    },
+    {
+      "id": "glass-beneath-endless-stars",
+      "title": "Glass Beneath Endless Stars",
+      "src": "/public/audio/soundtrack-v001/glass-beneath-endless-stars.mp3",
+      "durationSeconds": 154.8
+    },
+    {
+      "id": "claws-above-the-hollow",
+      "title": "Claws Above the Hollow",
+      "src": "/public/audio/soundtrack-v001/claws-above-the-hollow.mp3",
+      "durationSeconds": 118.16
+    },
+    {
+      "id": "three-notes-beyond-silence",
+      "title": "Three Notes Beyond Silence",
+      "src": "/public/audio/soundtrack-v001/three-notes-beyond-silence.mp3",
+      "durationSeconds": 192
+    },
+    {
+      "id": "watchfires-along-the-border",
+      "title": "Watchfires Along the Border",
+      "src": "/public/audio/soundtrack-v001/watchfires-along-the-border.mp3",
+      "durationSeconds": 177.08
+    },
+    {
+      "id": "steel-against-the-night",
+      "title": "Steel Against the Night",
+      "src": "/public/audio/soundtrack-v001/steel-against-the-night.mp3",
+      "durationSeconds": 130.56
+    },
+    {
+      "id": "throne-of-teeth",
+      "title": "Throne of Teeth",
+      "src": "/public/audio/soundtrack-v001/throne-of-teeth.mp3",
+      "durationSeconds": 149.2
+    },
+    {
+      "id": "iron-laurel",
+      "title": "Iron Laurel",
+      "src": "/public/audio/soundtrack-v001/iron-laurel.mp3",
+      "durationSeconds": 174.8
+    }
+  ],
+  "effects": {
+    "victory": {
+      "id": "victory-noise",
+      "title": "Victory Noise",
+      "src": "/public/audio/soundtrack-v001/victory-noise.mp3",
+      "durationSeconds": 4
+    }
+  }
+}

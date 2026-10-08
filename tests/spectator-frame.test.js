@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { audioBindings } from './fixtures/audio-stub.js';
 import * as combat from '../src/combat.js';
 import { normalizeAppearance } from '../src/avatar.js';
 import { normalizePresetAppearance } from '../src/face-presets.js';
@@ -128,6 +129,7 @@ test('the preview startup does not construct a guest client, recover a room, or 
   let polls = 0;
   const app = { addEventListener() {}, innerHTML: '' };
   const context = vm.createContext({
+    ...audioBindings,
     ...combat, normalizeAppearance, normalizePresetAppearance, URLSearchParams,
     document: { querySelector: () => app, addEventListener() {} }, location: { search: '?spectator-frame-review=1' },
     OnlineClient: class { constructor() { throw new Error('The preview accessed guest state.'); } },

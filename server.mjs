@@ -9,7 +9,7 @@ import { DuelService, ApiError } from './online/service.mjs';
 import { MemoryStore } from './online/store.mjs';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.json': 'application/json; charset=utf-8' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.mp3': 'audio/mpeg', '.json': 'application/json; charset=utf-8' };
 const BODY_LIMIT = 16 * 1024;
 
 function originList(value) {
@@ -126,10 +126,11 @@ export function createAppServer(options = {}) {
       if (pathname === '/') pathname = '/index.html';
       const publicAsset = /^\/assets\/(?:dpixel-avatar|arena|clean-gladiator|armory)\/[a-zA-Z0-9/_.-]+\.(png|json)$/.test(pathname) && !pathname.split('/').includes('..');
       const publicMedia = /^\/public\/cinematics\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\.(mp4|jpg|png)$/.test(pathname);
-      if (pathname !== '/index.html' && !/^\/src\/[a-zA-Z0-9/_-]+\.(js|css|svg)$/.test(pathname) && !publicAsset && !publicMedia) throw new ApiError(404, 'Not found.');
+      const publicAudio = /^\/public\/audio\/soundtrack-v\d+\/[a-zA-Z0-9_-]+\.(mp3|json)$/.test(pathname);
+      if (pathname !== '/index.html' && !/^\/src\/[a-zA-Z0-9/_-]+\.(js|css|svg)$/.test(pathname) && !publicAsset && !publicMedia && !publicAudio) throw new ApiError(404, 'Not found.');
       const target = resolve(root, `.${pathname}`);
       if (!target.startsWith(`${resolve(root)}${sep}`)) throw new ApiError(403, 'Forbidden.');
-      if (publicMedia) {
+      if (publicMedia || publicAudio && extname(target) === '.mp3') {
         let info;
         try { info = await stat(target); } catch { throw new ApiError(404, 'Not found.'); }
         if (!info.isFile()) throw new ApiError(404, 'Not found.');

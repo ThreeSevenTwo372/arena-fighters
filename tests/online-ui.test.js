@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { audioBindings } from './fixtures/audio-stub.js';
 import * as combat from '../src/combat.js';
 import * as presentation from '../src/battle-presentation.js';
 import { normalizeAppearance } from '../src/avatar.js';
@@ -42,6 +43,7 @@ function fixture() {
     querySelectorAll: () => [], querySelector: () => null, setAttribute() {},
   };
   const context = vm.createContext({
+    ...audioBindings,
     ...combat, ...presentation, normalizeAppearance, facePresetChoices, normalizePresetAppearance, structuredClone, URLSearchParams, AbortController,
     setTimeout, clearTimeout, console,
     location: { search: '' }, window: { scrollTo() {} }, navigator: {},

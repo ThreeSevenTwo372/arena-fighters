@@ -1,0 +1,28 @@
+body { padding-bottom: 66px; }
+.app-shell.menu-shell { min-height: calc(100svh - 66px); }
+.game-audio-controls { position: fixed; left: 16px; bottom: 12px; z-index: 25; max-width: 330px; color: #5c4638; font-family: Georgia, 'Times New Roman', serif; }
+.audio-bar { display: flex; align-items: flex-start; justify-content: flex-end; gap: 12px; }
+.audio-toggle, .audio-options > summary { min-height: 44px; padding: 10px 14px; border: 1px solid #ad8c61; color: #652b27; background: #e8d9b5; font: inherit; font-size: 14px; cursor: pointer; }
+.audio-toggle { flex: 0 0 auto; }
+.audio-options { max-width: 330px; min-width: 150px; }
+.audio-options > summary { list-style-position: inside; }
+.audio-settings { padding: 15px; border: 1px solid #ad8c61; border-top: 0; background: #e8d9b5; }
+.audio-settings label { display: flex; justify-content: space-between; gap: 16px; font-size: 14px; }
+.audio-settings output { font-variant-numeric: tabular-nums; }
+.audio-settings input[type="range"] { display: block; width: 100%; min-width: 0; min-height: 44px; accent-color: #8f332c; margin: 0 0 8px; }
+.audio-status, .audio-now-playing { font-size: 12px; line-height: 1.5; margin: 10px 0 0; overflow-wrap: anywhere; }
+.audio-toggle:focus-visible, .audio-options > summary:focus-visible, .audio-settings input:focus-visible { outline: 3px solid #8f332c; outline-offset: 3px; }
+body:has(.menu-shell) .game-audio-controls, body:has(.menu-record-page) .game-audio-controls { color: #f7e5b6; font-family: Consolas, 'Courier New', monospace; }
+body:has(.menu-shell) .audio-toggle, body:has(.menu-shell) .audio-options > summary,
+body:has(.menu-record-page) .audio-toggle, body:has(.menu-record-page) .audio-options > summary,
+body:has(.menu-shell) .audio-settings, body:has(.menu-record-page) .audio-settings { border: 2px solid #bc9557; color: #f7e5b6; background: #292028; box-shadow: 2px 2px #120c0d; }
+body:has(.menu-shell) .audio-toggle, body:has(.menu-shell) .audio-options > summary,
+body:has(.menu-record-page) .audio-toggle, body:has(.menu-record-page) .audio-options > summary { font-size: 11px; }
+body:has(.menu-shell) .audio-settings, body:has(.menu-record-page) .audio-settings { margin-top: 6px; }
+@media (max-width: 480px) {
+  body { min-width: 0; }
+  .game-audio-controls { left: 16px; right: 16px; bottom: 10px; max-width: none; }
+  .audio-bar { justify-content: space-between; gap: 8px; }
+  .audio-toggle, .audio-options > summary { padding-inline: 10px; }
+  .audio-options { min-width: 0; flex: 1; }
+}

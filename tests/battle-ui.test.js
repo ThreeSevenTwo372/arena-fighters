@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { audioBindings } from './fixtures/audio-stub.js';
 import * as combat from '../src/combat.js';
 import * as presentation from '../src/battle-presentation.js';
 import { avatarChoices, normalizeAppearance } from '../src/avatar.js';
@@ -68,6 +69,7 @@ function fixture({ receiptValues = new Map() } = {}) {
     static now() { return now; }
   }
   const context = vm.createContext({
+    ...audioBindings,
     ...combat, ...presentation, avatarChoices, normalizeAppearance, facePresetChoices, normalizePresetAppearance, renderArmory,
     structuredClone, URLSearchParams, AbortController, Date: ControlledDate, console,
     setTimeout: (fn, delay) => schedule(fn, delay), clearTimeout: id => timers.delete(id),

@@ -138,7 +138,7 @@ function bloodEffect(document, weapon) {
  * Play a server/local accepted execution. Complete identity, equipment and hands move together.
  * Every temporary node and modified attribute is restored, including on navigation/abort.
  */
-export async function playExecutionAnimation(container, event, { signal, reducedMotion } = {}) {
+export async function playExecutionAnimation(container, event, { signal, reducedMotion, onCue } = {}) {
   if (!container || signal?.aborted || !INDICES.has(event?.winner)
     || event.loser !== 1 - event.winner || !WEAPONS.has(event.weapon)) return false;
   const arena = container.querySelector('.arena-svg');
@@ -160,6 +160,11 @@ export async function playExecutionAnimation(container, event, { signal, reduced
   const attached = () => !signal?.aborted && container.isConnected && arena.isConnected
     && fighters.every(fighter => fighter.isConnected);
   const wait = async duration => await pause(duration, signal) && attached();
+  const impactCue = () => {
+    if (typeof onCue !== 'function' || !attached()) return;
+    try { onCue(Object.freeze({ type: 'execution', weapon: event.weapon }))?.catch?.(() => {}); }
+    catch { /* A media failure must not change the confirmed verdict. */ }
+  };
   try {
     container.classList.add('execution-playback');
     if (reduce) container.classList.add('execution-playback-reduced');
@@ -187,6 +192,7 @@ export async function playExecutionAnimation(container, event, { signal, reduced
 
     if (reduce) {
       container.setAttribute('data-execution-phase', 'impact');
+      impactCue();
       blood = bloodEffect(document, event.weapon);
       gladiators[event.loser].append(blood);
       return await wait(650);
@@ -196,6 +202,7 @@ export async function playExecutionAnimation(container, event, { signal, reduced
     container.setAttribute('data-execution-phase', 'strike');
     if (!await wait(220)) return false;
     container.setAttribute('data-execution-phase', 'impact');
+    impactCue();
     blood = bloodEffect(document, event.weapon);
     gladiators[event.loser].append(blood);
     if (!await wait(1280)) return false;

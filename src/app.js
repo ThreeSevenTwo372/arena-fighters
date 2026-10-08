@@ -13,8 +13,13 @@ import { buildExecutionEvent, playExecutionAnimation } from './execution-animati
 import { renderMercyPanel, playLoserOutcome } from './mercy-presentation.js';
 import { battlePhase, fighterReadiness, roundSummary, actionPreview, outcomeReason } from './battle-presentation.js';
 import { renderMainMenu, renderMatchBrowser, renderLeaderboard, renderGraveyard } from './main-menu.js';
+import { createGameAudio } from './game-audio.js';
+import { mountAudioControls } from './audio-controls.js';
 
 const app = document.querySelector('#app');
+const audio = createGameAudio();
+const audioPanel = document.querySelector('#audio-controls');
+if (audioPanel?.id === 'audio-controls') mountAudioControls(audioPanel, audio);
 const presetReview = new URLSearchParams(globalThis.location.search).get('face-presets-review') === '1';
 const spectatorReview = new URLSearchParams(globalThis.location.search).get('spectator-frame-review') === '1';
 const tournamentEnabled = !presetReview && !spectatorReview && new URLSearchParams(globalThis.location.search).get('duel-mode') !== '1' && typeof TournamentClient === 'function';
@@ -324,6 +329,7 @@ function useOnlineSession(session) {
 }
 function stopSpectatorPlayback() {
   spectatorPlayback?.controller.abort();
+  audio.stopEffects();
   spectatorPlayback = null;
   queuedSpectatorView = null;
 }
@@ -337,6 +343,7 @@ function revealWinner(key, until) {
   if (revealedWinners.has(key) || until <= Date.now()) { revealedWinners.add(key); return; }
   stopVerdictReveal(); revealedWinners.add(key);
   const reveal = { key, until }; verdictReveal = reveal;
+  audio.playEffect('victory');
   verdictTimer = setTimeout(() => {
     if (verdictReveal !== reveal) return;
     verdictReveal = null;
@@ -456,6 +463,7 @@ function captureExecution(view, enabled) {
 }
 function stopExecutionPlayback() {
   executionPlayback?.controller.abort();
+  audio.stopEffects();
   if (executionPlayback) { state.phase = 'select'; state.screen = tournamentView ? 'tournament-spectator' : 'battle'; }
   executionPlayback = null;
   queuedExecutionView = null;
@@ -485,7 +493,7 @@ async function runExecutionPlayback(transition) {
   try {
     await render({ keepExecution: true, retainArena: true });
     if (transition !== executionPlayback || !['battle', 'tournament-spectator'].includes(state.screen)) return;
-    await playExecutionAnimation(app.querySelector('.arena-stage'), transition.event, { signal: transition.controller.signal });
+    await playExecutionAnimation(app.querySelector('.arena-stage'), transition.event, { signal: transition.controller.signal, onCue: playAudioCue });
   } catch (error) {
     if (transition === executionPlayback) state.error = `The verdict is final. Its animation could not finish: ${error.message}`;
   } finally {
@@ -586,6 +594,7 @@ async function resetAfterDeath(transition) {
     state.pending = [null, null]; state.decision = null; state.error = ''; state.reaction = null;
     onlineReplacement = false;
     arrivalComplete = false;
+    syncGameAudio();
     if (!arrival?.replay(app)) { arrivalComplete = true; await render(); }
   } catch (error) {
     if (transition !== outcomePlayback) return;
@@ -628,7 +637,7 @@ async function runSpectatorPlayback(transition) {
   try {
     await render();
     if (transition !== spectatorPlayback) return;
-    await playBattleAnimation(app.querySelector('.arena-stage'), transition.steps, { signal: transition.controller.signal });
+    await playBattleAnimation(app.querySelector('.arena-stage'), transition.steps, { signal: transition.controller.signal, onCue: playAudioCue });
   } catch (error) {
     if (transition === spectatorPlayback) state.error = `The round resolved. Its animation could not finish: ${error.message}`;
   } finally {
@@ -904,8 +913,21 @@ async function pollOnline() {
     }
   } finally { polling = false; }
 }
+function playAudioCue(cue) {
+  audio.playEffect(cue.type, { weapon: cue.weapon, counter: cue.counter });
+}
+function syncGameAudio() {
+  if (!arrivalComplete) { audio.setScene({ kind: 'cinematic' }); return; }
+  if (presetReview || spectatorReview) { audio.setScene({ kind: 'silent' }); return; }
+  const inBattle = state.duel && (['battle', 'tournament-spectator', 'tournament-entrance'].includes(state.screen)
+    || state.screen === 'handoff' && state.handoff?.kind === 'action');
+  const entering = state.screen === 'tournament-entrance' && tournamentView?.match?.duelId;
+  audio.setScene(inBattle || entering
+    ? { kind: 'battle', battleKey: onlineMode() ? verdictKey(tournamentView || onlineView) : `local:${localDuelId}` }
+    : { kind: 'menu' });
+}
 async function render({ keepPlayback = false, keepExecution = false, keepOutcome = false, retainArena = false } = {}) {
-  if (!arrivalComplete) return;
+  if (!arrivalComplete) { syncGameAudio(); return; }
   if (executionPlayback && !keepExecution) return;
   if (outcomePlayback && !keepOutcome) return;
   if (!keepPlayback && roundPlayback) cancelRoundPlayback({ commit: true });
@@ -929,12 +951,13 @@ async function render({ keepPlayback = false, keepExecution = false, keepOutcome
   try { await Promise.all(requests); }
   catch (error) { if (version === renderVersion) state.error = `Character art could not load: ${error.message}`; }
   if (version !== renderVersion) return;
+  syncGameAudio();
   if (!onlineMode() && state.screen === 'battle' && state.phase === 'select' && state.duel?.status === 'active' && !localTurnClock) armLocalTurnClock();
   const focusSelector = focused?.watchCode !== undefined ? '[data-watch-code]' : focused?.name !== undefined ? `[data-name="${focused.name}"]` : focused?.trait !== undefined ? `[data-trait="${focused.trait}"]` : focused?.appearance ? `[data-appearance="${focused.appearance}"][data-index="${focused.index}"]` : focused?.action ? `[data-action="${focused.action}"]${focused.index === undefined ? '' : `[data-index="${focused.index}"]`}${focused.stat ? `[data-stat="${focused.stat}"]` : ''}${focused.delta !== undefined ? `[data-delta="${focused.delta}"]` : ''}${focused.value ? `[data-value="${focused.value}"]` : ''}` : null;
   const temporary = onlineClient?.sessionMode === 'temporary';
   const content = menuPages.has(state.screen) ? `${header()}${state.screen === 'menu' ? renderMainMenu({ session: onlineSession, temporary }) : state.screen === 'match-browser' ? renderMatchBrowser({ ...menuData, temporary }) : state.screen === 'leaderboard' ? renderLeaderboard({ ...menuData, temporary }) : renderGraveyard({ ...menuData, temporary })}` : state.screen === 'creator' ? creator() : state.screen === 'loadout' ? loadout() : state.screen === 'handoff' ? handoff() : state.screen === 'online-lobby' ? onlineLobby() : state.screen === 'tournament-lobby' ? `${header()}${renderTournamentLobby(tournamentView)}` : state.screen === 'tournament-spectator' ? `${header()}${renderTournamentSpectator(spectatorPlayback ? { ...tournamentView, phase: 'battle' } : tournamentView, { playing: Boolean(spectatorPlayback), duel: state.duel, verdictPhase: verdictReveal ? 'winner' : null, verdictBusy: onlineBusy || onlineOffline, executing: Boolean(executionPlayback) })}` : state.screen === 'tournament-entrance' ? tournamentEntrance() : battle();
   const notice = state.error || (onlineMode() ? onlineClient.storageWarning : null);
-  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.9.1</span></footer></main>`;
+  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.9.2</span></footer></main>`;
   if (retained) {
     const replacementStage = app.querySelector('.arena-stage');
     const originalHud = retained.stage.querySelector('.battle-hud');
@@ -1054,6 +1077,7 @@ function cancelRoundPlayback({ commit = false } = {}) {
   const transition = roundPlayback;
   if (!transition) return;
   transition.controller.abort();
+  audio.stopEffects();
   if (commit) commitRoundPlayback(transition);
   else { roundPlayback = null; queuedOnlineView = null; }
 }
@@ -1061,7 +1085,7 @@ async function runRoundPlayback(transition) {
   try {
     await render({ keepPlayback: true });
     if (transition !== roundPlayback || state.screen !== 'battle') return;
-    await playBattleAnimation(app.querySelector('.arena-stage'), transition.steps, { signal: transition.controller.signal });
+    await playBattleAnimation(app.querySelector('.arena-stage'), transition.steps, { signal: transition.controller.signal, onCue: playAudioCue });
   } catch (error) {
     if (transition === roundPlayback) state.error = `Combat animation could not play: ${error.message}`;
   } finally {
@@ -1166,6 +1190,7 @@ app.addEventListener('click', async event => {
   if (state.phase === 'playback' && !['online-leave', 'tournament-leave', 'observer-leave'].includes(action)) return;
   if (state.phase === 'execution' && !['online-leave', 'tournament-leave', 'observer-leave', 'mode', 'new-session'].includes(action)) return;
   if ((state.phase === 'outcome' || verdictReveal) && !['online-leave', 'tournament-leave', 'observer-leave', 'mode', 'new-session'].includes(action)) return;
+  audio.playEffect('click');
   const index = Number(button.dataset.index);
   state.error = '';
   try {
@@ -1345,13 +1370,19 @@ app.addEventListener('click', async event => {
   } catch (error) { state.error = error.message; render(); }
 });
 document.addEventListener('keydown', event => {
+  if (event.isTrusted !== false && !event.repeat && !event.target.closest?.('[data-audio-toggle]')) void audio.unlock();
   if (renderBusy) return;
   if (event.repeat || event.ctrlKey || event.metaKey || event.altKey || ['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) return;
   if (state.screen !== 'battle' || state.phase !== 'select' || state.duel?.status !== 'active') return;
   const key = Number(event.key);
   if (key >= 1 && key <= 4) app.querySelectorAll('[data-action="fight"]')[key - 1]?.click();
 });
+document.addEventListener('pointerdown', event => { if (event.isTrusted !== false && !event.target.closest?.('[data-audio-toggle]')) void audio.unlock(); }, { capture: true });
+document.addEventListener('visibilitychange', () => audio.setVisible(document.visibilityState !== 'hidden'));
+globalThis.addEventListener?.('pagehide', () => audio.setVisible(false));
+globalThis.addEventListener?.('pageshow', () => audio.setVisible(document.visibilityState !== 'hidden'));
 app.innerHTML = '<main class="app-shell"><section class="panel loading-screen" role="status"><h1>Opening the arena…</h1><p>Loading your character creator.</p></section></main>';
+void audio.load();
 try {
   if (spectatorReview) {
     const { mountSpectatorPreview } = await import('./spectator-preview.js');
@@ -1359,6 +1390,7 @@ try {
   } else {
     arrival = createArrivalController({ onComplete: () => { arrivalComplete = true; if (appReady) void render(); } });
     arrivalComplete = !arrival.shouldShow();
+    syncGameAudio();
     if (!arrivalComplete) arrival.mount(app);
     await preloadCleanArt();
     try {

@@ -1,4 +1,6 @@
-# Shared combat and retained online duels, current v0.9.1
+# Shared combat and retained online duels, current v0.9.2
+
+v0.9.2 adds local presentation audio: the DEICIDE menu song, eleven shuffled full battle tracks, a four-second victory cue and simple sound effects. Player and spectator views retain their selected song by duel identity rather than round/revision; private local action handoffs retain the same score. Effects follow resolved public animation events and cannot read pending moves or resolve a verdict. Gesture-enabled playback, mute, separate volume, silent arrival/death replay and hidden-page pause do not change guest authentication, saved identities, temporary session limits or server authority. Current soundtrack evidence is recorded separately in artifacts/Soundtrack_v001/VERIFICATION.json.
 
 v0.9.1 adds Dagger/Riposte without changing the seven earlier weapons. Dagger favors Dexterity and grants +2 initiative with lower base damage. Riposte costs 5 base stamina, readies at priority +2, halves only an ordinary Strike after armor, then counters once if its fighter survives. Weapon techniques bypass it; Guard or Recover denies its opening. The counter is conditional, keeps full armor protection, and never charges twice. Both secret moves commit before the server determines a parry or counter. The stance expires at the end of the round.
 
@@ -8,7 +10,7 @@ The default site now runs the eight-player sequential tournament documented in [
 
 For a standalone two-player online duel, open `?duel-mode=1`, name and customize a fighter, create a room, and share its six-character code with a rival. Both players must visit the same running service using separate browser profiles or devices. Practice and Pass & play remain available. Surviving fighters keep their identity and skip naming. Two-player rematch controls apply to this retained flow; tournaments advance through their bracket instead.
 
-Run `node server.mjs` and open `http://127.0.0.1:4173`. For two devices on the same network, run `node server.mjs --host 0.0.0.0 --port 4173` and use this computer’s LAN address on both devices. Only one process should own the default data store. The temporary-session game is deployed at https://blackbook-arena-fighters.onrender.com and embedded on https://www.blackbooktattoo.com/arena-fighters. The user has tested it with a friend; current-release deployment and browser evidence are recorded separately in artifacts/Weapon_Dagger_v001/VERIFICATION.json.
+Run `node server.mjs` and open `http://127.0.0.1:4173`. For two devices on the same network, run `node server.mjs --host 0.0.0.0 --port 4173` and use this computer’s LAN address on both devices. Only one process should own the default data store. The temporary-session game is deployed at https://blackbook-arena-fighters.onrender.com and embedded on https://www.blackbooktattoo.com/arena-fighters. The user has tested its earlier alpha with a friend; current-release deployment and browser evidence are recorded separately in artifacts/Soundtrack_v001/VERIFICATION.json.
 
 ## Attributes
 

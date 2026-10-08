@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import { audioBindings } from './fixtures/audio-stub.js';
 import * as combat from '../src/combat.js';
 import * as presentation from '../src/battle-presentation.js';
 import * as menu from '../src/main-menu.js';
@@ -95,6 +96,7 @@ function fixture({ restoredSession = null, restoredView = null, observedView = t
     async vote(chosenView, decision) { calls.push({ kind: 'vote', decision, code: chosenView?.code }); return chosenView; }
   }
   const context = vm.createContext({
+    ...audioBindings,
     ...combat, ...presentation, ...menu, avatarChoices, normalizeAppearance, facePresetChoices, normalizePresetAppearance,
     renderArmory, renderTournamentLobby, renderTournamentSpectator, renderTournamentBracket, renderTournamentEntrance,
     structuredClone, URLSearchParams, AbortController, console,

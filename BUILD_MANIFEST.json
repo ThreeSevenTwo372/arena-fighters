@@ -1,9 +1,9 @@
 {
   "schema": "arena-fighters.local-release.v1",
   "status": "complete",
-  "version": "0.9.1",
-  "createdAt": "2026-10-08T18:14:29.435Z",
-  "directory": "releases/Arena_Fighters_v0.9.1_v001",
+  "version": "0.9.2",
+  "createdAt": "2026-10-08T19:12:09.572Z",
+  "directory": "releases/Arena_Fighters_v0.9.2_v001",
   "identity": {
     "active": {
       "version": "v013",
@@ -17,11 +17,11 @@
   "provenance": [
     {
       "chatId": "01a11c7b-e6ec-7503-8396-2679f20d2469",
-      "note": "User-authorized continuation: strategic dagger/Riposte, additive registered equipment, conditional previews and revealed playback; hosting remains free as requested"
+      "note": "User-authorized implementation and publication: reuse selected DEICIDE/Suno menu song, eleven random per-duel battle songs, simple sound effects and persistent volume controls; free hosting retained"
     },
     {
       "chatId": "01a11c7b-e6ec-7503-8396-2679f20d2469",
-      "note": "Preserves v0.9.0 pixel menu, cinematic final frame, observers, leaderboard and guest death archives"
+      "note": "Preserves all v0.9.1 artwork/media, v013 and v006 identities, Dagger/Riposte, temporary spectator/records contracts and authoritative mercy/execution flow; original soundtrack sources read-only"
     }
   ],
   "entries": [
@@ -74,8 +74,8 @@
     "copiedBytesVerified": true,
     "catalogReferencesVerified": true
   },
-  "fileCount": 1370,
-  "totalBytes": 51695091,
+  "fileCount": 1392,
+  "totalBytes": 84186249,
   "catalogs": [
     {
       "path": "assets/clean-gladiator/v013/manifest.json",
@@ -195,8 +195,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 13424,
-      "sha256": "55dffc8aa07832aa8624eab4214d252d5eb3393faaa824c1af5a9c2674745eb0"
+      "bytes": 14074,
+      "sha256": "020d5fdc135598389a920b4b0abb6b395491d13c7c64734a5fa9245f68e3e44e"
     },
     {
       "path": "ART_DIRECTION.md",
@@ -215,8 +215,8 @@
     },
     {
       "path": "CURRENT_VERSION.md",
-      "bytes": 11374,
-      "sha256": "2ca4db46ec2e2949e270a9b26b1926e0c8b50d7bbc944faaa041f3a4d1ec68de"
+      "bytes": 13371,
+      "sha256": "0c977c0fa8f2c2752e96878d550694dfe3ed77929bfca280d894b0d2131659a4"
     },
     {
       "path": "DARK_ART.md",
@@ -225,23 +225,23 @@
     },
     {
       "path": "DESIGN.md",
-      "bytes": 21475,
-      "sha256": "732a620c82ef437b31c9ca79eb83ecaf16235d7537fd72ddd77b9afc66b498f8"
+      "bytes": 23856,
+      "sha256": "1a53c5694883ce4420b6000fccacbf4b10cb7bad89be7b44b10baa977a75e5d6"
     },
     {
       "path": "HOSTING.md",
-      "bytes": 6572,
-      "sha256": "23aee0ef5aacdf20ab2f1afe7f695524f148f67e0c4d6ba549ca6b41e3f3c476"
+      "bytes": 7084,
+      "sha256": "6563fc31d5cd5aadd506f6e306d6dbf06018b57c75d9884a1f6496c98c365103"
     },
     {
       "path": "ONLINE_DUELS.md",
-      "bytes": 16914,
-      "sha256": "4511cde75a2bbfc64e1c39092992d62940aaaaeaaa4981f5de2f6ca800e0e1e8"
+      "bytes": 17626,
+      "sha256": "1be03dd3f4389c872909c43987d756f13cdb232939c5011b94313da6ff295ff2"
     },
     {
       "path": "README.md",
-      "bytes": 13039,
-      "sha256": "99e5f24e340409d5e5eaa803d43dab560fef8c8d1efee5a34230e2e97661ffe1"
+      "bytes": 14435,
+      "sha256": "1afbc1bf1fbc8e90582cf1a0a595922806c941c29f0cb4db8fb585abebdce5c5"
     },
     {
       "path": "Start-Prototype.ps1",
@@ -6550,8 +6550,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 1687,
-      "sha256": "068c0d591cc22cf7ab6b3ad6117a7c7556c45b754f4847011db4b2484a5b1128"
+      "bytes": 1837,
+      "sha256": "6a561a17b50a7af6f290a762d25b830cbe54bc9270ad3ad496b2d1ffc6f3fca9"
     },
     {
       "path": "online/service.mjs",
@@ -6575,8 +6575,78 @@
     },
     {
       "path": "package.json",
-      "bytes": 386,
-      "sha256": "ce2f20f2a322bcffa2df94d1c5b420f64c8750bfdb34065f770b5b6bd0280736"
+      "bytes": 372,
+      "sha256": "41ce88c132ec5b9503df0648b2be6317dc90935b896eef99ce537f836c7fead5"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/beyond-the-last-lantern-day.mp3",
+      "bytes": 2556843,
+      "sha256": "8502a61656ac9432ec63a323aabf93a6b02a15f8087ce3880afabe51c9babd16"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/beyond-the-last-lantern-night.mp3",
+      "bytes": 2996538,
+      "sha256": "78a05c797866023a447d87b34040aa51c9984240bc3e33c160809909cc43ec14"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/circles-around-the-flame.mp3",
+      "bytes": 3113977,
+      "sha256": "67a4cfd6d0e7afb533990289aacdf665af5a26da6bd214d1e1754469ae014012"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/claws-above-the-hollow.mp3",
+      "bytes": 1891863,
+      "sha256": "9a3c05280d633a043d00ed2c260111154e3649eda64ff3fc4f4798b18b04a932"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/embers-under-hollow-stone.mp3",
+      "bytes": 3091827,
+      "sha256": "8546e66b821ffae5a6113364ca9a66f6c11163a071cf9f1ff0631c3bdb52e560"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/glass-beneath-endless-stars.mp3",
+      "bytes": 2477847,
+      "sha256": "d77dd6d0a4f9a5a255cb9d54905b6f65cdf2d76219defe06bc48fd4efdae3646"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/iron-laurel.mp3",
+      "bytes": 2797987,
+      "sha256": "8ad14e2b2bd0e750a9c513628cb81a29403836f29091f144646b4d813db6103b"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/manifest.json",
+      "bytes": 2676,
+      "sha256": "860706940d535a834691763f97e8c9b96c8a3aa60bad51dfbdb6471c9330c4ce"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/menu-where-the-stars-remember.mp3",
+      "bytes": 3014503,
+      "sha256": "b90e289c987d30f0af9dd93dbfa549469c0774fc11b1b9f94626e649feeb8bf2"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/steel-against-the-night.mp3",
+      "bytes": 2089976,
+      "sha256": "e623e44cf0cb80f93085fe30196173241a0714f7e51e34fe94cf71eaef01d0d2"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/three-notes-beyond-silence.mp3",
+      "bytes": 3073019,
+      "sha256": "f866072cab40511da7c448f2138ddce852348b9fe00817a9b417c47dd1f50c1b"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/throne-of-teeth.mp3",
+      "bytes": 2388391,
+      "sha256": "d3949fc6f1a630ae9487a90f210f8b43875d9c467e93e100189e3a4070631be6"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/victory-noise.mp3",
+      "bytes": 65372,
+      "sha256": "852e29d13533d69a6547bc4fdc0ae4b0a9f3cb6b4ccad7d116b2b0e4078b0616"
+    },
+    {
+      "path": "public/audio/soundtrack-v001/watchfires-along-the-border.mp3",
+      "bytes": 2834366,
+      "sha256": "d08948cd8d78bb5d902833ea34a9bf03442c67934df936c06b41b17accae6ee8"
     },
     {
       "path": "public/cinematics/arrival-v001/PREPARATION_RECEIPT.json",
@@ -6625,13 +6695,13 @@
     },
     {
       "path": "server.mjs",
-      "bytes": 11154,
-      "sha256": "236fc84d46a7330a9d13111cc787cc6a4d47a27d7c80b0cc982b8e2735fe985b"
+      "bytes": 11344,
+      "sha256": "f9632fc805992d850024019f38c8819428c0eda4b4ef332b9c2748a9eee1846b"
     },
     {
       "path": "src/app.js",
-      "bytes": 103867,
-      "sha256": "d36ff3c136ae4c79d75df1edc051eb96e84f5c4e37260adc56fdfcb3ad25a51d"
+      "bytes": 105784,
+      "sha256": "4571cb4ee51893b39f42a7c14f138877cbafbf2285ad26569950e23570ddf08d"
     },
     {
       "path": "src/arena-avatar.js",
@@ -6664,6 +6734,16 @@
       "sha256": "cea702023195e68203568b7847aa1d85b1fce4f27abf9c5316adc4a11f2b1721"
     },
     {
+      "path": "src/audio-controls.css",
+      "bytes": 2504,
+      "sha256": "121c75ac4cda984d65391b37851c18d253a6de8a8d53db399599daa8882f42b1"
+    },
+    {
+      "path": "src/audio-controls.js",
+      "bytes": 3841,
+      "sha256": "ec5e1c2ec469ceafc9a1634fd9dde5b08356f51635090910c7c0d37cfd22a8ff"
+    },
+    {
       "path": "src/avatar.css",
       "bytes": 362,
       "sha256": "5c29774eb3b7b01157534076b6c7a4304c377a9866548564bc5eac2efad1165e"
@@ -6680,8 +6760,8 @@
     },
     {
       "path": "src/battle-animation.js",
-      "bytes": 8353,
-      "sha256": "21aed2f80dd02406b620017664ec3f980fab998ce71586bee2759e5225c58b8d"
+      "bytes": 9160,
+      "sha256": "a8baf60d292c1d916dcdfded124acbe84cff230d4e5293b4d6e84e49c59b4083"
     },
     {
       "path": "src/battle-presentation.js",
@@ -6725,8 +6805,8 @@
     },
     {
       "path": "src/execution-animation.js",
-      "bytes": 9848,
-      "sha256": "202dd87f1102cc3c93b9dab1afa2718e0f8e8e4f6fb0b21ed07050806294ee54"
+      "bytes": 10157,
+      "sha256": "db09f87368ccc7a3e9c0a87cbd9165a0437c12a18573d88a1ad4e9e01c0b23d1"
     },
     {
       "path": "src/face-presets.js",
@@ -6737,6 +6817,11 @@
       "path": "src/fixed-identity.js",
       "bytes": 20963,
       "sha256": "cd45dab723c48c5c153b2f6d05dd2441b9bf932a7c5289a1181dff4750d02e72"
+    },
+    {
+      "path": "src/game-audio.js",
+      "bytes": 18204,
+      "sha256": "2fd269366ef68ea19843f09d8c23c138c2e512f28fd6b5b4f1454b6195347cd3"
     },
     {
       "path": "src/main-menu.css",
@@ -6829,6 +6914,11 @@
       "sha256": "175e49876abc4b31880c4f9d1fc0cb9ea9b4cd66e8be87cac0084f9ecf1d26d7"
     },
     {
+      "path": "tests/audio-playback.test.js",
+      "bytes": 13891,
+      "sha256": "be812353ad49e58b0da1f5e211d6cc66e4214a97ed53ba273ece7491d513e8f3"
+    },
+    {
       "path": "tests/battle-animation.test.js",
       "bytes": 4481,
       "sha256": "7c16e508ec1f6f574d22a2782a3932dc8ee649de090db1f2cdf3b6f3de70a1a3"
@@ -6840,8 +6930,8 @@
     },
     {
       "path": "tests/battle-ui.test.js",
-      "bytes": 40089,
-      "sha256": "9b2dc6334a946f313d096059eec4d309ec648367a45fc92b41f043077f31097e"
+      "bytes": 40169,
+      "sha256": "abd4f984256cba447909f9ce130f387bf698bc39bd004de9526132515bd636ec"
     },
     {
       "path": "tests/clean-avatar.test.js",
@@ -6914,6 +7004,16 @@
       "sha256": "1b4c55c4375bbfbfd549c337ed9115e6f3025fd307f3deb4d1facf4ebc1a308e"
     },
     {
+      "path": "tests/fixtures/audio-stub.js",
+      "bytes": 565,
+      "sha256": "9fba8da193f734585517ce0b254699e7e95a9924cd98d2f578e49c5d5b1195ec"
+    },
+    {
+      "path": "tests/game-audio.test.js",
+      "bytes": 18483,
+      "sha256": "782e3aa705f8a9c6b10359ae98c4bbae9aff4c24f7a928962cc23ae8d7b2215f"
+    },
+    {
       "path": "tests/hosting.test.js",
       "bytes": 5246,
       "sha256": "1c3a4cacb1e2de6cdfdede002fa38c94176bad500102bc93f9ebcb93cc894b29"
@@ -6930,8 +7030,8 @@
     },
     {
       "path": "tests/menu-ui.test.js",
-      "bytes": 22578,
-      "sha256": "f6099fa2533748308a50f65fcd512f268116e9df9b278db2d2f5eca42161a229"
+      "bytes": 22658,
+      "sha256": "fe6577c5a0b7dc372b9c6fc03d36de12d863a1d13b7fd50961fa189ff40bd7cc"
     },
     {
       "path": "tests/mercy-presentation.test.js",
@@ -6940,8 +7040,8 @@
     },
     {
       "path": "tests/onboarding-ui.test.js",
-      "bytes": 20482,
-      "sha256": "5063d89cd4ed9fa4d695f8e4fba53727570b144624a5659b568a1ff70e2b4f1e"
+      "bytes": 20562,
+      "sha256": "1fa0801972d8dc024d486796872b995c60a1971b54e4947e67480dbf66cc43c8"
     },
     {
       "path": "tests/online-client.test.js",
@@ -6950,8 +7050,8 @@
     },
     {
       "path": "tests/online-ui.test.js",
-      "bytes": 8064,
-      "sha256": "c8710660cb470c0d46796f123c01bafed94e2f4e1c0d589ce1ee0bb5c905168f"
+      "bytes": 8144,
+      "sha256": "48636772b1b3a7a147c90ae4b59c4ae58416dcda91af1a84913ca41924950c96"
     },
     {
       "path": "tests/online.test.js",
@@ -6984,9 +7084,19 @@
       "sha256": "bf5ee052530b791bad6daf0967f5a7c7754e19e1e8c01a7ef033a1084faef64b"
     },
     {
+      "path": "tests/soundtrack-http.test.js",
+      "bytes": 8356,
+      "sha256": "682d4f172b24c8396ce53d32b8e61a1a97bc2b08a8d7552bbcad78ec41b11347"
+    },
+    {
+      "path": "tests/soundtrack-ui.test.js",
+      "bytes": 18562,
+      "sha256": "ecce3ea1a1d5b244c0952098295b3334953846ea69a1acf49406d469531db06d"
+    },
+    {
       "path": "tests/spectator-frame.test.js",
-      "bytes": 7717,
-      "sha256": "731e8f472f21e9fc6a7f7bd8ddb7af573edcaf723b9973e41f6d4dcb9017bcaf"
+      "bytes": 7797,
+      "sha256": "b31e0e42bf913c41d3583550524433930f6e86b03f33fba6dc8fa6ab8281d151"
     },
     {
       "path": "tests/temporary-client.test.js",
@@ -7000,8 +7110,8 @@
     },
     {
       "path": "tests/temporary-ui.test.js",
-      "bytes": 10412,
-      "sha256": "a6d1c251e6db7c99d24471fffe4f4f94e1a33dcaf48edb7b7c8904683a2c7444"
+      "bytes": 10492,
+      "sha256": "ffd0366dccf8be255a611a93f1c7786d99a00dae3bd84ea0910bf651c888a7fc"
     },
     {
       "path": "tests/tournament-bots.test.js",
@@ -7015,8 +7125,8 @@
     },
     {
       "path": "tests/tournament-ui.test.js",
-      "bytes": 50402,
-      "sha256": "436aae3f7c8513f0c589259edc3232f5ad9716879b3bcb4abf0bf63236b5a3f6"
+      "bytes": 50482,
+      "sha256": "335b9e993535f5b55214ea790abcdc51aecd856b6d29c26f4f9f57d3975ead1a"
     },
     {
       "path": "tests/tournament-view.test.js",

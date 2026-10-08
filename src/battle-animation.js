@@ -97,12 +97,19 @@ function clearEffects(container) {
   container.querySelectorAll('.fighter-combat-effect').forEach(node => node.remove());
 }
 
+// Audio follows public playback and cannot interrupt its commit or cleanup.
+function emitCue(onCue, type, step = {}) {
+  if (typeof onCue !== 'function') return;
+  const cue = Object.freeze({ type, ...(step.weapon ? { weapon: step.weapon } : {}), ...(step.counter ? { counter: true } : {}) });
+  try { onCue(cue)?.catch?.(() => {}); } catch { /* A media failure must not change combat. */ }
+}
+
 /**
  * Play already-resolved events, returning false when interrupted and true when complete.
  * The caller blocks the surrounding action controls until this promise completes.
  * Abort on screen changes, then render the final combat state after successful playback.
  */
-export async function playBattleAnimation(container, steps, { signal, reducedMotion } = {}) {
+export async function playBattleAnimation(container, steps, { signal, reducedMotion, onCue } = {}) {
   if (!container || signal?.aborted) return false;
   const reduce = reducedMotion ?? globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
   const fighters = [0, 1].map(index => container.querySelector(`.arena-fighter[data-fighter-index="${index}"]`));
@@ -119,6 +126,7 @@ export async function playBattleAnimation(container, steps, { signal, reducedMot
       clearEffects(container);
       caption.textContent = step.text;
       if (step.type === 'reveal') {
+        emitCue(onCue, 'round');
         if (!await pause(reduce ? 160 : 360, signal)) return false;
         continue;
       }
@@ -129,19 +137,24 @@ export async function playBattleAnimation(container, steps, { signal, reducedMot
       if (step.action) fighter.dataset.combatAction = step.action;
       if (step.type === 'attack') {
         // The hand-mounted weapon moves first; the target reacts at the contact frame.
+        emitCue(onCue, 'swing', step);
         if (!await pause(reduce ? 90 : 285, signal)) return false;
+        if (signal?.aborted || !container.isConnected) return false;
         const target = fighters[step.target];
         if (target) {
+          emitCue(onCue, step.parried || (step.guarded && !step.bypassedGuard) ? 'parry' : 'hit', step);
           target.dataset.animation = step.parried || (step.guarded && !step.bypassedGuard) ? 'blocked' : 'hit';
           effect(target, `${step.parried ? 'PARRY ' : ''}−${step.damage}`, step.parried ? 'blocked' : step.bypassedGuard ? 'break' : step.guarded ? 'blocked' : 'hit');
         }
         if (!await pause(reduce ? 150 : 380, signal)) return false;
         if (target) delete target.dataset.animation;
       } else if (step.type === 'guard') {
+        emitCue(onCue, 'guard', step);
         fighter.dataset.guarding = 'true';
         effect(fighter, 'GUARD', 'guard');
         if (!await pause(reduce ? 180 : 420, signal)) return false;
       } else if (step.type === 'riposte') {
+        emitCue(onCue, 'guard', step);
         fighter.dataset.riposting = 'true';
         effect(fighter, 'RIPOSTE', 'guard');
         if (!await pause(reduce ? 180 : 420, signal)) return false;
@@ -150,9 +163,11 @@ export async function playBattleAnimation(container, steps, { signal, reducedMot
         effect(fighter, 'NO COUNTER', 'guard');
         if (!await pause(reduce ? 140 : 320, signal)) return false;
       } else if (step.type === 'recover') {
+        emitCue(onCue, 'recover', step);
         effect(fighter, `+${step.restored} SP`, 'recover');
         if (!await pause(reduce ? 180 : 510, signal)) return false;
       } else if (step.type === 'defeat') {
+        emitCue(onCue, 'defeat', step);
         fighter.dataset.defeated = 'true';
         effect(fighter, 'DOWN', 'defeat');
         if (!await pause(reduce ? 180 : 480, signal)) return false;
