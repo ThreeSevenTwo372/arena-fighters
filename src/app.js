@@ -917,7 +917,7 @@ function playAudioCue(cue) {
   audio.playEffect(cue.type, { weapon: cue.weapon, counter: cue.counter });
 }
 function syncGameAudio() {
-  if (!arrivalComplete) { audio.setScene({ kind: 'cinematic' }); return; }
+  if (!arrivalComplete) { audio.setScene({ kind: 'menu' }); return; }
   if (presetReview || spectatorReview) { audio.setScene({ kind: 'silent' }); return; }
   const inBattle = state.duel && (['battle', 'tournament-spectator', 'tournament-entrance'].includes(state.screen)
     || state.screen === 'handoff' && state.handoff?.kind === 'action');
@@ -957,7 +957,7 @@ async function render({ keepPlayback = false, keepExecution = false, keepOutcome
   const temporary = onlineClient?.sessionMode === 'temporary';
   const content = menuPages.has(state.screen) ? `${header()}${state.screen === 'menu' ? renderMainMenu({ session: onlineSession, temporary }) : state.screen === 'match-browser' ? renderMatchBrowser({ ...menuData, temporary }) : state.screen === 'leaderboard' ? renderLeaderboard({ ...menuData, temporary }) : renderGraveyard({ ...menuData, temporary })}` : state.screen === 'creator' ? creator() : state.screen === 'loadout' ? loadout() : state.screen === 'handoff' ? handoff() : state.screen === 'online-lobby' ? onlineLobby() : state.screen === 'tournament-lobby' ? `${header()}${renderTournamentLobby(tournamentView)}` : state.screen === 'tournament-spectator' ? `${header()}${renderTournamentSpectator(spectatorPlayback ? { ...tournamentView, phase: 'battle' } : tournamentView, { playing: Boolean(spectatorPlayback), duel: state.duel, verdictPhase: verdictReveal ? 'winner' : null, verdictBusy: onlineBusy || onlineOffline, executing: Boolean(executionPlayback) })}` : state.screen === 'tournament-entrance' ? tournamentEntrance() : battle();
   const notice = state.error || (onlineMode() ? onlineClient.storageWarning : null);
-  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.9.2</span></footer></main>`;
+  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.9.3</span></footer></main>`;
   if (retained) {
     const replacementStage = app.querySelector('.arena-stage');
     const originalHud = retained.stage.querySelector('.battle-hud');
@@ -1382,7 +1382,10 @@ document.addEventListener('visibilitychange', () => audio.setVisible(document.vi
 globalThis.addEventListener?.('pagehide', () => audio.setVisible(false));
 globalThis.addEventListener?.('pageshow', () => audio.setVisible(document.visibilityState !== 'hidden'));
 app.innerHTML = '<main class="app-shell"><section class="panel loading-screen" role="status"><h1>Opening the arena…</h1><p>Loading your character creator.</p></section></main>';
-void audio.load();
+audio.setVisible(document.visibilityState !== 'hidden');
+void audio.load().then(loaded => {
+  if (loaded && !presetReview && !spectatorReview) void audio.startMusic();
+});
 try {
   if (spectatorReview) {
     const { mountSpectatorPreview } = await import('./spectator-preview.js');

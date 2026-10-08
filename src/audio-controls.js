@@ -13,7 +13,7 @@ export function mountAudioControls(host, audio) {
   const update = state => {
     const needsGesture = !state.unlocked || ['blocked', 'unavailable'].includes(state.status);
     text(toggle, state.muted ? 'Unmute' : state.status === 'unavailable' ? 'Retry sound' : needsGesture ? 'Enable sound' : 'Mute');
-    toggle.setAttribute('aria-pressed', String(state.unlocked && !state.muted));
+    toggle.setAttribute('aria-pressed', String(!needsGesture && !state.muted));
     toggle.setAttribute('aria-label', state.muted ? 'Unmute game sound' : state.status === 'unavailable' ? 'Retry game sound' : needsGesture ? 'Enable game sound' : 'Mute game sound');
     if (host.ownerDocument?.activeElement !== music) music.value = String(percent(state.musicVolume));
     if (host.ownerDocument?.activeElement !== effects) effects.value = String(percent(state.effectsVolume));

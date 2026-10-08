@@ -90,6 +90,7 @@ export function createGameAudio({
   let loadFailed = false;
   let visible = true;
   let unlocked = false;
+  let effectsUnlocked = false;
   let disposed = false;
   let score = null;
   let scoreSrc = null;
@@ -143,7 +144,7 @@ export function createGameAudio({
   }
 
   function mayPlayEffects() {
-    return !disposed && visible && unlocked && !settings.muted && settings.effectsVolume > 0
+    return !disposed && visible && effectsUnlocked && !settings.muted && settings.effectsVolume > 0
       && (scene.kind === 'menu' || scene.kind === 'battle');
   }
 
@@ -158,7 +159,7 @@ export function createGameAudio({
     else if (blocked) status = 'blocked';
     else if (scorePlaying) status = 'playing';
     return Object.freeze({
-      ...settings, unlocked, status, trackTitle: track?.title ?? '', kind: scene.kind,
+      ...settings, unlocked, effectsUnlocked, status, trackTitle: track?.title ?? '', kind: scene.kind,
       battleKey: scene.battleKey, ready: !!manifest, error: loadFailed || scoreFailed ? 'Soundtrack is unavailable.'
         : blocked ? 'Tap or press a key to enable music.' : null,
       rememberedBattleCount: rememberedBattles.size, activeEffectVoices: voices.size, disposed,
@@ -383,9 +384,17 @@ export function createGameAudio({
     return pending;
   }
 
+  /** Best-effort score autoplay only. Effects still require a trusted unlock gesture. */
+  function startMusic() {
+    if (disposed || !manifest) return Promise.resolve(false);
+    unlocked = true;
+    return reconcile();
+  }
+
   function unlock() {
     if (disposed) return Promise.resolve(false);
     unlocked = true;
+    effectsUnlocked = true;
     const activeContext = ensureContext();
     let resumed;
     try { resumed = activeContext?.state === 'suspended' ? activeContext.resume() : undefined; }
@@ -468,6 +477,6 @@ export function createGameAudio({
     subscribers.clear();
   }
 
-  return Object.freeze({ load, unlock, setScene, playEffect, setMuted, setMusicVolume, setEffectsVolume,
+  return Object.freeze({ load, startMusic, unlock, setScene, playEffect, setMuted, setMusicVolume, setEffectsVolume,
     getState, subscribe, setVisible, stopEffects, dispose });
 }

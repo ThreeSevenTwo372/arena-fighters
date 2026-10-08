@@ -4,6 +4,7 @@ export const audioBindings = {
     setScene() {}, setVisible() {}, stopEffects() {}, dispose() {}, playEffect() {},
     setMuted() {}, setMusicVolume() {}, setEffectsVolume() {}, load: async () => {},
     unlock: async () => {},
+    startMusic: async () => {},
     getState: () => ({ muted: false, musicVolume: .45, effectsVolume: .65, unlocked: false, status: 'ready', trackTitle: '', kind: 'menu' }),
     subscribe: () => () => {},
   }),

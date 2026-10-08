@@ -1,6 +1,6 @@
 {
   "name": "arena-fighters-prototype",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "private": true,
   "type": "module",
   "description": "Arena Fighters with the DEICIDE soundtrack, random battle music, simple sound effects, Dagger/Riposte, and pixel menu.",

@@ -447,3 +447,96 @@ test('audio creation can recover and independent zero volumes silence only their
   assert.ok(context.oscillators.every(node => node.disconnected));
   engine.dispose();
 });
+
+test('best-effort music can start before interaction without enabling effects or constructing a context', async () => {
+  let contexts = 0;
+  const context = new FakeContext();
+  const { engine, players } = fixture({ createContext: () => { contexts++; return context; } });
+  engine.setScene({ kind: 'menu' });
+  await engine.load();
+  assert.equal(await engine.startMusic(), true);
+  assert.equal(engine.getState().status, 'playing');
+  assert.equal(engine.getState().effectsUnlocked, false);
+  assert.equal(contexts, 0);
+  assert.equal(engine.playEffect('click'), false);
+  assert.equal(engine.playEffect('victory'), false);
+  assert.equal(players.length, 1);
+  const score = players[0];
+  score.currentTime = 14;
+  for (let index = 0; index < 10; index++) engine.setScene({ kind: 'menu' });
+  await flush();
+  assert.equal(score.count('play'), 1);
+  assert.equal(score.currentTime, 14);
+  assert.equal(await engine.unlock(), true);
+  assert.equal(contexts, 1);
+  assert.equal(engine.playEffect('click'), true);
+  assert.equal(score.count('play'), 1);
+  engine.dispose();
+});
+
+test('denied best-effort autoplay waits for a trusted gesture instead of retrying on rerenders', async () => {
+  const score = new FakeAudio();
+  const denial = new Error('A gesture is required.');
+  denial.name = 'NotAllowedError';
+  score.results.push(Promise.reject(denial));
+  let contexts = 0;
+  const context = new FakeContext('suspended');
+  const { engine } = fixture({ createAudio: () => score, createContext: () => { contexts++; return context; } });
+  await engine.load();
+  engine.setScene({ kind: 'menu' });
+  assert.equal(await engine.startMusic(), false);
+  assert.equal(engine.getState().status, 'blocked');
+  assert.equal(contexts, 0);
+  for (let index = 0; index < 10; index++) {
+    engine.setScene({ kind: 'menu' });
+    assert.equal(await engine.startMusic(), false);
+  }
+  assert.equal(score.count('play'), 1);
+  assert.equal(engine.playEffect('hit'), false);
+  assert.equal(await engine.unlock(), true);
+  assert.equal(score.count('play'), 2);
+  assert.equal(contexts, 1);
+  assert.equal(context.resumes, 1);
+  assert.equal(engine.playEffect('hit'), true);
+  engine.dispose();
+});
+
+test('best-effort music respects mute, zero volume, hidden pages, silent scenes, and disposal before any media attempt', async () => {
+  for (const silence of [engine => engine.setMuted(true), engine => engine.setMusicVolume(0),
+    engine => engine.setVisible(false), engine => engine.setScene({ kind: 'cinematic' }),
+    engine => engine.setScene({ kind: 'silent' }), engine => engine.dispose()]) {
+    let contexts = 0;
+    const { engine, players } = fixture({ createContext: () => { contexts++; return new FakeContext(); } });
+    engine.setScene({ kind: 'menu' });
+    assert.equal(await engine.startMusic(), false);
+    await engine.load();
+    silence(engine);
+    assert.equal(await engine.startMusic(), false);
+    assert.equal(players.length, 0);
+    assert.equal(contexts, 0);
+    assert.equal(engine.playEffect('victory'), false);
+    engine.dispose();
+  }
+});
+
+test('late best-effort playback cannot resume after visibility, mute, cinematic, or disposal cancels it', async () => {
+  for (const cancel of [engine => engine.setVisible(false), engine => engine.setMuted(true),
+    engine => engine.setScene({ kind: 'cinematic' }), engine => engine.dispose()]) {
+    const score = new FakeAudio();
+    const pending = deferred();
+    score.results.push(pending.promise);
+    let contexts = 0;
+    const { engine } = fixture({ createAudio: () => score, createContext: () => { contexts++; return new FakeContext(); } });
+    await engine.load();
+    engine.setScene({ kind: 'menu' });
+    const starting = engine.startMusic();
+    cancel(engine);
+    score.playing = true;
+    pending.resolve();
+    assert.equal(await starting, false);
+    assert.equal(score.playing, false);
+    assert.equal(contexts, 0);
+    assert.equal(engine.getState().effectsUnlocked, false);
+    engine.dispose();
+  }
+});

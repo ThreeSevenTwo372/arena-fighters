@@ -1,6 +1,14 @@
 # Current Arena Fighters version
 
-Current local source: **0.9.2, Soundtrack and Sound Effects v001**, October 8, 2026.
+Current local source: **0.9.3, Intro Theme v001**, October 8, 2026.
+
+**Where the Stars Remember** is requested as the sky-to-arena arrival begins, and the same playing menu theme continues into the menu without restarting. Death-replay arrival uses the same theme. Fresh visits make a best-effort audible autoplay attempt; when browser policy requires an interaction, the first trusted game interaction or **Enable sound** retries playback. Saved mute is respected, and hidden pages continue to pause sound. The video elements remain muted, and every existing soundtrack, cinematic and artwork file is unchanged.
+
+The existing shuffled eleven-song battle playlist, four-second victory cue, public-event effects, separate music/effects volume and sound-only browser preference storage remain intact. Audio has no authority over combat, private choices, saved identities, guest authentication, records or verdicts. Hosting remains free with temporary RAM/tab sessions; durable online progression remains deferred.
+
+The independent snapshot is releases/Arena_Fighters_v0.9.3_v001; releases/Arena_Fighters_v0.9.2_v001 is the rollback. Source, preservation, browser and deployment evidence is recorded separately in artifacts/Intro_Theme_v001/VERIFICATION.json. Preparation and v0.9.2 soundtrack evidence remain preserved in artifacts/Soundtrack_v001.
+
+Previous local source: **0.9.2, Soundtrack and Sound Effects v001**, October 8, 2026.
 
 The downloaded DEICIDE/Suno menu song, **Where the Stars Remember**, accompanies the menu, records, creator, equipment and waiting lobbies. Eleven full-length battle songs are shuffled without an immediate repeat; one song is selected for each distinct duel and retained across rounds, private action handoffs, spectator updates, mercy and execution. The selected song loops if needed. A four-second **Victory Noise** cue plays once for a fresh winner reveal. Simple procedural effects accompany interface confirmation, round reveal, weapon swing, hit, parry, Guard, Recover, defeat and the confirmed execution impact. Effects follow resolved public presentation events and never inspect hidden choices or resolve gameplay.
 
@@ -22,7 +30,7 @@ Live temporary mode still resets on restart and guest expiry; its leaderboard an
 
 The temporary hosting mode uses RAM-only multiplayer state and tab-scoped guest identities, with refresh recovery and 90-second departure expiry. It adds hosting PORT/HTTPS configuration, restricted Squarespace embedding and a public health check. Local saved-fighter mode remains the default. The v0.8.5 Roman Manuscript game, artwork and media remain preserved; releases/Arena_Fighters_v0.8.5_v001 is the rollback snapshot. Hosting instructions are in HOSTING.md. Publication status and verification are recorded separately in artifacts/Temporary_Sessions_v001/VERIFICATION.json; a packaged release or local test does not establish a public deployment.
 
-The main local entry is http://127.0.0.1:4173/; run Start-Prototype.ps1 or node server.mjs. The independent current snapshot is releases/Arena_Fighters_v0.9.2_v001. Dagger and Riposte, Pixel Menu and Memorial, Temporary Sessions, Roman Manuscript and Mercy and Crowd snapshots remain preserved at v0.9.1, v0.9.0, v0.8.6, v0.8.5 and v0.8.4. Earlier preview ports and review packages remain historical evidence.
+The main local entry is http://127.0.0.1:4173/; run Start-Prototype.ps1 or node server.mjs. The independent current snapshot is releases/Arena_Fighters_v0.9.3_v001. Soundtrack and Sound Effects, Dagger and Riposte, Pixel Menu and Memorial, Temporary Sessions, Roman Manuscript and Mercy and Crowd snapshots remain preserved at v0.9.2, v0.9.1, v0.9.0, v0.8.6, v0.8.5 and v0.8.4. Earlier preview ports and review packages remain historical evidence.
 
 Roman Manuscript v001 adds warm parchment pages, Palatino/Georgia serif type, red rubric headings and actions, fine ruled borders, and restrained laurel ornament through src/roman-manuscript.css, loaded after all scene styles. Naming, the compact creator, equipment annotations, tournament registers/brackets, battle commands, and mercy/crowd controls share that presentation. The existing illustrated scenes and media remain preserved. The theme does not change gameplay, source artwork, v013/v006 dispatch, complete figure dimensions, equipment/animation registration, saved identities, authentication or verdict authority.
 

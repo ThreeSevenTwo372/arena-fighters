@@ -1,9 +1,9 @@
 {
   "schema": "arena-fighters.local-release.v1",
   "status": "complete",
-  "version": "0.9.2",
-  "createdAt": "2026-10-08T19:12:09.572Z",
-  "directory": "releases/Arena_Fighters_v0.9.2_v001",
+  "version": "0.9.3",
+  "createdAt": "2026-10-08T19:25:47.688Z",
+  "directory": "releases/Arena_Fighters_v0.9.3_v001",
   "identity": {
     "active": {
       "version": "v013",
@@ -17,11 +17,11 @@
   "provenance": [
     {
       "chatId": "01a11c7b-e6ec-7503-8396-2679f20d2469",
-      "note": "User-authorized implementation and publication: reuse selected DEICIDE/Suno menu song, eleven random per-duel battle songs, simple sound effects and persistent volume controls; free hosting retained"
+      "note": "User-requested follow-up: menu song during intro and continuous into menu; best-effort score autoplay respects browser denial, sound preferences and visibility; trusted interaction starts effects"
     },
     {
       "chatId": "01a11c7b-e6ec-7503-8396-2679f20d2469",
-      "note": "Preserves all v0.9.1 artwork/media, v013 and v006 identities, Dagger/Riposte, temporary spectator/records contracts and authoritative mercy/execution flow; original soundtrack sources read-only"
+      "note": "Preserves every v0.9.2 asset and soundtrack file, original sources, cinematic video bytes, v013/v006 identities and free temporary hosting"
     }
   ],
   "entries": [
@@ -75,7 +75,7 @@
     "catalogReferencesVerified": true
   },
   "fileCount": 1392,
-  "totalBytes": 84186249,
+  "totalBytes": 84199931,
   "catalogs": [
     {
       "path": "assets/clean-gladiator/v013/manifest.json",
@@ -195,8 +195,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 14074,
-      "sha256": "020d5fdc135598389a920b4b0abb6b395491d13c7c64734a5fa9245f68e3e44e"
+      "bytes": 14314,
+      "sha256": "156927736375ab25c6d1759a3be0924c0b672adae9cc3b0958e76579bbbeb586"
     },
     {
       "path": "ART_DIRECTION.md",
@@ -215,8 +215,8 @@
     },
     {
       "path": "CURRENT_VERSION.md",
-      "bytes": 13371,
-      "sha256": "0c977c0fa8f2c2752e96878d550694dfe3ed77929bfca280d894b0d2131659a4"
+      "bytes": 14758,
+      "sha256": "4dc74973b3dc5ad1ef25f2b012ba5b7928e9188a4a2ffcb8617194ca0f2dcff9"
     },
     {
       "path": "DARK_ART.md",
@@ -225,23 +225,23 @@
     },
     {
       "path": "DESIGN.md",
-      "bytes": 23856,
-      "sha256": "1a53c5694883ce4420b6000fccacbf4b10cb7bad89be7b44b10baa977a75e5d6"
+      "bytes": 24565,
+      "sha256": "5c2bdb5af11e8c0d72f5caf9cfd04f2fc2f5ea64282e9561ae897425fbc8ff68"
     },
     {
       "path": "HOSTING.md",
-      "bytes": 7084,
-      "sha256": "6563fc31d5cd5aadd506f6e306d6dbf06018b57c75d9884a1f6496c98c365103"
+      "bytes": 7374,
+      "sha256": "957d50664075a6c2933d1f359af58c8e833a26ee6b604b7b56b209527375938d"
     },
     {
       "path": "ONLINE_DUELS.md",
-      "bytes": 17626,
-      "sha256": "1be03dd3f4389c872909c43987d756f13cdb232939c5011b94313da6ff295ff2"
+      "bytes": 17964,
+      "sha256": "a71998d5a23488766423cc0797d29759c10d026655b4368e2030a0bdccf1810d"
     },
     {
       "path": "README.md",
-      "bytes": 14435,
-      "sha256": "1afbc1bf1fbc8e90582cf1a0a595922806c941c29f0cb4db8fb585abebdce5c5"
+      "bytes": 14761,
+      "sha256": "47fbbfae860fd0c433bdd6bc453ef2aa27a33f36fd42710049c5c0cd80487fe6"
     },
     {
       "path": "Start-Prototype.ps1",
@@ -6576,7 +6576,7 @@
     {
       "path": "package.json",
       "bytes": 372,
-      "sha256": "41ce88c132ec5b9503df0648b2be6317dc90935b896eef99ce537f836c7fead5"
+      "sha256": "5b79833392b1ce4c0101a11569010c2812c9a4e2a0d792e00a30fd26d185c5d0"
     },
     {
       "path": "public/audio/soundtrack-v001/beyond-the-last-lantern-day.mp3",
@@ -6700,8 +6700,8 @@
     },
     {
       "path": "src/app.js",
-      "bytes": 105784,
-      "sha256": "4571cb4ee51893b39f42a7c14f138877cbafbf2285ad26569950e23570ddf08d"
+      "bytes": 105932,
+      "sha256": "12f9dd1e9793c6390971116684cd5fc3e32203d68e88ed9487f236858b0107eb"
     },
     {
       "path": "src/arena-avatar.js",
@@ -6740,8 +6740,8 @@
     },
     {
       "path": "src/audio-controls.js",
-      "bytes": 3841,
-      "sha256": "ec5e1c2ec469ceafc9a1634fd9dde5b08356f51635090910c7c0d37cfd22a8ff"
+      "bytes": 3840,
+      "sha256": "aec6c625600e2dea30759f3a32e3796a0be64e0d2f9b7065fd57a390ea9a1cc0"
     },
     {
       "path": "src/avatar.css",
@@ -6820,8 +6820,8 @@
     },
     {
       "path": "src/game-audio.js",
-      "bytes": 18204,
-      "sha256": "2fd269366ef68ea19843f09d8c23c138c2e512f28fd6b5b4f1454b6195347cd3"
+      "bytes": 18527,
+      "sha256": "f94d1bd005bf0276bfe734477e577aded82582649b7508a6590a647f8954d1bc"
     },
     {
       "path": "src/main-menu.css",
@@ -7005,13 +7005,13 @@
     },
     {
       "path": "tests/fixtures/audio-stub.js",
-      "bytes": 565,
-      "sha256": "9fba8da193f734585517ce0b254699e7e95a9924cd98d2f578e49c5d5b1195ec"
+      "bytes": 597,
+      "sha256": "56d167a4118e31c6eb69227dc8ea0fb1297c4f4f6d350f04c060c7a6b5aa552e"
     },
     {
       "path": "tests/game-audio.test.js",
-      "bytes": 18483,
-      "sha256": "782e3aa705f8a9c6b10359ae98c4bbae9aff4c24f7a928962cc23ae8d7b2215f"
+      "bytes": 22474,
+      "sha256": "7b7ed54ffdbc37fc05ad045ab8c1fbf420fa7a80116686cf5ea4c512ed784284"
     },
     {
       "path": "tests/hosting.test.js",
@@ -7090,8 +7090,8 @@
     },
     {
       "path": "tests/soundtrack-ui.test.js",
-      "bytes": 18562,
-      "sha256": "ecce3ea1a1d5b244c0952098295b3334953846ea69a1acf49406d469531db06d"
+      "bytes": 24461,
+      "sha256": "65a1d80aca74dd5a547f9a43aaca08323825db8d992367105096948ccbf757fb"
     },
     {
       "path": "tests/spectator-frame.test.js",

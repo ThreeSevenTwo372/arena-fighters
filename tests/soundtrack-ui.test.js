@@ -12,6 +12,7 @@ import { renderMercyPanel } from '../src/mercy-presentation.js';
 import { renderArmory } from '../src/armory.js';
 import { renderTournamentLobby, renderTournamentSpectator, renderTournamentBracket, renderTournamentEntrance } from '../src/tournament-view.js';
 import { mountAudioControls } from '../src/audio-controls.js';
+import { createGameAudio as createRealGameAudio } from '../src/game-audio.js';
 
 const appSource = readFileSync(new URL('../src/app.js', import.meta.url), 'utf8');
 const startup = appSource.indexOf('\napp.innerHTML = \'<main class="app-shell"><section class="panel loading-screen"');
@@ -37,10 +38,10 @@ function spectatorView(duel, { revision = 1, duelId = 'match-1', phase = 'battle
 }
 
 // Execute the actual app's accepted-state routing and handlers; media/DOM/network are boundaries.
-function fixture({ firstArrival = false, startupRun = false, playback = async () => {}, realControls = false } = {}) {
+function fixture({ firstArrival = false, startupRun = false, playback = async () => {}, realControls = false, realAudio = false, denyAutoplay = false, visibilityState = 'visible' } = {}) {
   const handlers = new Map(), scenes = [], effects = [], visibility = [], mounts = [], timers = new Map(), calls = [];
-  let nextTimer = 0, unlocks = 0, stops = 0, arrivalOptions, arrivalSeen = !firstArrival;
-  const stage = { closest: () => null };
+  let nextTimer = 0, unlocks = 0, musicStarts = 0, stops = 0, arrivalOptions, arrivalSeen = !firstArrival, playbackAllowed = !denyAutoplay;
+  const stage = { closest: () => null, querySelector: selector => selector === '.battle-hud' ? null : { setAttribute() {}, removeAttribute() {} }, replaceWith() {} };
   const app = { innerHTML: '', inert: false, classList: { toggle() {} }, addEventListener: (name, handler) => handlers.set(`app-${name}`, handler),
     querySelector: selector => selector === '.arena-stage' ? stage : null, querySelectorAll: () => [], setAttribute() {} };
   const audioNodes = new Map(), audioSubscribers = new Set();
@@ -49,13 +50,36 @@ function fixture({ firstArrival = false, startupRun = false, playback = async ()
     querySelector(selector) { if (!audioNodes.has(selector)) audioNodes.set(selector, { tagName: 'BUTTON', textContent: '', value: '', setAttribute() {}, closest: selected => selected === selector ? audioNodes.get(selector) : null }); return audioNodes.get(selector); },
     addEventListener: (name, handler) => handlers.set(`audio-${name}`, handler), removeEventListener: name => handlers.delete(`audio-${name}`) };
   const notifyAudio = () => { for (const listener of audioSubscribers) listener(audioState); };
-  const audio = {
-    load: async () => {}, setScene: scene => scenes.push(plain(scene)), playEffect: (type, options) => effects.push({ type, options: plain(options ?? {}) }),
+  let audio = {
+    load: async () => true, setScene: scene => scenes.push(plain(scene)), playEffect: (type, options) => effects.push({ type, options: plain(options ?? {}) }),
     setVisible: visible => visibility.push(visible), stopEffects: () => { stops++; }, unlock: async () => { unlocks++; audioState.unlocked = true; audioState.status = 'playing'; notifyAudio(); },
+    startMusic: async () => { musicStarts++; audioState.unlocked = true; audioState.status = 'playing'; notifyAudio(); return true; },
     setMuted: muted => { calls.push({ muted }); audioState.muted = muted; notifyAudio(); },
     getState: () => ({ ...audioState }),
     subscribe: listener => { audioSubscribers.add(listener); listener(audioState); return () => audioSubscribers.delete(listener); }, dispose() {},
   };
+  const players = [];
+  if (realAudio) {
+    const directory = '/public/audio/soundtrack-v001/';
+    const track = id => ({ id, title: id === 'menu' ? 'Where the Stars Remember' : id, src: `${directory}${id}.mp3`, durationSeconds: 120 });
+    const engine = createRealGameAudio({
+      fetcher: async () => ({ ok: true, json: async () => ({ schema: 'arena-fighters.soundtrack.v1', menu: track('menu'), battles: [track('battle-a'), track('battle-b')] }) }),
+      createContext: () => null, storage: { getItem: () => null, setItem() {} }, random: () => .25,
+      createAudio: () => {
+        let source = '';
+        const player = { currentTime: 0, playCalls: 0, pauseCalls: 0, sourceChanges: 0, playing: false,
+          get src() { return source; }, set src(value) { if (value !== source) { this.currentTime = 0; this.sourceChanges++; } source = value; },
+          play() { this.playCalls++; if (!playbackAllowed) return Promise.reject(Object.assign(new Error('Gesture required'), { name: 'NotAllowedError' })); this.playing = true; return Promise.resolve(); },
+          pause() { this.pauseCalls++; this.playing = false; }, addEventListener() {}, removeAttribute() {}, load() {} };
+        players.push(player); return player;
+      },
+    });
+    audio = { ...engine,
+      setScene: scene => { scenes.push(plain(scene)); engine.setScene(scene); },
+      unlock: () => { unlocks++; return engine.unlock(); }, startMusic: () => { musicStarts++; return engine.startMusic(); },
+      setMuted: value => { calls.push({ muted: value }); engine.setMuted(value); },
+    };
+  }
   class Client {
     constructor() { this.sessionMode = 'temporary'; }
     async session() { calls.push('session'); return null; }
@@ -63,7 +87,7 @@ function fixture({ firstArrival = false, startupRun = false, playback = async ()
     async leaderboard() { return { fighters: [] }; }
     async graveyard() { return { graves: [] }; }
   }
-  const browserDocument = { visibilityState: 'visible', activeElement: null,
+  const browserDocument = { visibilityState, activeElement: null,
     querySelector: selector => selector === '#audio-controls' ? audioHost : app,
     addEventListener: (name, handler) => handlers.set(`document-${name}`, handler) };
   audioHost.ownerDocument = browserDocument;
@@ -86,31 +110,87 @@ function fixture({ firstArrival = false, startupRun = false, playback = async ()
       return { shouldShow: () => !arrivalSeen, mount() { arrivalSeen = true; app.innerHTML = 'Arrival'; return true; }, replay() { app.innerHTML = 'Arrival'; return true; }, dispose() {} };
     },
   });
-  const expose = `globalThis.fixture = { state, render, applyOnlineView, applyTournamentView, startDuel, startLoadouts, newSession, revealWinner,
+  const expose = `globalThis.fixture = { state, render, applyOnlineView, applyTournamentView, startDuel, startLoadouts, newSession, revealWinner, resolveLocalVerdict,
     get arrivalComplete() { return arrivalComplete; }, set arrivalComplete(value) { arrivalComplete = value; },
     get playback() { return roundPlayback; }, get spectatorPlayback() { return spectatorPlayback; } };`;
   const ready = startupRun
     ? vm.runInContext(`(async () => { ${definitions}\n${expose}\n${appSource.slice(startup)} })()`, context)
     : vm.runInContext(definitions + expose, context);
   const ui = context.fixture;
-  Object.assign(ui, { app, audioHost, audio, scenes, effects, visibility, mounts, calls, document: browserDocument, ready: Promise.resolve(ready) });
+  Object.assign(ui, { app, audioHost, audio, players, scenes, effects, visibility, mounts, calls, document: browserDocument, ready: Promise.resolve(ready) });
   ui.lastScene = () => scenes.at(-1);
   ui.unlocks = () => unlocks;
+  ui.musicStarts = () => musicStarts;
+  ui.allowPlayback = () => { playbackAllowed = true; };
   ui.stops = () => stops;
   ui.emit = async (name, event = {}) => { await handlers.get(name)?.(event); await settle(); };
   ui.finishArrival = async () => { arrivalOptions.onComplete(); await settle(); };
   return ui;
 }
 
-test('arrival stays silent, then menu/records/creator share the menu route and retain one external audio panel', async () => {
+test('arrival, menu, records and creator share the menu route and retain one external audio panel', async () => {
   const ui = fixture({ firstArrival: true, startupRun: true }); await ui.ready;
-  assert.deepEqual(ui.lastScene(), { kind: 'cinematic' });
+  assert.deepEqual(ui.lastScene(), { kind: 'menu' });
   assert.equal(ui.mounts.length, 1); assert.equal(ui.mounts[0].host, ui.audioHost); assert.equal(ui.mounts[0].controller, ui.audio);
   await ui.finishArrival(); assert.deepEqual(ui.lastScene(), { kind: 'menu' });
   for (const screen of ['leaderboard', 'graveyard', 'match-browser', 'creator']) {
     ui.state.screen = screen; await ui.render(); assert.deepEqual(ui.lastScene(), { kind: 'menu' });
   }
   assert.equal(ui.mounts.length, 1); assert.equal(ui.audioHost.innerHTML, 'Persistent audio panel');
+});
+
+test('permitted best-effort music begins during the intro and keeps its player, position and play call into the menu', async t => {
+  const ui = fixture({ firstArrival: true, startupRun: true, realAudio: true });
+  t.after(() => ui.audio.dispose()); await ui.ready; await settle();
+  assert.equal(ui.arrivalComplete, false); assert.equal(ui.app.innerHTML, 'Arrival');
+  assert.equal(ui.audio.getState().kind, 'menu'); assert.equal(ui.audio.getState().status, 'playing');
+  assert.equal(ui.musicStarts(), 1); assert.equal(ui.unlocks(), 0);
+  assert.equal(ui.players.length, 1);
+  const score = ui.players[0]; assert.match(score.src, /menu\.mp3$/); assert.equal(score.playCalls, 1);
+  score.currentTime = 17.5;
+  await ui.finishArrival();
+  assert.equal(ui.state.screen, 'menu'); assert.equal(ui.players.length, 1);
+  assert.equal(score.sourceChanges, 1); assert.equal(score.playCalls, 1); assert.equal(score.currentTime, 17.5);
+});
+
+test('browser-denied intro music waits for one sound-button gesture without retrying or muting on menu entry', async t => {
+  const ui = fixture({ firstArrival: true, startupRun: true, realAudio: true, realControls: true, denyAutoplay: true });
+  t.after(() => ui.audio.dispose()); await ui.ready; await settle();
+  assert.equal(ui.audio.getState().status, 'blocked'); assert.equal(ui.players[0].playCalls, 1);
+  await ui.render(); await ui.finishArrival();
+  assert.equal(ui.players[0].playCalls, 1, 'Scene refresh must not retry browser-denied audible autoplay.');
+  ui.allowPlayback();
+  const toggle = ui.audioHost.querySelector('[data-audio-toggle]');
+  await ui.emit('document-pointerdown', { isTrusted: true, target: toggle });
+  await ui.emit('audio-click', { target: toggle });
+  assert.equal(ui.unlocks(), 1); assert.equal(ui.audio.getState().status, 'playing');
+  assert.equal(ui.audio.getState().muted, false); assert.equal(ui.players[0].playCalls, 2);
+});
+
+test('a loser death replays the intro with menu music and continues its position into replacement creation', async t => {
+  const ui = fixture({ firstArrival: true, startupRun: true, realAudio: true });
+  t.after(() => ui.audio.dispose()); await ui.ready; await settle(); await ui.finishArrival();
+  ui.state.mode = 'cpu'; ui.state.profiles = profiles(); ui.startDuel(); await settle();
+  assert.equal(ui.audio.getState().kind, 'battle');
+  ui.state.duel = combat.forfeitDuel(ui.state.duel, 0);
+  ui.resolveLocalVerdict('execute'); await settle();
+  assert.equal(ui.arrivalComplete, false); assert.equal(ui.app.innerHTML, 'Arrival');
+  assert.equal(ui.audio.getState().kind, 'menu'); assert.equal(ui.audio.getState().status, 'playing');
+  const score = ui.players[0], sourceChanges = score.sourceChanges, playCalls = score.playCalls;
+  score.currentTime = 9.25; await ui.finishArrival();
+  assert.equal(ui.state.screen, 'creator'); assert.equal(ui.state.creatorStep, 'name');
+  assert.equal(ui.state.drafts[0].name, ''); assert.equal(ui.players.length, 1);
+  assert.equal(score.sourceChanges, sourceChanges); assert.equal(score.playCalls, playCalls); assert.equal(score.currentTime, 9.25);
+});
+
+test('an initially hidden intro selects the menu score while deferring playback until the page is visible', async t => {
+  const ui = fixture({ firstArrival: true, startupRun: true, realAudio: true, visibilityState: 'hidden' });
+  t.after(() => ui.audio.dispose()); await ui.ready; await settle();
+  assert.equal(ui.audio.getState().kind, 'menu'); assert.equal(ui.audio.getState().status, 'paused');
+  assert.equal(ui.players.length, 0);
+  ui.document.visibilityState = 'visible'; await ui.emit('document-visibilitychange');
+  assert.equal(ui.players.length, 1); assert.equal(ui.audio.getState().status, 'playing');
+  assert.match(ui.players[0].src, /menu\.mp3$/);
 });
 
 test('a local battle and private action handoffs retain the battle key; a new battle gets a new key', async () => {
