@@ -1,9 +1,9 @@
 {
   "schema": "arena-fighters.local-release.v1",
   "status": "complete",
-  "version": "0.9.3",
-  "createdAt": "2026-10-08T19:25:47.688Z",
-  "directory": "releases/Arena_Fighters_v0.9.3_v001",
+  "version": "0.9.4",
+  "createdAt": "2026-10-08T19:56:29.823Z",
+  "directory": "releases/Arena_Fighters_v0.9.4_v001",
   "identity": {
     "active": {
       "version": "v013",
@@ -17,11 +17,11 @@
   "provenance": [
     {
       "chatId": "01a11c7b-e6ec-7503-8396-2679f20d2469",
-      "note": "User-requested follow-up: menu song during intro and continuous into menu; best-effort score autoplay respects browser denial, sound preferences and visibility; trusted interaction starts effects"
+      "note": "Shared per-tournament arena chat for fighters waiting for the lobby to fill and public spectators; persistent composition across battle playback with server-assigned identities and bounded plain-text RAM-only history"
     },
     {
       "chatId": "01a11c7b-e6ec-7503-8396-2679f20d2469",
-      "note": "Preserves every v0.9.2 asset and soundtrack file, original sources, cinematic video bytes, v013/v006 identities and free temporary hosting"
+      "note": "Preserves every v0.9.3 asset, cinematic and soundtrack file, v013/v006 identities, gameplay and public-observer authority, private saved-fighter data and free temporary hosting"
     }
   ],
   "entries": [
@@ -74,8 +74,8 @@
     "copiedBytesVerified": true,
     "catalogReferencesVerified": true
   },
-  "fileCount": 1392,
-  "totalBytes": 84199931,
+  "fileCount": 1400,
+  "totalBytes": 84302099,
   "catalogs": [
     {
       "path": "assets/clean-gladiator/v013/manifest.json",
@@ -195,8 +195,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 14314,
-      "sha256": "156927736375ab25c6d1759a3be0924c0b672adae9cc3b0958e76579bbbeb586"
+      "bytes": 15466,
+      "sha256": "0c942765a1bdbfe517ab1dcee08bd6ae35b62ed1ab0b04deb9e9c6893c2b1c66"
     },
     {
       "path": "ART_DIRECTION.md",
@@ -215,8 +215,8 @@
     },
     {
       "path": "CURRENT_VERSION.md",
-      "bytes": 14758,
-      "sha256": "4dc74973b3dc5ad1ef25f2b012ba5b7928e9188a4a2ffcb8617194ca0f2dcff9"
+      "bytes": 16487,
+      "sha256": "571a34663d6c4506af341a11112d7aafe4a8a2355fc96daffd49e1b60401c456"
     },
     {
       "path": "DARK_ART.md",
@@ -225,23 +225,23 @@
     },
     {
       "path": "DESIGN.md",
-      "bytes": 24565,
-      "sha256": "5c2bdb5af11e8c0d72f5caf9cfd04f2fc2f5ea64282e9561ae897425fbc8ff68"
+      "bytes": 27117,
+      "sha256": "b29fdb5aae309699d8e7d0db86063274890e003527bc2834d92b836db0f1acbb"
     },
     {
       "path": "HOSTING.md",
-      "bytes": 7374,
-      "sha256": "957d50664075a6c2933d1f359af58c8e833a26ee6b604b7b56b209527375938d"
+      "bytes": 8327,
+      "sha256": "cf268aa6198917d198d454907202e056a394a0294072f243e6ac902e89a911f7"
     },
     {
       "path": "ONLINE_DUELS.md",
-      "bytes": 17964,
-      "sha256": "a71998d5a23488766423cc0797d29759c10d026655b4368e2030a0bdccf1810d"
+      "bytes": 19409,
+      "sha256": "e483c8cc3c72bdc6bf15ae23137e26a83c42ba92b88b7a76f8671d548395316e"
     },
     {
       "path": "README.md",
-      "bytes": 14761,
-      "sha256": "47fbbfae860fd0c433bdd6bc453ef2aa27a33f36fd42710049c5c0cd80487fe6"
+      "bytes": 16161,
+      "sha256": "47cf024f44df0f577a1946ea89c4140e034ea8621c5187d50e18f2e8933293a2"
     },
     {
       "path": "Start-Prototype.ps1",
@@ -250,8 +250,8 @@
     },
     {
       "path": "TOURNAMENTS.md",
-      "bytes": 18668,
-      "sha256": "2edea03b29d54f9de4ea0b74be3b5e667199993733dc83a62c564db4b83fc3c3"
+      "bytes": 21893,
+      "sha256": "f7f239a832d86aada3da0f6998fae7043073ede9093ed82b759a30c43c3548e5"
     },
     {
       "path": "assets/arena/ARENA_PROVENANCE.md",
@@ -6550,13 +6550,18 @@
     },
     {
       "path": "index.html",
-      "bytes": 1837,
-      "sha256": "6a561a17b50a7af6f290a762d25b830cbe54bc9270ad3ad496b2d1ffc6f3fca9"
+      "bytes": 2051,
+      "sha256": "77228f5cbb78a02325a8ea93b629b45d0a433747a275f26df8ce4a242afdcbff"
+    },
+    {
+      "path": "online/arena-chat.mjs",
+      "bytes": 6108,
+      "sha256": "fcebeb7c2f7377dd8d952e330e7fe8eefe3808de2de95c7e5aa1991732a0786a"
     },
     {
       "path": "online/service.mjs",
-      "bytes": 30885,
-      "sha256": "ae88f54e203d749676046131b165b78756ec7632a83ec6ff80a1d0f03d0c9808"
+      "bytes": 31702,
+      "sha256": "c2c1f57516752d89c34af8313a277f22bb3f907280edc43cb22af3141ab93542"
     },
     {
       "path": "online/store.mjs",
@@ -6575,8 +6580,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 372,
-      "sha256": "5b79833392b1ce4c0101a11569010c2812c9a4e2a0d792e00a30fd26d185c5d0"
+      "bytes": 367,
+      "sha256": "1096252bdad05ecfba210319f27a867cea4600590156724b5dd680558495e641"
     },
     {
       "path": "public/audio/soundtrack-v001/beyond-the-last-lantern-day.mp3",
@@ -6700,13 +6705,23 @@
     },
     {
       "path": "src/app.js",
-      "bytes": 105932,
-      "sha256": "12f9dd1e9793c6390971116684cd5fc3e32203d68e88ed9487f236858b0107eb"
+      "bytes": 107092,
+      "sha256": "f77b4114125472310e9b481df28f37fe9744dfe3650e3fe3dd1ad131bc17c22e"
     },
     {
       "path": "src/arena-avatar.js",
       "bytes": 17590,
       "sha256": "001963ead11237969c4bef909c6cee29b107b8df8161fca48359d36d73fe067a"
+    },
+    {
+      "path": "src/arena-chat.css",
+      "bytes": 4558,
+      "sha256": "9ffa8d4a874ecf27da0fc34856569d36907ddcc883e1dc016bd9c530ba3b1a6c"
+    },
+    {
+      "path": "src/arena-chat.js",
+      "bytes": 12481,
+      "sha256": "54a40d636605735ec647b3a68d230b41c4d06a6819924a6e603efd0e1344bf6b"
     },
     {
       "path": "src/arena.js",
@@ -6890,8 +6905,8 @@
     },
     {
       "path": "src/tournament-client.js",
-      "bytes": 2114,
-      "sha256": "8f1bff07446492f52539275f8a8cf8eef29fc2e2136433952f8d8952d124449b"
+      "bytes": 2434,
+      "sha256": "73d016cfffdb98eeef4358fb68aa75fe6e095c6b47a65ed3fd762b3dae8cadcd"
     },
     {
       "path": "src/tournament-view.js",
@@ -6907,6 +6922,31 @@
       "path": "tests/arena-avatar.test.js",
       "bytes": 17792,
       "sha256": "a8435e5e9f42216e9aca16b2a0b8f1020d69d9eec1d008365ca5bd4bf034d633"
+    },
+    {
+      "path": "tests/arena-chat-app.test.js",
+      "bytes": 17031,
+      "sha256": "e7df2fc298996753819709d3f1d36ae3d6bd08efe67f28107c36407bf178cd92"
+    },
+    {
+      "path": "tests/arena-chat-client.test.js",
+      "bytes": 6189,
+      "sha256": "1ad880d375368e817915be71857df4ea76d50a537a4e4942a4d69984049147aa"
+    },
+    {
+      "path": "tests/arena-chat-http.test.js",
+      "bytes": 7253,
+      "sha256": "4a1d628062f3ee758250853d2bf8eab2eb4b0ae67ca32f9522833ce607120265"
+    },
+    {
+      "path": "tests/arena-chat-service.test.js",
+      "bytes": 18117,
+      "sha256": "f6dff0d3d1ff5784c18272de0e06c0666282152f031ef6b943cb25b3e464df9e"
+    },
+    {
+      "path": "tests/arena-chat-ui.test.js",
+      "bytes": 15469,
+      "sha256": "0a1d853b8b71e38eef0449cef5b6277fe16a4678249cd74b059df1376052d31a"
     },
     {
       "path": "tests/arrival.test.js",

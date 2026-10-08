@@ -1,9 +1,9 @@
 {
   "name": "arena-fighters-prototype",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "private": true,
   "type": "module",
-  "description": "Arena Fighters with the DEICIDE soundtrack, random battle music, simple sound effects, Dagger/Riposte, and pixel menu.",
+  "description": "Arena Fighters with tournament lobby chat, the DEICIDE soundtrack, sound effects, Dagger/Riposte, and pixel menu.",
   "engines": { "node": ">=24 <25" },
   "scripts": {
     "start": "node server.mjs",

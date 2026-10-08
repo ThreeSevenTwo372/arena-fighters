@@ -4,6 +4,7 @@ import { normalizeAppearance } from '../src/avatar.js';
 import { facePresetChoices } from '../src/face-presets.js';
 import { AtomicStore, MemoryStore } from './store.mjs';
 import { TournamentStore } from './tournament-store.mjs';
+import { ArenaChat } from './arena-chat.mjs';
 
 const copy = value => structuredClone(value);
 const object = value => value && typeof value === 'object' && !Array.isArray(value);
@@ -63,6 +64,7 @@ export class DuelService {
     this.lastSeen = new Map();
     this.queue = Promise.resolve();
     this.tournaments = new TournamentStore(this, { entranceMs, intermissionMs });
+    this.arenaChat = new ArenaChat();
     this.initialized = this.store.read().then(async data => {
       this.data = data;
       data.tournaments ??= {};
@@ -102,11 +104,13 @@ export class DuelService {
       await this.initialized;
       const before = copy(this.data);
       this.changed = false;
+      this.arenaChat.beginTransaction();
       try {
         const value = await operation();
         if (this.changed) await this.store.write(this.data);
+        this.arenaChat.commitTransaction();
         return value;
-      } catch (error) { this.data = before; throw error; }
+      } catch (error) { this.data = before; this.arenaChat.rollbackTransaction(); throw error; }
     });
     this.queue = task.catch(() => {});
     return task;
@@ -339,6 +343,7 @@ export class DuelService {
     }
     this.tournaments.advance(now);
     if (this.temporarySessions) this.collectTemporaryGames(now);
+    this.arenaChat.cleanup(this.data.tournaments, now);
   }
   async tick() { return this.serialize(() => this.advance(this.clock())); }
   command(room, index, kind, body, execute) {
@@ -369,11 +374,19 @@ export class DuelService {
         return { token: secret, playerId: session.playerId };
       }
       if (path.startsWith('/api/arena/')) {
-        if (method !== 'GET') fail(405, 'Method not allowed.');
         // Public browsing does not create a fighter; an existing guest keeps its grace window.
         const viewer = typeof token === 'string' && /^[A-Za-z0-9_-]{43}$/.test(token)
           ? this.data.sessions[digest(token)] : null;
         if (viewer) this.heartbeat(viewer, now);
+        const chat = /^\/api\/arena\/tournaments\/([A-Z2-9]{6})\/chat$/.exec(path);
+        if (chat) {
+          if (!['GET', 'POST'].includes(method)) fail(405, 'Method not allowed.');
+          const session = method === 'POST' ? this.session(token) : viewer;
+          const tournament = this.data.tournaments[chat[1]];
+          if (!tournament) fail(404, 'Tournament lobby not found.', 'room_not_found');
+          return method === 'POST' ? this.arenaChat.post(tournament, session, body, now) : this.arenaChat.view(tournament, session);
+        }
+        if (method !== 'GET') fail(405, 'Method not allowed.');
         if (path === '/api/arena/tournaments') return this.arenaTournamentList();
         if (path === '/api/arena/leaderboard') return this.arenaLeaderboard();
         const observer = /^\/api\/arena\/tournaments\/([A-Z2-9]{6})$/.exec(path);

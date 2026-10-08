@@ -1,6 +1,14 @@
 # Current Arena Fighters version
 
-Current local source: **0.9.3, Intro Theme v001**, October 8, 2026.
+Current local source: **0.9.4, Arena Lobby Chat v001**, October 8, 2026.
+
+Each tournament has one shared **Arena lobby chat**, available while its lobby fills and while players watch the match. The same conversation remains available through loadout, entrance, battle and verdict presentation; it preserves the player's open/closed choice, and a first view as an active duelist starts collapsed. Its separate DOM host preserves drafts and focus across game polls and resolved animations. Departing, starting local play, or entering the defeated player's outcome/arrival sequence hides the chat.
+
+Reading the public chat creates no guest, fighter or tournament seat. A first send creates only an ordinary guest session. The server supplies a tournament member's actual fighter name or a numbered Spectator label, accepts plain text up to 240 Unicode code points, and enforces two seconds between messages and ten messages per minute. Commands retain their exact ID and text across retries. Up to sixty recent messages per room are kept for one hour in RAM; chat history expires and is lost on restart in both temporary hosting and durable localhost modes. It never enters the fighter save file or changes combat, ballot, verdict or record authority.
+
+The independent snapshot is releases/Arena_Fighters_v0.9.4_v001; releases/Arena_Fighters_v0.9.3_v001 is the rollback. Source, preservation, browser and deployment status are recorded separately in artifacts/Arena_Chat_v001/VERIFICATION.json. Packaging or local tests alone do not establish that v0.9.4 is deployed. Free hosting, temporary tab sessions, protected private saves, exact character assets and the v0.9.3 intro/menu soundtrack remain unchanged.
+
+Previous local source: **0.9.3, Intro Theme v001**, October 8, 2026.
 
 **Where the Stars Remember** is requested as the sky-to-arena arrival begins, and the same playing menu theme continues into the menu without restarting. Death-replay arrival uses the same theme. Fresh visits make a best-effort audible autoplay attempt; when browser policy requires an interaction, the first trusted game interaction or **Enable sound** retries playback. Saved mute is respected, and hidden pages continue to pause sound. The video elements remain muted, and every existing soundtrack, cinematic and artwork file is unchanged.
 
@@ -30,7 +38,7 @@ Live temporary mode still resets on restart and guest expiry; its leaderboard an
 
 The temporary hosting mode uses RAM-only multiplayer state and tab-scoped guest identities, with refresh recovery and 90-second departure expiry. It adds hosting PORT/HTTPS configuration, restricted Squarespace embedding and a public health check. Local saved-fighter mode remains the default. The v0.8.5 Roman Manuscript game, artwork and media remain preserved; releases/Arena_Fighters_v0.8.5_v001 is the rollback snapshot. Hosting instructions are in HOSTING.md. Publication status and verification are recorded separately in artifacts/Temporary_Sessions_v001/VERIFICATION.json; a packaged release or local test does not establish a public deployment.
 
-The main local entry is http://127.0.0.1:4173/; run Start-Prototype.ps1 or node server.mjs. The independent current snapshot is releases/Arena_Fighters_v0.9.3_v001. Soundtrack and Sound Effects, Dagger and Riposte, Pixel Menu and Memorial, Temporary Sessions, Roman Manuscript and Mercy and Crowd snapshots remain preserved at v0.9.2, v0.9.1, v0.9.0, v0.8.6, v0.8.5 and v0.8.4. Earlier preview ports and review packages remain historical evidence.
+The main local entry is http://127.0.0.1:4173/; run Start-Prototype.ps1 or node server.mjs. The independent current snapshot is releases/Arena_Fighters_v0.9.4_v001. Intro Theme, Soundtrack and Sound Effects, Dagger and Riposte, Pixel Menu and Memorial, Temporary Sessions, Roman Manuscript and Mercy and Crowd snapshots remain preserved at v0.9.3, v0.9.2, v0.9.1, v0.9.0, v0.8.6, v0.8.5 and v0.8.4. Earlier preview ports and review packages remain historical evidence.
 
 Roman Manuscript v001 adds warm parchment pages, Palatino/Georgia serif type, red rubric headings and actions, fine ruled borders, and restrained laurel ornament through src/roman-manuscript.css, loaded after all scene styles. Naming, the compact creator, equipment annotations, tournament registers/brackets, battle commands, and mercy/crowd controls share that presentation. The existing illustrated scenes and media remain preserved. The theme does not change gameplay, source artwork, v013/v006 dispatch, complete figure dimensions, equipment/animation registration, saved identities, authentication or verdict authority.
 

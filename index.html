@@ -23,10 +23,14 @@
     <link rel="stylesheet" href="/src/main-menu.css">
     <link rel="stylesheet" href="/src/roman-manuscript.css">
     <link rel="stylesheet" href="/src/audio-controls.css">
+    <link rel="stylesheet" href="/src/arena-chat.css">
     <script type="module" src="/src/app.js"></script>
   </head>
   <body>
-    <div id="app"></div>
+    <div class="arena-game-layout">
+      <div id="app"></div>
+      <aside id="arena-chat" class="arena-chat arena-chat-host" aria-label="Arena lobby chat" hidden></aside>
+    </div>
     <aside id="audio-controls" class="game-audio-controls" aria-label="Game sound"></aside>
     <noscript>This duel needs JavaScript enabled in your browser.</noscript>
   </body>

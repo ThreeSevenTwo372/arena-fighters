@@ -15,6 +15,7 @@ import { battlePhase, fighterReadiness, roundSummary, actionPreview, outcomeReas
 import { renderMainMenu, renderMatchBrowser, renderLeaderboard, renderGraveyard } from './main-menu.js';
 import { createGameAudio } from './game-audio.js';
 import { mountAudioControls } from './audio-controls.js';
+import { mountArenaChat } from './arena-chat.js';
 
 const app = document.querySelector('#app');
 const audio = createGameAudio();
@@ -54,6 +55,10 @@ const observedOutcomes = new Set(), revealedWinners = new Set(), fallbackDeathRe
 let verdictTimer, localMercyTimer, localCrowdTimer, deathRetryTimer;
 let localDuelId = 0;
 const onlineClient = spectatorReview ? null : typeof TournamentClient === 'function' ? new TournamentClient({ duelMode: !tournamentEnabled }) : new OnlineClient();
+const arenaChatHost = document.querySelector('#arena-chat');
+const arenaChat = arenaChatHost?.id === 'arena-chat' && typeof onlineClient?.chat === 'function'
+  ? mountArenaChat(arenaChatHost, { read: code => onlineClient.chat(code), send: (code, payload) => onlineClient.sendChat(code, payload) }) : null;
+let lastChatRefresh = 0;
 let arrival = null, arrivalComplete = true, appReady = false;
 let tournamentView = null;
 let spectatorPlayback = null, queuedSpectatorView = null;
@@ -522,6 +527,7 @@ function startLoserOutcome(candidate, latest = null) {
   if (candidate.decision === 'execute') rememberDeath(candidate.profileId, 'pending');
   const transition = { ...candidate, controller: new AbortController(), epoch: onlineEpoch };
   outcomePlayback = transition;
+  arenaChat?.setRoom(null);
   queuedOutcomeView = latest;
   void runLoserOutcome(transition);
   return true;
@@ -595,6 +601,7 @@ async function resetAfterDeath(transition) {
     onlineReplacement = false;
     arrivalComplete = false;
     syncGameAudio();
+    syncArenaChat();
     if (!arrival?.replay(app)) { arrivalComplete = true; await render(); }
   } catch (error) {
     if (transition !== outcomePlayback) return;
@@ -774,6 +781,7 @@ async function performOnline(operation) {
 }
 function detachObserver() {
   if (!observerMode) return;
+  arenaChat?.setRoom(null);
   onlineEpoch += 1;
   cancelRoundPlayback(); stopExecutionPlayback(); stopLoserOutcome(); stopVerdictReveal(); stopSpectatorPlayback();
   observerMode = false; onlineView = null; tournamentView = null; state.duel = null; state.profiles = [];
@@ -843,6 +851,11 @@ async function watchTournament(code) {
 }
 async function pollOnline() {
   updateOnlineIndicators();
+  syncArenaChat();
+  if (arenaChat && Date.now() - lastChatRefresh >= 2000) {
+    lastChatRefresh = Date.now();
+    void arenaChat.refresh();
+  }
   if (!onlineMode() || onlineBusy || polling) return;
   if (menuPages.has(state.screen) && state.screen !== 'menu' && !menuData.loading && Date.now() - lastMenuRefresh >= 10000) {
     await refreshMenu({ loading: false });
@@ -916,6 +929,14 @@ async function pollOnline() {
 function playAudioCue(cue) {
   audio.playEffect(cue.type, { weapon: cue.weapon, counter: cue.counter });
 }
+function syncArenaChat() {
+  const visible = arrivalComplete && !outcomePlayback && onlineMode() && tournamentView
+    && ['tournament-lobby', 'tournament-spectator', 'tournament-entrance', 'loadout', 'battle'].includes(state.screen);
+  const duelist = tournamentView?.match?.you !== null && tournamentView?.match?.you !== undefined;
+  arenaChat?.setRoom(visible
+    ? { code: tournamentView.code, tournamentId: tournamentView.tournamentId, visible: true, expanded: !duelist }
+    : null);
+}
 function syncGameAudio() {
   if (!arrivalComplete) { audio.setScene({ kind: 'menu' }); return; }
   if (presetReview || spectatorReview) { audio.setScene({ kind: 'silent' }); return; }
@@ -927,7 +948,7 @@ function syncGameAudio() {
     : { kind: 'menu' });
 }
 async function render({ keepPlayback = false, keepExecution = false, keepOutcome = false, retainArena = false } = {}) {
-  if (!arrivalComplete) { syncGameAudio(); return; }
+  if (!arrivalComplete) { syncGameAudio(); syncArenaChat(); return; }
   if (executionPlayback && !keepExecution) return;
   if (outcomePlayback && !keepOutcome) return;
   if (!keepPlayback && roundPlayback) cancelRoundPlayback({ commit: true });
@@ -952,12 +973,13 @@ async function render({ keepPlayback = false, keepExecution = false, keepOutcome
   catch (error) { if (version === renderVersion) state.error = `Character art could not load: ${error.message}`; }
   if (version !== renderVersion) return;
   syncGameAudio();
+  syncArenaChat();
   if (!onlineMode() && state.screen === 'battle' && state.phase === 'select' && state.duel?.status === 'active' && !localTurnClock) armLocalTurnClock();
   const focusSelector = focused?.watchCode !== undefined ? '[data-watch-code]' : focused?.name !== undefined ? `[data-name="${focused.name}"]` : focused?.trait !== undefined ? `[data-trait="${focused.trait}"]` : focused?.appearance ? `[data-appearance="${focused.appearance}"][data-index="${focused.index}"]` : focused?.action ? `[data-action="${focused.action}"]${focused.index === undefined ? '' : `[data-index="${focused.index}"]`}${focused.stat ? `[data-stat="${focused.stat}"]` : ''}${focused.delta !== undefined ? `[data-delta="${focused.delta}"]` : ''}${focused.value ? `[data-value="${focused.value}"]` : ''}` : null;
   const temporary = onlineClient?.sessionMode === 'temporary';
   const content = menuPages.has(state.screen) ? `${header()}${state.screen === 'menu' ? renderMainMenu({ session: onlineSession, temporary }) : state.screen === 'match-browser' ? renderMatchBrowser({ ...menuData, temporary }) : state.screen === 'leaderboard' ? renderLeaderboard({ ...menuData, temporary }) : renderGraveyard({ ...menuData, temporary })}` : state.screen === 'creator' ? creator() : state.screen === 'loadout' ? loadout() : state.screen === 'handoff' ? handoff() : state.screen === 'online-lobby' ? onlineLobby() : state.screen === 'tournament-lobby' ? `${header()}${renderTournamentLobby(tournamentView)}` : state.screen === 'tournament-spectator' ? `${header()}${renderTournamentSpectator(spectatorPlayback ? { ...tournamentView, phase: 'battle' } : tournamentView, { playing: Boolean(spectatorPlayback), duel: state.duel, verdictPhase: verdictReveal ? 'winner' : null, verdictBusy: onlineBusy || onlineOffline, executing: Boolean(executionPlayback) })}` : state.screen === 'tournament-entrance' ? tournamentEntrance() : battle();
   const notice = state.error || (onlineMode() ? onlineClient.storageWarning : null);
-  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.9.3</span></footer></main>`;
+  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.9.4</span></footer></main>`;
   if (retained) {
     const replacementStage = app.querySelector('.arena-stage');
     const originalHud = retained.stage.querySelector('.battle-hud');
@@ -1108,6 +1130,7 @@ function finishRound() {
   void runRoundPlayback(transition);
 }
 function newSession() {
+  arenaChat?.setRoom(null);
   cancelRoundPlayback();
   stopExecutionPlayback();
   stopLoserOutcome(); stopVerdictReveal(); stopLocalMercy();

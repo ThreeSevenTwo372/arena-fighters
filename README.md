@@ -1,6 +1,10 @@
 # Arena Fighters
 
-**Current local source: 0.9.3 — Intro Theme v001 (October 8, 2026).**
+**Current local source: 0.9.4 — Arena Lobby Chat v001 (October 8, 2026).**
+
+**Arena lobby chat** lets players talk while waiting for the eight-fighter lobby to fill and while spectating its matches. The same tournament conversation follows equipment preparation, gate entrance, battle and verdict playback. It preserves your open/closed choice; a first view as an active duelist starts collapsed. The chat panel lives outside the game's changing render tree, so polling and animations retain your draft and focus. Enter sends a message; Shift+Enter starts a new line. Leaving or entering your personal defeat/death-arrival sequence hides it.
+
+Public chat reading needs no guest identity or fighter seat. Your first send creates only a guest session; tournament members use their server-owned fighter names and other guests receive numbered Spectator labels. Messages are plain text, limited to 240 Unicode code points, with two seconds between sends and ten sends per minute. Each room retains up to sixty recent messages for one hour in RAM. Chat history is temporary in both hosting modes and disappears on a service restart; it is separate from fighter saves, combat choices, records and voting authority.
 
 **Where the Stars Remember**, the downloaded DEICIDE/Suno menu song, is requested as the sky-to-arena arrival begins and continues into the menu without restarting. Death replay uses the same theme. It also plays across records, creation, equipment and waiting lobbies. Each battle selects one of eleven full-length songs from a shuffled playlist, avoiding an immediate repeat. That song loops and stays with the duel through all rounds, spectator updates and verdict playback. A four-second **Victory Noise** cue accompanies each fresh winner reveal. Simple sound effects cover interface confirmation, round reveal, swing, hit, parry, Guard, Recover, defeat and execution impact.
 
@@ -49,7 +53,7 @@ The [two-character face comparison](http://127.0.0.1:4173/?face-presets-review=1
 
 ## Verification and release
 
-Current v0.9.3 source, preservation, browser and deployment evidence is recorded separately in artifacts/Intro_Theme_v001/VERIFICATION.json. Historical v0.9.2 soundtrack evidence remains in artifacts/Soundtrack_v001/VERIFICATION.json. Audio routing and decoded media checks are distinct from human listening quality and confirmation of the deployed build.
+Current v0.9.4 source, preservation, browser and deployment status are recorded separately in artifacts/Arena_Chat_v001/VERIFICATION.json. The independent snapshot is releases/Arena_Fighters_v0.9.4_v001, with releases/Arena_Fighters_v0.9.3_v001 as rollback. Local tests and packaging do not establish deployment. Historical v0.9.3 intro-theme evidence remains in artifacts/Intro_Theme_v001/VERIFICATION.json, and v0.9.2 soundtrack evidence remains in artifacts/Soundtrack_v001/VERIFICATION.json. Audio routing and decoded media checks are distinct from human listening quality and confirmation of the deployed build.
 
 Previous v0.9.1 source suite: **464 passing, zero failures, cancellations or skips**, in artifacts/Weapon_Dagger_v001/full-test-final.log. The 13,440 historical combat outcomes retain their exact fingerprint. All 1,257 prior art/media files remain SHA-256 identical to the sealed v0.9.0 snapshot. Static actual-renderer controls cover the complete male/female dagger figures, all three armors, both facings, and representative thrust/parry poses at native and 2x sizes. Browser access to the dagger preview remained blocked by a saved permission despite renewed user approval; static review and automated checks do not establish browser behavior or user art acceptance. Its deployment status is recorded separately in artifacts/Weapon_Dagger_v001/VERIFICATION.json.
 

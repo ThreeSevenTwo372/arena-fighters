@@ -32,6 +32,11 @@ export class TournamentClient extends OnlineClient {
   resetMatchContext() { this.legacyRoom = this.duelMode; }
   tournaments() { return this.request('/api/arena/tournaments'); }
   observe(code) { return this.request(`/api/arena/tournaments/${encodeURIComponent(code.trim().toUpperCase())}`); }
+  chat(code) { return this.request(`/api/arena/tournaments/${encodeURIComponent(code.trim().toUpperCase())}/chat`); }
+  async sendChat(code, { commandId, text }) {
+    await this.session();
+    return this.request(`/api/arena/tournaments/${encodeURIComponent(code.trim().toUpperCase())}/chat`, { commandId, text });
+  }
   leaderboard() { return this.request('/api/arena/leaderboard'); }
   graveyard() { return this.request('/api/graveyard'); }
   command(view, action, payload = {}) {
