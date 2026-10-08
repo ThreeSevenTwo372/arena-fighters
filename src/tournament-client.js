@@ -30,6 +30,10 @@ export class TournamentClient extends OnlineClient {
   }
   room(code) { return this.request(`/api/${this.legacyRoom ? 'rooms' : 'tournaments'}/${encodeURIComponent(code)}`); }
   resetMatchContext() { this.legacyRoom = this.duelMode; }
+  tournaments() { return this.request('/api/arena/tournaments'); }
+  observe(code) { return this.request(`/api/arena/tournaments/${encodeURIComponent(code.trim().toUpperCase())}`); }
+  leaderboard() { return this.request('/api/arena/leaderboard'); }
+  graveyard() { return this.request('/api/graveyard'); }
   command(view, action, payload = {}) {
     const legacyRoom = view.type === 'tournament' ? false : this.legacyRoom;
     return this.request(`/api/${legacyRoom ? 'rooms' : 'tournaments'}/${encodeURIComponent(view.code)}/${action}`, {

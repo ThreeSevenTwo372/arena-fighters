@@ -1,0 +1,111 @@
+{
+  "schema": "arena-fighters.menu-background-preparation.v1",
+  "version": "menu-v001",
+  "preparedAt": "2026-10-08T17:24:13.306Z",
+  "authorization": "The user requested the exact final frame of the existing sky-to-arena arrival film as the main-menu background.",
+  "source": {
+    "path": "public/cinematics/arrival-v001/sky-to-arena.mp4",
+    "bytes": 10201126,
+    "sha256": "11ec72c3634994914407ce16c588ce073d1267437557a2d59b1896fa31935f16",
+    "sourcePreparationReceipt": "public/cinematics/arrival-v001/PREPARATION_RECEIPT.json"
+  },
+  "output": {
+    "path": "public/cinematics/menu-v001/arrival-last-frame.png",
+    "format": "PNG",
+    "width": 1280,
+    "height": 720,
+    "bytes": 1951536,
+    "sha256": "9b319087d3d74c6fdfbbd9bb05ab0822c487bb28c1cd5bfff469269cf6287a08"
+  },
+  "extraction": {
+    "tool": "FFmpeg 7.1",
+    "toolPath": "C:/Users/santa/AppData/Local/Temp/arena-arrival-encode-tools-v001/imageio_ffmpeg/binaries/ffmpeg-win-x86_64-v7.1.exe",
+    "arguments": [
+      "-hide_banner",
+      "-sseof",
+      "-1",
+      "-i",
+      "public/cinematics/arrival-v001/sky-to-arena.mp4",
+      "-vf",
+      "showinfo,reverse",
+      "-frames:v",
+      "1",
+      "-update",
+      "1",
+      "public/cinematics/menu-v001/arrival-last-frame.png"
+    ],
+    "log": "artifacts/Main_Menu_v001/frame-extraction.log",
+    "rescaled": false,
+    "cropped": false,
+    "generated": false,
+    "repainted": false
+  },
+  "verification": {
+    "method": "Decode every source video frame and the extracted PNG independently to RGB24, compare the final source frame checksum with the PNG frame checksum.",
+    "pixelFormat": "rgb24",
+    "frameHashAlgorithm": "MD5",
+    "sourceFrameCount": 480,
+    "finalFrameIndex": 479,
+    "finalPresentationTimestamp": 479,
+    "timeBase": [
+      1,
+      24
+    ],
+    "finalTimeSeconds": 19.958333333333332,
+    "decodedBytes": 2764800,
+    "sourceFinalFrameHash": "8fee379efd1411fe4fa798a1eb4abab8",
+    "pngDecodedFrameHash": "8fee379efd1411fe4fa798a1eb4abab8",
+    "exactDecodedPixelMatch": true,
+    "sourceFrameChecksums": "artifacts/Main_Menu_v001/arrival-rgb24.framemd5",
+    "pngFrameChecksum": "artifacts/Main_Menu_v001/menu-png-rgb24.framemd5",
+    "commands": [
+      [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "public/cinematics/arrival-v001/sky-to-arena.mp4",
+        "-map",
+        "0:v:0",
+        "-pix_fmt",
+        "rgb24",
+        "-fps_mode",
+        "passthrough",
+        "-f",
+        "framemd5",
+        "artifacts/Main_Menu_v001/arrival-rgb24.framemd5"
+      ],
+      [
+        "-hide_banner",
+        "-v",
+        "error",
+        "-i",
+        "public/cinematics/menu-v001/arrival-last-frame.png",
+        "-map",
+        "0:v:0",
+        "-pix_fmt",
+        "rgb24",
+        "-fps_mode",
+        "passthrough",
+        "-f",
+        "framemd5",
+        "artifacts/Main_Menu_v001/menu-png-rgb24.framemd5"
+      ]
+    ]
+  },
+  "preservedOriginalMedia": [
+    {
+      "path": "ArtReview/Cinematics_Animation_v002/Exports/sky-to-arena-v002.mp4",
+      "bytes": 61116647,
+      "sha256": "66f8db5880762bf5d694587192aa068a1d7af21fe3f3091f3610cc20c0c4158c",
+      "agreesWithPreservedPreparationReceipt": true
+    },
+    {
+      "path": "ArtReview/Cinematics_Animation_v001/Exports/gladiator-at-the-gate.mp4",
+      "bytes": 7770941,
+      "sha256": "2ba8bcc63b8d6a8cafd5fcd56937c3bb2cdbf6009b7c0c144dcca2d037876529",
+      "agreesWithPreservedPreparationReceipt": true
+    }
+  ],
+  "proofBoundary": "This verifies the PNG contains the exact final decoded display pixels of the preserved browser arrival video. It does not assess main-menu text contrast, browser layout, or user visual acceptance."
+}

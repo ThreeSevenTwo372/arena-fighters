@@ -31,6 +31,7 @@ function leaveLabel(view) {
   return own?.eliminated || own?.left ? 'Leave the stands' : 'Withdraw from tournament';
 }
 function roomBar(view, { invite = false } = {}) {
+  if (view.role === 'spectator') return `<div class="tournament-room-bar"><div><span class="tournament-room-label">Watching tournament</span><strong class="tournament-room-code">${escape(view.code)}</strong></div><div class="tournament-room-actions"><button type="button" class="button ghost" data-action="observer-leave">Back to matches</button></div></div>`;
   return `<div class="tournament-room-bar"><div><span class="tournament-room-label">Tournament</span><strong class="tournament-room-code">${escape(view.code)}</strong>${invite ? '<span class="tournament-invite-note">Invite rivals with this code.</span>' : ''}</div><div class="tournament-room-actions">${invite ? '<button type="button" class="button ghost" data-action="copy-room">Copy code</button>' : ''}<button type="button" class="button ghost" data-action="tournament-leave">${leaveLabel(view)}</button></div></div>`;
 }
 function seatState(view, profile, index) {
@@ -91,6 +92,7 @@ function lobbySlots(view) {
 export function renderTournamentLobby(view = {}) {
   const openSeats = (view.players ?? []).filter(profile => profile && !profile.left).length < 8;
   const botClock = view.phase === 'waiting' && openSeats ? deadline(view.nextBotAt, 'Next bot in') : '';
+  if (view.role === 'spectator') return `<div class="tournament-view tournament-lobby">${roomBar(view)}<section class="tournament-heading"><span class="eyebrow">A seat in the stands</span><h1>The tournament is gathering.</h1><p>Watch the fighters arrive. The draw begins when all eight places are filled.</p>${botClock}</section>${lobbySlots(view)}${renderTournamentBracket(view)}</div>`;
   return `<div class="tournament-view tournament-lobby">${roomBar(view, { invite: true })}<section class="tournament-heading"><span class="eyebrow">Gather your rivals</span><h1>Your tournament begins with eight.</h1><p>Meet the fighters as they join. When every place is filled, the first-round pairings are drawn at random.</p>${botClock}</section>${lobbySlots(view)}${renderTournamentBracket(view)}</div>`;
 }
 
@@ -113,6 +115,7 @@ function fighterStatus(fighter, index, view, playing) {
   return `<section class="spectator-status" aria-label="${escape(name)} status"><div class="spectator-status-heading"><h2>${escape(name)}</h2><span>${index === 0 ? 'West gate' : 'East gate'}</span></div><p>${escape(WEAPONS[fighter.weapon]?.name ?? 'Weapon')} · ${escape(ARMORS[fighter.armor]?.name ?? 'Armor')}</p><div class="meter-label"><span>Health</span><strong>${hp} / ${maxHp}</strong></div><progress class="meter health" max="${maxHp}" value="${Math.min(hp, maxHp)}" aria-label="${escape(name)} health"></progress><div class="meter-label"><span>Stamina</span><strong>${stamina} / ${maxStamina}</strong></div><progress class="meter stamina" max="${maxStamina}" value="${Math.min(stamina, maxStamina)}" aria-label="${escape(name)} stamina"></progress><div class="tournament-fighter-state">${readiness}</div></section>`;
 }
 function spectatorNotice(view) {
+  if (view.role === 'spectator') return '<p class="tournament-personal-note">Watching from the stands. The fighters choose their moves in secret.</p>';
   const own = currentProfile(view);
   if (own?.alive === false) return '<p class="tournament-personal-note">Your fighter has been retired. Watch the tournament through to its champion, then create a new fighter.</p>';
   if (own?.eliminated) return '<p class="tournament-personal-note">Your tournament run has ended. Your surviving fighter keeps their identity and record. Enjoy the remaining matches from the stands.</p>';
@@ -158,8 +161,9 @@ export function renderTournamentSpectator(view = {}, { playing = false, duel = n
 /** Leaving a finished bracket preserves survivors or opens replacement creation. */
 export function renderTournamentOutcome(view = {}) {
   const champion = Number.isInteger(view.champion) ? fighterName(view, view.champion) : null;
+  if (view.role === 'spectator') return `<div class="tournament-view tournament-complete">${roomBar(view)}<section class="tournament-champion"><span class="eyebrow">Tournament ${escape(view.code)} · Complete</span><h1>${champion ? `${escape(champion)} takes the crown.` : 'The tournament has ended.'}</h1><p>Eight entered. The final record joins the leaderboard.</p><button type="button" class="button primary" data-action="observer-leave">Watch another tournament <span aria-hidden="true">→</span></button></section>${renderTournamentBracket(view)}${roster(view)}</div>`;
   const own = currentProfile(view);
   const won = view.champion === view.you && Number.isInteger(view.champion);
-  const note = own?.alive === false ? 'Your fighter has been retired. Create a new fighter for your next tournament.' : won ? 'Your champion survives with their identity and record. The next tournament awaits.' : 'Your surviving fighter keeps their identity and record for the next tournament.';
+  const note = view.role === 'spectator' ? 'The final record joins the leaderboard. Another tournament awaits.' : own?.alive === false ? 'Your fighter has been retired. Create a new fighter for your next tournament.' : won ? 'Your champion survives with their identity and record. The next tournament awaits.' : 'Your surviving fighter keeps their identity and record for the next tournament.';
   return `<div class="tournament-view tournament-complete"><section class="tournament-champion"><svg class="tournament-crown" viewBox="0 0 72 60" aria-hidden="true"><path d="M9 15L23 25L36 7L49 25L63 15L57 48H15Z" fill="#c7a163" stroke="#f1d79b" stroke-width="2"/><path d="M16 52H56" stroke="#f1d79b" stroke-width="4"/><path d="M23 39H49" stroke="#795736" stroke-width="3"/><circle cx="36" cy="31" r="3" fill="#ead6a3"/></svg><span class="eyebrow">Tournament ${escape(view.code)} · Complete</span><h1>${champion ? `${escape(champion)} takes the crown.` : 'The tournament has ended.'}</h1><p>${won ? 'You are the arena’s champion.' : champion ? 'Eight entered. One champion remains.' : 'The arena will welcome a new field of fighters.'}</p><p class="tournament-survival-note">${note}</p><button type="button" class="button primary" data-action="${own?.alive === false ? 'tournament-leave' : 'tournament-next'}">${leaveLabel(view)} <span aria-hidden="true">→</span></button>${own?.alive !== false ? '<button type="button" class="button ghost" data-action="tournament-leave">Leave lobby</button>' : ''}</section>${renderTournamentBracket(view)}${roster(view)}</div>`;
 }

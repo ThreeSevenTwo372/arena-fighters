@@ -1,0 +1,140 @@
+/* Original handheld-style menu UI. The preserved film frame stays unmodified. */
+#app.menu-scene::before { content: ''; position: fixed; inset: 0; background: linear-gradient(#070b1126, #070b114d), url('/public/cinematics/menu-v001/arrival-last-frame.png') center center / cover no-repeat; }
+.app-shell.menu-shell { position: relative; max-width: none; min-height: 100svh; display: flex; flex-direction: column; padding-bottom: 16px; background: transparent; border: 0; box-shadow: none; }
+.menu-shell .masthead { width: 100%; max-width: 1164px; min-height: 70px; margin-inline: auto; border-bottom: 2px solid #d2ad6766; }
+.menu-shell .masthead .brand { color: #f7e5b6; font-family: Consolas, 'Courier New', monospace; font-size: 14px; letter-spacing: .08em; text-shadow: 2px 2px #24121d; }
+.menu-shell .masthead .brand-mark { display: none; }
+.menu-shell .masthead .badge { color: #f7e5b6; border: 2px solid #bc9557; background: #211b1fe6; font-family: Consolas, 'Courier New', monospace; font-size: 10px; letter-spacing: .04em; box-shadow: 2px 2px #120c0d; }
+.menu-shell .masthead .badge::before { background: #d2ad67; }
+.menu-shell .page-footer { width: 100%; max-width: 1164px; margin: 24px auto 0; color: #f7e5b6; border-top: 2px solid #d2ad6766; font-family: Consolas, 'Courier New', monospace; font-size: 10px; letter-spacing: .07em; text-shadow: 1px 1px #120c0d; }
+.arena-main-menu, .menu-record-page { --ink: #f7e5b6; --muted: #c8b992; --panel: #292028; --line: #bc9557; --rubric: #e2b76c; --serif: Consolas, 'Courier New', monospace; --sans: Consolas, 'Courier New', monospace; color: var(--ink); font-family: var(--sans); }
+.menu-shell .arena-main-menu { width: min(352px, 100%); margin: auto clamp(0px, 4vw, 56px) auto auto; padding: 22px 24px 20px; background: #211b1ff2; border: 3px solid #bc9557; box-shadow: 4px 4px #120c0d, inset 0 0 0 2px #5e402d; }
+.arena-main-menu { width: min(352px, 100%); max-width: 352px; margin: 26px auto; padding: 24px; background: #211b1f; border: 3px solid #bc9557; text-align: center; }
+.arena-main-menu .eyebrow { display: block; color: #d2ad67; font-size: 10px; line-height: 1.4; letter-spacing: .12em; margin: 0 0 17px; }
+.menu-title-page h1 { margin: 0; font-size: 0; line-height: 1; color: #f7e5b6; }
+.menu-title-line { display: flex; justify-content: center; }
+.menu-title-line + .menu-title-line { margin-top: 8px; }
+.menu-title-line .menu-pixel-label { filter: drop-shadow(3px 3px 0 #7c332c); }
+.menu-pixel-label, .menu-command-pointer { flex: none; display: block; image-rendering: pixelated; }
+.menu-title-rule { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 21px 0 20px; color: #d2ad67; }
+.menu-title-rule::before, .menu-title-rule::after { content: ''; height: 2px; flex: 1; background: #78533c; }
+.menu-title-rule > span { width: 6px; height: 6px; background: #d2ad67; box-shadow: 2px 2px #7c332c; }
+.menu-primary { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.menu-primary-entry { min-width: 0; }
+.arena-main-menu .button { position: relative; display: flex; justify-content: flex-start; gap: 12px; width: 100%; min-height: 48px; padding: 12px 13px; border: 2px solid #bc9557; border-radius: 0; background: #3b2c2d; color: #f7e5b6; box-shadow: 3px 3px #120c0d, inset 0 2px #6c4a38; font-family: var(--sans); transition: none; }
+.arena-main-menu .button.primary { border-color: #e2b76c; background: #7c332c; color: #fff0c4; box-shadow: 3px 3px #120c0d, inset 0 2px #ac5740; }
+.arena-main-menu .button.secondary { border-color: #bc9557; background: #3b2c2d; color: #f7e5b6; box-shadow: 3px 3px #120c0d, inset 0 2px #6c4a38; }
+.menu-command-pointer { color: #e2b76c; opacity: .45; }
+.arena-main-menu .button.primary .menu-command-pointer, .arena-main-menu .button:hover .menu-command-pointer, .arena-main-menu .button:focus-visible .menu-command-pointer { opacity: 1; }
+.arena-main-menu .button:hover:not(:disabled), .arena-main-menu .button.secondary:hover:not(:disabled) { background: #554033; border-color: #e2b76c; transform: none; }
+.arena-main-menu .button.primary:hover:not(:disabled) { background: #974233; }
+.arena-main-menu .button:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 1px 1px #120c0d; }
+.menu-primary-entry p { margin: 8px 0 0; font-size: 11px; line-height: 1.45; color: var(--muted); text-align: left; }
+.menu-current-fighter { display: flex; flex-direction: column; gap: 5px; margin: 21px 0 0; padding: 14px 0; border-block: 2px solid #78533c; color: var(--muted); font-size: 10px; line-height: 1.55; overflow-wrap: anywhere; }
+.menu-current-fighter strong { color: #f7e5b6; font-size: 13px; }
+.menu-current-fighter > span:first-child { color: #e2b76c; text-transform: uppercase; font-size: 9px; letter-spacing: .07em; }
+.menu-secondary { margin-top: 20px; padding-top: 16px; border-top: 2px solid #78533c; }
+.menu-current-fighter + .menu-secondary { padding-top: 0; border-top: 0; }
+.menu-secondary .button { min-height: 44px; }
+.menu-secondary p { color: var(--muted); font-size: 10px; margin: 8px 0 0; text-align: left; }
+.app-shell:has(.menu-record-page) { background: #211b1f; border: 0; box-shadow: none; }
+.app-shell:has(.menu-record-page) .masthead { border-bottom: 2px solid #78533c; }
+.app-shell:has(.menu-record-page) .brand { color: #f7e5b6; font-family: Consolas, 'Courier New', monospace; font-size: 16px; letter-spacing: .06em; }
+.app-shell:has(.menu-record-page) .brand-mark { color: #e2b76c; border-color: #bc9557; border-radius: 0; }
+.app-shell:has(.menu-record-page) .badge { color: #c8b992; background: #292028; border: 2px solid #bc9557; font-family: Consolas, 'Courier New', monospace; border-radius: 0; }
+.app-shell:has(.menu-record-page) .page-footer { color: #c8b992; border-top: 2px solid #78533c; font-family: Consolas, 'Courier New', monospace; font-size: 10px; }
+.menu-record-page { max-width: 990px; margin: 0 auto; padding: 24px 0; }
+.menu-record-page h1, .menu-record-page h2, .menu-record-page h3 { font-family: var(--sans); color: var(--ink); }
+.menu-record-page .eyebrow { color: #e2b76c; font-size: 10px; letter-spacing: .09em; }
+.menu-record-page .button { min-height: 44px; border: 2px solid #bc9557; border-radius: 0; color: #f7e5b6; background: #3b2c2d; box-shadow: 2px 2px #120c0d; font-family: var(--sans); font-size: 12px; letter-spacing: 0; transition: none; }
+.menu-record-page .button.secondary, .menu-record-page .button.ghost { color: #f7e5b6; border-color: #bc9557; background: #3b2c2d; box-shadow: 2px 2px #120c0d; }
+.menu-record-page .button:hover:not(:disabled), .menu-record-page .button.ghost:hover:not(:disabled), .menu-record-page .button.secondary:hover:not(:disabled) { background: #554033; border-color: #e2b76c; color: #fff0c4; transform: none; }
+.menu-record-page .button:active:not(:disabled) { transform: translate(1px, 1px); box-shadow: 1px 1px #120c0d; }
+.menu-page-navigation { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 25px; }
+.menu-record-heading { text-align: center; margin: 0 auto 25px; }
+.menu-record-heading h1 { font-size: clamp(25px, 4vw, 36px); font-weight: bold; line-height: 1.15; margin: 8px 0 12px; letter-spacing: .015em; text-transform: uppercase; text-shadow: 2px 2px #7c332c; }
+.menu-record-heading p { color: var(--muted); font-size: 12px; margin-bottom: 0; line-height: 1.6; }
+.menu-record-notice { max-width: 650px; margin: 0 auto 22px; padding: 11px 13px; border-inline-start: 3px solid #bc9557; color: #c8b992; font-size: 11px; line-height: 1.6; background: #292028; }
+.menu-watch-code { display: grid; grid-template-columns: minmax(0, 1fr) minmax(240px, 330px); align-items: center; gap: 18px; padding: 19px 20px; border: 2px solid #bc9557; background: #292028; box-shadow: 3px 3px #120c0d; margin-bottom: 26px; }
+.menu-watch-code h2 { font-size: 17px; margin: 0 0 6px; }
+.menu-watch-code p { font-size: 11px; color: var(--muted); margin: 0; line-height: 1.5; }
+.menu-watch-code-controls { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: stretch; }
+.menu-record-page .menu-watch-code-controls input { width: 100%; min-width: 0; font-family: var(--sans); font-size: 14px; text-transform: uppercase; letter-spacing: .05em; color: #f7e5b6; background: #181319; border: 2px solid #78533c; border-radius: 0; box-shadow: inset 2px 2px #120c0d; }
+.menu-watch-code-controls .button { padding-inline: 16px; }
+.menu-live-list { min-width: 0; }
+.menu-empty { text-align: center; padding: 38px 18px; border-block: 2px solid #78533c; }
+.menu-empty h2 { margin: 0 0 12px; font-size: 19px; }
+.menu-empty p { margin: 0 auto; max-width: 490px; font-size: 12px; color: var(--muted); line-height: 1.7; }
+.menu-loading-rule { display: block; width: 64px; height: 4px; margin: 20px auto 0; background: #bc9557; box-shadow: 2px 2px #120c0d; }
+.menu-tournament-list, .menu-grave-list { padding: 0; margin: 0; list-style: none; }
+.menu-tournament { display: grid; grid-template-columns: minmax(155px, 190px) minmax(0, 1fr) auto; align-items: center; gap: 20px; padding: 20px; border: 2px solid #bc9557; background: #292028; box-shadow: 3px 3px #120c0d; }
+.menu-tournament + .menu-tournament { margin-top: 14px; }
+.menu-tournament-heading .eyebrow { display: block; margin: 0 0 6px; font-size: 9px; }
+.menu-tournament-code { color: #e2b76c; font: bold 22px var(--sans); letter-spacing: .08em; overflow-wrap: anywhere; }
+.menu-tournament-details { min-width: 0; }
+.menu-tournament-details h2 { margin: 0 0 6px; font-size: 16px; overflow-wrap: anywhere; }
+.menu-tournament-details p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.65; overflow-wrap: anywhere; }
+.menu-leaderboard { width: 100%; table-layout: fixed; border-collapse: collapse; border-block: 3px solid #bc9557; color: #f7e5b6; background: #292028; }
+.menu-rank-column { width: 9%; }
+.menu-name-column { width: 51%; }
+.menu-wins-column { width: 18%; }
+.menu-crowns-column { width: 22%; }
+.menu-leaderboard th, .menu-leaderboard td { padding: 15px 12px; border-bottom: 2px solid #78533c; text-align: center; font-size: 14px; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.menu-leaderboard thead th { color: #e2b76c; font-size: 11px; font-weight: normal; line-height: 1.4; }
+.menu-leaderboard tbody th { text-align: left; font-weight: normal; font-family: var(--sans); font-size: 15px; }
+.menu-leaderboard .menu-rank { color: #e2b76c; font-size: 16px; }
+.menu-leaderboard tbody tr:first-child { background: #493326; }
+.menu-grave-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.menu-grave-list > li { min-width: 0; }
+.menu-grave { height: 100%; padding: 23px 16px 18px; border: 2px solid #bc9557; border-top: 4px solid #bc9557; background: #292028; box-shadow: 3px 3px #120c0d, inset 0 2px #78533c; text-align: center; }
+.menu-memorial-mark { display: block; width: 8px; height: 8px; margin: 0 auto 18px; color: transparent; background: #e2b76c; font-size: 0; box-shadow: 2px 2px #7c332c; }
+.menu-grave h2 { font-size: 19px; line-height: 1.3; margin: 0 0 10px; overflow-wrap: anywhere; }
+.menu-grave-date { font-size: 11px; color: var(--muted); margin: 0 0 20px; }
+.menu-final-record { display: grid; grid-template-columns: 1fr 1fr; margin: 0; padding: 12px 0; border-block: 2px solid #78533c; gap: 8px; }
+.menu-final-record div { min-width: 0; }
+.menu-final-record dt { font-size: 10px; color: var(--muted); overflow-wrap: anywhere; }
+.menu-final-record dd { font: bold 20px var(--sans); margin: 6px 0 0; color: var(--ink); }
+.menu-grave-verdict { margin: 16px 0 0; color: var(--muted); font-size: 11px; line-height: 1.6; overflow-wrap: anywhere; }
+.arena-main-menu button:focus-visible, .menu-record-page button:focus-visible, .menu-record-page input:focus-visible { outline: 3px solid #fff0c4; outline-offset: 4px; }
+@media (max-width: 760px) {
+  .menu-shell .arena-main-menu { margin-right: 0; }
+  .menu-watch-code { grid-template-columns: 1fr; gap: 14px; padding: 17px; }
+  .menu-tournament { grid-template-columns: minmax(0, 1fr) auto; gap: 12px; padding: 18px; }
+  .menu-tournament-heading { grid-column: 1 / -1; }
+  .menu-grave-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+}
+@media (max-width: 480px) {
+  .app-shell.menu-shell { padding-inline: 16px; padding-bottom: 14px; }
+  .menu-shell .masthead { min-height: 58px; gap: 10px; }
+  .menu-shell .masthead .brand { font-size: 10px; letter-spacing: .035em; }
+  .menu-shell .masthead .badge { font-size: 8px; padding: 5px 7px; }
+  .menu-shell .arena-main-menu { margin: 30px auto auto; padding: 21px 20px 19px; }
+  .menu-primary { gap: 14px; }
+  .menu-title-page .eyebrow { font-size: 9px; }
+  .menu-title-rule { margin-block: 19px; }
+  .arena-main-menu .button { padding-inline: 10px; gap: 10px; }
+  .menu-primary-entry p { font-size: 10px; }
+  .menu-page-navigation { margin-bottom: 22px; }
+  .menu-page-navigation .button { padding: 10px 11px; font-size: 11px; }
+  .menu-record-heading p { font-size: 11px; }
+  .menu-watch-code { padding: 15px 12px; }
+  .menu-watch-code-controls { gap: 8px; }
+  .menu-watch-code-controls .button { padding-inline: 11px; }
+  .menu-record-page .menu-watch-code-controls input { font-size: 12px; padding-inline: 8px; }
+  .menu-tournament { padding: 15px 12px; }
+  .menu-tournament-details h2 { font-size: 15px; }
+  .menu-tournament .button { padding: 10px 11px; }
+  .menu-leaderboard th, .menu-leaderboard td { padding: 12px 4px; font-size: 12px; }
+  .menu-leaderboard thead th { font-size: 10px; }
+  .menu-leaderboard tbody th { font-size: 12px; }
+  .menu-leaderboard .menu-rank { font-size: 14px; }
+  .menu-rank-column { width: 12%; }
+  .menu-name-column { width: 42%; }
+  .menu-wins-column { width: 19%; }
+  .menu-crowns-column { width: 27%; }
+  .menu-grave-list { grid-template-columns: 1fr; }
+  .menu-empty { padding: 30px 12px; }
+  .app-shell:has(.menu-record-page) .brand { font-size: 12px; }
+  .app-shell:has(.menu-record-page) .brand-mark { display: none; }
+}
+@media (forced-colors: active) { .menu-pixel-label { color: ButtonText; } .menu-title-line .menu-pixel-label { color: CanvasText; filter: none; } }

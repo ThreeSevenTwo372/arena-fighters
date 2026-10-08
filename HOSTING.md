@@ -1,5 +1,7 @@
 # Arena Fighters temporary hosting
 
+The v0.9.0 Pixel Menu and Memorial update retains this hosting contract. Public match browsing and the living leaderboard need no guest creation; private graveyard reads require the existing guest bearer. Browsing menus or spectating heartbeats an existing guest. Neither the leaderboard nor graves are permanent on this temporary deployment. Persisted online ownership/save storage is a separate planned milestone before coins and unlocks. Current release/deployment evidence is in artifacts/Main_Menu_v001/VERIFICATION.json; historical v0.8.6 evidence below remains preserved.
+
 The hosting release is based on v0.8.5's complete Roman Manuscript game. All art, media, combat, mercy/crowd behavior and legacy appearance recipes remain preserved. The independent v0.8.5 release is the rollback version.
 
 ## Session behavior
@@ -23,7 +25,9 @@ Use a separate PowerShell window for this command so the regular local launcher 
 
 ## Render test deployment
 
-Use the clean releases/Arena_Fighters_v0.8.6_v001 snapshot as the repository root, excluding private local data and historical work. Connect that private Git repository to Render. Run one Node web-service instance in Virginia on the Free plan, with build command node --check server.mjs and start command node server.mjs. Set SESSION_MODE=temporary and EMBED_ORIGINS to the origins in render.yaml. No disk or database is needed. The included Blueprint describes the same settings.
+The clean releases/Arena_Fighters_v0.8.6_v001 snapshot was uploaded to https://github.com/ThreeSevenTwo372/arena-fighters on branch codex/temporary-sessions at commit 6887db87b8cb5c943f3aa585c3535270e185f663. Private local data and historical work were excluded. The user made the repository public so Render could download it without a private Git-provider connection.
+
+The live game is https://blackbook-arena-fighters.onrender.com/. Render service blackbook-arena-fighters (srv-db3s7gom7kps73fs9iqg) runs one Node 24 instance in Virginia on the Free plan in the user-confirmed My Workspace. Build command is node --check server.mjs and start command is node server.mjs. SESSION_MODE=temporary and EMBED_ORIGINS match render.yaml. No disk or database is needed. Automatic deploys are off, so a later repository push requires a deliberate manual deploy. The API-created service uses its default health-check configuration; /healthz was verified directly and reports temporary mode. The included Blueprint additionally specifies /healthz as the health check.
 
 The server uses Render's RENDER_EXTERNAL_URL as its HTTPS public origin. Set PUBLIC_ORIGIN explicitly when adding a custom game domain; comma-separated exact origins are supported. Cross-site writes and forged proxy-origin headers remain rejected. Embedding permission applies only to the configured parent origins; it does not grant API access to those parents. Authenticated guests have individual poll quotas behind the proxy; unauthenticated guest starts retain a shared 30-per-minute socket quota for this small beta.
 
@@ -31,14 +35,14 @@ Free Render services can sleep after 15 idle minutes, take about one minute to w
 
 ## Squarespace page
 
-The destination is https://www.blackbooktattoo.com/arena-fighters. After Render supplies the actual live URL, generate the Code Block snippet:
+The published destination is https://www.blackbooktattoo.com/arena-fighters. It contains an HTML Code Block with the live game iframe and an Open Arena Fighters full screen link. Generate the exact snippet with:
 
 ```powershell
-node tools/build-squarespace-embed.mjs https://ACTUAL-SERVICE.onrender.com
+node tools/build-squarespace-embed.mjs https://blackbook-arena-fighters.onrender.com
 ```
 
 The script writes a new versioned artifact under artifacts/Temporary_Sessions_v001. Paste it into an HTML Code Block on the Arena Fighters page with Display Source off. It provides the embedded game and an Open full screen link. Iframe support requires a qualifying Squarespace plan; on an unsupported plan use a normal Squarespace button linking to the actual live game URL. A full-page link also avoids third-party browser-storage restrictions.
 
-Verify the public page signed out, the game on desktop and narrow screens, and two real devices on different networks. Confirm refresh recovery, different fighters per fresh tab/device, departing-player forfeit, survivor reentry, mercy/crowd/execution, and server-restart recovery. Local/API fixtures are not public-network proof.
+The live API smoke passed 13 checks with all eight disposable QA guests withdrawn. Browser checks covered the published iframe, native complete-figure creator, normal eight-fighter bot lobby, refresh recovery to the same fighter/lobby, a fresh full-page visit, a live combat round, withdrawal, and a 390px phone-width page with no horizontal overflow. Details and screenshots are in artifacts/Temporary_Sessions_v001/VERIFICATION.json. These checks used one browser and API clients; two physical devices on different networks and a full human tournament remain separate user checks.
 
 Documentation: https://render.com/docs/free, https://render.com/docs/environment-variables, https://support.squarespace.com/hc/en-us/articles/206543167-Code-blocks.

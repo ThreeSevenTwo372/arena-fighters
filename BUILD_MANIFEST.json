@@ -1,9 +1,9 @@
 {
   "schema": "arena-fighters.local-release.v1",
   "status": "complete",
-  "version": "0.8.6",
-  "createdAt": "2026-10-08T16:02:39.624Z",
-  "directory": "releases/Arena_Fighters_v0.8.6_v001",
+  "version": "0.9.0",
+  "createdAt": "2026-10-08T17:31:45.823Z",
+  "directory": "releases/Arena_Fighters_v0.9.0_v001",
   "identity": {
     "active": {
       "version": "v013",
@@ -16,12 +16,12 @@
   },
   "provenance": [
     {
-      "chatId": "01a11c14-6d06-7892-a24c-8adaa4a7ed66",
-      "note": "Preserved v0.8.5 Roman Manuscript gameplay, rendering, artwork and media"
+      "chatId": "01a11c7b-e6ec-7503-8396-2679f20d2469",
+      "note": "User-authorized pixel menu over exact cinematic final frame, public spectators, living leaderboard, authenticated death archive and phased alpha roadmap"
     },
     {
       "chatId": "01a11bff-c95f-75b1-9d32-8c59124aad2f",
-      "note": "Temporary sessions and authorized Black Book Tattoo Squarespace hosting preparation"
+      "note": "Preserved temporary hosting and durable localhost from v0.8.6"
     }
   ],
   "entries": [
@@ -74,8 +74,8 @@
     "copiedBytesVerified": true,
     "catalogReferencesVerified": true
   },
-  "fileCount": 1349,
-  "totalBytes": 49523126,
+  "fileCount": 1356,
+  "totalBytes": 51578214,
   "catalogs": [
     {
       "path": "assets/clean-gladiator/v013/manifest.json",
@@ -195,8 +195,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 12370,
-      "sha256": "a1a31e05392a3c8ce985f0ba934f880825b1b0f6cbf9b78c81ecd321b9579102"
+      "bytes": 13043,
+      "sha256": "ea43e1c650f4ccba83f9be61fadfbd459a2121d346cf99df9561e2e98ebf37e5"
     },
     {
       "path": "ART_DIRECTION.md",
@@ -215,8 +215,8 @@
     },
     {
       "path": "CURRENT_VERSION.md",
-      "bytes": 8388,
-      "sha256": "69a7289874f492933b3456f70285fa17c61efe3dbf91822700f1ac7e430a36f8"
+      "bytes": 9947,
+      "sha256": "4c411b424ec7c5e335c4e003b3be5e0fd84b67fb43b8a4327d58cb1f0b84c0db"
     },
     {
       "path": "DARK_ART.md",
@@ -225,13 +225,13 @@
     },
     {
       "path": "DESIGN.md",
-      "bytes": 12292,
-      "sha256": "3841d972f55b18ced65844a370f3360c9b6554c6f4329cfd6a00e7567532e49f"
+      "bytes": 20036,
+      "sha256": "69e29d28b38780998681c287690abfe029ed0c18bd885c07b24a62eb6ad41934"
     },
     {
       "path": "HOSTING.md",
-      "bytes": 4615,
-      "sha256": "96c46dfe1a3770e7f85a9dbe62f2bfa4135b8a30c6ea66630882cf7797b368a4"
+      "bytes": 6104,
+      "sha256": "995b95b788145f0118df76e48cfa0f2d9a26ef59dfa6d2e4e8012a54400a8f22"
     },
     {
       "path": "ONLINE_DUELS.md",
@@ -240,8 +240,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 10660,
-      "sha256": "4f2cd40ed0481603c89d4ce82ae2e53d8bb51dc6238082bbeb008309f575084f"
+      "bytes": 11981,
+      "sha256": "bd1c6d44217663c39cffa762c6fe9ea89f57bd4a9a154fb5cec7995049979412"
     },
     {
       "path": "Start-Prototype.ps1",
@@ -6500,13 +6500,13 @@
     },
     {
       "path": "index.html",
-      "bytes": 1633,
-      "sha256": "63bdb58b64a7a8e88c42981c8e24dd8fdf364d0372c9d0291aea8d0064a2db73"
+      "bytes": 1687,
+      "sha256": "068c0d591cc22cf7ab6b3ad6117a7c7556c45b754f4847011db4b2484a5b1128"
     },
     {
       "path": "online/service.mjs",
-      "bytes": 26836,
-      "sha256": "1abc37bf6959d36434694c3e0054bcb30ac759948178c5a9223ca7b777be6eed"
+      "bytes": 30885,
+      "sha256": "ae88f54e203d749676046131b165b78756ec7632a83ec6ff80a1d0f03d0c9808"
     },
     {
       "path": "online/store.mjs",
@@ -6525,8 +6525,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 435,
-      "sha256": "f709d4c0da76738b124fdf37feaac8c282106f70a0b875a1eef53e27eab9cdd5"
+      "bytes": 400,
+      "sha256": "2433311ea5c6e827e55a7636bb61e2c9287bd159604c2bb5d8af0e1fb182b4b5"
     },
     {
       "path": "public/cinematics/arrival-v001/PREPARATION_RECEIPT.json",
@@ -6559,6 +6559,16 @@
       "sha256": "11ec72c3634994914407ce16c588ce073d1267437557a2d59b1896fa31935f16"
     },
     {
+      "path": "public/cinematics/menu-v001/PREPARATION_RECEIPT.json",
+      "bytes": 3709,
+      "sha256": "ada8913990c1c3a2e724b7ed97346bc60a06c23dc3ede78cea8f6b420bbde05f"
+    },
+    {
+      "path": "public/cinematics/menu-v001/arrival-last-frame.png",
+      "bytes": 1951536,
+      "sha256": "9b319087d3d74c6fdfbbd9bb05ab0822c487bb28c1cd5bfff469269cf6287a08"
+    },
+    {
       "path": "render.yaml",
       "bytes": 521,
       "sha256": "081bd832e7966c4fb17e6f12c6e34f836eec6521d8e11d325185bf78c90a001a"
@@ -6570,8 +6580,8 @@
     },
     {
       "path": "src/app.js",
-      "bytes": 97376,
-      "sha256": "e0501badcf5782df53b8552fb7582d46cdf21f7f5cbc63cb1c24a586407d03ba"
+      "bytes": 103610,
+      "sha256": "ad783ceb71de13ccd3020ef0ef0496685af1746e768f89df7088895590e2a24b"
     },
     {
       "path": "src/arena-avatar.js",
@@ -6679,6 +6689,16 @@
       "sha256": "cd45dab723c48c5c153b2f6d05dd2441b9bf932a7c5289a1181dff4750d02e72"
     },
     {
+      "path": "src/main-menu.css",
+      "bytes": 14163,
+      "sha256": "e60bb1d2ca57f92fc4135c6ec223144737297175c9133212c89b6843ea3ebfbc"
+    },
+    {
+      "path": "src/main-menu.js",
+      "bytes": 12276,
+      "sha256": "2676ecbc384dffb4686ecbc5e981a1792d82bb5857a800b9e9a2efc6605c9a9e"
+    },
+    {
       "path": "src/mercy-presentation.css",
       "bytes": 4398,
       "sha256": "8831673e4857340d28ca5ff29d597612895702e08c802689150cf71fc0cfe643"
@@ -6735,13 +6755,13 @@
     },
     {
       "path": "src/tournament-client.js",
-      "bytes": 1807,
-      "sha256": "60bd976af16cd1bc2a13e2471037e567a0cae0f168e2f4b116df515031772932"
+      "bytes": 2114,
+      "sha256": "8f1bff07446492f52539275f8a8cf8eef29fc2e2136433952f8d8952d124449b"
     },
     {
       "path": "src/tournament-view.js",
-      "bytes": 20547,
-      "sha256": "ddebf1feb6fcf91dd963514a5e923941d4383d81488a9096b577a4dd0758a5cc"
+      "bytes": 22124,
+      "sha256": "aadafa04b5673ffc843fb13fc4bc62824cecfeccb1955ee46b3f3e712245c3fc"
     },
     {
       "path": "src/tournament.css",
@@ -6827,6 +6847,21 @@
       "path": "tests/hosting.test.js",
       "bytes": 5246,
       "sha256": "1c3a4cacb1e2de6cdfdede002fa38c94176bad500102bc93f9ebcb93cc894b29"
+    },
+    {
+      "path": "tests/main-menu.test.js",
+      "bytes": 7553,
+      "sha256": "306d90dcbd74977d2a925e613cf3d6430203752ec9747d05ebc2bb879cfa9bd9"
+    },
+    {
+      "path": "tests/menu-service.test.js",
+      "bytes": 18301,
+      "sha256": "6cef873f96f3ba00d9a872538f372e9f3529fa836790d3ae0572e1880c710d5f"
+    },
+    {
+      "path": "tests/menu-ui.test.js",
+      "bytes": 22578,
+      "sha256": "f6099fa2533748308a50f65fcd512f268116e9df9b278db2d2f5eca42161a229"
     },
     {
       "path": "tests/mercy-presentation.test.js",

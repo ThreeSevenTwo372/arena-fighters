@@ -49,6 +49,7 @@ function sameCharacter(a, b) {
   const withoutId = ({ id, ...rest }) => stable(rest);
   return JSON.stringify(withoutId(a)) === JSON.stringify(withoutId(b));
 }
+const publicIdentity = character => ({ id: character.id, name: character.name, color: character.color, appearance: copy(character.appearance) });
 
 /** All requests and deadline advancement are serialized, including persistence. */
 export class DuelService {
@@ -152,6 +153,57 @@ export class DuelService {
     });
   }
   sessionForPlayer(playerId) { return Object.values(this.data.sessions).find(session => session.playerId === playerId); }
+  arenaTournamentList() {
+    return {
+      tournaments: Object.values(this.data.tournaments).filter(tournament => tournament.phase !== 'complete')
+        .sort((a, b) => a.createdAt - b.createdAt || a.code.localeCompare(b.code)).map(tournament => ({
+          code: tournament.code, phase: tournament.phase,
+          playerCount: tournament.players.filter((player, index) => player.alive && !tournament.left[index]).length,
+          currentMatchLabel: tournament.bracket.find(match => match.index === tournament.currentMatchIndex)?.label ?? null,
+          fighters: (tournament.match?.players ?? tournament.players.filter((_, index) => !tournament.left[index]))
+            .map(player => player.character.name),
+        })),
+      sessionMode: this.temporarySessions ? 'temporary' : 'persistent',
+    };
+  }
+  arenaTournamentView(code) {
+    const tournament = this.data.tournaments[code];
+    if (!tournament) fail(404, 'Tournament lobby not found.', 'room_not_found');
+    // An observer never acquires a roster seat or inherits its voting/control rights.
+    const view = this.tournaments.view(tournament, -1);
+    view.you = null; view.role = 'spectator'; view.spectator = true;
+    if (view.crowdVote) { view.crowdVote.canVote = false; view.crowdVote.yourVote = null; }
+    if (view.match) {
+      view.match.you = null; view.match.yourLoadout = null; view.match.canRematch = false;
+      if (view.match.crowdVote) { view.match.crowdVote.canVote = false; view.match.crowdVote.yourVote = null; }
+    }
+    return view;
+  }
+  arenaLeaderboard() {
+    const profiles = new Map();
+    for (const session of Object.values(this.data.sessions)) {
+      const profile = session.profile;
+      if (profile?.alive && profile.bot !== true && profile.character?.id) profiles.set(profile.character.id, profile);
+    }
+    return {
+      fighters: [...profiles.values()].sort((a, b) => b.duelWins - a.duelWins
+        || (b.tournamentWins ?? 0) - (a.tournamentWins ?? 0) || a.character.id.localeCompare(b.character.id))
+        .map((profile, index) => ({ rank: index + 1, character: publicIdentity(profile.character),
+          duelWins: profile.duelWins, tournamentWins: profile.tournamentWins ?? 0 })),
+      sessionMode: this.temporarySessions ? 'temporary' : 'persistent',
+    };
+  }
+  archiveExecution(room, loser, winner) {
+    const session = this.sessionForPlayer(room.playerIds[loser]);
+    if (!session) return;
+    const profile = room.players[loser];
+    session.graveyard ??= [];
+    if (session.graveyard.some(grave => grave.character.id === profile.character.id)) return;
+    session.graveyard.push({ character: copy(profile.character), duelWins: profile.duelWins,
+      tournamentWins: profile.tournamentWins ?? 0, diedAt: this.clock(),
+      killedBy: room.players[winner].character.name, code: room.code });
+    this.changed = true;
+  }
   saveProfile(room, index) {
     const session = this.sessionForPlayer(room.playerIds[index]);
     if (session) session.profile = copy(room.players[index]);
@@ -176,7 +228,9 @@ export class DuelService {
   decide(room, decision) {
     const winner = room.duel.result.winner, loser = 1 - winner;
     room.decision = { decision, winner, loser };
-    if (decision === 'execute') { room.players[loser].alive = false; this.saveProfile(room, loser); }
+    if (decision === 'execute') {
+      room.players[loser].alive = false; this.archiveExecution(room, loser, winner); this.saveProfile(room, loser);
+    }
     const session = this.sessionForPlayer(room.playerIds[loser]);
     if (session?.pendingMercyRoom === room.code) session.pendingMercyRoom = null;
     room.phase = 'complete'; room.deadline = null;
@@ -314,7 +368,23 @@ export class DuelService {
         this.data.sessions[digest(secret)] = session; this.heartbeat(session, now); this.changed = true;
         return { token: secret, playerId: session.playerId };
       }
+      if (path.startsWith('/api/arena/')) {
+        if (method !== 'GET') fail(405, 'Method not allowed.');
+        // Public browsing does not create a fighter; an existing guest keeps its grace window.
+        const viewer = typeof token === 'string' && /^[A-Za-z0-9_-]{43}$/.test(token)
+          ? this.data.sessions[digest(token)] : null;
+        if (viewer) this.heartbeat(viewer, now);
+        if (path === '/api/arena/tournaments') return this.arenaTournamentList();
+        if (path === '/api/arena/leaderboard') return this.arenaLeaderboard();
+        const observer = /^\/api\/arena\/tournaments\/([A-Z2-9]{6})$/.exec(path);
+        if (observer) return this.arenaTournamentView(observer[1]);
+        fail(404, 'Arena endpoint not found.');
+      }
       const session = this.session(token); this.heartbeat(session, now);
+      if (path === '/api/graveyard') {
+        if (method !== 'GET') fail(405, 'Method not allowed.');
+        return { graves: copy(session.graveyard ?? []), sessionMode: this.temporarySessions ? 'temporary' : 'persistent' };
+      }
       if (method === 'GET' && path === '/api/session') return {
         playerId: session.playerId, character: session.profile?.character ?? null,
         alive: session.profile?.alive ?? true, duelWins: session.profile?.duelWins ?? 0, activeRoom: session.activeRoom,

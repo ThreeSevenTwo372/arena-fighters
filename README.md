@@ -1,6 +1,10 @@
 # Arena Fighters
 
-**Current local source: 0.8.6 — Temporary Sessions v001 (October 8, 2026).**
+**Current local source: 0.9.0 — Pixel Menu and Memorial v001 (October 8, 2026).**
+
+The sky-to-arena film lands on a pixel-game menu over its exact final frame. **FIGHT** enters the preserved creation/lobby flow or resumes your active fighter; **SPECTATE** watches public tournaments without joining a bracket; **LEADERBOARD** ranks living human fighters by duel wins. **Graveyard** remembers each of this guest's executed characters and their final records. Public spectators cannot choose moves, equipment, mercy or crowd votes. The menu's GBA-era Roman pixel treatment is scoped to the menu pages; existing illustrated scenes and manuscript presentation remain intact.
+
+Graves are recorded from accepted executions in v0.9.0 onward. The live temporary host's records last only until guest expiry or server restart; private durable localhost history survives restart. Planned weapons, worn gear, durable online progression, coin rewards/betting, cosmetics and the downloaded DEICIDE soundtrack are sequenced in [DESIGN.md](DESIGN.md:77). Verification is in artifacts/Main_Menu_v001, with v0.8.6 preserved for rollback.
 
 The hosted test mode uses temporary fighters: refresh keeps the same tab's fighter, ninety seconds without a heartbeat ends the guest, and a server restart resets all temporary games. Set SESSION_MODE=temporary for RAM-only state and separate tab storage. The existing saved-fighter localhost mode remains the default. [HOSTING.md](HOSTING.md) records Render and Squarespace setup, exact configuration and limitations. The preceding v0.8.5 release and existing private saves remain preserved.
 
@@ -29,7 +33,7 @@ Open [Arena Fighters](http://127.0.0.1:4173/). Start-Prototype.ps1 starts the sa
 7. The winner's name and WINNER! appear before a full 20-second MERCY? window with **Spare**, **Kill**, and **Let crowd decide**. Missing the deadline spares the loser. Delegating starts a separate 20-second vote for living tournament spectators who remain in the lobby, including bots. Each casts one Spare/Kill vote; the active pair cannot vote. Only more Kill votes than Spare votes executes the loser, so ties and no votes spare them. Practice and Pass & play use a simulated six-member crowd; the retained two-player online route has no spectators and therefore defaults to Spare after its crowd window.
 8. An accepted Kill verdict plays the finishing blow, pixel blood and collapse inside the duelists' battle scene and the spectators' existing stands view. The defeated player alone then sees **Hades takes your soul.**, followed by the preserved arrival film and replacement naming. A spared defeated player sees **You live to fight another day!** and keeps their identity, attributes, trait and records. Reduced motion uses brief static cues. Execution requires a new identity; a valid champion receives a tournament title.
 
-Practice and Pass & play remain available. The [legacy two-player duel route](http://127.0.0.1:4173/?duel-mode=1) remains available and recovers a saved active tournament through the correct service. Public deployment has not been performed.
+Practice and Pass & play remain available. The [legacy two-player duel route](http://127.0.0.1:4173/?duel-mode=1) remains available and recovers a saved active tournament through the correct service. The temporary-session game is live on [Black Book Tattoo's Arena Fighters page](https://www.blackbooktattoo.com/arena-fighters), with a [full-page game](https://blackbook-arena-fighters.onrender.com/) on Render's Free plan. The user made the clean game repository public to enable deployment; automatic deploys are off.
 
 ## Identity and preservation
 
