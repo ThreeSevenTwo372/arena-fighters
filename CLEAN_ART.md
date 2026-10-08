@@ -1,0 +1,13 @@
+# Clean gladiator art and animation v0.3
+
+The playable art package is `assets/clean-gladiator/v002/manifest.json`. Six headless bodies cover male and female light, medium, and heavy armor. Sword, spear, axe, and shield are separate transparent raster assets. Each body has authored hand coordinates and an exact glove overlay so its weapon attaches under the hand. All gear shares cream cloth, brown leather, muted steel, antique gold, and red accents.
+
+The original linked portrait and chibi head layers remain unchanged. Sex, all nine hairstyles including bald, six skin tones, eight hair colors, eight eye colors, two eye shapes, and four male facial-hair choices still select the same identity. Gloves and covered arms prevent a mismatched exposed skin tone. All bodies use the same 192 by 160 canvas, head registration [64,36], and foot pivot [96,152]. The arena renders them at a single authored 2x scale, then adapts the stage to the browser viewport.
+
+Two new atlases were generated with the built-in image generation tool. Complete prompts and references are in `ArtReview/Clean_Art_v001/PRODUCTION.json`. Original generated PNGs are retained in its `Sources` folder. `tools/prepare-clean-art.py` makes technical alpha-bound crops, nearest-neighbor resizes, fixed registrations, and exact glove overlays; it does not paint or recolor images. Both v001 and the corrected v002 package remain available. `ArtReview/Clean_Art_v001/Prepared_v002/preparation-receipt.json` records source hashes and a closed 17-file output roster. No external stock license was added, and source project rights remain as recorded in AVATAR_PORT.md.
+
+`src/battle-animation.js` reads resolved round events. Discrete CSS movement rotates sword and axe around the hand, thrusts the spear, moves the shield for Guard, and provides hit/recovery/defeat cues. This is a simple articulated idle rig, not a fully hand-drawn animation sheet. Attacks include a forward step and return. Floating damage labels remain readable on both facing directions. A knocked-out fighter's canceled action never animates.
+
+During playback, combat and crowd buttons are blocked. Skip commits the same already-resolved outcome exactly once. Starting a new practice session cancels old playback without stale health or win-count updates. Reduced-motion preference uses brief text/color cues. Equipment, attributes, damage, stamina, CPU choices, and mercy rules are unchanged.
+
+The pre-change runtime snapshot and SHA256 list are under `artifacts/Before_Clean_Art_v001`. The D-PIXEL source project and existing assets were not modified. This remains a local duel prototype; the current update does not implement online lobbies or tournament brackets.

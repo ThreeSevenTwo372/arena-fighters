@@ -1,0 +1,70 @@
+/* One complete figure, with preset controls beside it at integer display sizes. */
+.panel.fighter-editor.compact-editor.preset-editor {
+  grid-template-columns: 428px minmax(0, 1fr) 250px;
+  grid-template-areas: "identity appearance values";
+}
+.preset-editor > .creator-identity { grid-area: identity; align-self: start; }
+.preset-editor > .creator-appearance { grid-area: appearance; }
+.preset-editor > .creator-values { grid-area: values; }
+.preset-editor .appearance-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.preset-editor .appearance-fields label:last-child { grid-column: 1 / -1; }
+.preset-editor .arena-identity-figure {
+  grid-template-rows: 256px auto;
+  padding: 8px;
+}
+.preset-character {
+  display: grid;
+  grid-template-columns: 44px 320px 44px;
+  align-items: center;
+  width: 408px;
+  height: 256px;
+}
+.preset-character > .clean-avatar {
+  display: block;
+  width: 320px;
+  height: 256px;
+  max-width: none;
+}
+.preset-arrow {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 48px;
+  padding: 3px;
+  border: 0;
+  background: transparent;
+  color: var(--brass);
+  cursor: pointer;
+}
+.preset-arrow > svg { width: 36px; height: 32px; overflow: visible; }
+.preset-arrow path { fill: #352c27; stroke: currentColor; stroke-width: 2; stroke-linejoin: miter; }
+.preset-arrow.next > svg { transform: scaleX(-1); }
+.preset-arrow:hover:not(:disabled) { color: var(--ink); }
+.preset-arrow:hover:not(:disabled) path { fill: #614b32; }
+.preset-arrow:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+.preset-arrow:disabled { opacity: .3; cursor: default; }
+.preset-editor .arena-identity-figure figcaption { display: flex; align-items: center; justify-content: center; gap: 12px; }
+.preset-number { color: var(--brass); font-variant-numeric: tabular-nums; }
+@media (max-width: 1000px) {
+  .panel.fighter-editor.compact-editor.preset-editor { grid-template-columns: 268px minmax(0, 1fr) 240px; }
+  .preset-editor .arena-identity-figure { grid-template-rows: 128px auto; }
+  .preset-character { grid-template-columns: 44px 160px 44px; width: 248px; height: 128px; }
+  .preset-character > .clean-avatar { width: 160px; height: 128px; }
+}
+@media (max-width: 850px) {
+  .panel.fighter-editor.compact-editor.preset-editor {
+    grid-template-columns: 268px minmax(0, 1fr);
+    grid-template-areas: "identity appearance" "identity values";
+  }
+}
+@media (max-width: 600px) {
+  .panel.fighter-editor.compact-editor.preset-editor {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "identity" "appearance" "values";
+    gap: 16px;
+    padding: 12px;
+  }
+  .preset-editor .arena-identity-figure { padding: 8px; }
+  .preset-editor .appearance-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .preset-editor .creator-identity > .field-label { margin-top: 10px; }
+}

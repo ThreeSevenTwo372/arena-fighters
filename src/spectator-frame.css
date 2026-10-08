@@ -1,0 +1,34 @@
+/* The arena fills the seat view, with authored audience rows in the foreground. */
+.spectator-frame { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 920 / 580; background: #796046; border: 1px solid #6a5039; }
+.spectator-field { position: absolute; z-index: 1; inset: 0; width: 100%; margin: 0; }
+.spectator-frame .arena-stage { width: 100%; height: 100%; margin: 0; border: 0; border-radius: 0; box-shadow: none; }
+.spectator-frame .arena-svg { display: block; width: 100%; height: 100%; min-height: 0; aspect-ratio: 920 / 580; }
+.spectator-frame-art { position: absolute; z-index: 2; bottom: -25%; left: 50%; transform: translateX(-50%); display: block; width: 150%; max-width: none; height: auto; pointer-events: none; user-select: none; image-rendering: pixelated; }
+.spectator-frame .battle-animation-caption { top: 12px; bottom: auto; z-index: 3; }
+.spectator-battle-hud { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding: 15px 0; }
+.spectator-status { min-width: 0; padding: 12px 15px; border: 1px solid #756448; background: #1d1c25; }
+.spectator-status-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.spectator-status-heading h2 { margin: 0; font-size: 21px; color: #f4e2bc; }
+.spectator-status-heading span { color: #c8b994; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; }
+.spectator-status > p { margin: 8px 0; color: #d0c6b9; font-size: 11px; }
+.spectator-status .meter-label, .spectator-status .meter-label strong { color: #eee1c6; font-size: 10px; }
+.spectator-status .meter { height: 7px; margin: 5px 0 7px; }
+.spectator-preview { max-width: 1130px; }
+.spectator-preview .masthead { min-height: 65px; }
+.spectator-preview-heading { padding: 23px 0 0; }
+.spectator-preview-heading h1 { margin-bottom: 9px; font-size: clamp(23px, 4vw, 35px); }
+.spectator-preview-heading > p { max-width: 760px; margin-bottom: 0; font-size: 13px; line-height: 1.7; color: #d0c6b9; }
+.spectator-preview-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 17px 0 7px; }
+.spectator-preview-controls .button { min-width: 155px; }
+.spectator-preview-message { margin: 9px 0 0; color: #e1cda6; font-size: 12px; line-height: 1.6; }
+@media (max-width: 600px) {
+  .spectator-battle-hud { gap: 8px; padding: 12px 0; }
+  .spectator-status { padding: 9px; }
+  .spectator-status-heading h2 { font-size: 16px; }
+  .spectator-status-heading span { font-size: 8px; }
+  .spectator-status > p { min-height: 30px; font-size: 9px; line-height: 1.5; }
+  .spectator-status .meter-label, .spectator-status .meter-label strong { font-size: 9px; }
+  .spectator-frame .battle-animation-caption { top: 7px; font-size: 9px; }
+  .spectator-preview-controls { gap: 8px; }
+  .spectator-preview-controls .button { flex: 1; min-width: 0; font-size: 11px; }
+}

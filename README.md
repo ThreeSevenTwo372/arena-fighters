@@ -1,0 +1,54 @@
+# Arena Fighters
+
+**Current local source: 0.8.6 — Temporary Sessions v001 (October 8, 2026).**
+
+The hosted test mode uses temporary fighters: refresh keeps the same tab's fighter, ninety seconds without a heartbeat ends the guest, and a server restart resets all temporary games. Set SESSION_MODE=temporary for RAM-only state and separate tab storage. The existing saved-fighter localhost mode remains the default. [HOSTING.md](HOSTING.md) records Render and Squarespace setup, exact configuration and limitations. The preceding v0.8.5 release and existing private saves remain preserved.
+
+The interface retains its direction from ancient Roman literature and book presentation: warm parchment, Palatino and Georgia serif lettering, red rubric headings and controls, fine ruled borders, and restrained laurel ornament. src/roman-manuscript.css loads after every scene stylesheet to carry the treatment through naming, creation, equipment annotations, tournament registers, battle commands, and mercy voting. Illustrated arena, armory, spectator and cinematic scenes retain their artwork. The v0.8.5 Roman Manuscript and v0.8.4 Mercy and Crowd releases remain preserved.
+
+The preserved unified game combines the local work from the character-art, cinematics, battle/onboarding, spectator, and tournament chats. New fighters use the v013 roster of ten male and ten female face-and-hair presets. The condensed creator places previous/next preset arrows beside the character, starts new fighters on 05, and contains sex, skin tone, hair color, five attribute values, a banner, and one of ten lifelong traits. The old face gallery and preset eye-color picker are removed. Only the selected trait's exact effects appear; preset descriptions and extra appearance explanations are removed. The complete selected figure uses a native-size preview or 2x where space allows. The manuscript treatment preserves the v013/v006 identity dispatch, complete figure sizing, equipment registration, gameplay, saved identities, authentication and verdict timing.
+
+## Start the current game
+
+Node.js 24 or newer is required; no package installation is needed.
+
+```powershell
+node server.mjs
+```
+
+Open [Arena Fighters](http://127.0.0.1:4173/). Start-Prototype.ps1 starts the same version. Keep the server running while playing. Stop it with Ctrl+C. For another port, use node server.mjs --port 4174.
+
+## Current flow
+
+1. The preserved sky-to-arena Flux animation opens the first visit in each tab. Skip intro or Escape proceeds to naming. Reduced motion uses a still with an explicit Enter control.
+2. **NAME YOUR FIGHTER.** leads to the condensed creator. Allocate 20 points across Strength, Dexterity, Speed, Defense, and Intelligence, with 8 maximum in one attribute. Use the arrows to cycle presets, then select skin and hair colors, a banner, and a trait.
+3. **Enter tournament** joins a waiting eight-player lobby. Joined fighters occupy eight complete-avatar slots. After 20 seconds without a new player joining, a bot with a Roman gladiator inspired name fills one empty slot. A new player joining resets that wait. Another bot joins every 20 quiet seconds until the eighth fighter triggers randomized quarterfinal pairings.
+4. The active pair chooses weapons from the rack, armor from display stands, and an optional cosmetic helmet in the existing gate setting. Equipment is selected before every duel.
+5. All eight see the accepted gate-opening film. Two fight and six watch the live match from the enlarged, tiered spectator stands. One duel runs at a time: four quarterfinals, two semifinals, then the final.
+6. Each action has a 20-second deadline; missed choices become Recover. Bots select equipment automatically, choose legal moves from public battle state after three seconds, and spare defeated opponents after the winner reveal. Full attack animations play and rounds advance automatically. Strike, the weapon technique, Guard, and Recover remain the four commands. Narrow screens place the HUD above the scene so it cannot cover heads or weapons.
+7. The winner's name and WINNER! appear before a full 20-second MERCY? window with **Spare**, **Kill**, and **Let crowd decide**. Missing the deadline spares the loser. Delegating starts a separate 20-second vote for living tournament spectators who remain in the lobby, including bots. Each casts one Spare/Kill vote; the active pair cannot vote. Only more Kill votes than Spare votes executes the loser, so ties and no votes spare them. Practice and Pass & play use a simulated six-member crowd; the retained two-player online route has no spectators and therefore defaults to Spare after its crowd window.
+8. An accepted Kill verdict plays the finishing blow, pixel blood and collapse inside the duelists' battle scene and the spectators' existing stands view. The defeated player alone then sees **Hades takes your soul.**, followed by the preserved arrival film and replacement naming. A spared defeated player sees **You live to fight another day!** and keeps their identity, attributes, trait and records. Reduced motion uses brief static cues. Execution requires a new identity; a valid champion receives a tournament title.
+
+Practice and Pass & play remain available. The [legacy two-player duel route](http://127.0.0.1:4173/?duel-mode=1) remains available and recovers a saved active tournament through the correct service. Public deployment has not been performed.
+
+## Identity and preservation
+
+src/current-avatar.js is the shared identity entry point for creator, armory, lobby, arena, and spectators. Explicit facePreset p01..p10 recipes use assets/clean-gladiator/v013. Existing surviving recipes without a face preset keep their exact v006 rendering and saved appearance; they are not visually migrated. Full-head helmets hide the complete identity and restore it when removed. Original artwork, raw sources, masks, bodies, equipment, and all previous versions remain unchanged.
+
+The [two-character face comparison](http://127.0.0.1:4173/?face-presets-review=1) and [spectator sample](http://127.0.0.1:4173/?spectator-frame-review=1) remain optional diagnostic views. Normal creation includes the latest presets without a review URL. Incorporation into this release does not imply acceptance of the entire art roster's quality.
+
+## Verification and release
+
+Temporary Sessions v001 full root suite: **395 passing, zero failures**, in artifacts/Temporary_Sessions_v001/full-test.log. It includes hosted HTTPS/embedding/quota checks, temporary departure cleanup, tab-session storage, idle heartbeats and restart recovery. This is local fixture evidence; public deployment and browser checks are recorded separately in artifacts/Temporary_Sessions_v001/VERIFICATION.json.
+
+```powershell
+node --test tests/*.test.js
+```
+
+The manuscript work's final root suite passed **356 tests**, with zero failures, cancellations or skips; the full output is artifacts/Roman_Manuscript_UI_v001/final-test.log. It used node --test tests/*.test.js, the exact package test script, because npm is unavailable in the current shell. An independent SHA-256 comparison found all **1,255 assets and media files byte-identical to the sealed v0.8.4 snapshot**, with no additions, removals or changes; artifacts/Roman_Manuscript_UI_v001/asset-preservation.json records the result. Source rollback copies are preserved in artifacts/Roman_Manuscript_UI_v001/before. Browser verification and screenshots are recorded in artifacts/Roman_Manuscript_UI_v001/VERIFICATION.json. Desktop and 320-pixel checks cover the creator, lobby, armory, battle commands, both facings and player/spectator attack playback. Exact current-renderer specimens cover the winner, mercy/crowd and spared-overlay presentation; automated tests and preserved v0.8.4 integration evidence retain verdict behavior proof. The independent current snapshot is verified by its BUILD_MANIFEST.json and artifacts/Roman_Manuscript_UI_v001/RELEASE_RECEIPT.json. User art acceptance remains separate.
+
+The sealed v0.8.4 verification remains historical evidence: **355 tests** passed with zero failures in artifacts/Recovery_Mercy_Validation_v001/npm-test.log. Coverage includes combat, authenticated private choices, timed lobby bots, sequential brackets, 20-second mercy/crowd boundaries, vote authority and persistence, survivor/death recovery, native execution framing, original avatar parity, historical preparation contracts, and mixed v006/v013 rendering. Its browser checks cover the actual creator and armory, both battle facings, winner-first reveal, crowd delegation, authenticated human and bot votes, a majority Kill verdict, native player/spectator execution, personal loser outcomes and automatic arrival replay to empty replacement naming. The receipt is artifacts/Recovery_Mercy_v001/VERIFICATION.json. All 1,255 asset and media files were byte-identical to v0.8.3, independently hashed in artifacts/Recovery_Mercy_Validation_v001/assets-preservation.json. Prior execution browser evidence remains in artifacts/Execution_v001. Source rollback copies are preserved in artifacts/Before_Mercy_Crowd_v001, and that continuation's previous documentation is in artifacts/Recovery_Mercy_v001/before-docs. Bot-fill, preset-arrow and unified-flow proofs remain in their prior artifact folders.
+
+The current independent runnable snapshot is releases/Arena_Fighters_v0.8.6_v001. Temporary-session verification and release receipts are in artifacts/Temporary_Sessions_v001. The v0.8.5 snapshot and archive remain preserved. The preceding v0.8.4 snapshot and archive remain preserved with their Mercy and Crowd presentation. BUILD_MANIFEST.json records every copied file's SHA-256, active and legacy catalogs, contributing chat IDs, and the portable test scope. Private guest/save data and historical review folders are excluded; the root retains the full suite and all historical art evidence. The portable test log is artifacts/Recovery_Mercy_v001/portable-test.log; artifacts/Recovery_Mercy_v001/RELEASE_RECEIPT.json records the portable count, ZIP SHA-256 and source/snapshot/archive parity for v0.8.4. Earlier releases remain preserved. The current packaging command is node tools/package-current.mjs --config artifacts/Temporary_Sessions_v001/release-config.json. It refuses an existing destination; future packages require a fresh versioned location.
+
+[CURRENT_VERSION.md](CURRENT_VERSION.md) records consolidation provenance. [ART_DIRECTION.md](ART_DIRECTION.md) and [AGENTS.md](AGENTS.md) govern future artwork; [TOURNAMENTS.md](TOURNAMENTS.md), [ONLINE_DUELS.md](ONLINE_DUELS.md), and [DESIGN.md](DESIGN.md) retain gameplay contracts and design history.

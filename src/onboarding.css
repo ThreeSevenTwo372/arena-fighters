@@ -1,0 +1,110 @@
+/* Two compact creation steps share the existing arena identity renderer. */
+.preparation-heading { padding: 25px 0 19px; }
+.preparation-heading h1 { margin: 8px 0; font-size: clamp(28px, 4vw, 40px); }
+.preparation-heading > p { font-size: 12px; color: var(--muted); }
+.preparation-rival { margin-top: 11px; font-size: 11px; }
+.preparation-rival summary { cursor: pointer; color: var(--brass); }
+.preparation-rival .rule-strip { margin-top: 10px; }
+.preparation-footer { margin-bottom: 24px; }
+.preparation-footer p { font-size: 11px; }
+.tournament-invite-join { margin-left: 12px; font-size: 11px; }
+.tournament-invite-join summary { cursor: pointer; padding: 12px; color: var(--brass); }
+.tournament-invite-join .compact-room-join { margin-top: 8px; }
+.tournament-entry-note { flex-basis: 100%; }
+.tournament-gate { position: relative; overflow: hidden; min-height: 440px; aspect-ratio: 16/9; background: #100e14; margin: 20px 0; }
+.tournament-gate-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.tournament-gate-caption { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; text-align: center; padding: 30px 18px; background: linear-gradient(transparent 40%, #0b0914d9); text-shadow: 0 2px 8px #000; }
+.tournament-gate-caption h1 { font-size: clamp(25px, 4vw, 40px); margin: 9px 0; }
+.tournament-gate-caption > p { margin: 4px 0; }
+.tournament-gate-caption [hidden] { display: none; }
+@media (max-width: 600px) { .tournament-invite-join { margin-left: 0; width: 100%; } .tournament-gate { min-height: 370px; } }
+.creator-shell { max-width: 1110px; }
+.name-screen { min-height: min(600px, calc(100svh - 180px)); display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 0; }
+.name-screen h1 { max-width: 680px; font-size: clamp(30px, 4.5vw, 54px); line-height: 1.2; margin: 8px 0 30px; }
+.name-screen .eyebrow { color: var(--brass); }
+.name-form { display: grid; gap: 15px; width: min(100%, 420px); }
+.name-form input { min-width: 0; font-size: 19px; text-align: center; min-height: 56px; }
+.name-form .button { min-height: 48px; }
+.name-screen > .button { margin-top: 12px; }
+.onboarding-modes { margin-top: 40px; }
+.onboarding-modes .mode-toggle { background: #191b23; border-color: #554e47; }
+.onboarding-modes button { font-size: 11px; padding: 8px 14px; }
+.creator-heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 25px 0 18px; }
+.creator-heading h1 { font-size: clamp(26px, 3.4vw, 38px); line-height: 1.15; margin: 7px 0 0; overflow-wrap: anywhere; }
+.creator-heading .eyebrow { color: var(--brass); margin: 0; }
+.creator-heading .button { flex-shrink: 0; padding: 8px 12px; font-size: 11px; }
+.creator-player-tabs { display: flex; gap: 8px; margin-bottom: 13px; }
+.creator-player-tabs .button { min-height: 36px; padding: 8px 13px; font-size: 11px; }
+.compact-creator-layout, .review-creator-layout { min-width: 0; }
+.review-creator-layout { display: grid; gap: 20px; }
+.panel.fighter-editor.compact-editor { display: grid; grid-template-columns: 210px minmax(0, 1fr) 280px; gap: 20px; padding: 20px; align-items: start; }
+.compact-editor > div { min-width: 0; }
+.compact-editor .arena-identity-preview { width: 100%; margin: 0; }
+.compact-editor .arena-identity-figure { grid-template-rows: 228px auto; padding: 8px; gap: 6px; }
+.compact-editor .arena-identity-figure > .clean-avatar { height: 228px; width: 100%; }
+.compact-editor .arena-identity-figure figcaption { color: var(--ink); font-size: 11px; overflow-wrap: anywhere; }
+.compact-editor .creator-identity > .field-label { margin: 14px 0 8px; }
+.compact-editor .color-choices { margin: 0; padding: 0; border: 0; justify-content: center; gap: 8px; }
+.compact-editor .color-choice { width: 26px; height: 26px; }
+.compact-editor .appearance-fields { margin: 0; padding: 10px; gap: 10px; border-width: 1px; }
+.compact-editor .appearance-fields label { font-size: 10px; }
+.compact-editor .appearance-fields select { font-size: 11px; min-height: 38px; padding: 5px 7px; }
+.compact-editor .appearance-note { display: none; }
+.attribute-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.attribute-heading h2 { font-size: 21px; margin: 0; }
+.attribute-heading .badge { padding: 5px 7px; font-size: 9px; white-space: nowrap; }
+.attribute-limit { font-size: 10px; color: var(--muted); margin: 7px 0 9px; }
+.compact-editor .stat-row { padding: 7px 0; border-bottom: 1px solid #514a48; gap: 8px; }
+.compact-editor .stat-label { font-size: 12px; }
+.compact-editor .stat-controls { gap: 7px; }
+.compact-editor .stat-controls button { width: 32px; height: 32px; min-height: 32px; font-size: 18px; }
+.compact-editor .stat-value { min-width: 22px; font-size: 20px; }
+.compact-editor .creator-values > .field-label { margin: 18px 0 7px; }
+.compact-editor .creator-values > select { width: 100%; min-height: 40px; font-size: 12px; }
+.compact-editor .trait-description { color: #dac9b0; font-size: 11px; line-height: 1.6; margin: 9px 0 0; }
+.creator-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; padding: 18px 0; }
+.creator-actions > .button { min-width: 190px; }
+.compact-room-join { display: flex; gap: 8px; min-width: 0; }
+.compact-room-join input { width: 150px; min-width: 0; letter-spacing: .1em; font-size: 12px; text-transform: uppercase; }
+.compact-room-join .button { padding: 10px 17px; }
+.memorial-note { flex-basis: 100%; color: var(--muted); font-size: 11px; margin: 0; }
+.creator-shell .page-footer { margin-top: 18px; }
+.creator-game-mode { font-size: 11px; color: var(--muted); }
+.creator-game-mode summary { cursor: pointer; width: fit-content; }
+.creator-game-mode .mode-toggle { margin-top: 12px; }
+@media (max-width: 960px) {
+  .panel.fighter-editor.compact-editor { grid-template-columns: 185px minmax(0, 1fr) 250px; gap: 14px; padding: 16px; }
+  .compact-editor .appearance-fields { grid-template-columns: minmax(0, 1fr); }
+  .compact-editor .arena-identity-figure { grid-template-rows: 218px auto; }
+  .compact-editor .arena-identity-figure > .clean-avatar { height: 218px; }
+}
+@media (max-width: 760px) {
+  .panel.fighter-editor.compact-editor { grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); }
+  .creator-identity { align-self: center; }
+  .compact-editor .creator-appearance { grid-column: 1 / -1; grid-row: 2; }
+  .compact-editor .appearance-fields { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .compact-editor .creator-values { grid-column: 2; grid-row: 1; }
+  .compact-editor .trait-description { font-size: 10px; }
+  .creator-actions > .button { min-width: 150px; }
+}
+@media (max-width: 480px) {
+  .creator-heading { padding-top: 21px; }
+  .creator-heading .button { font-size: 10px; padding: 7px 9px; }
+  .panel.fighter-editor.compact-editor { gap: 12px; padding: 12px; grid-template-columns: minmax(0, .82fr) minmax(0, 1fr); }
+  .compact-editor .arena-identity-figure { grid-template-rows: 180px auto; padding: 5px 3px; }
+  .compact-editor .arena-identity-figure > .clean-avatar { height: 180px; }
+  .compact-editor .color-choices { gap: 8px; }
+  .compact-editor .color-choice { width: 27px; height: 27px; }
+  .attribute-heading { flex-wrap: wrap; }
+  .attribute-heading h2 { font-size: 18px; }
+  .attribute-limit { font-size: 9px; }
+  .compact-editor .stat-label { font-size: 10px; }
+  .compact-editor .stat-controls { gap: 4px; }
+  .compact-editor .stat-controls button { width: 27px; height: 30px; min-height: 30px; }
+  .compact-editor .stat-value { font-size: 18px; min-width: 14px; }
+  .compact-editor .appearance-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .creator-actions { align-items: stretch; flex-direction: column; gap: 12px; }
+  .compact-room-join input { flex: 1; width: auto; }
+  .name-screen h1 { font-size: 29px; }
+  .onboarding-modes .mode-toggle button { padding: 8px 10px; font-size: 10px; }
+}

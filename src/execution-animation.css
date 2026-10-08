@@ -1,0 +1,243 @@
+/* Original facing, scale, pixels and grip registrations remain on their original SVG nodes. */
+.execution-motion {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+.fighter-front-hand-motion {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+.execution-playback [data-execution-role="victor"] {
+  --execution-weapon-windup: -35deg;
+  --execution-weapon-contact: 95deg;
+}
+.execution-playback [data-execution-role="victor"][data-execution-weapon="spear"] {
+  --execution-weapon-windup: 68deg;
+  --execution-weapon-contact: 81deg;
+}
+.execution-playback [data-execution-role="victor"][data-execution-weapon="halberd"] {
+  --execution-weapon-windup: 60deg;
+  --execution-weapon-contact: 82deg;
+}
+.execution-playback [data-execution-role="victor"][data-execution-weapon="axe"],
+.execution-playback [data-execution-role="victor"][data-execution-weapon="greatsword"] {
+  --execution-weapon-windup: -52deg;
+  --execution-weapon-contact: 111deg;
+}
+.execution-playback [data-execution-role="victor"][data-execution-weapon="mace"] {
+  --execution-weapon-windup: -48deg;
+  --execution-weapon-contact: 106deg;
+}
+.execution-playback [data-execution-role="victor"][data-execution-weapon="flail"] {
+  --execution-weapon-windup: -43deg;
+  --execution-weapon-contact: 101deg;
+}
+/* Weapon and unchanged front-hand bitmap share the exact recorded grip and motion. */
+.execution-playback:not(.execution-playback-reduced) [data-execution-role="victor"] .fighter-body {
+  mask: var(--fighter-hand-mask, none);
+}
+.execution-playback[data-execution-phase="windup"] [data-execution-role="victor"] .fighter-weapon-motion,
+.execution-playback[data-execution-phase="windup"] [data-execution-role="victor"] .fighter-front-hand-motion {
+  animation: execution-weapon-ready 520ms steps(7, end) both;
+}
+.execution-playback[data-execution-phase="strike"] [data-execution-role="victor"] .fighter-weapon-motion,
+.execution-playback[data-execution-phase="strike"] [data-execution-role="victor"] .fighter-front-hand-motion {
+  animation: execution-weapon-contact 220ms steps(4, end) both;
+}
+.execution-playback[data-execution-phase="impact"] [data-execution-role="victor"] .fighter-weapon-motion,
+.execution-playback[data-execution-phase="impact"] [data-execution-role="victor"] .fighter-front-hand-motion {
+  transform: rotate(var(--execution-weapon-contact));
+}
+.execution-playback[data-execution-phase="settle"] [data-execution-role="victor"] .fighter-weapon-motion,
+.execution-playback[data-execution-phase="settle"] [data-execution-role="victor"] .fighter-front-hand-motion {
+  animation: execution-weapon-settle 530ms steps(5, end) both;
+}
+.execution-playback[data-execution-phase="windup"] [data-execution-role="victor"] .fighter-flail-chain-motion {
+  transform: rotate(18deg);
+}
+.execution-playback[data-execution-phase="strike"] [data-execution-role="victor"] .fighter-flail-chain-motion,
+.execution-playback[data-execution-phase="impact"] [data-execution-role="victor"] .fighter-flail-chain-motion {
+  transform: rotate(-18deg);
+}
+.execution-playback[data-execution-phase="strike"] [data-execution-role="victor"] .fighter-flail-head-motion,
+.execution-playback[data-execution-phase="impact"] [data-execution-role="victor"] .fighter-flail-head-motion {
+  transform: rotate(12deg);
+}
+.execution-playback [data-execution-role="victor"] .execution-motion {
+  --execution-windup: -7deg;
+  --execution-strike: 9deg;
+}
+.execution-playback [data-execution-weapon="spear"] .execution-motion,
+.execution-playback [data-execution-weapon="halberd"] .execution-motion {
+  --execution-windup: -4deg;
+  --execution-strike: 4deg;
+}
+.execution-playback [data-execution-weapon="axe"] .execution-motion,
+.execution-playback [data-execution-weapon="greatsword"] .execution-motion {
+  --execution-windup: -11deg;
+  --execution-strike: 13deg;
+}
+.execution-playback [data-execution-weapon="mace"] .execution-motion,
+.execution-playback [data-execution-weapon="flail"] .execution-motion {
+  --execution-windup: -9deg;
+  --execution-strike: 11deg;
+}
+.execution-playback[data-execution-phase="windup"] [data-execution-role="victor"] .execution-motion {
+  animation: execution-close 520ms steps(7, end) both;
+}
+.execution-playback[data-execution-phase="strike"] [data-execution-role="victor"] .execution-motion {
+  animation: execution-blow 220ms steps(4, end) both;
+}
+.execution-playback[data-execution-phase="impact"] [data-execution-role="victor"] .execution-motion {
+  transform: translate(var(--execution-approach), 2px) rotate(var(--execution-strike));
+}
+.execution-playback[data-execution-phase="settle"] [data-execution-role="victor"] .execution-motion {
+  animation: execution-victor-settle 530ms steps(5, end) both;
+}
+.execution-playback[data-execution-phase="windup"] [data-execution-role="defeated"] .execution-motion,
+.execution-playback[data-execution-phase="strike"] [data-execution-role="defeated"] .execution-motion {
+  transform: translate(-2px, 8px) rotate(-10deg);
+}
+.execution-playback[data-execution-phase="impact"] [data-execution-role="defeated"] .execution-motion {
+  animation: execution-collapse 850ms steps(8, end) both;
+}
+.execution-playback[data-execution-phase="settle"] [data-execution-role="defeated"] .execution-motion {
+  transform: translate(-17px, 3px) rotate(-76deg);
+  opacity: .72;
+}
+.execution-playback[data-execution-phase="impact"] .arena-svg {
+  animation: execution-camera-kick 260ms steps(4, end);
+}
+.execution-blood { pointer-events: none; }
+.execution-blood-pixel {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  animation: execution-pixel-burst 1230ms steps(12, end) var(--burst-delay) both;
+}
+.execution-sand-stains { animation: execution-stain 760ms steps(4, end) both; }
+.execution-slash { animation: execution-cut-flare 280ms steps(3, end) both; }
+.execution-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 60%, transparent 35%, #570d20a6 100%);
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.execution-playback[data-execution-phase="windup"] .execution-vignette,
+.execution-playback[data-execution-phase="strike"] .execution-vignette { opacity: .45; }
+.execution-playback[data-execution-phase="impact"] .execution-vignette {
+  animation: execution-impact-shadow 1280ms steps(5, end) both;
+}
+.execution-playback[data-execution-phase="settle"] .execution-vignette { opacity: .55; }
+.execution-caption {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  z-index: 2;
+  padding: 8px 12px;
+  border: 2px solid #b84641;
+  background: #210f16ed;
+  color: #ffddbc;
+  box-shadow: 3px 3px 0 #10080d;
+  text-align: center;
+  font: bold 12px/1.5 var(--font-ui, Consolas, monospace);
+  pointer-events: none;
+}
+@keyframes execution-close {
+  0% { transform: translate(0, 0) rotate(0); }
+  70% { transform: translate(var(--execution-approach), 0) rotate(0); }
+  100% { transform: translate(var(--execution-approach), -1px) rotate(var(--execution-windup)); }
+}
+@keyframes execution-weapon-ready {
+  0%, 30% { transform: rotate(0); }
+  100% { transform: rotate(var(--execution-weapon-windup)); }
+}
+@keyframes execution-weapon-contact {
+  0% { transform: rotate(var(--execution-weapon-windup)); }
+  100% { transform: rotate(var(--execution-weapon-contact)); }
+}
+@keyframes execution-weapon-settle {
+  0% { transform: rotate(var(--execution-weapon-contact)); }
+  100% { transform: rotate(0); }
+}
+@keyframes execution-blow {
+  0% { transform: translate(var(--execution-approach), -1px) rotate(var(--execution-windup)); }
+  100% { transform: translate(var(--execution-approach), 2px) rotate(var(--execution-strike)); }
+}
+@keyframes execution-victor-settle {
+  0% { transform: translate(var(--execution-approach), 2px) rotate(var(--execution-strike)); }
+  100% { transform: translate(var(--execution-approach), 0) rotate(0); }
+}
+@keyframes execution-collapse {
+  0% { transform: translate(-2px, 8px) rotate(-10deg); opacity: 1; }
+  20% { transform: translate(-9px, 0) rotate(-23deg); }
+  65% { transform: translate(-16px, 1px) rotate(-70deg); opacity: .85; }
+  100% { transform: translate(-17px, 3px) rotate(-76deg); opacity: .72; }
+}
+@keyframes execution-pixel-burst {
+  0% { transform: translate(0, 0); opacity: 1; }
+  28% { transform: translate(var(--burst-x), var(--burst-rise)); opacity: 1; }
+  82% { transform: translate(var(--burst-x), var(--burst-fall)); opacity: .95; }
+  100% { transform: translate(var(--burst-x), var(--burst-fall)); opacity: 0; }
+}
+@keyframes execution-stain {
+  0%, 32% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes execution-cut-flare {
+  0%, 45% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes execution-impact-shadow {
+  0%, 15% { opacity: .9; }
+  50%, 100% { opacity: .55; }
+}
+@keyframes execution-camera-kick {
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(-3px, 2px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, 1px); }
+}
+/* The short reduced-motion cue has no camera kick, flashing or animated figure movement. */
+.execution-playback-reduced .execution-motion,
+.execution-playback-reduced .fighter-weapon-motion,
+.execution-playback-reduced .fighter-front-hand-motion,
+.execution-playback-reduced .fighter-flail-chain-motion,
+.execution-playback-reduced .fighter-flail-head-motion,
+.execution-playback-reduced .arena-svg,
+.execution-playback-reduced .execution-blood-pixel,
+.execution-playback-reduced .execution-sand-stains,
+.execution-playback-reduced .execution-slash,
+.execution-playback-reduced .execution-vignette { animation: none !important; }
+.execution-playback-reduced .execution-motion { transform: none !important; }
+.execution-playback-reduced .fighter-weapon-motion,
+.execution-playback-reduced .fighter-front-hand-motion,
+.execution-playback-reduced .fighter-flail-chain-motion,
+.execution-playback-reduced .fighter-flail-head-motion { transform: none !important; }
+.execution-playback-reduced .execution-blood-pixel { opacity: .7; }
+.execution-playback-reduced .execution-sand-stains { opacity: .85; }
+.execution-playback-reduced .execution-slash { opacity: .55; }
+.execution-playback-reduced .execution-vignette { opacity: .4; }
+@media (prefers-reduced-motion: reduce) {
+  .execution-playback .execution-motion,
+  .execution-playback .fighter-weapon-motion,
+  .execution-playback .fighter-front-hand-motion,
+  .execution-playback .fighter-flail-chain-motion,
+  .execution-playback .fighter-flail-head-motion,
+  .execution-playback .arena-svg,
+  .execution-playback .execution-blood-pixel,
+  .execution-playback .execution-sand-stains,
+  .execution-playback .execution-slash,
+  .execution-playback .execution-vignette { animation: none !important; }
+  .execution-playback .execution-motion { transform: none !important; }
+  .execution-playback [data-execution-role="victor"] .fighter-body { mask: none; }
+  .execution-playback .fighter-weapon-motion,
+  .execution-playback .fighter-front-hand-motion,
+  .execution-playback .fighter-flail-chain-motion,
+  .execution-playback .fighter-flail-head-motion { transform: none !important; }
+}
+@media (max-width: 600px) {
+  .execution-caption { left: 7px; right: 7px; bottom: 7px; padding: 5px 7px; font-size: 10px; }
+}

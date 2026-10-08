@@ -1,0 +1,3 @@
+.linked-avatar { display: block; width: 100%; height: 100%; object-fit: contain; user-select: none; }
+.linked-avatar--idle, .linked-avatar--walk, .linked-avatar--battle, .linked-avatar--seated_idle { image-rendering: pixelated; }
+.linked-avatar-loading { display: grid; min-height: 10rem; padding: 1rem; place-items: center; color: #77603e; font-size: .85rem; }

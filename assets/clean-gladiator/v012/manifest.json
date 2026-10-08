@@ -1,0 +1,799 @@
+{
+  "schema": "last-laurel.arena-identity.v1",
+  "styleVersion": "arena-identity-v4",
+  "sourceWorkflow": "Finished whole-head presets, explicit baked material ownership and one shared compact neck socket",
+  "canvas": [
+    192,
+    160
+  ],
+  "pivot": [
+    96,
+    152
+  ],
+  "headOrigin": [
+    64,
+    36
+  ],
+  "neckCenter": [
+    96,
+    86
+  ],
+  "bodies": {
+    "male": {
+      "light": {
+        "url": "/assets/clean-gladiator/v003/bodies/male-light.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          75,
+          108
+        ],
+        "offhandGrip": [
+          102,
+          109
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/male-light.png",
+        "handOverlayBounds": [
+          71,
+          104,
+          79,
+          113
+        ]
+      },
+      "medium": {
+        "url": "/assets/clean-gladiator/v003/bodies/male-medium.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          73,
+          108
+        ],
+        "offhandGrip": [
+          101,
+          109
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/male-medium.png",
+        "handOverlayBounds": [
+          69,
+          104,
+          77,
+          113
+        ]
+      },
+      "heavy": {
+        "url": "/assets/clean-gladiator/v003/bodies/male-heavy.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          72,
+          109
+        ],
+        "offhandGrip": [
+          102,
+          110
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/male-heavy.png",
+        "handOverlayBounds": [
+          68,
+          105,
+          76,
+          114
+        ]
+      }
+    },
+    "female": {
+      "light": {
+        "url": "/assets/clean-gladiator/v003/bodies/female-light.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          75,
+          107
+        ],
+        "offhandGrip": [
+          101,
+          108
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/female-light.png",
+        "handOverlayBounds": [
+          71,
+          103,
+          79,
+          112
+        ]
+      },
+      "medium": {
+        "url": "/assets/clean-gladiator/v003/bodies/female-medium.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          73,
+          108
+        ],
+        "offhandGrip": [
+          101,
+          109
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/female-medium.png",
+        "handOverlayBounds": [
+          69,
+          104,
+          77,
+          113
+        ]
+      },
+      "heavy": {
+        "url": "/assets/clean-gladiator/v003/bodies/female-heavy.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          72,
+          108
+        ],
+        "offhandGrip": [
+          101,
+          110
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/female-heavy.png",
+        "handOverlayBounds": [
+          68,
+          104,
+          76,
+          113
+        ]
+      }
+    }
+  },
+  "weapons": {
+    "sword": {
+      "url": "/assets/clean-gladiator/v003/weapons/sword.png",
+      "width": 24,
+      "height": 63,
+      "grip": [
+        11,
+        50
+      ],
+      "sourceFacing": "W"
+    },
+    "spear": {
+      "url": "/assets/clean-gladiator/v003/weapons/spear.png",
+      "width": 14,
+      "height": 95,
+      "grip": [
+        6,
+        67
+      ],
+      "sourceFacing": "W"
+    },
+    "axe": {
+      "url": "/assets/clean-gladiator/v003/weapons/axe.png",
+      "width": 30,
+      "height": 58,
+      "grip": [
+        20,
+        42
+      ],
+      "sourceFacing": "W"
+    },
+    "flail": {
+      "url": "/assets/clean-gladiator/v003/weapons/flail.png",
+      "width": 44,
+      "height": 65,
+      "grip": [
+        36,
+        43
+      ],
+      "sourceFacing": "W",
+      "chainPivot": [
+        35,
+        25
+      ],
+      "headCenter": [
+        10,
+        15
+      ],
+      "chainEnd": [
+        13,
+        9
+      ],
+      "headPivot": [
+        13,
+        9
+      ],
+      "rig": "handle swing with trailing head arc",
+      "parts": {
+        "handle": {
+          "url": "/assets/clean-gladiator/v003/weapons/flail-handle.png",
+          "width": 44,
+          "height": 65,
+          "grip": [
+            36,
+            43
+          ],
+          "origin": [
+            0,
+            0
+          ],
+          "pivot": [
+            36,
+            43
+          ]
+        },
+        "chain": {
+          "url": "/assets/clean-gladiator/v003/weapons/flail-chain.png",
+          "width": 44,
+          "height": 65,
+          "grip": [
+            36,
+            43
+          ],
+          "origin": [
+            0,
+            0
+          ],
+          "pivot": [
+            35,
+            25
+          ]
+        },
+        "head": {
+          "url": "/assets/clean-gladiator/v003/weapons/flail-head.png",
+          "width": 44,
+          "height": 65,
+          "grip": [
+            36,
+            43
+          ],
+          "origin": [
+            0,
+            0
+          ],
+          "pivot": [
+            13,
+            9
+          ]
+        }
+      }
+    },
+    "halberd": {
+      "url": "/assets/clean-gladiator/v003/weapons/halberd.png",
+      "width": 32,
+      "height": 98,
+      "grip": [
+        17,
+        68
+      ],
+      "sourceFacing": "W"
+    },
+    "mace": {
+      "url": "/assets/clean-gladiator/v003/weapons/mace.png",
+      "width": 17,
+      "height": 60,
+      "grip": [
+        8,
+        41
+      ],
+      "sourceFacing": "W"
+    },
+    "greatsword": {
+      "url": "/assets/clean-gladiator/v003/weapons/greatsword.png",
+      "width": 34,
+      "height": 82,
+      "grip": [
+        16,
+        62
+      ],
+      "sourceFacing": "W"
+    },
+    "shield": {
+      "url": "/assets/clean-gladiator/v003/weapons/shield.png",
+      "width": 21,
+      "height": 35,
+      "grip": [
+        10,
+        13
+      ],
+      "sourceFacing": "W"
+    }
+  },
+  "helmets": {
+    "closed_bascinet": {
+      "url": "/assets/clean-gladiator/v003/helmets/closed_bascinet-world.png",
+      "width": 192,
+      "height": 160,
+      "position": [
+        79,
+        55,
+        108,
+        90
+      ],
+      "cutDimensions": [
+        29,
+        35
+      ],
+      "headOrigin": [
+        64,
+        36
+      ],
+      "anchor": [
+        96,
+        86
+      ],
+      "cutAnchor": [
+        17,
+        31
+      ],
+      "sourceFacing": "W"
+    },
+    "barbute": {
+      "url": "/assets/clean-gladiator/v003/helmets/barbute-world.png",
+      "width": 192,
+      "height": 160,
+      "position": [
+        81,
+        55,
+        107,
+        90
+      ],
+      "cutDimensions": [
+        26,
+        35
+      ],
+      "headOrigin": [
+        64,
+        36
+      ],
+      "anchor": [
+        96,
+        86
+      ],
+      "cutAnchor": [
+        15,
+        31
+      ],
+      "sourceFacing": "W"
+    },
+    "greathelm": {
+      "url": "/assets/clean-gladiator/v003/helmets/greathelm-world.png",
+      "width": 192,
+      "height": 160,
+      "position": [
+        81,
+        55,
+        108,
+        90
+      ],
+      "cutDimensions": [
+        27,
+        35
+      ],
+      "headOrigin": [
+        64,
+        36
+      ],
+      "anchor": [
+        96,
+        86
+      ],
+      "cutAnchor": [
+        15,
+        31
+      ],
+      "sourceFacing": "W"
+    }
+  },
+  "identityCatalog": "/assets/clean-gladiator/v003/identity.json",
+  "reference": "ArtReview/Arena_Identity_v001/user-reference.png",
+  "construction": "Polished whole-head presets with exact same-source front-chin restoration; no head resampling or rig changes",
+  "identityTransform": {
+    "scale": 0.84,
+    "sourceAnchor": [
+      96,
+      86
+    ],
+    "targetAnchor": [
+      93,
+      86
+    ],
+    "method": "Nearest-neighbor whole identity about the neck socket; shared by all hair, beard, sex, armor and helmet combinations"
+  },
+  "identityMode": "preset-faces-v1",
+  "reviewStatus": "uniform-female-integer-socket-placement-review-candidate",
+  "facePresets": {
+    "male": {
+      "p01": {
+        "label": "Tousled",
+        "url": "/assets/clean-gladiator/v011/faces/male-p01.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/male-p01-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "2bca2e8e91c5912975687f83c33e35c591a021f05c354d6a016d071a04c1d705",
+        "materialsSha256": "3660cb43865a4ba1b3de09c8b48f38cfef7313c9bd978ddbc752d6330fa8954b"
+      },
+      "p02": {
+        "label": "Short swept",
+        "url": "/assets/clean-gladiator/v011/faces/male-p02.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/male-p02-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "37f5b27248bb9c5ca78e7926e5ff2e6fd4ce27c58440a2d0b4564cd6ab9beae4",
+        "materialsSha256": "894fdf5ca1e5fe4c7eb7bd4c794a86bb9635b6d84c8549e48109186ea977a605"
+      },
+      "p03": {
+        "label": "Cropped",
+        "url": "/assets/clean-gladiator/v011/faces/male-p03.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/male-p03-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "40c38d3727563e17053131910973638301ac14c8d0e738199a4ebdce4a884b98",
+        "materialsSha256": "57d0febb16e3138b9378c194e6c21afe9cdede700c68bcf4d8da307050636472"
+      },
+      "p04": {
+        "label": "Bald",
+        "url": "/assets/clean-gladiator/v011/faces/male-p04.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/male-p04-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "1c65b7465ec05a186062967138a26c8f402c7a5780bbbaf2fe7f0bf3f8703b3b",
+        "materialsSha256": "f565203b1838aa3025a44582543ab327180b1c15006d240e387bc858f853674d"
+      },
+      "p05": {
+        "label": "Braided ponytail",
+        "url": "/assets/clean-gladiator/v011/faces/male-p05.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/male-p05-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "c0d2b45410c1438ac5c833d2f3c29302e5983b8de6afa70fbb53c08201ed5253",
+        "materialsSha256": "dc34c6b7da43b6b8e85ae57a3645c264dab7b4b04abd99e3e29caa91cdf0d553"
+      },
+      "p06": {
+        "label": "High ponytail",
+        "url": "/assets/clean-gladiator/v011/faces/male-p06.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/male-p06-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "ec97e957c75b43cf1902942e0eb031e4d0f5ebb54632f6e347f09fecb4ae63b9",
+        "materialsSha256": "1b80dff18db3e2fc323f03735efb7d2dd1a50869fc7f79bb042da8c737f6d2f5"
+      },
+      "p07": {
+        "label": "Center part",
+        "url": "/assets/clean-gladiator/v011/faces/male-p07.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/male-p07-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "a1b6330f9ca4555aecb98e50c8bd50299af55a708c0bb632773fbaf6f4d60a73",
+        "materialsSha256": "1dd34c5c7b8a84e36ef14ab9148c46866938da94929bf02708443f0e65c6ef57"
+      },
+      "p08": {
+        "label": "Swept undercut",
+        "url": "/assets/clean-gladiator/v011/faces/male-p08.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/male-p08-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "0677697d062ee44067a0aeda2c649adda1804138ca851744b75db14fa6e9613f",
+        "materialsSha256": "ffc851ab9719ab3f9bf107447075198261a257258516dac9badd03965bf1c7bd"
+      },
+      "p09": {
+        "label": "Shoulder length",
+        "url": "/assets/clean-gladiator/v011/faces/male-p09.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/male-p09-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "224bc17f07fb89da4d177410b5a5742140a0f7c1141f03eedf5868948d6454d8",
+        "materialsSha256": "c3cfe618718037581a5e9fd44b16c7261e994abbad7419fa8be8130d7c12d642"
+      },
+      "p10": {
+        "label": "Veteran",
+        "url": "/assets/clean-gladiator/v011/faces/male-p10.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/male-p10-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "4cd9442f5c571b801430027e1d5cff3e22d79d4a1368df8c56560ec38aeda3be",
+        "materialsSha256": "fdc2dedce35f17996ebb8b38b795dad78e8139ce4adb5502e06890cf78724b38"
+      }
+    },
+    "female": {
+      "p01": {
+        "label": "Tousled",
+        "url": "/assets/clean-gladiator/v011/faces/female-p01.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/female-p01-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "061809308dcadd5ac3d947d10f08c97f02aded21c39ccca672ed209431dd4fea",
+        "materialsSha256": "4c4f3dabfa0782aa4785628297c63bdda26ef83165712c98e680166deaba27d4"
+      },
+      "p02": {
+        "label": "Short swept",
+        "url": "/assets/clean-gladiator/v011/faces/female-p02.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/female-p02-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "f40cf959666e7bd2fa8649fc22f71b4c925ba77e8f067c79c45f7754ca4aafd7",
+        "materialsSha256": "38ceccd8e56345e7b1f60dad673151b9203605f134966c2430a8fd0d5e78a37f"
+      },
+      "p03": {
+        "label": "Cropped",
+        "url": "/assets/clean-gladiator/v011/faces/female-p03.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/female-p03-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "c669f9af82908aa6f3389e22f038f2cb97cef43a9539df3a6057c0a3122008da",
+        "materialsSha256": "9a14117f80801532e426a6a50e2e40686311e7f6c7304bfa6fefbcb0afcce9bb"
+      },
+      "p04": {
+        "label": "Bald",
+        "url": "/assets/clean-gladiator/v011/faces/female-p04.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/female-p04-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "fb420d9cbcb46d4ba76e7315ba3b2250331033d4017061c3f2063dbb6e979df8",
+        "materialsSha256": "01495cd1429683abb9bc928ac107cb13b4e4458a92cf65600f4142e2795eac18"
+      },
+      "p05": {
+        "label": "Braided ponytail",
+        "url": "/assets/clean-gladiator/v011/faces/female-p05.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/female-p05-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "e296d919d24cdc642140c670402052a0203cf89157b20836d1afd1f3c328e9a8",
+        "materialsSha256": "6f45bf0e8de524cdae4bd90472a465cea04aa5b31063f393e0c75df308272903"
+      },
+      "p06": {
+        "label": "High ponytail",
+        "url": "/assets/clean-gladiator/v011/faces/female-p06.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/female-p06-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "079cbce005c28b5786a3729c8669e6e3ec390453e7e210b6386c8d2dc42c802b",
+        "materialsSha256": "2b718a80fb57519de10a7c024a7766e50ab2e5e5afc25821cb33e72abc2779ff"
+      },
+      "p07": {
+        "label": "Center part",
+        "url": "/assets/clean-gladiator/v011/faces/female-p07.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/female-p07-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "17b0be90b54a70abf0e9ca2193347cb3204855db386b2c33f3af9238badc676e",
+        "materialsSha256": "95c6dafee88eb7e19bfa8bc2c82ff99db3273a0fde41e116b2b63ddf626829c5"
+      },
+      "p08": {
+        "label": "Swept undercut",
+        "url": "/assets/clean-gladiator/v011/faces/female-p08.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/female-p08-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "e53fad334b9c8d58651220ab25ac1b8733d627bb4febc0bdcd8c97ea9d62f6b1",
+        "materialsSha256": "e9f8c542351654e7ede9cd0f272a57461d14caec19ddd5135b120de13e3f4aff"
+      },
+      "p09": {
+        "label": "Shoulder length",
+        "url": "/assets/clean-gladiator/v011/faces/female-p09.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/female-p09-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "832544a9cc43f67d184330942ae244bdb4611b4ad98fc40a30129eb81db41e5c",
+        "materialsSha256": "7fa642110e69e018c0038ee35df89566d6157aeebc6c409546592518ccf1fed8"
+      },
+      "p10": {
+        "label": "Veteran",
+        "url": "/assets/clean-gladiator/v011/faces/female-p10.png",
+        "materialsUrl": "/assets/clean-gladiator/v011/faces/female-p10-materials.png",
+        "width": 192,
+        "height": 160,
+        "materialDefaults": {
+          "skin": "#dbb798",
+          "hair": "#634630",
+          "iris": "#a97432"
+        },
+        "anchor": [
+          93,
+          86
+        ],
+        "alreadyFitted": true,
+        "sha256": "20d071ada10ccfd88af77a489ecc2471ab606869183d4a8aacdfac00633574be",
+        "materialsSha256": "2d13d25cdac483fefb77d36a81a4a9823782db099098ed19b944fba6d277846d"
+      }
+    }
+  },
+  "identityOffsetBySex": {
+    "male": [
+      0,
+      0
+    ],
+    "female": [
+      0,
+      3
+    ]
+  },
+  "identitySourceCatalog": "/assets/clean-gladiator/v011/manifest.json"
+}

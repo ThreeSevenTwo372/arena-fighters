@@ -1,0 +1,101 @@
+{
+  "schema": "last-laurel.clean-art.v1",
+  "styleVersion": "clean-v1",
+  "width": 192,
+  "height": 160,
+  "pivot": [
+    96,
+    152
+  ],
+  "headOrigin": [
+    64,
+    36
+  ],
+  "neckCenter": [
+    96,
+    86
+  ],
+  "mainhandGrip": [
+    70,
+    111
+  ],
+  "offhandGrip": [
+    106,
+    113
+  ],
+  "bodyFacing": "W",
+  "bodies": {
+    "male": {
+      "light": {
+        "url": "/assets/clean-gladiator/v001/bodies/male-light.png",
+        "width": 192,
+        "height": 160
+      },
+      "medium": {
+        "url": "/assets/clean-gladiator/v001/bodies/male-medium.png",
+        "width": 192,
+        "height": 160
+      },
+      "heavy": {
+        "url": "/assets/clean-gladiator/v001/bodies/male-heavy.png",
+        "width": 192,
+        "height": 160
+      }
+    },
+    "female": {
+      "light": {
+        "url": "/assets/clean-gladiator/v001/bodies/female-light.png",
+        "width": 192,
+        "height": 160
+      },
+      "medium": {
+        "url": "/assets/clean-gladiator/v001/bodies/female-medium.png",
+        "width": 192,
+        "height": 160
+      },
+      "heavy": {
+        "url": "/assets/clean-gladiator/v001/bodies/female-heavy.png",
+        "width": 192,
+        "height": 160
+      }
+    }
+  },
+  "weapons": {
+    "sword": {
+      "url": "/assets/clean-gladiator/v001/weapons/sword.png",
+      "width": 24,
+      "height": 63,
+      "grip": [
+        12,
+        50
+      ]
+    },
+    "spear": {
+      "url": "/assets/clean-gladiator/v001/weapons/spear.png",
+      "width": 9,
+      "height": 95,
+      "grip": [
+        4,
+        68
+      ]
+    },
+    "axe": {
+      "url": "/assets/clean-gladiator/v001/weapons/axe.png",
+      "width": 23,
+      "height": 58,
+      "grip": [
+        18,
+        43
+      ]
+    },
+    "shield": {
+      "url": "/assets/clean-gladiator/v001/weapons/shield.png",
+      "width": 36,
+      "height": 35,
+      "grip": [
+        18,
+        17
+      ]
+    }
+  }
+}

@@ -1,0 +1,1221 @@
+{
+  "schema": "last-laurel.dark-identity.v1",
+  "styleVersion": "dark-v1",
+  "identities": {
+    "male": {
+      "none": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/male-none-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "fdb4fafa1f34b5ba6ad7297298ff65d736e70032abfcd2241fa0d0f4f60295c6",
+          "irisBounds": [
+            140,
+            267,
+            219,
+            280
+          ],
+          "eyeBounds": [
+            128,
+            255,
+            231,
+            292
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/male-none-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "848301179c84a64d6567744f7f813294ff2d222ffdbef4e9cbcd45f12f7f3265",
+          "irisBounds": [
+            84,
+            72,
+            92,
+            74
+          ],
+          "eyeBounds": [
+            82,
+            70,
+            94,
+            76
+          ]
+        }
+      },
+      "shag": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/male-shag-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "8b229db642607eb84f712a8ffd7612b9cc01159b4645207fca7c5ea954a71ce1",
+          "irisBounds": [
+            143,
+            272,
+            222,
+            285
+          ],
+          "eyeBounds": [
+            131,
+            260,
+            234,
+            297
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/male-shag-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "ac66c6a5a2c15178a7c099f7b4baa403b471a28a1fba824f030f3867397f7fde",
+          "irisBounds": [
+            91,
+            72,
+            93,
+            74
+          ],
+          "eyeBounds": [
+            89,
+            70,
+            95,
+            76
+          ]
+        }
+      },
+      "short_swept": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/male-short_swept-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "6647aa8493509c575cf25a1bf12133aa32b97a535472a60741247b8830049906",
+          "irisBounds": [
+            136,
+            275,
+            218,
+            288
+          ],
+          "eyeBounds": [
+            124,
+            263,
+            230,
+            300
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/male-short_swept-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "d8c743e95a3d17787465301e961552edddadd89ff703dbf69b5e1bd0d08415d9",
+          "irisBounds": [
+            91,
+            72,
+            93,
+            74
+          ],
+          "eyeBounds": [
+            89,
+            70,
+            95,
+            76
+          ]
+        }
+      },
+      "cropped": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/male-cropped-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "d9b6434bf890b319de7ebd60e2e5777a2ca04d28905a79c5cc38272f3397ab40",
+          "irisBounds": [
+            141,
+            267,
+            220,
+            277
+          ],
+          "eyeBounds": [
+            129,
+            255,
+            232,
+            289
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/male-cropped-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "02b40a5c72590d39102d0b0ae8a46135f30278f57fd8c74543dd1b96ab26036f",
+          "irisBounds": [
+            84,
+            72,
+            92,
+            74
+          ],
+          "eyeBounds": [
+            82,
+            70,
+            94,
+            76
+          ]
+        }
+      },
+      "braided_ponytail": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/male-braided_ponytail-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "c44a0ae7eb00b85fb13157c22db16a73be738549a58d34bce6151582096edfce",
+          "irisBounds": [
+            133,
+            264,
+            216,
+            282
+          ],
+          "eyeBounds": [
+            121,
+            252,
+            228,
+            294
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/male-braided_ponytail-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "5f72b8843704c3fa8945a63be29c83d0c475775bde54f2f45682c0b2cc0d6484",
+          "irisBounds": [
+            84,
+            72,
+            92,
+            74
+          ],
+          "eyeBounds": [
+            82,
+            70,
+            94,
+            76
+          ]
+        }
+      },
+      "high_ponytail": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/male-high_ponytail-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "b9af3d8f477aada7d15f00f0834c084f8f80c65c060bff6ffaff3412298de51e",
+          "irisBounds": [
+            205,
+            266,
+            221,
+            275
+          ],
+          "eyeBounds": [
+            193,
+            254,
+            233,
+            287
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/male-high_ponytail-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "82d16c0eed59c21b4495da438d892d445c255ff8b6ac55a61d434de99421aea2",
+          "irisBounds": [
+            90,
+            72,
+            92,
+            73
+          ],
+          "eyeBounds": [
+            88,
+            70,
+            94,
+            75
+          ]
+        }
+      },
+      "center_part_medium": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/male-center_part_medium-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "b656b56733c51d1472430f30f5d1b0366c81ab6b6deafe9608ab9ba57bd3b73e",
+          "irisBounds": [
+            209,
+            268,
+            223,
+            275
+          ],
+          "eyeBounds": [
+            197,
+            256,
+            235,
+            287
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/male-center_part_medium-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "31f0bf4ef5a89bc5e91d9ca247102ac7ea86df1950ac433bebe8e9e5d3b88fb4",
+          "irisBounds": [
+            83,
+            72,
+            91,
+            74
+          ],
+          "eyeBounds": [
+            81,
+            70,
+            93,
+            76
+          ]
+        }
+      },
+      "swept_back_undercut": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/male-swept_back_undercut-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "697e3f60f7e89a570c475c170420e122f0969737c1e40c52799b738aaf6d676b",
+          "irisBounds": [
+            140,
+            264,
+            224,
+            283
+          ],
+          "eyeBounds": [
+            128,
+            252,
+            236,
+            295
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/male-swept_back_undercut-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "63e1262459067952b3463df126511a3f12b874bda721f6a2c862b0d462c71f7e",
+          "irisBounds": [
+            90,
+            72,
+            91,
+            73
+          ],
+          "eyeBounds": [
+            88,
+            70,
+            93,
+            75
+          ]
+        }
+      },
+      "shoulder_length_loose": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/male-shoulder_length_loose-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "cb8dd46221f0ecbeb1524d5509346a3220d6f497c53f55bd7426563a5e2389ed",
+          "irisBounds": [
+            202,
+            270,
+            215,
+            276
+          ],
+          "eyeBounds": [
+            190,
+            258,
+            227,
+            288
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/male-shoulder_length_loose-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "6b4521dab895e23705027e6c745eb161f8aa17101e8293bbf9801939f7503a9d",
+          "irisBounds": [
+            83,
+            72,
+            92,
+            74
+          ],
+          "eyeBounds": [
+            81,
+            70,
+            94,
+            76
+          ]
+        }
+      }
+    },
+    "female": {
+      "none": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/female-none-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "0a29665af6c12359c7ee800208ef3ac91feab7e10c035a2124e35ed72b2def81",
+          "irisBounds": [
+            124,
+            252,
+            209,
+            270
+          ],
+          "eyeBounds": [
+            112,
+            240,
+            221,
+            282
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/female-none-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "eb5d64902cef0d82eced92d27a3929f4d48e29b01b1e8df7b1fd650a2c276848",
+          "irisBounds": [
+            91,
+            70,
+            93,
+            72
+          ],
+          "eyeBounds": [
+            89,
+            68,
+            95,
+            74
+          ]
+        }
+      },
+      "shag": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/female-shag-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "1498710532986c12bd5044fc85c2150265b10125e850d6175b38db242a6f9b57",
+          "irisBounds": [
+            193,
+            258,
+            209,
+            275
+          ],
+          "eyeBounds": [
+            181,
+            246,
+            221,
+            287
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/female-shag-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "5deb772729ba962e32a5c75dc2ff61cc0cf6496a0ff870cebefda44cb34f5db4",
+          "irisBounds": [
+            91,
+            71,
+            93,
+            73
+          ],
+          "eyeBounds": [
+            89,
+            69,
+            95,
+            75
+          ]
+        }
+      },
+      "short_swept": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/female-short_swept-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "e754077f210e92869c5a271c647ecd5a6ee0b859a2c9faa243da32e220980a52",
+          "irisBounds": [
+            130,
+            261,
+            212,
+            279
+          ],
+          "eyeBounds": [
+            118,
+            249,
+            224,
+            291
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/female-short_swept-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "e50d6582420ad29f56ba5f153474fee6ee3a03d961435d01a0723deacf7effcd",
+          "irisBounds": [
+            84,
+            71,
+            93,
+            73
+          ],
+          "eyeBounds": [
+            82,
+            69,
+            95,
+            75
+          ]
+        }
+      },
+      "cropped": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/female-cropped-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "584b81bcc7c89b742b43e32f1db26e70167aea08af467c3fa55a1743d9ad070f",
+          "irisBounds": [
+            122,
+            261,
+            206,
+            281
+          ],
+          "eyeBounds": [
+            110,
+            249,
+            218,
+            293
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/female-cropped-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "37a866224d50054d53573f18a36bea09f924af5323570c7a1d59bb98644279d0",
+          "irisBounds": [
+            84,
+            70,
+            93,
+            73
+          ],
+          "eyeBounds": [
+            82,
+            68,
+            95,
+            75
+          ]
+        }
+      },
+      "braided_ponytail": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/female-braided_ponytail-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "9ee1e5f514017dddb39f28de0800beb173e2c3874bf403cc321a61ffa4659ec1",
+          "irisBounds": [
+            196,
+            266,
+            209,
+            277
+          ],
+          "eyeBounds": [
+            184,
+            254,
+            221,
+            289
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/female-braided_ponytail-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "bbc1454b0cd412805683d5cc6543a7a085dfb66cf240370ff23c11e53efb8ce0",
+          "irisBounds": [
+            91,
+            71,
+            93,
+            72
+          ],
+          "eyeBounds": [
+            89,
+            69,
+            95,
+            74
+          ]
+        }
+      },
+      "high_ponytail": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/female-high_ponytail-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "e25d32c1862f4d80ef67e6aa33938c21a44f9ff16a28bf8a7fe685b29ada0ab8",
+          "irisBounds": [
+            118,
+            257,
+            193,
+            273
+          ],
+          "eyeBounds": [
+            106,
+            245,
+            205,
+            285
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/female-high_ponytail-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "ddb0dd25d5ee90a68e8dd8ea6c0592578e2eb0ad2b70f23e82435945248f8069",
+          "irisBounds": [
+            85,
+            71,
+            94,
+            74
+          ],
+          "eyeBounds": [
+            83,
+            69,
+            96,
+            76
+          ]
+        }
+      },
+      "center_part_medium": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/female-center_part_medium-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "0d896d7804afe71480904b409133fae654c88da85c814e4e0cb60f14c9b1c1f2",
+          "irisBounds": [
+            129,
+            258,
+            210,
+            274
+          ],
+          "eyeBounds": [
+            117,
+            246,
+            222,
+            286
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/female-center_part_medium-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "290506bc753895d56b9de63ed988fc86d2f289e41eee1345cc6d2644098fe98b",
+          "irisBounds": [
+            84,
+            70,
+            93,
+            73
+          ],
+          "eyeBounds": [
+            82,
+            68,
+            95,
+            75
+          ]
+        }
+      },
+      "swept_back_undercut": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/female-swept_back_undercut-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "7acc4cc7ae33157fddbde9ef6256aa417641610914be1128f297d7cd288ef84e",
+          "irisBounds": [
+            121,
+            257,
+            208,
+            276
+          ],
+          "eyeBounds": [
+            109,
+            245,
+            220,
+            288
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/female-swept_back_undercut-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "bc27f13a731e152b0c18361f75880d1204da58c2bf5a753d9e2210bde9f08b7d",
+          "irisBounds": [
+            83,
+            70,
+            92,
+            73
+          ],
+          "eyeBounds": [
+            81,
+            68,
+            94,
+            75
+          ]
+        }
+      },
+      "shoulder_length_loose": {
+        "portrait": {
+          "url": "/assets/clean-gladiator/v003/identities/female-shoulder_length_loose-portrait.png",
+          "width": 512,
+          "height": 640,
+          "anchor": [
+            256,
+            420
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "78065ac7e274b8ed2be5592ec9f8042d177ac4b4f25a6e0fa51f502162f85d01",
+          "irisBounds": [
+            135,
+            261,
+            216,
+            278
+          ],
+          "eyeBounds": [
+            123,
+            249,
+            228,
+            290
+          ]
+        },
+        "chibi": {
+          "url": "/assets/clean-gladiator/v003/identities/female-shoulder_length_loose-chibi.png",
+          "width": 192,
+          "height": 160,
+          "anchor": [
+            96,
+            86
+          ],
+          "sourceFacing": "W",
+          "materialDefaults": {
+            "skin": "#c58d70",
+            "hair": "#626e83",
+            "iris": "#429886"
+          },
+          "sha256": "e2fc458cf980f71b4bad71fa9da3945a0c7361a1b69a62a6c8ad675ace1a2bfa",
+          "irisBounds": [
+            85,
+            70,
+            93,
+            72
+          ],
+          "eyeBounds": [
+            83,
+            68,
+            95,
+            74
+          ]
+        }
+      }
+    }
+  },
+  "beards": {
+    "stubble": {
+      "portrait": {
+        "url": "/assets/clean-gladiator/v003/identities/beard-stubble-portrait.png",
+        "width": 512,
+        "height": 640,
+        "anchor": [
+          256,
+          420
+        ],
+        "material": "hair",
+        "materialDefaults": {
+          "skin": "#c58d70",
+          "hair": "#626e83",
+          "iris": "#429886"
+        },
+        "placementCalibration": [
+          -24,
+          12
+        ],
+        "sha256": "7829dce6d58c07c9f78bed5e4ca9187b16c6956cd323f1d82125178b15d298ae"
+      },
+      "chibi": {
+        "url": "/assets/clean-gladiator/v003/identities/beard-stubble-chibi.png",
+        "width": 192,
+        "height": 160,
+        "anchor": [
+          96,
+          86
+        ],
+        "material": "hair",
+        "materialDefaults": {
+          "skin": "#c58d70",
+          "hair": "#626e83",
+          "iris": "#429886"
+        },
+        "placementCalibration": [
+          -3,
+          1
+        ],
+        "sha256": "5e377aa2e730ee00013d8d7e78fe87bf04099011188aa04f4bc3b183a52f0f12"
+      }
+    },
+    "trimmed_full": {
+      "portrait": {
+        "url": "/assets/clean-gladiator/v003/identities/beard-trimmed_full-portrait.png",
+        "width": 512,
+        "height": 640,
+        "anchor": [
+          256,
+          420
+        ],
+        "material": "hair",
+        "materialDefaults": {
+          "skin": "#c58d70",
+          "hair": "#626e83",
+          "iris": "#429886"
+        },
+        "placementCalibration": [
+          -24,
+          12
+        ],
+        "sha256": "6e08e54a99abc7552ce0955a32a405042d09d59c2864f2d5cc1d59706e51fba4"
+      },
+      "chibi": {
+        "url": "/assets/clean-gladiator/v003/identities/beard-trimmed_full-chibi.png",
+        "width": 192,
+        "height": 160,
+        "anchor": [
+          96,
+          86
+        ],
+        "material": "hair",
+        "materialDefaults": {
+          "skin": "#c58d70",
+          "hair": "#626e83",
+          "iris": "#429886"
+        },
+        "placementCalibration": [
+          -3,
+          1
+        ],
+        "sha256": "4ee360c98276d5e4ad7e659d66fa8775d5bd5b012bf1adf0b854f2dca670781c"
+      }
+    },
+    "moustache_goatee": {
+      "portrait": {
+        "url": "/assets/clean-gladiator/v003/identities/beard-moustache_goatee-portrait.png",
+        "width": 512,
+        "height": 640,
+        "anchor": [
+          256,
+          420
+        ],
+        "material": "hair",
+        "materialDefaults": {
+          "skin": "#c58d70",
+          "hair": "#626e83",
+          "iris": "#429886"
+        },
+        "placementCalibration": [
+          -24,
+          12
+        ],
+        "sha256": "a06d7c551b4ef0bc27db190fc4bf341e4dd56d8b62579144af632bb2dc329f7b"
+      },
+      "chibi": {
+        "url": "/assets/clean-gladiator/v003/identities/beard-moustache_goatee-chibi.png",
+        "width": 192,
+        "height": 160,
+        "anchor": [
+          96,
+          86
+        ],
+        "material": "hair",
+        "materialDefaults": {
+          "skin": "#c58d70",
+          "hair": "#626e83",
+          "iris": "#429886"
+        },
+        "placementCalibration": [
+          -3,
+          1
+        ],
+        "sha256": "14e26fadff09dd2a031d1e4d1f2b3a674a599f677487949f128060018524c909"
+      }
+    }
+  },
+  "sources": {
+    "portrait": {
+      "path": "C:\\Users\\santa\\OneDrive\\Documents\\ChatGPT\\online game for contest\\ArtReview\\Dark_Fantasy_v001\\Sources\\portrait-sheet.png",
+      "sha256": "153dd75c4480398fafdec77985d13c71418fa6edd13757b081e37581dfe8cd21",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "scales": {
+        "male": 1.3777777777777778,
+        "female": 1.467455621301775
+      },
+      "originalGeneratedPath": "C:\\Users\\santa\\.codex\\generated_images\\01a11826-edeb-77d2-86e0-af8f89dbd85d\\exec-0e89da64-c132-46f2-ab32-1c6192bc3468.png"
+    },
+    "chibi": {
+      "path": "C:\\Users\\santa\\OneDrive\\Documents\\ChatGPT\\online game for contest\\ArtReview\\Dark_Fantasy_v001\\Sources\\chibi-sheet.png",
+      "sha256": "27622e08b65289a31670f492eaaaecc4ddb71b52aef859a7338915f566767f68",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "scales": {
+        "male": 0.1358695652173913,
+        "female": 0.14450867052023122
+      },
+      "originalGeneratedPath": "C:\\Users\\santa\\.codex\\generated_images\\01a11826-edeb-77d2-86e0-af8f89dbd85d\\exec-586529f6-815a-4eda-9179-a5e91c0860ee.png"
+    },
+    "beards": {
+      "path": "C:\\Users\\santa\\OneDrive\\Documents\\ChatGPT\\online game for contest\\ArtReview\\Dark_Fantasy_v001\\Sources\\beard-sheet.png",
+      "sha256": "83ce98198879db14bb7a9e94682cf46d9eecbf2a813c77e8e233b8aa47784758",
+      "dimensions": [
+        1536,
+        1024
+      ],
+      "registration": "Magenta neck-base marker measured before extracting the overlay.",
+      "originalGeneratedPath": "C:\\Users\\santa\\.codex\\generated_images\\01a11826-edeb-77d2-86e0-af8f89dbd85d\\exec-89602bf7-d342-445f-bc0f-af7b2783a295.png"
+    }
+  },
+  "registration": "One scale per sex and atlas; every neck meets the same authored body anchor. Hair length does not affect head placement."
+}

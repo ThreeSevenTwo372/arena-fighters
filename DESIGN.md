@@ -1,0 +1,75 @@
+# Gladiator Tournament Design and Build Plan
+
+Build a browser game in which each player creates a gladiator, adapts equipment to each opponent, and accumulates tournament victories while keeping that character alive. The requested v0.7.0 playable scope is an eight-player sequential tournament. The earlier 2-to-8-player concept remains an expansion direction; smaller brackets are not part of the current implementation.
+
+## Agreed game concept
+
+- Players create a gladiator with a fixed point budget. Core attributes and creation traits remain fixed for that character's lifetime.
+- A first-tab 20-second sky-to-arena Flux arrival leads to NAME YOUR FIGHTER., then one compact screen for appearance, attribute values, and a trait. Attribute presets and explanations are removed from creation. The ten-trait catalog includes stronger bonuses with explicit drawbacks while preserving existing survivor traits.
+- Every gladiator can use any weapon type. Players choose weapons and equipment before each new one versus one match, then keep that equipment throughout the duel.
+- Combat is turn based, inspired by competitive Pokemon battles.
+- Enter tournament joins the oldest waiting lobby or creates one. Eight guests fill the roster and trigger a secure shuffled bracket automatically, with one duel active at a time. There are no bots or host-start controls.
+- Current duelists prepare at the existing arena gate using the weapon rack, three armor displays, and four helmet choices. The existing eight-second gate film precedes the first combat deadline.
+- The other players watch the current match from the arena seats, including public health/stamina, readiness, and resolved attack animation. Cosmetic remote cheers, tomatoes, and mercy gestures remain planned.
+- After a duel, the winner chooses whether to spare or execute the defeated gladiator. A 30-second deadline defaults to spare; a six-second intermission then calls the next pair.
+- A spared gladiator can enter another tournament. An executed gladiator cannot; its player creates a new character for another lobby.
+- Tournament victories belong to the individual character. The objective is to win as many tournaments as possible before that character dies.
+
+## Current playable rules
+
+Use five attributes: Strength for heavy attacks and handling, Dexterity for precise weapons/techniques, Speed for initiative, Defense for health and armor effectiveness, and Intelligence for tactical efficiency plus small all-round fortune bonuses. The prototype uses 20 points and a cap of 8. Fortune is currently deterministic and capped at +1. Equal budgets constrain character creation; matchup testing and human play establish whether the choices are balanced. Actual equipment previews and rules are documented in [ONLINE_DUELS.md](ONLINE_DUELS.md).
+
+The seven available weapons are sword, spear, axe, flail, halberd, mace, and greatsword, plus light, medium, and heavy armor. All options are available to every character. Helmets change appearance without combat bonuses and conceal the complete saved head when enclosed. Armor trades protection against initiative or stamina efficiency. Each weapon supplies four clear actions: Strike, a distinctive Weapon Technique, Guard, and Recover. Numerical costs and effects remain tuning values supported by automated matchup checks and pending human balance review.
+
+Both duelists see the opponent's fixed attributes, select equipment privately, and reveal their loadouts together. Both choose combat actions secretly each turn. Resolve actions by priority, then effective initiative; a surviving fighter receives one action per turn. Equal initiative alternates the first fighter. Spectators receive choices only after the reveal.
+
+Begin with stamina and weapon techniques as the sources of tactical counterplay. Test whether they give disadvantaged builds a useful response. Add simple close and reach distance states if those tests show that weapon matchups still decide too much of the outcome.
+
+Restore health, stamina, and temporary effects before each duel. The current bracket contains four quarterfinals, two semifinals, and a final, with no byes. The recorded original shuffle assigns seeds 1 through 8. An exact combat draw advances the fighter with the lower seed number, and the bracket labels advancement by original seeding. A spared loser is still eliminated from the current tournament. Both spared and executed players can remain spectators until it ends. A valid surviving champion receives exactly one durable tournament victory. An abandoned bracket may complete without an eligible champion and awards no title.
+
+Future remote cheers and tomatoes should remain cosmetic, with short cooldowns; mercy gestures should advise the winner without deciding the outcome. The current decision timer defaults to spare, and a retired character's final record remains visible while creating a replacement. Tournament titles preserve the same combat budget for returning champions and newcomers; further cosmetic recognition remains an extension.
+
+Current windows are 120 seconds for equipment, eight seconds for gate entrance, at most 20 seconds for each action, 90 seconds of disconnect grace, 30 seconds for mercy, and six seconds between matches. Missing equipment defaults to sword/medium/no helmet; missing actions become Recover; mercy defaults to spare. The first action deadline starts after gate entrance. See [TOURNAMENTS.md](TOURNAMENTS.md) for advancement, withdrawal, privacy, and persistence.
+
+## Build milestones
+
+| Milestone | Deliverable | Completion check |
+| --- | --- | --- |
+| 1. Combat rules and sandbox | Character allocation, weapon and armor choices, pure combat rules, and a simple local duel interface | Different builds can win through decisions; no endless guard or recovery loops; turn order and stamina costs are understandable |
+| 2. Online duel | Room code joining, two independent players, private loadout selection, secret combat choices, and a shared battle history | Independent browser sessions agree on the result; hidden choices stay private; refresh restores the duel |
+| 3. Complete tournament | Current scope: eight guests, automatic entry/draw, one active duel, live spectator seats, mercy, champion result, and another tournament; smaller brackets/reactions remain extensions | Local service checks complete an eight-guest seven-match bracket; spared identities return, retired identities stay retired, and titles are recorded once |
+| 4. Presentation and submission | Character appearance, arena artwork, animations, sound, mobile layout, public HTTPS URL, and submission materials | Real phone and laptop play; full public tournament; title, cover image, description, and game URL ready for the mission |
+
+## Multiplayer and persistence
+
+The v0.7.0 service implements the default eight-player tournament and retains the earlier two-player rooms at `?duel-mode=1`. It uses one Node service and the existing atomic `.local-data/online-duels.json` store. Tournament members receive the current live spectator state; only the active pair can commit equipment, actions, or winner mercy. The original browser token key is unchanged, and persisted `activeTournament` restores the roster, match, and bracket. Public HTTPS hosting, real phone testing, smaller brackets, and remote crowd reactions remain pending. The ordinary v006 character renderer and v009 candidate review URL remain preserved.
+
+The v0.6.2 battle flow gives players at most 20 seconds to choose, defaults missing moves to Recover, plays every resolved round in full, and advances automatically. The command window uses four compact commands, public readiness, an upfront countdown, and collapsed history. New duels use 90 base health plus build modifiers; Speed adds 2 stamina recovery per 4 points to preserve longer-fight tradeoffs. Representative offensive medians are 8–10 rounds, while the existing 24-round cap prevents indefinite stalling.
+
+The browser client submits intentions to an authoritative game service with durable character storage. Combat rules remain separate from the interface so the same rules power the sandbox, online service, and balance simulations. Hosting and any required ChatGPT Work publication workflow need a separate deployment task; no public deployment has been performed.
+
+The service validates attribute budgets, equipment, combat actions, resources, tournament advancement, and mercy decisions. It owns deadlines and sends each player only the information they are permitted to see. Clients request actions rather than submitting damage or results. Retried commands must not resolve a turn, execute a character, or award a victory twice.
+
+Use an opaque guest identity to support room codes without player logins. Initially, a character returns in the same browser; cross device recovery needs a separate design. Refreshing must not restore health, erase a defeat, or resurrect an executed character. A character can participate in only one active tournament at a time.
+
+The service persists the resolved duel and mercy decision before advancing the bracket. Reconnects receive the current state and deadlines. The full eight-guest roster starts automatically, so no host can freeze the draw. An entrant who withdraws before a future scheduled match cannot enter another lobby until their forfeit and verdict resolve; an eliminated fighter whose verdict has resolved may leave and reenter. Guest identity supports casual persistence; it does not establish that each browser belongs to a unique person.
+
+## Validation
+
+Exercise legal attribute allocations and weapon and armor combinations with several tactical policies. Review unusually strong builds, initiative advantages, repeated optimal actions, and stamina deadlocks. Follow this with human matches; automated results alone do not show that prediction feels satisfying.
+
+Current automated checks cover eight distinct authenticated guests, all seven sequential matches, private choices, spectator command rejection, exact timing boundaries, stale/retried commands, retirement, safe withdrawal, champion credit, durable restart, and persistence rollback. Actual app integration fixtures cover roster-to-duelist indexing, gate-before-battle flow, queued server revisions during animations, leaving during playback, and identity recovery. The [test receipt](artifacts/Tournament_Flow_v001/TEST_RECEIPT.json) records 28 backend/legacy checks and 17 app integration checks, with 49 in the focused flow suite; the [final full-suite log](artifacts/Tournament_Flow_v001/full-test.log) records 218 passing tests and no failures.
+
+The separate [live local browser proof receipt](artifacts/Tournament_Flow_v001/BROWSER_RECEIPT.json) follows the seven-match bracket to Aster's title and three duel wins, then automatic lobby reentry for Aster and spared Mira with their same identities and records. [Browser captures](artifacts/Tournament_Flow_v001/browser) include desktop and 390-pixel layouts. This evidence does not establish eight real devices or a public-network tournament.
+
+Test the public build on a phone and laptop. Until that check succeeds, local tests establish local behavior only.
+
+## Contest requirements
+
+The [Handshake mission](https://joinhandshake.com/learn/create-a-multiplayer-game-8d7d59b5/) describes a game created with ChatGPT Work, published at a public URL, and joined by room code without player logins or installations. Confirm that the creation and publication workflow satisfies the mission before committing to a hosting route.
+
+The [official contest rules](https://go.joinhandshake.com/rs/390-ZTF-353/images/%5BAI_Skills_Studio_Challenge%5D_Contest_Official_Rules.pdf?version=0) require a project title, cover image, description, and URL submitted through the Handshake mission. They specify October 30, 2026 at 11:59 PM Pacific, which is October 31 at 2:59 AM Eastern. The mission overview advertises October 31. Plan around the deadline specified in the rules and aim to submit before the final day.
+
+## Later expansion
+
+Expand the weapon roster, creation traits, arena presentation, and cosmetic rewards after the full tournament works. Campaigns, equipment grinding, competitive matchmaking, and cross device identity recovery are later features.

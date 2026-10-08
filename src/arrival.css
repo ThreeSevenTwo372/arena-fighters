@@ -1,0 +1,33 @@
+/* The real Flux film owns the first viewport; controls sit in its dark margins. */
+#app.arrival-active { min-height: 100svh; }
+.arrival-screen { position: relative; isolation: isolate; overflow: hidden; display: grid; min-height: 100svh; color: #f5e7cf; background: #0a090b; }
+.arrival-video { position: absolute; z-index: -3; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.arrival-shade { position: absolute; z-index: -2; inset: 0; background: linear-gradient(180deg, #09080cbd 0%, #09080c00 25%, #09080c00 60%, #09080cc9 100%); pointer-events: none; }
+.arrival-header { position: absolute; top: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: clamp(22px, 4vw, 42px) clamp(22px, 5vw, 64px); }
+.arrival-wordmark { text-transform: uppercase; font-size: clamp(12px, 1.6vw, 18px); letter-spacing: .24em; font-weight: 600; text-shadow: 0 2px 12px #000; }
+.arrival-screen button { appearance: none; font: inherit; cursor: pointer; border-radius: 3px; }
+.arrival-skip { display: inline-flex; align-items: center; gap: 20px; min-height: 44px; padding: 8px 14px; border: 1px solid #e7d2ab67; background: #100e16a3; color: #f1dfc4; font-size: 12px; letter-spacing: .06em; }
+.arrival-skip:hover, .arrival-skip:focus-visible { background: #29202ac7; border-color: #f5d8a7; }
+.arrival-invitation { position: absolute; bottom: clamp(80px, 15svh, 160px); left: 20px; right: 20px; display: grid; justify-items: center; text-align: center; }
+.arrival-status { font-family: Georgia, serif; font-size: clamp(23px, 4vw, 40px); letter-spacing: .01em; text-shadow: 0 3px 16px #000; margin: 0 0 24px; }
+.arrival-status:empty { display: none; }
+.arrival-buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.arrival-screen [hidden] { display: none; }
+.arrival-enter, .arrival-play { min-height: 48px; padding: 13px 24px; border: 1px solid #c8a477; color: #251919; background: #d9bb83; font-size: 13px; }
+.arrival-enter { display: inline-flex; align-items: center; gap: 30px; }
+.arrival-play { color: #ead7b7; background: #15111ecc; }
+.arrival-enter:hover, .arrival-enter:focus-visible { background: #f1d49c; }
+.arrival-play:hover, .arrival-play:focus-visible { background: #332534; }
+.arrival-screen button:focus-visible { outline: 2px solid #ffdda0; outline-offset: 4px; }
+.arrival-caption { position: absolute; bottom: clamp(24px, 4svh, 42px); left: 20px; right: 20px; text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: .22em; color: #dfd1b9; text-shadow: 0 2px 12px #000; }
+.arrival-screen[data-state="playing"] .arrival-caption { opacity: .7; }
+.arrival-screen[data-state="error"] .arrival-video { object-fit: cover; }
+@media (min-aspect-ratio: 2/1) { .arrival-video { object-fit: contain; } }
+@media (max-width: 600px) {
+  .arrival-header { padding: 18px 16px; gap: 10px; }
+  .arrival-wordmark { font-size: 10px; letter-spacing: .17em; }
+  .arrival-skip { font-size: 11px; gap: 10px; padding: 8px 11px; }
+  .arrival-video { object-fit: contain; }
+  .arrival-caption { font-size: 9px; letter-spacing: .15em; }
+  .arrival-invitation { bottom: max(88px, 12svh); }
+}

@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: blackbook-arena-fighters
+    runtime: node
+    plan: free
+    region: virginia
+    buildCommand: node --check server.mjs
+    startCommand: node server.mjs
+    healthCheckPath: /healthz
+    numInstances: 1
+    autoDeployTrigger: off
+    envVars:
+      - key: SESSION_MODE
+        value: temporary
+      - key: EMBED_ORIGINS
+        value: https://www.blackbooktattoo.com,https://blackbooktattoo.com,https://fish-bullfrog-sgh8.squarespace.com
+      - key: NODE_VERSION
+        value: "24"

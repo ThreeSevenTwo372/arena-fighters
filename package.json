@@ -1,0 +1,12 @@
+{
+  "name": "arena-fighters-prototype",
+  "version": "0.8.6",
+  "private": true,
+  "type": "module",
+  "description": "Arena Fighters with optional temporary online sessions, Roman manuscript presentation, timed mercy and crowd verdicts, native pixel execution, lobby bots and sequential tournaments.",
+  "engines": { "node": ">=24 <25" },
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test tests/*.test.js"
+  }
+}

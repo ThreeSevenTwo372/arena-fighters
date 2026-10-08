@@ -1,0 +1,26 @@
+{
+  "schema": "game_dev.job.v1",
+  "id": "job_55837877-eec2-41a9-a8ef-63e61062ac6b",
+  "operation": "package.show",
+  "status": "failed",
+  "request": {
+    "positionals": [
+      "package",
+      "show",
+      "C:\\Users\\santa\\Game Development\\D-PIXEL BUILD\\AssetProduction\\Chibi_Customization_B_v001\\Group_01F_Pixel_Modular_Test_v001"
+    ],
+    "flags": {}
+  },
+  "attempts": 1,
+  "eventCount": 1,
+  "artifacts": [],
+  "createdAt": "2026-10-07T22:37:58.935Z",
+  "updatedAt": "2026-10-07T22:37:58.965Z",
+  "startedAt": "2026-10-07T22:37:58.949Z",
+  "completedAt": "2026-10-07T22:37:58.965Z",
+  "error": {
+    "error": "INVALID_STATE",
+    "message": "C:\\Users\\santa\\Game Development\\D-PIXEL BUILD\\AssetProduction\\Chibi_Customization_B_v001\\Group_01F_Pixel_Modular_Test_v001 is not a supported Game Development Studio asset package",
+    "retryable": false
+  }
+}

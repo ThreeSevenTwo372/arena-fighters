@@ -1,0 +1,400 @@
+{
+  "schema": "last-laurel.arena-identity.v1",
+  "styleVersion": "arena-identity-v2",
+  "sourceWorkflow": "D-PIXEL linked rig: fixed identity anchors, full canvases and authored grips",
+  "canvas": [
+    192,
+    160
+  ],
+  "pivot": [
+    96,
+    152
+  ],
+  "headOrigin": [
+    64,
+    36
+  ],
+  "neckCenter": [
+    96,
+    86
+  ],
+  "bodies": {
+    "male": {
+      "light": {
+        "url": "/assets/clean-gladiator/v003/bodies/male-light.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          75,
+          108
+        ],
+        "offhandGrip": [
+          102,
+          109
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/male-light.png",
+        "handOverlayBounds": [
+          71,
+          104,
+          79,
+          113
+        ]
+      },
+      "medium": {
+        "url": "/assets/clean-gladiator/v003/bodies/male-medium.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          73,
+          108
+        ],
+        "offhandGrip": [
+          101,
+          109
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/male-medium.png",
+        "handOverlayBounds": [
+          69,
+          104,
+          77,
+          113
+        ]
+      },
+      "heavy": {
+        "url": "/assets/clean-gladiator/v003/bodies/male-heavy.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          72,
+          109
+        ],
+        "offhandGrip": [
+          102,
+          110
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/male-heavy.png",
+        "handOverlayBounds": [
+          68,
+          105,
+          76,
+          114
+        ]
+      }
+    },
+    "female": {
+      "light": {
+        "url": "/assets/clean-gladiator/v003/bodies/female-light.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          75,
+          107
+        ],
+        "offhandGrip": [
+          101,
+          108
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/female-light.png",
+        "handOverlayBounds": [
+          71,
+          103,
+          79,
+          112
+        ]
+      },
+      "medium": {
+        "url": "/assets/clean-gladiator/v003/bodies/female-medium.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          73,
+          108
+        ],
+        "offhandGrip": [
+          101,
+          109
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/female-medium.png",
+        "handOverlayBounds": [
+          69,
+          104,
+          77,
+          113
+        ]
+      },
+      "heavy": {
+        "url": "/assets/clean-gladiator/v003/bodies/female-heavy.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          72,
+          108
+        ],
+        "offhandGrip": [
+          101,
+          110
+        ],
+        "handsUrl": "/assets/clean-gladiator/v003/hands/female-heavy.png",
+        "handOverlayBounds": [
+          68,
+          104,
+          76,
+          113
+        ]
+      }
+    }
+  },
+  "weapons": {
+    "sword": {
+      "url": "/assets/clean-gladiator/v003/weapons/sword.png",
+      "width": 24,
+      "height": 63,
+      "grip": [
+        11,
+        50
+      ],
+      "sourceFacing": "W"
+    },
+    "spear": {
+      "url": "/assets/clean-gladiator/v003/weapons/spear.png",
+      "width": 14,
+      "height": 95,
+      "grip": [
+        6,
+        67
+      ],
+      "sourceFacing": "W"
+    },
+    "axe": {
+      "url": "/assets/clean-gladiator/v003/weapons/axe.png",
+      "width": 30,
+      "height": 58,
+      "grip": [
+        20,
+        42
+      ],
+      "sourceFacing": "W"
+    },
+    "flail": {
+      "url": "/assets/clean-gladiator/v003/weapons/flail.png",
+      "width": 44,
+      "height": 65,
+      "grip": [
+        36,
+        43
+      ],
+      "sourceFacing": "W",
+      "chainPivot": [
+        35,
+        25
+      ],
+      "headCenter": [
+        10,
+        15
+      ],
+      "chainEnd": [
+        13,
+        9
+      ],
+      "headPivot": [
+        13,
+        9
+      ],
+      "rig": "handle swing with trailing head arc",
+      "parts": {
+        "handle": {
+          "url": "/assets/clean-gladiator/v003/weapons/flail-handle.png",
+          "width": 44,
+          "height": 65,
+          "grip": [
+            36,
+            43
+          ],
+          "origin": [
+            0,
+            0
+          ],
+          "pivot": [
+            36,
+            43
+          ]
+        },
+        "chain": {
+          "url": "/assets/clean-gladiator/v003/weapons/flail-chain.png",
+          "width": 44,
+          "height": 65,
+          "grip": [
+            36,
+            43
+          ],
+          "origin": [
+            0,
+            0
+          ],
+          "pivot": [
+            35,
+            25
+          ]
+        },
+        "head": {
+          "url": "/assets/clean-gladiator/v003/weapons/flail-head.png",
+          "width": 44,
+          "height": 65,
+          "grip": [
+            36,
+            43
+          ],
+          "origin": [
+            0,
+            0
+          ],
+          "pivot": [
+            13,
+            9
+          ]
+        }
+      }
+    },
+    "halberd": {
+      "url": "/assets/clean-gladiator/v003/weapons/halberd.png",
+      "width": 32,
+      "height": 98,
+      "grip": [
+        17,
+        68
+      ],
+      "sourceFacing": "W"
+    },
+    "mace": {
+      "url": "/assets/clean-gladiator/v003/weapons/mace.png",
+      "width": 17,
+      "height": 60,
+      "grip": [
+        8,
+        41
+      ],
+      "sourceFacing": "W"
+    },
+    "greatsword": {
+      "url": "/assets/clean-gladiator/v003/weapons/greatsword.png",
+      "width": 34,
+      "height": 82,
+      "grip": [
+        16,
+        62
+      ],
+      "sourceFacing": "W"
+    },
+    "shield": {
+      "url": "/assets/clean-gladiator/v003/weapons/shield.png",
+      "width": 21,
+      "height": 35,
+      "grip": [
+        10,
+        13
+      ],
+      "sourceFacing": "W"
+    }
+  },
+  "helmets": {
+    "closed_bascinet": {
+      "url": "/assets/clean-gladiator/v003/helmets/closed_bascinet-world.png",
+      "width": 192,
+      "height": 160,
+      "position": [
+        79,
+        55,
+        108,
+        90
+      ],
+      "cutDimensions": [
+        29,
+        35
+      ],
+      "headOrigin": [
+        64,
+        36
+      ],
+      "anchor": [
+        96,
+        86
+      ],
+      "cutAnchor": [
+        17,
+        31
+      ],
+      "sourceFacing": "W"
+    },
+    "barbute": {
+      "url": "/assets/clean-gladiator/v003/helmets/barbute-world.png",
+      "width": 192,
+      "height": 160,
+      "position": [
+        81,
+        55,
+        107,
+        90
+      ],
+      "cutDimensions": [
+        26,
+        35
+      ],
+      "headOrigin": [
+        64,
+        36
+      ],
+      "anchor": [
+        96,
+        86
+      ],
+      "cutAnchor": [
+        15,
+        31
+      ],
+      "sourceFacing": "W"
+    },
+    "greathelm": {
+      "url": "/assets/clean-gladiator/v003/helmets/greathelm-world.png",
+      "width": 192,
+      "height": 160,
+      "position": [
+        81,
+        55,
+        108,
+        90
+      ],
+      "cutDimensions": [
+        27,
+        35
+      ],
+      "headOrigin": [
+        64,
+        36
+      ],
+      "anchor": [
+        96,
+        86
+      ],
+      "cutAnchor": [
+        15,
+        31
+      ],
+      "sourceFacing": "W"
+    }
+  },
+  "identityCatalog": "/assets/clean-gladiator/v003/identity.json",
+  "reference": "ArtReview/Arena_Identity_v001/user-reference.png",
+  "construction": "Complete head group fitted to the body neck socket: smaller, three source pixels forward, original body and hands preserved",
+  "identityTransform": {
+    "scale": 0.84,
+    "sourceAnchor": [
+      96,
+      86
+    ],
+    "targetAnchor": [
+      93,
+      86
+    ],
+    "method": "Nearest-neighbor whole identity about the neck socket; shared by all hair, beard, sex, armor and helmet combinations"
+  }
+}

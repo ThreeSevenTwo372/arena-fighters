@@ -1,0 +1,195 @@
+{
+  "schema": "last-laurel.clean-art.v1",
+  "styleVersion": "clean-v1",
+  "width": 192,
+  "height": 160,
+  "pivot": [
+    96,
+    152
+  ],
+  "canvas": [
+    192,
+    160
+  ],
+  "headOrigin": [
+    64,
+    36
+  ],
+  "neckCenter": [
+    96,
+    86
+  ],
+  "mainhandGrip": [
+    78,
+    110
+  ],
+  "offhandGrip": [
+    105,
+    111
+  ],
+  "bodyFacing": "W",
+  "bodies": {
+    "male": {
+      "light": {
+        "url": "/assets/clean-gladiator/v002/bodies/male-light.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          78,
+          110
+        ],
+        "offhandGrip": [
+          105,
+          111
+        ],
+        "handsUrl": "/assets/clean-gladiator/v002/hands/male-light.png",
+        "handOverlayBounds": [
+          74,
+          106,
+          82,
+          115
+        ]
+      },
+      "medium": {
+        "url": "/assets/clean-gladiator/v002/bodies/male-medium.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          77,
+          110
+        ],
+        "offhandGrip": [
+          105,
+          111
+        ],
+        "handsUrl": "/assets/clean-gladiator/v002/hands/male-medium.png",
+        "handOverlayBounds": [
+          73,
+          106,
+          81,
+          115
+        ]
+      },
+      "heavy": {
+        "url": "/assets/clean-gladiator/v002/bodies/male-heavy.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          73,
+          110
+        ],
+        "offhandGrip": [
+          101,
+          111
+        ],
+        "handsUrl": "/assets/clean-gladiator/v002/hands/male-heavy.png",
+        "handOverlayBounds": [
+          69,
+          106,
+          77,
+          115
+        ]
+      }
+    },
+    "female": {
+      "light": {
+        "url": "/assets/clean-gladiator/v002/bodies/female-light.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          77,
+          110
+        ],
+        "offhandGrip": [
+          105,
+          111
+        ],
+        "handsUrl": "/assets/clean-gladiator/v002/hands/female-light.png",
+        "handOverlayBounds": [
+          73,
+          106,
+          81,
+          115
+        ]
+      },
+      "medium": {
+        "url": "/assets/clean-gladiator/v002/bodies/female-medium.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          77,
+          110
+        ],
+        "offhandGrip": [
+          105,
+          111
+        ],
+        "handsUrl": "/assets/clean-gladiator/v002/hands/female-medium.png",
+        "handOverlayBounds": [
+          73,
+          106,
+          81,
+          115
+        ]
+      },
+      "heavy": {
+        "url": "/assets/clean-gladiator/v002/bodies/female-heavy.png",
+        "width": 192,
+        "height": 160,
+        "mainhandGrip": [
+          73,
+          110
+        ],
+        "offhandGrip": [
+          101,
+          111
+        ],
+        "handsUrl": "/assets/clean-gladiator/v002/hands/female-heavy.png",
+        "handOverlayBounds": [
+          69,
+          106,
+          77,
+          115
+        ]
+      }
+    }
+  },
+  "weapons": {
+    "sword": {
+      "url": "/assets/clean-gladiator/v002/weapons/sword.png",
+      "width": 24,
+      "height": 63,
+      "grip": [
+        12,
+        50
+      ]
+    },
+    "spear": {
+      "url": "/assets/clean-gladiator/v002/weapons/spear.png",
+      "width": 9,
+      "height": 95,
+      "grip": [
+        4,
+        68
+      ]
+    },
+    "axe": {
+      "url": "/assets/clean-gladiator/v002/weapons/axe.png",
+      "width": 23,
+      "height": 58,
+      "grip": [
+        18,
+        43
+      ]
+    },
+    "shield": {
+      "url": "/assets/clean-gladiator/v002/weapons/shield.png",
+      "width": 36,
+      "height": 35,
+      "grip": [
+        18,
+        17
+      ]
+    }
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "project": "Arena Fighters",
+  "version": "arrival-v001",
+  "prepared_on_user_date": "2026-10-08",
+  "authorization": "Current user request to greet first visitors with sky-to-arena Flux, then naming and creation, using existing arena gate artwork and animation.",
+  "sources": [
+    {
+      "file": "ArtReview\\Cinematics_Animation_v002\\Exports\\sky-to-arena-v002.mp4",
+      "bytes": 61116647,
+      "sha256": "66f8db5880762bf5d694587192aa068a1d7af21fe3f3091f3610cc20c0c4158c",
+      "preserved_unchanged": true,
+      "generation_provenance": "ArtReview/Cinematics_Animation_v002/GENERATION_RECEIPT.json",
+      "provider": "Higgsfield",
+      "model": "flux_3_video",
+      "job_id": "1a0010ca-dbd3-4a8d-9b10-53484fb7f75f"
+    },
+    {
+      "file": "ArtReview\\Cinematics_Animation_v001\\Exports\\gladiator-at-the-gate.mp4",
+      "bytes": 7770941,
+      "sha256": "2ba8bcc63b8d6a8cafd5fcd56937c3bb2cdbf6009b7c0c144dcca2d037876529",
+      "preserved_unchanged": true,
+      "generation_provenance": "ArtReview/Cinematics_Animation_v001/ANIMATION_RECEIPT.json"
+    }
+  ],
+  "tool": {
+    "package": "imageio-ffmpeg 0.6.0",
+    "binary_version": "ffmpeg version 7.1-essentials_build-www.gyan.dev Copyright (c) 2000-2024 the FFmpeg developers",
+    "location": "Temporary isolated tools directory; no project runtime dependency"
+  },
+  "commands": [
+    [
+      "-hide_banner",
+      "-loglevel",
+      "warning",
+      "-i",
+      "ArtReview\\Cinematics_Animation_v002\\Exports\\sky-to-arena-v002.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-vf",
+      "scale=1280:720:flags=lanczos,setsar=1",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "medium",
+      "-crf",
+      "24",
+      "-pix_fmt",
+      "yuv420p",
+      "-movflags",
+      "+faststart",
+      "-y",
+      "public/cinematics/arrival-v001/sky-to-arena.mp4"
+    ],
+    [
+      "-hide_banner",
+      "-loglevel",
+      "warning",
+      "-ss",
+      "0",
+      "-i",
+      "ArtReview\\Cinematics_Animation_v002\\Exports\\sky-to-arena-v002.mp4",
+      "-frames:v",
+      "1",
+      "-vf",
+      "scale=1280:720:flags=lanczos",
+      "-q:v",
+      "3",
+      "-update",
+      "1",
+      "-y",
+      "public/cinematics/arrival-v001/poster.jpg"
+    ],
+    [
+      "-hide_banner",
+      "-loglevel",
+      "warning",
+      "-ss",
+      "19.8",
+      "-i",
+      "ArtReview\\Cinematics_Animation_v002\\Exports\\sky-to-arena-v002.mp4",
+      "-frames:v",
+      "1",
+      "-vf",
+      "scale=1280:720:flags=lanczos",
+      "-q:v",
+      "3",
+      "-update",
+      "1",
+      "-y",
+      "public/cinematics/arrival-v001/arena-still.jpg"
+    ],
+    [
+      "-hide_banner",
+      "-loglevel",
+      "warning",
+      "-i",
+      "ArtReview\\Cinematics_Animation_v001\\Exports\\gladiator-at-the-gate.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-vf",
+      "scale=1280:720:flags=lanczos,setsar=1",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "medium",
+      "-crf",
+      "24",
+      "-pix_fmt",
+      "yuv420p",
+      "-movflags",
+      "+faststart",
+      "-y",
+      "public/cinematics/arrival-v001/arena-gate.mp4"
+    ],
+    [
+      "-hide_banner",
+      "-loglevel",
+      "warning",
+      "-ss",
+      "0",
+      "-i",
+      "ArtReview\\Cinematics_Animation_v001\\Exports\\gladiator-at-the-gate.mp4",
+      "-frames:v",
+      "1",
+      "-vf",
+      "scale=1280:720:flags=lanczos",
+      "-q:v",
+      "3",
+      "-update",
+      "1",
+      "-y",
+      "public/cinematics/arrival-v001/arena-gate.jpg"
+    ]
+  ],
+  "outputs": [
+    {
+      "file": "sky-to-arena.mp4",
+      "bytes": 10201126,
+      "sha256": "11ec72c3634994914407ce16c588ce073d1267437557a2d59b1896fa31935f16",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "pixel_format": "yuv420p",
+      "fps": 24,
+      "frames": 480,
+      "decoded_duration_seconds": 20.0,
+      "audio_streams": 0,
+      "fast_start": true,
+      "full_decode_exit_code": 0,
+      "full_decode_errors": ""
+    },
+    {
+      "file": "poster.jpg",
+      "bytes": 134180,
+      "sha256": "32e41b0544bfc0e96dc427dab79c74020ecd48f8181a9eafdd7b0ab3a08be08d",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "file": "arena-still.jpg",
+      "bytes": 249709,
+      "sha256": "8bc6acb201513890384b7f6d09139006817214679e5657896a5f5277417a2f2e",
+      "width": 1280,
+      "height": 720
+    },
+    {
+      "file": "arena-gate.mp4",
+      "bytes": 478713,
+      "sha256": "879be2ccddef5b4de7f30f5b118c362606e7099777e7200d00f0c262346ae113",
+      "codec": "h264",
+      "width": 1280,
+      "height": 720,
+      "pixel_format": "yuv420p",
+      "fps": 24,
+      "frames": 192,
+      "decoded_duration_seconds": 8.0,
+      "audio_streams": 0,
+      "fast_start": true,
+      "full_decode_exit_code": 0,
+      "full_decode_errors": ""
+    },
+    {
+      "file": "arena-gate.jpg",
+      "bytes": 122203,
+      "sha256": "b74e126149e5befdf17482d0868e21313dc13b012999a6492197f8310b1698a4",
+      "width": 1280,
+      "height": 720
+    }
+  ],
+  "runtime": {
+    "opening_video": "/public/cinematics/arrival-v001/sky-to-arena.mp4",
+    "opening_poster": "/public/cinematics/arrival-v001/poster.jpg",
+    "reduced_motion_still": "/public/cinematics/arrival-v001/arena-still.jpg",
+    "gate_video": "/public/cinematics/arrival-v001/arena-gate.mp4",
+    "gate_poster": "/public/cinematics/arrival-v001/arena-gate.jpg",
+    "session_key": "arena-fighters.arrival-v001.seen",
+    "review_queries_bypassed": [
+      "face-presets-review=1",
+      "spectator-frame-review=1"
+    ],
+    "source_review_folders_exposed": false
+  },
+  "review": {
+    "source_preservation_hashes_verified": true,
+    "prepared_video_full_decode_passed": true,
+    "user_visual_acceptance_claimed": false
+  }
+}

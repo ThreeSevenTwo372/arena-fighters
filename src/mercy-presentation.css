@@ -1,0 +1,74 @@
+/* Verdict controls sit beside the preserved battle/spectator frame, never replace its camera. */
+.mercy-panel {
+  margin: 0;
+  padding: 18px 20px;
+  border: 2px solid #93764f;
+  background: #211c25;
+  color: #f6deb7;
+  font-family: var(--font-ui, Consolas, monospace);
+}
+.mercy-winner { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.mercy-winner strong { font-size: clamp(18px, 3vw, 28px); line-height: 1.3; overflow-wrap: anywhere; }
+.mercy-winner > span { color: #d6ad61; font-size: 16px; font-weight: bold; letter-spacing: 2px; }
+.mercy-winner-reveal { display: grid; place-items: center; min-height: 120px; text-align: center; }
+.mercy-winner-reveal .mercy-winner { justify-content: center; }
+.mercy-question-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; margin: 14px 0; }
+.mercy-question-row h2 { margin: 0; color: #f6deb7; font-size: clamp(19px, 3vw, 28px); letter-spacing: 2px; line-height: 1.25; }
+.mercy-clock { display: flex; align-items: baseline; gap: 2px; min-width: 56px; text-align: right; white-space: nowrap; color: #d6ad61; }
+.mercy-clock > span { font-size: 30px; font-weight: bold; line-height: 1; }
+.mercy-clock > small { font-size: 12px; }
+.mercy-actions { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 10px; }
+.mercy-actions .button { min-height: 46px; font-size: 13px; }
+.mercy-actions .mercy-kill { border-color: #9d4848; background: #4b222c; color: #ffe1cd; }
+.mercy-actions .mercy-crowd { border-color: #8d795d; background: #342c34; }
+.mercy-actions .mercy-spare { border-color: #7f966f; }
+.crowd-vote-actions { grid-template-columns: 1fr 1fr; }
+.crowd-vote-counts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 13px; }
+.crowd-vote-counts > span { display: flex; justify-content: space-between; align-items: center; padding: 10px 13px; border: 1px solid #605349; background: #18171d; }
+.crowd-vote-counts strong { color: #e3bd7c; font-size: 22px; }
+.mercy-vote-status { margin: 10px 0 0; font-size: 12px; color: #c7bba8; }
+.mercy-actions [aria-pressed="true"] { outline: 2px solid #d6ad61; outline-offset: -4px; }
+.loser-outcome-host { position: fixed; inset: 0; z-index: 1000; }
+.loser-outcome-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 30px;
+  overflow: hidden;
+  background: #000;
+  font-family: var(--font-ui, Consolas, monospace);
+}
+.loser-outcome-overlay h2 { position: relative; z-index: 1; margin: 0; max-width: 760px; font-size: clamp(24px, 4vw, 44px); line-height: 1.5; text-align: center; }
+.loser-outcome-death h2 { color: #c84847; text-shadow: 3px 3px 0 #370812; }
+.loser-outcome-spared { background: #090c0a85; }
+.loser-outcome-spared h2 { padding: 28px 32px; border: 2px solid #8b825d; background: #181b17f2; box-shadow: 6px 6px 0 #090b08; color: #ded0a0; font-size: clamp(22px, 3.2vw, 32px); text-shadow: 3px 3px 0 #1f2620; }
+.outcome-blood { position: absolute; inset: 0 0 auto; display: block; width: 100%; height: min(32vh, 290px); pointer-events: none; }
+.outcome-blood-drip { transform-box: view-box; transform-origin: 0 0; animation: mercy-blood-drip 2700ms steps(7, end) var(--drip-delay) both; }
+.outcome-blood-drop { transform-box: view-box; transform-origin: 0 0; animation: mercy-blood-drop 2100ms steps(8, end) var(--drip-delay) both; }
+@keyframes mercy-blood-drip {
+  0% { transform: scaleY(.12); }
+  100% { transform: scaleY(1); }
+}
+@keyframes mercy-blood-drop {
+  0%, 25% { transform: translateY(0); opacity: 0; }
+  30%, 80% { opacity: 1; }
+  100% { transform: translateY(40px); opacity: 0; }
+}
+.loser-outcome-reduced .outcome-blood-drip { animation: none; transform: scaleY(.18); }
+.loser-outcome-reduced .outcome-blood-drop { animation: none; display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .outcome-blood-drip { animation: none; transform: scaleY(.18); }
+  .outcome-blood-drop { animation: none; display: none; }
+}
+@media (max-width: 600px) {
+  .mercy-panel { padding: 12px; }
+  .mercy-winner { gap: 7px; }
+  .mercy-winner > span { font-size: 13px; }
+  .mercy-actions { gap: 7px; grid-template-columns: 1fr 1fr; }
+  .mercy-actions .mercy-crowd { grid-column: 1 / -1; }
+  .mercy-actions .button { min-height: 44px; font-size: 12px; }
+  .mercy-clock > span { font-size: 26px; }
+  .mercy-question-row h2 { letter-spacing: 1px; }
+  .loser-outcome-overlay { padding: 20px; }
+}
