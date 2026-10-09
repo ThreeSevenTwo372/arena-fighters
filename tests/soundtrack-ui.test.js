@@ -63,6 +63,7 @@ function fixture({ firstArrival = false, startupRun = false, playback = async ()
     const directory = '/public/audio/soundtrack-v001/';
     const track = id => ({ id, title: id === 'menu' ? 'Where the Stars Remember' : id, src: `${directory}${id}.mp3`, durationSeconds: 120 });
     const engine = createRealGameAudio({
+      manifestUrl: `${directory}manifest.json`,
       fetcher: async () => ({ ok: true, json: async () => ({ schema: 'arena-fighters.soundtrack.v1', menu: track('menu'), battles: [track('battle-a'), track('battle-b')] }) }),
       createContext: () => null, storage: { getItem: () => null, setItem() {} }, random: () => .25,
       createAudio: () => {

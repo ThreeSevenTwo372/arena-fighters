@@ -19,10 +19,12 @@
 .arena-fighter[data-animation="attack"][data-weapon="axe"] .fighter-weapon-motion {
   animation: gladiator-axe-chop 665ms steps(7, end) both;
 }
-.arena-fighter[data-animation="attack"][data-weapon="spear"] .fighter-weapon-motion {
+.arena-fighter[data-animation="attack"][data-weapon="spear"] .fighter-weapon-motion,
+.arena-fighter[data-animation="attack"][data-weapon="trident"] .fighter-weapon-motion {
   animation: gladiator-spear-thrust 665ms steps(7, end) both;
 }
-.arena-fighter[data-animation="attack"][data-weapon="spear"] .fighter-motion {
+.arena-fighter[data-animation="attack"][data-weapon="spear"] .fighter-motion,
+.arena-fighter[data-animation="attack"][data-weapon="trident"] .fighter-motion {
   animation-name: gladiator-spear-lunge;
 }
 .arena-fighter[data-animation="attack"][data-weapon="flail"] .fighter-weapon-motion {

@@ -37,6 +37,11 @@ export class TournamentClient extends OnlineClient {
     await this.session();
     return this.request(`/api/arena/tournaments/${encodeURIComponent(code.trim().toUpperCase())}/chat`, { commandId, text });
   }
+  reactions(code) { return this.request(`/api/arena/tournaments/${encodeURIComponent(code.trim().toUpperCase())}/reactions`); }
+  async sendReaction(code, { commandId, kind }) {
+    await this.session();
+    return this.request(`/api/arena/tournaments/${encodeURIComponent(code.trim().toUpperCase())}/reactions`, { commandId, kind });
+  }
   leaderboard() { return this.request('/api/arena/leaderboard'); }
   graveyard() { return this.request('/api/graveyard'); }
   command(view, action, payload = {}) {

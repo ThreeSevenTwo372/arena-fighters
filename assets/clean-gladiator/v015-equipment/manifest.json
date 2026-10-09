@@ -1,0 +1,47 @@
+{
+  "schema": "last-laurel.arena-equipment.v1",
+  "revision": "trident-net-v001",
+  "compatibleIdentityCatalogs": [
+    "v006",
+    "v013"
+  ],
+  "weapons": {
+    "dagger": {
+      "url": "/assets/clean-gladiator/v014-equipment/weapons/dagger.png",
+      "width": 16,
+      "height": 36,
+      "grip": [
+        7,
+        29
+      ],
+      "sourceFacing": "W"
+    },
+    "trident": {
+      "url": "/assets/clean-gladiator/v015-equipment/weapons/trident.png",
+      "width": 26,
+      "height": 92,
+      "grip": [
+        12,
+        64
+      ],
+      "sourceFacing": "W",
+      "offhand": {
+        "url": "/assets/clean-gladiator/v015-equipment/weapons/net.png",
+        "width": 38,
+        "height": 42,
+        "grip": [
+          5,
+          4
+        ],
+        "sourceFacing": "W"
+      }
+    }
+  },
+  "provenance": {
+    "type": "original hand-authored vector pixel artwork",
+    "providerCalls": 0,
+    "imageEdits": 0,
+    "direction": "Three steel tines on a wrapped wooden shaft, bronze collars; weighted knotted cord net held at the existing offhand socket.",
+    "license": "Project-specific original artwork; no third-party source or new public-domain claim."
+  }
+}

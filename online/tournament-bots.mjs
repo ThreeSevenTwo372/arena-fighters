@@ -1,5 +1,6 @@
 import { randomInt, randomUUID } from 'node:crypto';
 import { normalizePresetAppearance } from '../src/face-presets.js';
+import { BOT_STYLES } from '../src/combat.js';
 
 export const LOBBY_BOT_INTERVAL_MS = 20000;
 export const BOT_ACTION_DELAY_MS = 3000;
@@ -34,7 +35,7 @@ export function createTournamentBot(players) {
   return {
     playerId: `bot:${randomUUID()}`,
     profile: {
-      bot: true, alive: true, duelWins: 0, tournamentWins: 0,
+      bot: true, botStyle: pick(Object.keys(BOT_STYLES)), alive: true, duelWins: 0, tournamentWins: 0,
       character: {
         id: randomUUID(), name, trait: build.trait, color: pick(BANNERS),
         stats: Object.fromEntries(['strength', 'dexterity', 'speed', 'defense', 'intelligence'].map((key, index) => [key, build.stats[index]])),
@@ -46,6 +47,6 @@ export function createTournamentBot(players) {
 
 export function chooseTournamentBotLoadout(character) {
   const { strength, dexterity, speed } = character.stats;
-  const weapon = strength >= 6 ? pick(['axe', 'greatsword', 'halberd']) : dexterity > strength ? pick(['sword', 'spear', 'dagger']) : pick(['sword', 'flail']);
+  const weapon = strength >= 6 ? pick(['axe', 'greatsword', 'halberd']) : dexterity > strength ? pick(['sword', 'spear', 'dagger', 'trident']) : pick(['sword', 'flail', 'trident']);
   return { weapon, armor: speed >= 6 ? 'light' : character.stats.defense >= 6 ? 'heavy' : 'medium', helmet: 'none' };
 }

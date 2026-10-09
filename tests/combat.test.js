@@ -186,7 +186,7 @@ test('new weapon power has initiative and stamina tradeoffs, preserving the orig
   assert.ok(greatsword[0].damage > axe[0].damage && greatsword[0].cost > axe[0].cost);
   assert.ok(WEAPONS.greatsword.speedBonus < WEAPONS.axe.speedBonus);
   assert.ok(Object.entries(WEAPONS).filter(([id]) => id !== 'dagger').every(([, weapon]) => weapon.speedBonus <= WEAPONS.spear.speedBonus));
-  assert.deepEqual(Object.keys(WEAPONS), ['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword', 'dagger']);
+  assert.deepEqual(Object.keys(WEAPONS), ['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword', 'dagger', 'trident']);
 });
 
 test('full helmets are validated cosmetic choices and preserve all combat outcomes', () => {
@@ -499,9 +499,10 @@ test('representative offensive duels last several decision rounds without routin
       Object.keys(ARMORS).map(armor => entry('Pacing', weapon, armor, stats, trait)))));
   const attackWhenAffordable = action => (state, index) => {
     const options = getActionOptions(state, index), chosen = options.find(option => option.id === action);
-    // An offensive policy uses Strike instead of a stance which requires the
-    // rival's Strike. Mutual Riposte stalling is tested as a bounded draw.
-    const attack = chosen.conditional ? options.find(option => option.id === 'strike') : chosen;
+    // An offensive policy uses Strike instead of predictive stances or a
+    // low-damage stamina-control technique. Their repeated-control policies
+    // are covered separately; this still checks the same knockout/cap limits.
+    const attack = chosen.conditional || chosen.statusEffect ? options.find(option => option.id === 'strike') : chosen;
     return attack.enabled ? attack.id : 'recover';
   };
   // Every weapon, armor, trait, and representative attribute build appears in

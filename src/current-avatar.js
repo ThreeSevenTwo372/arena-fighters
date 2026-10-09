@@ -5,7 +5,7 @@ import * as legacy from './arena-avatar.js?current-legacy-v006';
 
 const CURRENT_CATALOG = '/assets/clean-gladiator/v013/manifest.json';
 const LEGACY_CATALOG = '/assets/clean-gladiator/v006/manifest.json';
-const EQUIPMENT_CATALOG = '/assets/clean-gladiator/v014-equipment/manifest.json';
+const EQUIPMENT_CATALOG = '/assets/clean-gladiator/v015-equipment/manifest.json';
 let sourceConfig = { equipmentManifestUrl: EQUIPMENT_CATALOG };
 const hasPreset = appearance => typeof appearance?.facePreset === 'string' && /^p(?:0[1-9]|10)$/.test(appearance.facePreset);
 const rendererFor = appearance => hasPreset(appearance) ? preset : legacy;

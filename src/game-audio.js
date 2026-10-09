@@ -1,5 +1,5 @@
 /** Local presentation only. Audio never reads choices or changes battle state. */
-const DEFAULT_MANIFEST = '/public/audio/soundtrack-v001/manifest.json';
+const DEFAULT_MANIFEST = '/public/audio/soundtrack-v002/manifest.json';
 const SETTINGS_KEY = 'arena-fighters.audio.v1';
 const DEFAULT_SETTINGS = Object.freeze({ muted: false, musicVolume: 0.35, effectsVolume: 0.5 });
 const MAX_REMEMBERED_BATTLES = 32;
@@ -40,8 +40,10 @@ function readSettings(storage) {
 }
 
 function validateManifest(value, manifestUrl) {
-  if (!MANIFEST_PATH.test(manifestUrl) || value?.schema !== 'arena-fighters.soundtrack.v1'
-    || !Array.isArray(value.battles) || value.battles.length < 1 || value.battles.length > 64) {
+  const menuOnly = value?.schema === 'arena-fighters.soundtrack.v2' && value.mode === 'menu-only';
+  if (!MANIFEST_PATH.test(manifestUrl) || !(menuOnly || value?.schema === 'arena-fighters.soundtrack.v1')
+    || !Array.isArray(value.battles) || value.battles.length > 64
+    || (menuOnly ? value.battles.length !== 0 || value.effects?.victory != null : value.battles.length < 1)) {
     throw new Error('Invalid soundtrack manifest.');
   }
   const directory = manifestUrl.slice(0, manifestUrl.lastIndexOf('/') + 1);
@@ -130,7 +132,7 @@ export function createGameAudio({
   function selectedTrack() {
     if (!manifest) return null;
     if (scene.kind === 'menu') return manifest.menu;
-    if (scene.kind !== 'battle') return null;
+    if (scene.kind !== 'battle' || !manifest.battles.length) return null;
     const key = scene.battleKey;
     if (!rememberedBattles.has(key)) {
       rememberedBattles.set(key, nextBattleTrack());

@@ -1,5 +1,23 @@
 # Gladiator Tournament Design and Build Plan
 
+## Release Readiness v001 — v0.10.0, October 9, 2026
+
+The menu now offers **Learn to fight**, three optional coached rounds using the shared combat rules and exact current male/female avatars, and **Quick Duel**, the existing private two-player flow with a shareable invitation link. Lessons are disposable, untimed, repeatable and guest-free; they preserve an owned surviving fighter and keep the condensed creator unchanged. Invitation URLs carry a public code and mode only, prefill the matching join field and never auto-join, replace an active match, or carry authentication.
+
+Later online rounds reserve a server-owned **four-second presentation interval**, followed by the full **20-second action window**. Early commands are rejected; bots act three seconds after opening. The final round reserves presentation before the five-second winner reveal and full mercy window. Clock boundaries survive refresh/restart in durable localhost mode; clients never choose their own deadlines.
+
+Bots have stable **Aggressive, Cautious or Patient** styles, displayed in the roster and battle. They keep legal stats and equipment and use only resolved public information. Practice cycles these styles between duels. Styles grant no hidden-choice access or combat bonuses.
+
+Tournament spectators can **Cheer, Applaud or Throw tomato**. Short effects stay inside each viewer's current battle/spectator frame without remounting playback. Three-second server cooldowns, six-second retention and a bounded 24-event room queue apply. Public reads create no guest or seat; first sending obtains an ordinary guest only. Current duelists receive effects but cannot send, and reactions grant no move, equipment, mercy or ballot authority. Reaction history is process RAM only even in durable localhost mode; command retries do not duplicate a throw.
+
+The ninth weapon is **Trident & Net**, supplied through additive equipment overlay v015 with the exact v014 dagger entry retained. **Entangle** trades damage for a +3 stamina surcharge on the rival's Strike/Technique next round only. Guard reduces its damage, prevents the net and clears an existing net; Recover clears it when executed. Nets never stack and expire at the end of that next round, death, forfeit or duel completion. Exact command costs include the surcharge, while base equipment values and saved identities stay intact. The authored trident and offhand net follow existing grips; source catalogs, heads, bodies, hands, helmets and every prior asset remain preserved.
+
+Only **Where the Stars Remember** remains active as music. Active manifest public/audio/soundtrack-v002/manifest.json contains no battle playlist or recorded victory cue. Menu/arrival continuity, mute, separate volume settings and hidden-page pause remain; procedural gameplay effects remain enabled. All v001 battle tracks, the old victory clip, original soundtrack sources and previous releases are preserved for the user's later song selection. Battles, their entrance and verdict sequences have no score music.
+
+Free temporary hosting and session-scoped records remain the selected scope. Durable online progression, coins and unlocks remain separate milestones. This is a **local implementation and independent release**, not a publication claim. Current automated, browser, preservation, package and deployment evidence is recorded separately in artifacts/Release_Readiness_v001/VERIFICATION.json. The preserved rollback is releases/Arena_Fighters_v0.9.4_v001. Physical phone/public-network play and fresh human balance/art judgment remain distinct from automated and resized-browser proof.
+
+## Preserved v0.9.4 documentation
+
 Current local source is **v0.9.4, Arena Lobby Chat v001**. The independent snapshot is releases/Arena_Fighters_v0.9.4_v001; v0.9.3 Intro Theme is the rollback. Current source, browser, release and deployment status are recorded separately in artifacts/Arena_Chat_v001/VERIFICATION.json. The original concept and earlier implementation notes below remain historical context; the October 8 alpha roadmap records the current delivered scope.
 
 Build a browser game in which each player creates a gladiator, adapts equipment to each opponent, and accumulates tournament victories while keeping that character alive. The requested v0.7.0 playable scope is an eight-player sequential tournament. The earlier 2-to-8-player concept remains an expansion direction; smaller brackets are not part of the current implementation.

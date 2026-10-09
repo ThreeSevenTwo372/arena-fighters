@@ -11,7 +11,8 @@
   --execution-weapon-windup: -35deg;
   --execution-weapon-contact: 95deg;
 }
-.execution-playback [data-execution-role="victor"][data-execution-weapon="spear"] {
+.execution-playback [data-execution-role="victor"][data-execution-weapon="spear"],
+.execution-playback [data-execution-role="victor"][data-execution-weapon="trident"] {
   --execution-weapon-windup: 68deg;
   --execution-weapon-contact: 81deg;
 }
@@ -68,6 +69,7 @@
   --execution-strike: 9deg;
 }
 .execution-playback [data-execution-weapon="spear"] .execution-motion,
+.execution-playback [data-execution-weapon="trident"] .execution-motion,
 .execution-playback [data-execution-weapon="halberd"] .execution-motion {
   --execution-windup: -4deg;
   --execution-strike: 4deg;

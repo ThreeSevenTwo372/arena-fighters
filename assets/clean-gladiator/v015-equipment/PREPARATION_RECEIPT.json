@@ -1,0 +1,46 @@
+{
+  "schema": "arena-trident-net-preparation-v1",
+  "textures": [
+    {
+      "id": "trident",
+      "sourceSha256": "804d8c23274e056d0483eb2981cb4bf54e0ee1d57e954e3524c99f6ac6b9728f",
+      "sourceSvgSha256": "6eda6ac1221450e06a21452bfbc12e1a6fa3162c7c1d65ad3f00757719d7766e",
+      "textureSha256": "750dada7cd257ac6bb5ca2f4a65acf2a984abece267495429ecaf2e768a0920b",
+      "canvas": [
+        26,
+        92
+      ],
+      "grip": [
+        12,
+        64
+      ],
+      "authoredCells": 782
+    },
+    {
+      "id": "net",
+      "sourceSha256": "fe886bb2285af38e767086a77b50202bc6acf6c44d878a962c75e50bc5b95897",
+      "sourceSvgSha256": "71ae49d60f7bd40306b5669f84ef00fa093cdf930ae4326dcbe1d61eed57f684",
+      "textureSha256": "9347e6343447fd794f5d0c679aa0e84f60f8fbd47da5c1a3b2c3e6dd08867663",
+      "canvas": [
+        38,
+        42
+      ],
+      "grip": [
+        5,
+        4
+      ],
+      "authoredCells": 316
+    }
+  ],
+  "operations": [
+    "Author exact native integer cells with explicit fixed material ownership",
+    "Emit editable matching SVG and source JSON",
+    "Encode lossless RGBA without resampling"
+  ],
+  "placement": "Preserved body.mainhandGrip and outward weapon angle; net uses preserved body.offhandGrip, replacing decorative shield only for trident.",
+  "preserved": [
+    "Every existing identity, body, hand, head, helmet and weapon file",
+    "Exact v014 dagger manifest entry"
+  ],
+  "evidence": "Preparation only. Whole-figure rendering, browser checks and user art acceptance are separate."
+}

@@ -90,6 +90,20 @@ export const WEAPONS = freeze({
     attack: 7, speedBonus: 2, strikeCost: 3,
     technique: { name: 'Riposte', description: 'Ready a counter before attacks. Halve an ordinary Strike, then counter once if you survive. Weapon Techniques bypass the stance; Guard, Recover and another Riposte cause no counter. Enemy armor protects fully. Pay stamina even when it misses.', scaling: { strength: 0.5, dexterity: 1.5 }, cost: 5, priority: 2, multiplier: 1, ignoresGuard: false, armorFactor: 1, conditional: 'riposte', trigger: 'strike', reduction: 0.5 },
   },
+  trident: {
+    name: 'Trident & Net',
+    description: 'Dexterity favors trident strikes. Entangle trades damage for a brief stamina tax; Guard or Recover counters its net.',
+    scaling: { strength: 0.75, dexterity: 1.25 }, heavyHandling: false,
+    attack: 9, speedBonus: 0, strikeCost: 4,
+    technique: { name: 'Entangle', description: 'Deal light damage and net a surviving rival: Strike and Technique cost +3 stamina next round only. Guard prevents the net and clears it; Recover clears it. Full armor protects, and Guard reduces damage. Nets never stack.', scaling: { strength: 0.25, dexterity: 0.5 }, cost: 6, priority: 0, multiplier: 0.25, ignoresGuard: false, armorFactor: 1, statusEffect: 'entangle', attackSurcharge: 3 },
+  },
+});
+
+/** Public bot approaches have no stat bonuses and never receive secret commitments. */
+export const BOT_STYLES = freeze({
+  aggressive: { label: 'Aggressive', description: 'Keeps pressure and spends stamina for damage.' },
+  cautious: { label: 'Cautious', description: 'Mixes protection with attacks and watches its stamina.' },
+  patient: { label: 'Patient', description: 'Keeps a stamina reserve and responds to revealed habits.' },
 });
 
 export const ARMORS = freeze({
@@ -222,15 +236,25 @@ function actionDamage(attacker, defender, action, guarded = false) {
   return afterArmor;
 }
 
+/** A visible, bounded next-round status. Historical duel states need no migration. */
+export function getFighterStatus(state, index) {
+  checkState(state, index);
+  const effect = state.fighters[index].entangle;
+  if (state.status !== 'active' || effect?.round !== state.round) return null;
+  return freeze({ id: 'entangled', label: 'Entangled', attackSurcharge: effect.attackSurcharge,
+    clearsWith: ['guard', 'recover'], expiresAfterRound: effect.round });
+}
+
 /** Riposte damage is a possible counter, never a promise about a secret rival choice. */
 export function getActionOptions(state, index) {
   checkState(state, index);
   const fighter = state.fighters[index];
   const weapon = WEAPONS[fighter.weapon];
   const opponent = state.fighters[1 - index];
+  const pressure = getFighterStatus(state, index)?.attackSurcharge ?? 0;
   const options = [
-    { id: 'strike', name: 'Strike', description: 'An ordinary attack, scaled by this weapon’s Strength and Dexterity affinities. Guard reduces its damage by 65%.', cost: fighter.strikeCost, priority: 0, damage: actionDamage(fighter, opponent, 'strike'), guardedDamage: actionDamage(fighter, opponent, 'strike', true) },
-    { id: 'technique', name: weapon.technique.name, description: weapon.technique.description, cost: fighter.techniqueCost, priority: weapon.technique.priority, damage: actionDamage(fighter, opponent, 'technique'), guardedDamage: weapon.technique.conditional === 'riposte' ? 0 : actionDamage(fighter, opponent, 'technique', true), ...(weapon.technique.conditional === 'riposte' ? { conditional: 'riposte', trigger: weapon.technique.trigger, reduction: weapon.technique.reduction } : {}) },
+    { id: 'strike', name: 'Strike', description: 'An ordinary attack, scaled by this weapon’s Strength and Dexterity affinities. Guard reduces its damage by 65%.', cost: fighter.strikeCost + pressure, priority: 0, damage: actionDamage(fighter, opponent, 'strike'), guardedDamage: actionDamage(fighter, opponent, 'strike', true), ...(pressure ? { statusSurcharge: pressure } : {}) },
+    { id: 'technique', name: weapon.technique.name, description: weapon.technique.description, cost: fighter.techniqueCost + pressure, priority: weapon.technique.priority, damage: actionDamage(fighter, opponent, 'technique'), guardedDamage: weapon.technique.conditional === 'riposte' ? 0 : actionDamage(fighter, opponent, 'technique', true), ...(weapon.technique.conditional === 'riposte' ? { conditional: 'riposte', trigger: weapon.technique.trigger, reduction: weapon.technique.reduction } : {}), ...(weapon.technique.statusEffect ? { statusEffect: weapon.technique.statusEffect, attackSurcharge: weapon.technique.attackSurcharge, statusDuration: 1 } : {}), ...(pressure ? { statusSurcharge: pressure } : {}) },
     { id: 'guard', name: 'Guard', description: 'Act first and reduce most attacks by 65% this round. Feint, Guard Break, and Chain Sweep bypass it.', cost: RULES.GUARD_COST, priority: 3, damage: 0, guardedDamage: 0 },
     { id: 'recover', name: 'Recover', description: `Restore up to ${fighter.recovery} stamina, including Intelligence. Acts last, leaving you open to attack.`, cost: 0, priority: -2, damage: 0, guardedDamage: 0, recovery: fighter.recovery },
   ];
@@ -256,6 +280,7 @@ export function forfeitDuel(state, loserIndex) {
   const winner = loserIndex === null ? null : 1 - loserIndex;
   next.status = 'complete';
   next.result = { winner, reason: loserIndex === null ? 'abandoned' : 'forfeit' };
+  for (const fighter of next.fighters) delete fighter.entangle;
   const event = {
     round: state.round, type: 'result', actor: winner,
     text: winner === null ? 'Both fighters left the duel. No victory is awarded.' : `${next.fighters[winner].character.name} wins by forfeit.`,
@@ -300,10 +325,12 @@ export function resolveRound(state, actions) {
     if (option.id === 'guard') {
       guarded[index] = true;
       add('guard', index, `${fighter.character.name} guards, spending ${option.cost} stamina.`);
+      if (fighter.entangle) { delete fighter.entangle; add('entangle-clear', index, `${fighter.character.name} clears the net with Guard.`, { action: 'guard' }); }
     } else if (option.id === 'recover') {
       const restored = Math.min(option.recovery, fighter.maxStamina - fighter.stamina);
       fighter.stamina += restored;
       add('recover', index, `${fighter.character.name} recovers ${restored} stamina.`, { restored });
+      if (fighter.entangle) { delete fighter.entangle; add('entangle-clear', index, `${fighter.character.name} clears the net with Recover.`, { action: 'recover' }); }
     } else if (option.conditional === 'riposte') {
       riposteReady[index] = true;
       add('riposte', index, `${fighter.character.name} readies Riposte, spending ${option.cost} stamina.`);
@@ -323,6 +350,11 @@ export function resolveRound(state, actions) {
       const bypassed = guarded[1 - index] && option.id === 'technique' && WEAPONS[fighter.weapon].technique.ignoresGuard;
       opponent.hp = Math.max(0, opponent.hp - damage);
       add('attack', index, `${fighter.character.name} uses ${option.name} for ${damage} damage${bypassed ? ', bypassing Guard' : guarded[1 - index] ? ' against Guard' : parried ? ' against Riposte' : ''}, spending ${option.cost} stamina.`, { action: option.id, damage, target, bypassedGuard: bypassed, ...(parried ? { parried: true } : {}) });
+      if (option.statusEffect === 'entangle' && opponent.hp > 0) {
+        if (guarded[target]) add('entangle-blocked', target, `${opponent.character.name}'s Guard keeps the net away.`);
+        else { opponent.entangle = { round: state.round + 1, attackSurcharge: option.attackSurcharge };
+          add('entangle', index, `${opponent.character.name} is netted: attacks cost +${option.attackSurcharge} stamina next round. Guard or Recover clears it.`, { target, attackSurcharge: option.attackSurcharge, expiresAfterRound: state.round + 1 }); }
+      }
       if (opponent.hp === 0) {
         next.status = 'complete';
         next.result = { winner: index, reason: 'knockout' };
@@ -341,6 +373,7 @@ export function resolveRound(state, actions) {
       }
     }
   }
+  for (const fighter of next.fighters) if (fighter.entangle?.round <= state.round) delete fighter.entangle;
   if (next.status === 'active' && state.round >= state.maxRounds) {
     next.status = 'complete';
     next.result = roundLimitResult(next.fighters);
@@ -348,6 +381,7 @@ export function resolveRound(state, actions) {
       ? `The ${state.maxRounds} round limit is reached. Equal health and stamina percentages make this a draw.`
       : `${next.fighters[next.result.winner].character.name} wins at the ${state.maxRounds} round limit by remaining health percentage, then stamina percentage.`);
   }
+  if (next.status === 'complete') for (const fighter of next.fighters) delete fighter.entangle;
   next.lastRound = { round: state.round, actions: [...actions], order, events };
   next.log.push(...events);
   if (next.status === 'active') next.round += 1;
@@ -355,7 +389,7 @@ export function resolveRound(state, actions) {
 }
 
 /** A deterministic practice opponent. Reads only public fighter state and revealed past actions. */
-export function chooseCpuAction(state, index) {
+export function chooseCpuAction(state, index, style) {
   checkState(state, index);
   if (state.status !== 'active') throw new Error('This duel has already ended.');
   const options = getActionOptions(state, index);
@@ -369,6 +403,20 @@ export function chooseCpuAction(state, index) {
   if (directTechnique && directTechnique.priority > 0 && directTechnique.damage >= opponent.hp) return 'technique';
   if (strike.damage >= opponent.hp) return 'strike';
   const lastOpponentAction = state.lastRound?.actions[1 - index];
+  if (has(BOT_STYLES, style)) {
+    const guard = legal('guard'), rhythm = (state.round + index) % 5;
+    if (getFighterStatus(state, index) && style !== 'aggressive') return 'recover';
+    if (style === 'patient' && fighter.stamina < Math.min(fighter.maxStamina, strike.cost * 2 + 2)) return 'recover';
+    if (style === 'cautious' && guard && rhythm === 3 && opponent.stamina >= opponent.strikeCost) return 'guard';
+    if (technique?.conditional === 'riposte' && lastOpponentAction === 'strike'
+      && opponent.stamina >= opponent.strikeCost && rhythm === (style === 'patient' ? 2 : 1)) return 'technique';
+    if (directTechnique?.statusEffect === 'entangle' && !getFighterStatus(state, 1 - index)
+      && lastOpponentAction !== 'guard' && lastOpponentAction !== 'recover' && rhythm === (style === 'aggressive' ? 0 : 2)) return 'technique';
+    if (directTechnique && !directTechnique.statusEffect && (directTechnique.damage > strike.damage
+      || lastOpponentAction === 'guard' && WEAPONS[fighter.weapon].technique.ignoresGuard)) return 'technique';
+    if (style === 'cautious' && fighter.stamina < fighter.maxStamina / 2 && rhythm === 4) return 'recover';
+    return 'strike';
+  }
   if (lastOpponentAction === 'guard' && technique && WEAPONS[fighter.weapon].technique.ignoresGuard) return 'technique';
   if (opponent.stamina < opponent.strikeCost) return 'strike';
   if (directTechnique && directTechnique.damage > strike.damage + 1) return 'technique';

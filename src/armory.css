@@ -23,6 +23,9 @@
 .armory-weapon-silhouette { position: relative; display: flex; align-items: flex-start; justify-content: center; flex: 1; width: 100%; padding-top: 8px; }
 .armory-weapon--sword { --weapon-width:24; --weapon-height:63; }.armory-weapon--spear { --weapon-width:14; --weapon-height:95; }.armory-weapon--axe { --weapon-width:30; --weapon-height:58; }.armory-weapon--flail { --weapon-width:44; --weapon-height:65; }.armory-weapon--halberd { --weapon-width:32; --weapon-height:98; }.armory-weapon--mace { --weapon-width:17; --weapon-height:60; }.armory-weapon--greatsword { --weapon-width:34; --weapon-height:82; }
 .armory-weapon--dagger { --weapon-width:16; --weapon-height:36; }
+.armory-weapon--trident { --weapon-width:26; --weapon-height:92; }
+.armory-weapon-rack { grid-template-columns: repeat(5,minmax(0,1fr)); }
+.armory-weapon--trident .armory-nameplate { white-space: normal; text-align: center; }
 .armory-weapon-silhouette img { width: calc(var(--weapon-width) * 1.65px); height: calc(var(--weapon-height) * 1.65px); max-width: none; object-fit: contain; image-rendering: pixelated; filter: drop-shadow(2px 3px 2px #000b); }
 .armory-weapon--dagger .armory-weapon-silhouette img { width: 32px; height: 72px; }
 .armory-weapon--axe img { transform: rotate(-5deg); }.armory-weapon--flail img { transform: rotate(5deg); }.armory-weapon--greatsword img { transform: rotate(8deg); }

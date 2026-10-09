@@ -75,6 +75,7 @@ function fixture(options = {}) {
   const context = new FakeContext();
   const writes = [];
   const engine = createGameAudio({
+    manifestUrl: `${directory}manifest.json`,
     fetcher: async () => ({ ok: true, json: async () => soundtrack() }),
     createAudio: () => { const audio = new FakeAudio(); players.push(audio); return audio; },
     createContext: () => context,

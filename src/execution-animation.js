@@ -1,6 +1,6 @@
 /** Execution playback is presentation of an accepted verdict, never a combat resolver. */
 const INDICES = new Set([0, 1]);
-const WEAPONS = new Set(['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword', 'dagger']);
+const WEAPONS = new Set(['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword', 'dagger', 'trident']);
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
 /** A spare/draw/unresolved or mismatched verdict cannot produce an execution. */
@@ -121,7 +121,7 @@ function bloodEffect(document, weapon) {
   effect.append(spray);
   const slash = svgNode(document, 'g', { class: 'execution-slash' });
   const crushing = weapon === 'mace' || weapon === 'flail';
-  const piercing = weapon === 'spear' || weapon === 'halberd' || weapon === 'dagger';
+  const piercing = weapon === 'spear' || weapon === 'halberd' || weapon === 'dagger' || weapon === 'trident';
   for (let i = 0; i < 13; i++) {
     const x = crushing ? (i % 5) * 6 - 13 : i * 6 - 38;
     const y = crushing ? Math.floor(i / 5) * 7 - 77 : piercing ? -66 + (i % 2) * 3 : i * 4 - 91;

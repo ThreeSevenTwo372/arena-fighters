@@ -52,7 +52,7 @@ test('dagger admission merges equipment while both historical source catalogs st
   const current = await preloadCleanArt();
   assert.deepEqual(current.weapons.dagger.grip, [7, 29]);
   assert.equal(current.weapons.dagger.url, '/assets/clean-gladiator/v014-equipment/weapons/dagger.png');
-  assert.equal(current.equipmentRevision, 'dagger-v001');
+  assert.equal(current.equipmentRevision, 'trident-net-v001');
   for (const version of ['v006', 'v013']) {
     const original = JSON.parse(await read(`assets/clean-gladiator/${version}/manifest.json`));
     assert.equal(original.weapons.dagger, undefined);

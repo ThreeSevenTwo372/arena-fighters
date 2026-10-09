@@ -53,6 +53,7 @@ async function fixture(t, options = {}, persistent = false) {
         }
       } else if (view.phase === 'entrance') await this.tick(view.match.deadline - now);
       else if (view.phase === 'battle') {
+        if (view.match.actionOpensAt > now) await this.tick(view.match.actionOpensAt - now);
         const round = view.match.duel.round;
         for (let index = 0; index < 2; index += 1) {
           if (view.phase === 'battle' && view.match.duel.round === round && !view.match.players[index].bot && !view.match.pending[index]) {
@@ -61,6 +62,7 @@ async function fixture(t, options = {}, persistent = false) {
         }
         if (view.phase === 'battle' && view.match.duel.round === round) await this.tick(3000);
       } else if (view.phase === 'mercy') {
+        if (view.match.mercyOpensAt > now) { await this.tick(view.match.mercyOpensAt - now); return this.view(view.code); }
         const winner = view.match.duel.result.winner;
         if (!view.match.players[winner].bot) view = await this.commit(view, winner, 'mercy', { decision: 'spare' });
         else await this.tick(3000);
@@ -191,7 +193,7 @@ test('a bot selects from public state only after three seconds, retains its pend
   let view = await f.commit(equipment, humanIndex, 'loadout', { loadout: gear() });
   await f.tick(8000); view = await f.view(view.code);
   assert.equal(view.phase, 'battle'); assert.deepEqual(view.match.pending, [false, false]);
-  const initialDuel = structuredClone(view.match.duel), expected = chooseCpuAction(initialDuel, botIndex);
+  const initialDuel = structuredClone(view.match.duel), expected = chooseCpuAction(initialDuel, botIndex, view.match.players[botIndex].botStyle);
   await f.tick(2999); assert.deepEqual((await f.view(view.code)).match.pending, [false, false]);
   await f.tick(1); view = await f.view(view.code);
   assert.equal(view.match.pending[botIndex], true); assert.equal(view.match.pending[humanIndex], false);
@@ -201,6 +203,7 @@ test('a bot selects from public state only after three seconds, retains its pend
   view = await f.commit(view, humanIndex, 'action', { round: 1, action: 'guard' });
   assert.equal(view.phase, 'battle'); assert.equal(view.match.duel.round, 2); assert.deepEqual(view.match.pending, [false, false]);
   await f.tick(0); assert.deepEqual((await f.view(view.code)).match.pending, [false, false]);
+  await f.tick(4000); assert.deepEqual((await f.view(view.code)).match.pending, [false, false], 'Presentation time must not consume the bot thinking interval.');
   await f.tick(2999); assert.deepEqual((await f.view(view.code)).match.pending, [false, false]);
   await f.tick(1); assert.equal((await f.view(view.code)).match.pending[botIndex], true);
 });
@@ -210,7 +213,7 @@ test('a human secret choice made first does not change the bot action selected f
   const humanIndex = equipment.match.slots.indexOf(0), botIndex = 1 - humanIndex;
   let view = await f.commit(equipment, humanIndex, 'loadout', { loadout: gear() });
   await f.tick(8000); view = await f.view(view.code);
-  const publicDuel = structuredClone(view.match.duel), expectedBot = chooseCpuAction(publicDuel, botIndex);
+  const publicDuel = structuredClone(view.match.duel), expectedBot = chooseCpuAction(publicDuel, botIndex, view.match.players[botIndex].botStyle);
   const actions = [null, null]; actions[humanIndex] = 'guard'; actions[botIndex] = expectedBot;
   view = await f.commit(view, humanIndex, 'action', { round: 1, action: 'guard' });
   assert.equal(view.match.pending[humanIndex], true); assert.equal(view.match.pending[botIndex], false);

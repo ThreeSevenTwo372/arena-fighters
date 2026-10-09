@@ -18,7 +18,7 @@ async function fixture(t, options = {}) {
   const request = (method, path, token, body) => service.request({ method, path, token, body });
   t.after(async () => { await service.close(); await rm(directory, { recursive: true, force: true }); });
   return {
-    directory, storePath, request, get service() { return service; },
+    directory, storePath, request, get service() { return service; }, get now() { return now; },
     clock(value) { now += value; },
     async restart(restartOptions = options) { await service.close(); service = new DuelService({ storePath, clock: () => now, winnerMs: 0, ...restartOptions }); },
     async session() { return request('POST', '/api/session', undefined, {}); },
@@ -40,12 +40,14 @@ async function finish(f, pair) {
   let view = await f.request('GET', `/api/rooms/${pair.room.code}`, pair.one.token);
   let count = 0;
   while (view.phase === 'battle') {
+    if (view.actionOpensAt > f.now) f.clock(view.actionOpensAt - f.now);
     const actions = view.duel.fighters.map((_, i) => getActionOptions(view.duel, i).find(item => item.id === 'strike' && item.enabled) ? 'strike' : 'recover');
     await f.request('POST', `/api/rooms/${view.code}/action`, pair.one.token, command(view, `round-a-${count}`, { round: view.duel.round, action: actions[0] }));
     view = await f.request('POST', `/api/rooms/${view.code}/action`, pair.two.token, command(view, `round-b-${count}`, { round: view.duel.round, action: actions[1] }));
     count += 1;
     assert.ok(count <= 24);
   }
+  if (view.phase === 'mercy' && view.mercyOpensAt > f.now) f.clock(view.mercyOpensAt - f.now);
   return view;
 }
 
@@ -160,14 +162,20 @@ test('default battle window expires at twenty seconds, survives restart, and aut
   assert.equal(view.duel.round, 2);
   assert.deepEqual(view.duel.lastRound.actions, ['strike', 'recover']);
   assert.deepEqual(view.pending, [false, false]);
-  assert.equal(view.deadline, 1040000);
+  assert.equal(view.actionOpensAt, 1024000);
+  assert.equal(view.deadline, 1044000);
   await f.service.tick();
   assert.equal((await f.request('GET', `/api/rooms/${initial.code}`, pair.one.token)).duel.round, 2, 'one expiry must not resolve twice');
   f.clock(1000);
+  const early = command(view, 'early-a', { round: 2, action: 'recover' });
+  await assert.rejects(f.request('POST', `/api/rooms/${view.code}/action`, pair.one.token, early), error(409, 'actions_not_open'));
+  assert.deepEqual((await f.request('GET', `/api/rooms/${view.code}`, pair.one.token)).pending, [false, false]);
+  f.clock(3000);
   await f.request('POST', `/api/rooms/${view.code}/action`, pair.one.token, command(view, 'early-a', { round: 2, action: 'recover' }));
   view = await f.request('POST', `/api/rooms/${view.code}/action`, pair.two.token, command(view, 'early-b', { round: 2, action: 'strike' }));
   assert.equal(view.duel.round, 3, 'two committed actions resolve without a continue request');
-  assert.equal(view.deadline, 1041000, 'the next round receives a fresh twenty-second window');
+  assert.equal(view.actionOpensAt, 1028000);
+  assert.equal(view.deadline, 1048000, 'the next round receives a fresh twenty-second window after presentation');
 });
 
 test('restoring an old longer battle window durably caps its remainder without resetting choices or extending shorter deadlines', async t => {
@@ -197,7 +205,7 @@ test('restoring an old longer battle window durably caps its remainder without r
   view = await f.request('GET', `/api/rooms/${initial.code}`, pair.one.token);
   assert.equal(view.duel.round, 2);
   assert.deepEqual(view.duel.lastRound.actions, ['strike', 'recover']);
-  assert.equal(view.deadline, 1045000);
+  assert.equal(view.deadline, 1049000);
 });
 
 test('both disconnected players draw, without a fabricated winner or execution', async t => {

@@ -1,0 +1,47 @@
+/* Three optional coached rounds, with native-size complete registered figures. */
+.fight-tutorial { max-width: 990px; margin: 0 auto; padding: 24px 0; }
+.tutorial-navigation { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 24px; }
+.tutorial-navigation > span { font-size: 12px; color: var(--muted); text-align: right; }
+.tutorial-heading { max-width: 750px; margin-bottom: 24px; }
+.tutorial-heading h1 { margin: 6px 0 12px; font-size: clamp(25px, 4vw, 34px); }
+.tutorial-heading p { font-size: 16px; line-height: 1.6; margin: 0; }
+.tutorial-layout { display: grid; grid-template-columns: minmax(0, 520px) minmax(240px, 1fr); gap: 24px; align-items: start; }
+.tutorial-arena-panel { min-width: 0; }
+.tutorial-arena { height: 226px; background: #31241d; }
+.fight-tutorial .arena-svg { position: relative; left: 50%; width: 460px; height: 220px; max-width: none; transform: translateX(-50%); }
+.tutorial-status-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 18px; }
+.tutorial-fighter-status { min-width: 0; border: 1px solid var(--line); padding: 14px; background: var(--panel); }
+.tutorial-fighter-status > div:first-child { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 8px; }
+.tutorial-fighter-status h2 { margin: 0; font-size: 18px; }
+.tutorial-fighter-status > div:first-child > span { font-size: 11px; color: var(--muted); }
+.tutorial-fighter-status p { font-size: 12px; margin: 8px 0 14px; }
+.tutorial-fighter-status .meter-label { font-size: 11px; }
+.tutorial-fighter-status .meter { width: 100%; }
+.tutorial-coach { border: 1px solid var(--line); padding: 22px; background: var(--panel); }
+.tutorial-coach h2 { margin: 0 0 12px; font-size: 23px; }
+.tutorial-coach p, .tutorial-recap { font-size: 15px; line-height: 1.6; }
+.tutorial-predictable-rival { padding-top: 14px; border-top: 1px solid var(--line); }
+.tutorial-guided-move { display: flex; flex-direction: column; gap: 5px; width: 100%; text-align: left; }
+.tutorial-guided-move strong { font-size: 18px; }
+.tutorial-guided-move span { font-size: 12px; }
+.tutorial-round-summary { color: var(--muted); padding-top: 14px; border-top: 1px solid var(--line); }
+.tutorial-completion-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.tutorial-recap { padding-left: 20px; margin: 0 0 22px; }
+.tutorial-recap li + li { margin-top: 10px; }
+.fight-tutorial button:focus-visible { outline: 3px solid var(--rubric); outline-offset: 4px; }
+@media (max-width: 800px) {
+  .tutorial-layout { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .tutorial-coach { padding: 20px; }
+}
+@media (max-width: 480px) {
+  .fight-tutorial { padding-top: 18px; }
+  .tutorial-navigation { margin-bottom: 22px; }
+  .tutorial-navigation > span { font-size: 11px; }
+  .tutorial-heading { margin-bottom: 18px; }
+  .tutorial-heading p, .tutorial-coach p, .tutorial-recap { font-size: 14px; }
+  .tutorial-status-pair { gap: 8px; margin-top: 14px; }
+  .tutorial-fighter-status { padding: 10px; }
+  .tutorial-fighter-status h2 { font-size: 16px; }
+  .tutorial-fighter-status p { font-size: 11px; }
+  .tutorial-coach { padding: 18px; }
+}

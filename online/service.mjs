@@ -5,6 +5,10 @@ import { facePresetChoices } from '../src/face-presets.js';
 import { AtomicStore, MemoryStore } from './store.mjs';
 import { TournamentStore } from './tournament-store.mjs';
 import { ArenaChat } from './arena-chat.mjs';
+import { ArenaReactions } from './arena-reactions.mjs';
+
+// Covers the longest public round playback and the normal polling delay.
+export const ROUND_PRESENTATION_MS = 4000;
 
 const copy = value => structuredClone(value);
 const object = value => value && typeof value === 'object' && !Array.isArray(value);
@@ -58,13 +62,14 @@ export class DuelService {
     this.temporarySessions = Boolean(temporarySessions);
     this.store = store ?? (this.temporarySessions ? new MemoryStore() : new AtomicStore(storePath));
     this.clock = clock;
-    this.rules = { equipmentMs, actionMs, winnerMs, mercyMs, crowdMs, disconnectMs };
+    this.rules = { equipmentMs, actionMs, winnerMs, mercyMs, crowdMs, disconnectMs, presentationMs: ROUND_PRESENTATION_MS };
     for (const [key, value] of Object.entries(this.rules)) if (!Number.isFinite(value) || (key === 'winnerMs' ? value < 0 : value <= 0)) throw new Error('Duel deadlines must be positive milliseconds (the winner reveal may be zero).');
     this.heartbeatPersistMs = heartbeatPersistMs;
     this.lastSeen = new Map();
     this.queue = Promise.resolve();
     this.tournaments = new TournamentStore(this, { entranceMs, intermissionMs });
     this.arenaChat = new ArenaChat();
+    this.arenaReactions = new ArenaReactions();
     this.initialized = this.store.read().then(async data => {
       this.data = data;
       data.tournaments ??= {};
@@ -75,8 +80,15 @@ export class DuelService {
       let shortened = false;
       const restoreWindow = room => {
         let changed = false;
+        if (room.phase === 'battle' && !Number.isFinite(room.actionOpensAt)) {
+          room.actionOpensAt = now; changed = true;
+        }
+        if (['battle', 'mercy'].includes(room.phase) && !Number.isFinite(room.presentationEndsAt)) {
+          room.presentationEndsAt = now; changed = true;
+        }
         if (room.phase === 'mercy' && !Number.isFinite(room.mercyOpensAt)) { room.mercyOpensAt = now; changed = true; }
-        const maximumDeadline = (room.phase === 'mercy' ? Math.max(now, room.mercyOpensAt) : now) + windows[room.phase];
+        const opensAt = room.phase === 'mercy' ? room.mercyOpensAt : room.phase === 'battle' ? room.actionOpensAt : now;
+        const maximumDeadline = Math.max(now, opensAt) + windows[room.phase];
         if (room.deadline > maximumDeadline) {
           room.deadline = maximumDeadline;
           if (room.phase === 'crowd' && room.crowdVote) room.crowdVote.deadline = maximumDeadline;
@@ -105,12 +117,14 @@ export class DuelService {
       const before = copy(this.data);
       this.changed = false;
       this.arenaChat.beginTransaction();
+      this.arenaReactions.beginTransaction();
       try {
         const value = await operation();
         if (this.changed) await this.store.write(this.data);
         this.arenaChat.commitTransaction();
+        this.arenaReactions.commitTransaction();
         return value;
-      } catch (error) { this.data = before; this.arenaChat.rollbackTransaction(); throw error; }
+      } catch (error) { this.data = before; this.arenaChat.rollbackTransaction(); this.arenaReactions.rollbackTransaction(); throw error; }
     });
     this.queue = task.catch(() => {});
     return task;
@@ -152,6 +166,8 @@ export class DuelService {
       duel: room.loadouts.every(Boolean) ? room.duel : null, decision: room.decision,
       crowdVote: this.crowdVoteView(room, room.playerIds[index]),
       mercyOpensAt: room.phase === 'mercy' ? room.mercyOpensAt : null,
+      actionOpensAt: room.phase === 'battle' ? room.actionOpensAt : null,
+      presentationEndsAt: room.presentationEndsAt ?? null,
       rematchReady: room.rematchReady, deadline: room.deadline, rules: this.rules,
       canRematch: !room.left.some(Boolean),
     });
@@ -214,20 +230,26 @@ export class DuelService {
   }
   startBattle(room, now) {
     room.duel = combat.createDuel(room.players.map((player, index) => ({ character: player.character, ...room.loadouts[index] })));
-    room.phase = 'battle'; room.deadline = now + this.rules.actionMs;
+    room.phase = 'battle'; room.actionOpensAt = now; room.presentationEndsAt = now;
+    room.deadline = room.actionOpensAt + this.rules.actionMs;
   }
-  settleBattle(room, now) {
-    if (room.duel.status !== 'complete') { room.deadline = now + this.rules.actionMs; return; }
+  settleBattle(room, now, presentRound = false) {
+    room.presentationEndsAt = now + (presentRound ? this.rules.presentationMs : 0);
+    if (room.duel.status !== 'complete') {
+      room.actionOpensAt = room.presentationEndsAt;
+      room.deadline = room.actionOpensAt + this.rules.actionMs; return;
+    }
+    room.actionOpensAt = null;
     const winner = room.duel.result.winner;
     if (winner === null) { room.phase = 'complete'; room.deadline = null; }
     else {
       room.players[winner].duelWins += 1; this.saveProfile(room, winner);
-      room.phase = 'mercy'; room.mercyOpensAt = now + this.rules.winnerMs; room.deadline = room.mercyOpensAt + this.rules.mercyMs;
+      room.phase = 'mercy'; room.mercyOpensAt = room.presentationEndsAt + this.rules.winnerMs; room.deadline = room.mercyOpensAt + this.rules.mercyMs;
     }
   }
   resolveActions(room, now) {
     room.duel = combat.resolveRound(room.duel, room.actions);
-    room.actions = [null, null]; this.settleBattle(room, now);
+    room.actions = [null, null]; this.settleBattle(room, now, true);
   }
   decide(room, decision) {
     const winner = room.duel.result.winner, loser = 1 - winner;
@@ -344,6 +366,7 @@ export class DuelService {
     this.tournaments.advance(now);
     if (this.temporarySessions) this.collectTemporaryGames(now);
     this.arenaChat.cleanup(this.data.tournaments, now);
+    this.arenaReactions.cleanup(this.data.tournaments, now);
   }
   async tick() { return this.serialize(() => this.advance(this.clock())); }
   command(room, index, kind, body, execute) {
@@ -385,6 +408,14 @@ export class DuelService {
           const tournament = this.data.tournaments[chat[1]];
           if (!tournament) fail(404, 'Tournament lobby not found.', 'room_not_found');
           return method === 'POST' ? this.arenaChat.post(tournament, session, body, now) : this.arenaChat.view(tournament, session);
+        }
+        const reactions = /^\/api\/arena\/tournaments\/([A-Z2-9]{6})\/reactions$/.exec(path);
+        if (reactions) {
+          if (!['GET', 'POST'].includes(method)) fail(405, 'Method not allowed.');
+          const session = method === 'POST' ? this.session(token) : viewer;
+          const tournament = this.data.tournaments[reactions[1]];
+          if (!tournament) fail(404, 'Tournament lobby not found.', 'room_not_found');
+          return method === 'POST' ? this.arenaReactions.post(tournament, session, body, now) : this.arenaReactions.view(tournament, session, now);
         }
         if (method !== 'GET') fail(405, 'Method not allowed.');
         if (path === '/api/arena/tournaments') return this.arenaTournamentList();
@@ -459,6 +490,7 @@ export class DuelService {
         } else if (kind === 'action') {
           if (room.phase !== 'battle') fail(409, 'The duel is not accepting actions.', 'wrong_phase');
           if (!Number.isInteger(body.round) || body.round !== room.duel.round) fail(409, 'That choice belongs to an earlier round.', 'stale_round');
+          if (now < room.actionOpensAt) fail(409, 'The round is still playing. Choices open after the presentation.', 'actions_not_open');
           if (room.actions[index]) fail(409, 'Your choice is already locked for this round.', 'choice_locked');
           if (typeof body.action !== 'string') fail(400, 'Choose a valid action.');
           const option = combat.getActionOptions(room.duel, index).find(option => option.id === body.action);

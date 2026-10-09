@@ -54,12 +54,16 @@ async function fixture(t, options = {}, persistent = false) {
     async finish(view, decision = 'spare') {
       let rounds = 0;
       while (view.phase === 'battle') {
+        if (view.match.actionOpensAt > now) await this.tick(view.match.actionOpensAt - now);
         const choices = view.match.duel.fighters.map((_, index) => getActionOptions(view.match.duel, index).find(option => option.id === 'strike' && option.enabled) ? 'strike' : 'recover');
         await this.commit(view, 0, 'action', { round: view.match.duel.round, action: choices[0] });
         view = await this.commit(view, 1, 'action', { round: view.match.duel.round, action: choices[1] });
         assert.ok(++rounds <= 24);
       }
-      if (view.phase === 'mercy') view = await this.commit(view, view.match.duel.result.winner, 'mercy', { decision });
+      if (view.phase === 'mercy') {
+        if (view.match.mercyOpensAt > now) await this.tick(view.match.mercyOpensAt - now);
+        view = await this.commit(view, view.match.duel.result.winner, 'mercy', { decision });
+      }
       return view;
     },
   };
@@ -226,7 +230,7 @@ test('equipment, action and mercy deadlines advance one event at a time; an exac
   await f.tick(8000); view = await f.view(lobby.code);
   assert.equal(view.phase, 'battle'); assert.equal(view.match.deadline, f.now + 80);
   for (let round = 1; round <= 24; round += 1) {
-    await f.tick(80); view = await f.view(lobby.code);
+    await f.tick(view.match.deadline - f.now); view = await f.view(lobby.code);
     if (round < 24) { assert.equal(view.phase, 'battle'); assert.equal(view.match.duel.round, round + 1); }
   }
   assert.equal(view.phase, 'intermission'); assert.equal(view.match.duel.result.winner, null);

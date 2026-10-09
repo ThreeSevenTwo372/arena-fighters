@@ -54,6 +54,10 @@ export function roundSummary(duel) {
 
 /** All numbers come from the authoritative option; Guard never implies zero damage. */
 export function actionPreview(option) {
+  if (option.statusEffect === 'entangle') return {
+    label: `${option.damage} damage + net`,
+    detail: `Next-round attacks +3 SP · Guard prevents the net · Guard or Recover clears it · ${option.guardedDamage} damage against Guard`,
+  };
   if (option.conditional === 'riposte') return {
     label: `Counter: ${option.damage} damage`,
     detail: 'Halves an incoming Strike · Counter only if you survive · Techniques, Guard and Recover prevent the counter',

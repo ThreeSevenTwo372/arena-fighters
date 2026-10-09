@@ -1,9 +1,9 @@
 {
   "schema": "arena-fighters.local-release.v1",
   "status": "complete",
-  "version": "0.9.4",
-  "createdAt": "2026-10-08T19:56:29.823Z",
-  "directory": "releases/Arena_Fighters_v0.9.4_v001",
+  "version": "0.10.1",
+  "createdAt": "2026-10-09T17:46:57.372Z",
+  "directory": "releases/Arena_Fighters_v0.10.1_v001",
   "identity": {
     "active": {
       "version": "v013",
@@ -14,16 +14,7 @@
       "catalog": "assets/clean-gladiator/v006/manifest.json"
     }
   },
-  "provenance": [
-    {
-      "chatId": "01a11c7b-e6ec-7503-8396-2679f20d2469",
-      "note": "Shared per-tournament arena chat for fighters waiting for the lobby to fill and public spectators; persistent composition across battle playback with server-assigned identities and bounded plain-text RAM-only history"
-    },
-    {
-      "chatId": "01a11c7b-e6ec-7503-8396-2679f20d2469",
-      "note": "Preserves every v0.9.3 asset, cinematic and soundtrack file, v013/v006 identities, gameplay and public-observer authority, private saved-fighter data and free temporary hosting"
-    }
-  ],
+  "provenance": [],
   "entries": [
     "src",
     "online",
@@ -74,8 +65,8 @@
     "copiedBytesVerified": true,
     "catalogReferencesVerified": true
   },
-  "fileCount": 1400,
-  "totalBytes": 84302099,
+  "fileCount": 1431,
+  "totalBytes": 87641564,
   "catalogs": [
     {
       "path": "assets/clean-gladiator/v013/manifest.json",
@@ -195,8 +186,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 15466,
-      "sha256": "0c942765a1bdbfe517ab1dcee08bd6ae35b62ed1ab0b04deb9e9c6893c2b1c66"
+      "bytes": 19939,
+      "sha256": "6aaeae2330c8cce6f79c9c49c6b9753cf9fd9473165ba8aaa5f5d95611abcb9c"
     },
     {
       "path": "ART_DIRECTION.md",
@@ -215,8 +206,8 @@
     },
     {
       "path": "CURRENT_VERSION.md",
-      "bytes": 16487,
-      "sha256": "571a34663d6c4506af341a11112d7aafe4a8a2355fc96daffd49e1b60401c456"
+      "bytes": 20919,
+      "sha256": "25965dcd2820ae5dcbd6515e89fa5402debf16c20edc6b5761cd14ea01e8a1ff"
     },
     {
       "path": "DARK_ART.md",
@@ -225,23 +216,23 @@
     },
     {
       "path": "DESIGN.md",
-      "bytes": 27117,
-      "sha256": "b29fdb5aae309699d8e7d0db86063274890e003527bc2834d92b836db0f1acbb"
+      "bytes": 30771,
+      "sha256": "14cbac0fd1d096915434fe637cd569798b6ea673d9c7af927a4b09730052f9ce"
     },
     {
       "path": "HOSTING.md",
-      "bytes": 8327,
-      "sha256": "cf268aa6198917d198d454907202e056a394a0294072f243e6ac902e89a911f7"
+      "bytes": 11981,
+      "sha256": "b471b9c316fe678a13ee4e1a808a97410fc7af55397f8f15110f5bcd60ddeb80"
     },
     {
       "path": "ONLINE_DUELS.md",
-      "bytes": 19409,
-      "sha256": "e483c8cc3c72bdc6bf15ae23137e26a83c42ba92b88b7a76f8671d548395316e"
+      "bytes": 23063,
+      "sha256": "90cb01bb2111893b78912d5f2acdbe73d46a67f228d15830b5a0ed347729f81e"
     },
     {
       "path": "README.md",
-      "bytes": 16161,
-      "sha256": "47cf024f44df0f577a1946ea89c4140e034ea8621c5187d50e18f2e8933293a2"
+      "bytes": 20399,
+      "sha256": "068615b057759025d5d5a86dd88cdbd396169709788cc402b2992195f2ac878a"
     },
     {
       "path": "Start-Prototype.ps1",
@@ -250,8 +241,8 @@
     },
     {
       "path": "TOURNAMENTS.md",
-      "bytes": 21893,
-      "sha256": "f7f239a832d86aada3da0f6998fae7043073ede9093ed82b759a30c43c3548e5"
+      "bytes": 25547,
+      "sha256": "e062521eb5078731ae035ea3383bd319c2f2cc320fd049981a444378c636e7dc"
     },
     {
       "path": "assets/arena/ARENA_PROVENANCE.md",
@@ -2242,6 +2233,61 @@
       "path": "assets/clean-gladiator/v014-equipment/weapons/dagger.png",
       "bytes": 254,
       "sha256": "45ed99b54ca5fa56bbb0c3d4209b229cc41df1942a0c57bd6b15f6d623fdedae"
+    },
+    {
+      "path": "assets/clean-gladiator/v015-equipment/PREPARATION_RECEIPT.json",
+      "bytes": 1535,
+      "sha256": "097af2c23e8cfb7595f566f070cd857c0b42a0e80bba6feaf33f50e7d96feb9d"
+    },
+    {
+      "path": "assets/clean-gladiator/v015-equipment/README.md",
+      "bytes": 1069,
+      "sha256": "ea56b1bafc35a2312b3bf391a7b8bc1ab7f648835976d4d1f1616413717a401e"
+    },
+    {
+      "path": "assets/clean-gladiator/v015-equipment/manifest.json",
+      "bytes": 1184,
+      "sha256": "919a77725cd8c30503a492c07bb44295c71a94bba5852e9d2757e054c42937e7"
+    },
+    {
+      "path": "assets/clean-gladiator/v015-equipment/net.source.json",
+      "bytes": 29331,
+      "sha256": "fe886bb2285af38e767086a77b50202bc6acf6c44d878a962c75e50bc5b95897"
+    },
+    {
+      "path": "assets/clean-gladiator/v015-equipment/net.source.svg",
+      "bytes": 18008,
+      "sha256": "71ae49d60f7bd40306b5669f84ef00fa093cdf930ae4326dcbe1d61eed57f684"
+    },
+    {
+      "path": "assets/clean-gladiator/v015-equipment/prepare-equipment.mjs",
+      "bytes": 6969,
+      "sha256": "a6d43ce77cbdd17b930e181aa94d7a99fb0e985407e3d178566bb26ab729e85a"
+    },
+    {
+      "path": "assets/clean-gladiator/v015-equipment/render-controls.mjs",
+      "bytes": 5177,
+      "sha256": "cf4a09321ce4296c51300d1f4e631485830387468064db23afc47609b8f59323"
+    },
+    {
+      "path": "assets/clean-gladiator/v015-equipment/trident.source.json",
+      "bytes": 69786,
+      "sha256": "804d8c23274e056d0483eb2981cb4bf54e0ee1d57e954e3524c99f6ac6b9728f"
+    },
+    {
+      "path": "assets/clean-gladiator/v015-equipment/trident.source.svg",
+      "bytes": 44484,
+      "sha256": "6eda6ac1221450e06a21452bfbc12e1a6fa3162c7c1d65ad3f00757719d7766e"
+    },
+    {
+      "path": "assets/clean-gladiator/v015-equipment/weapons/net.png",
+      "bytes": 380,
+      "sha256": "9347e6343447fd794f5d0c679aa0e84f60f8fbd47da5c1a3b2c3e6dd08867663"
+    },
+    {
+      "path": "assets/clean-gladiator/v015-equipment/weapons/trident.png",
+      "bytes": 298,
+      "sha256": "750dada7cd257ac6bb5ca2f4a65acf2a984abece267495429ecaf2e768a0920b"
     },
     {
       "path": "assets/dpixel-avatar/v001/README.md",
@@ -6550,8 +6596,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 2051,
-      "sha256": "77228f5cbb78a02325a8ea93b629b45d0a433747a275f26df8ce4a242afdcbff"
+      "bytes": 2273,
+      "sha256": "ecac2a90bbbf80d9d2a77b4228eb02b748e539a1a0f01f2267cf5211ec57b868"
     },
     {
       "path": "online/arena-chat.mjs",
@@ -6559,9 +6605,14 @@
       "sha256": "fcebeb7c2f7377dd8d952e330e7fe8eefe3808de2de95c7e5aa1991732a0786a"
     },
     {
+      "path": "online/arena-reactions.mjs",
+      "bytes": 5514,
+      "sha256": "d1f5f32506536d235e677de3faa6919ca3df728d592aefe3ec477b3e00e970f1"
+    },
+    {
       "path": "online/service.mjs",
-      "bytes": 31702,
-      "sha256": "c2c1f57516752d89c34af8313a277f22bb3f907280edc43cb22af3141ab93542"
+      "bytes": 33726,
+      "sha256": "9f402234a58a5ff006c3a14f05b1f7b35d67736f8211fb8eab46c52105a1f207"
     },
     {
       "path": "online/store.mjs",
@@ -6570,18 +6621,18 @@
     },
     {
       "path": "online/tournament-bots.mjs",
-      "bytes": 2485,
-      "sha256": "52ca0e1c57a1e8833262d8cc51e101fc4b5115925d163d37b939557208a3ed60"
+      "bytes": 2595,
+      "sha256": "fc43c4383ec0e2861a737eea3d718d90f01135bdef577d7c605be3a13fe9fb7c"
     },
     {
       "path": "online/tournament-store.mjs",
-      "bytes": 27857,
-      "sha256": "5dd361089e12ef6565d290a28259a253ce998b4be175a0c2ef89f664693255f6"
+      "bytes": 28415,
+      "sha256": "564824e924bab5df59b9e702eb13ba1a8119fec61c87a224ea0d3def6dc4bd0a"
     },
     {
       "path": "package.json",
-      "bytes": 367,
-      "sha256": "1096252bdad05ecfba210319f27a867cea4600590156724b5dd680558495e641"
+      "bytes": 408,
+      "sha256": "090e5b077918baaf5bf6e1b84a51c0b19d3be4a15a1c3d93212e4e4d3d778e11"
     },
     {
       "path": "public/audio/soundtrack-v001/beyond-the-last-lantern-day.mp3",
@@ -6654,6 +6705,16 @@
       "sha256": "d08948cd8d78bb5d902833ea34a9bf03442c67934df936c06b41b17accae6ee8"
     },
     {
+      "path": "public/audio/soundtrack-v002/manifest.json",
+      "bytes": 471,
+      "sha256": "14aca0c3ae3bd97cb53e41872088ca3fd7f4e18cda2bf891d19c3308b18c04d9"
+    },
+    {
+      "path": "public/audio/soundtrack-v002/menu-where-the-stars-remember.mp3",
+      "bytes": 3014503,
+      "sha256": "b90e289c987d30f0af9dd93dbfa549469c0774fc11b1b9f94626e649feeb8bf2"
+    },
+    {
       "path": "public/cinematics/arrival-v001/PREPARATION_RECEIPT.json",
       "bytes": 5949,
       "sha256": "3df765b0bd5a238f6c575aa0822f9f4e672571953d2c089aa06e5af0c605fd28"
@@ -6705,13 +6766,13 @@
     },
     {
       "path": "src/app.js",
-      "bytes": 107092,
-      "sha256": "f77b4114125472310e9b481df28f37fe9744dfe3650e3fe3dd1ad131bc17c22e"
+      "bytes": 114329,
+      "sha256": "c6e5ccaa8328709871324d5fa4f6272518de05e251e411789e8357fe4169a480"
     },
     {
       "path": "src/arena-avatar.js",
-      "bytes": 17590,
-      "sha256": "001963ead11237969c4bef909c6cee29b107b8df8161fca48359d36d73fe067a"
+      "bytes": 18055,
+      "sha256": "6556add0d34d1e37753af01c27e9f8d0c97be655c9bc694537376e0519774044"
     },
     {
       "path": "src/arena-chat.css",
@@ -6724,19 +6785,34 @@
       "sha256": "54a40d636605735ec647b3a68d230b41c4d06a6819924a6e603efd0e1344bf6b"
     },
     {
+      "path": "src/arena-invite.js",
+      "bytes": 470,
+      "sha256": "dff2cd4441af695e48d8673676a09966d5838e1d8d6506b2316ccf006918aef9"
+    },
+    {
+      "path": "src/arena-reactions.css",
+      "bytes": 1719,
+      "sha256": "a4bd5e97277ad9cdaeb348e48b6515136783c61d03638ec1812ac8a4f5f4a2fc"
+    },
+    {
+      "path": "src/arena-reactions.js",
+      "bytes": 4491,
+      "sha256": "e4775bd7c58dea4cc124666ff4bd88dbce31bf29c121ea9ca4dcd2567abd71dd"
+    },
+    {
       "path": "src/arena.js",
       "bytes": 14617,
       "sha256": "e9c68a8e06731f0179ba2e8e8dde4f450405cd75c65eaf1edc779c8209475fcf"
     },
     {
       "path": "src/armory.css",
-      "bytes": 12469,
-      "sha256": "2b168b68567d76ecf7ddccc015843c7c20bb270f48b90e892df6ee773dac8557"
+      "bytes": 12695,
+      "sha256": "c8b17c29618d7fff7b4303f854c97b97fab6077b131a4414a368c43e1cb11f64"
     },
     {
       "path": "src/armory.js",
-      "bytes": 8044,
-      "sha256": "dcff8fd75c93542d0923d9034913c8caae3324d0e7ad53b923e0f40adef3ed81"
+      "bytes": 8190,
+      "sha256": "8e3f8e5af6a81e016d487b4d363cb80cd0237bf4f7ff459755b5ae513ef5cbb8"
     },
     {
       "path": "src/arrival.css",
@@ -6745,8 +6821,8 @@
     },
     {
       "path": "src/arrival.js",
-      "bytes": 6571,
-      "sha256": "cea702023195e68203568b7847aa1d85b1fce4f27abf9c5316adc4a11f2b1721"
+      "bytes": 6477,
+      "sha256": "27f274d0091a1824ed854fa7710238916c7f7e21faf6763fe7182157e71dde3f"
     },
     {
       "path": "src/audio-controls.css",
@@ -6770,18 +6846,18 @@
     },
     {
       "path": "src/battle-animation.css",
-      "bytes": 9913,
-      "sha256": "b10466fc095842685b8325bf47ee5205caefcce37088e3917ab47d1f33fd30fb"
+      "bytes": 10080,
+      "sha256": "d74a10bed8d37ce2b6ff0d1794786ad488a9ca9ae09ddef298819a21662c2167"
     },
     {
       "path": "src/battle-animation.js",
-      "bytes": 9160,
-      "sha256": "a8baf60d292c1d916dcdfded124acbe84cff230d4e5293b4d6e84e49c59b4083"
+      "bytes": 9372,
+      "sha256": "f9111fd2e049205841f7f1526723b216d7e5481dfeb575e1c20c1d273b2aafe0"
     },
     {
       "path": "src/battle-presentation.js",
-      "bytes": 4771,
-      "sha256": "c433354c424d7a2e55c70beabd308cb3fa2cfa92d49a5f278669ba6e283be847"
+      "bytes": 5015,
+      "sha256": "ec472d7a5be4974e595cc36ad0394c996c23c9b37cfb341ee0ad60a56888cdf8"
     },
     {
       "path": "src/battle-ui.css",
@@ -6795,13 +6871,13 @@
     },
     {
       "path": "src/combat.js",
-      "bytes": 27464,
-      "sha256": "8b5406610a9488ccf9ae7a39ef948275e903038651c854baab85c5df447d4adf"
+      "bytes": 31824,
+      "sha256": "50b783d1f44d713e4e243f59f49842fd95cd1be23aa6bafce16ec2c5ce3a50fe"
     },
     {
       "path": "src/current-avatar.js",
       "bytes": 2177,
-      "sha256": "75acb4691662efe3ebf59a3bcbbcecfa11dea21c6ea4ef2264688422ee4a254f"
+      "sha256": "822ed701749e3ef6c3b42169bb0031004ae1106f654e79161a9ee0f6a7e0d8b8"
     },
     {
       "path": "src/dark-identity.js",
@@ -6815,18 +6891,28 @@
     },
     {
       "path": "src/execution-animation.css",
-      "bytes": 11150,
-      "sha256": "a1ffbc761b694bf314dcc074136166ef2bcc4cae47f94b45ab525a4c33d77ee9"
+      "bytes": 11308,
+      "sha256": "f3dc19f0196028a40f833def4df7cc782b9ef1a964d47d0d065b0bc5dfe59878"
     },
     {
       "path": "src/execution-animation.js",
-      "bytes": 10157,
-      "sha256": "db09f87368ccc7a3e9c0a87cbd9165a0437c12a18573d88a1ad4e9e01c0b23d1"
+      "bytes": 10192,
+      "sha256": "982517d67413ddc4b7062214946cb5db2205d8d02f4181119c1eca5648798447"
     },
     {
       "path": "src/face-presets.js",
       "bytes": 2273,
       "sha256": "49f805e120bc7cec3a5e71d8bacb2d0425f96531fa7762002871a84d3d11b0ce"
+    },
+    {
+      "path": "src/fight-tutorial.css",
+      "bytes": 3217,
+      "sha256": "cec63ec4127f74a1ccb5ebde46a40ba15c8fca13abd9412517043d9766f7e19e"
+    },
+    {
+      "path": "src/fight-tutorial.js",
+      "bytes": 8782,
+      "sha256": "8c70bb0cd28e85a812c2a76b35bfd281bb2ce30256f0a8c2ce8857cd30d362a6"
     },
     {
       "path": "src/fixed-identity.js",
@@ -6835,8 +6921,8 @@
     },
     {
       "path": "src/game-audio.js",
-      "bytes": 18527,
-      "sha256": "f94d1bd005bf0276bfe734477e577aded82582649b7508a6590a647f8954d1bc"
+      "bytes": 18749,
+      "sha256": "3c149edb9ae48407b12e74de1c970c99542da9819a5a3e582d092de895ca030f"
     },
     {
       "path": "src/main-menu.css",
@@ -6845,8 +6931,8 @@
     },
     {
       "path": "src/main-menu.js",
-      "bytes": 12276,
-      "sha256": "2676ecbc384dffb4686ecbc5e981a1792d82bb5857a800b9e9a2efc6605c9a9e"
+      "bytes": 12661,
+      "sha256": "1406611cafc4de518d4e436e3a9be5c6fd797da137bc95c1e99eae0705fe4ff5"
     },
     {
       "path": "src/mercy-presentation.css",
@@ -6905,13 +6991,13 @@
     },
     {
       "path": "src/tournament-client.js",
-      "bytes": 2434,
-      "sha256": "73d016cfffdb98eeef4358fb68aa75fe6e095c6b47a65ed3fd762b3dae8cadcd"
+      "bytes": 2773,
+      "sha256": "d39b687a70fbe8ecaf97ebdbf6674fc97162c0751a9cf545212ff38170c27a94"
     },
     {
       "path": "src/tournament-view.js",
-      "bytes": 22124,
-      "sha256": "aadafa04b5673ffc843fb13fc4bc62824cecfeccb1955ee46b3f3e712245c3fc"
+      "bytes": 23134,
+      "sha256": "8fd3a0a8bc5ec49d63a107244d782def58af5f42b0cefa09c25643b7b9b20013"
     },
     {
       "path": "src/tournament.css",
@@ -6949,6 +7035,21 @@
       "sha256": "0a1d853b8b71e38eef0449cef5b6277fe16a4678249cd74b059df1376052d31a"
     },
     {
+      "path": "tests/arena-invite.test.js",
+      "bytes": 642,
+      "sha256": "47853faa4804c85c6807b62d0667bb1c09ce49c926d791cc1c0a5db15eb2a0d3"
+    },
+    {
+      "path": "tests/arena-reactions-ui.test.js",
+      "bytes": 3424,
+      "sha256": "a29413bcb0cdea17491fc4a96f5e0ecead0f40bbe31fe9f5c94ce35b5512636c"
+    },
+    {
+      "path": "tests/arena-reactions.test.js",
+      "bytes": 13326,
+      "sha256": "9dce9412f667f94b0d76a6c5accaf1f833b504e560dbeb5909597b79f7c6ed93"
+    },
+    {
       "path": "tests/arrival.test.js",
       "bytes": 10298,
       "sha256": "175e49876abc4b31880c4f9d1fc0cb9ea9b4cd66e8be87cac0084f9ecf1d26d7"
@@ -6974,14 +7075,19 @@
       "sha256": "abd4f984256cba447909f9ce130f387bf698bc39bd004de9526132515bd636ec"
     },
     {
+      "path": "tests/bot-personalities.test.js",
+      "bytes": 2470,
+      "sha256": "1009428a3915aa554b15a9acda48003d23811b24c148cbd3f8bbd9ae376b4065"
+    },
+    {
       "path": "tests/clean-avatar.test.js",
       "bytes": 8093,
       "sha256": "bd17543be4f2425d5a7b7ce336a239a2a0e9fd7006ad62dfe89eb46c59db716f"
     },
     {
       "path": "tests/combat.test.js",
-      "bytes": 34338,
-      "sha256": "781a8922436bf8ea525310125e6eff70aa5840b87b19e5f44958a68253855e55"
+      "bytes": 34448,
+      "sha256": "a331c0ceb7b9cf47e354ffe506f93ebe3f65d98acb14684f6f715e7f976bb15c"
     },
     {
       "path": "tests/crowd-vote.test.js",
@@ -7010,8 +7116,8 @@
     },
     {
       "path": "tests/dagger-renderer.test.js",
-      "bytes": 8729,
-      "sha256": "89e5a5caa76c94a6d936526bc8a156ecec9f58d0755509db049fdc3a822650b0"
+      "bytes": 8734,
+      "sha256": "816e522736fbecd28f38627be0a7384ee99cccda79de43591f6dd9dbb8aae214"
     },
     {
       "path": "tests/dark-identity-assets.test.js",
@@ -7039,6 +7145,11 @@
       "sha256": "778b0b784c108733d4cd7cc8dffe8dcea150093809e4e6a51d8f7dca6bfb21d8"
     },
     {
+      "path": "tests/fight-tutorial.test.js",
+      "bytes": 7844,
+      "sha256": "61ae6d612dc9d7eb11d4202bd7c6954bacf9a4898d2c81e2eda5bc389c842620"
+    },
+    {
       "path": "tests/fixed-identity.test.js",
       "bytes": 21211,
       "sha256": "1b4c55c4375bbfbfd549c337ed9115e6f3025fd307f3deb4d1facf4ebc1a308e"
@@ -7050,8 +7161,8 @@
     },
     {
       "path": "tests/game-audio.test.js",
-      "bytes": 22474,
-      "sha256": "7b7ed54ffdbc37fc05ad045ab8c1fbf420fa7a80116686cf5ea4c512ed784284"
+      "bytes": 22520,
+      "sha256": "983545076c21ca9da61c681cb0608fb3b25099b01f34abe3e9b6db8637e91d35"
     },
     {
       "path": "tests/hosting.test.js",
@@ -7060,8 +7171,13 @@
     },
     {
       "path": "tests/main-menu.test.js",
-      "bytes": 7553,
-      "sha256": "306d90dcbd74977d2a925e613cf3d6430203752ec9747d05ebc2bb879cfa9bd9"
+      "bytes": 7611,
+      "sha256": "d2cc390e8993912b13b55878ee108232d29cf3703f0f27aa14f60fed4d53068d"
+    },
+    {
+      "path": "tests/menu-only-audio.test.js",
+      "bytes": 2477,
+      "sha256": "99431255d7b45866b55c313a3c65a6939d6726e75d350f84384af5f6611c0636"
     },
     {
       "path": "tests/menu-service.test.js",
@@ -7095,8 +7211,8 @@
     },
     {
       "path": "tests/online.test.js",
-      "bytes": 24941,
-      "sha256": "632c6920bda347be294bb99e5347b4fd6a9608de3c713f8700e997daa47bb93f"
+      "bytes": 25582,
+      "sha256": "b0db4434620da607f4838b938cf1eb6b9358a9908f8e019782b71c54fd1aef55"
     },
     {
       "path": "tests/preset-diversity.test.js",
@@ -7124,14 +7240,29 @@
       "sha256": "bf5ee052530b791bad6daf0967f5a7c7754e19e1e8c01a7ef033a1084faef64b"
     },
     {
+      "path": "tests/release-presentation.test.js",
+      "bytes": 2056,
+      "sha256": "2f57bb62ef10d19637f3d9886d0b4cc969f3a9a21d284d9bf2418c3e99409fce"
+    },
+    {
+      "path": "tests/release-readiness-ui.test.js",
+      "bytes": 13897,
+      "sha256": "4d1a82495fe00f886eba25ec4c885ce2469f664e2f5bdb40cdc16c2d1e508903"
+    },
+    {
+      "path": "tests/round-pacing.test.js",
+      "bytes": 7202,
+      "sha256": "03ded0f647d1e980e44a1c182c7a664a07204e039a0d86f676141bd43a559cb3"
+    },
+    {
       "path": "tests/soundtrack-http.test.js",
       "bytes": 8356,
       "sha256": "682d4f172b24c8396ce53d32b8e61a1a97bc2b08a8d7552bbcad78ec41b11347"
     },
     {
       "path": "tests/soundtrack-ui.test.js",
-      "bytes": 24461,
-      "sha256": "65a1d80aca74dd5a547f9a43aaca08323825db8d992367105096948ccbf757fb"
+      "bytes": 24509,
+      "sha256": "acfce5fe15b114a4a20db80443053c868eff6a46c1ffbae25bc97c85af0f6e7b"
     },
     {
       "path": "tests/spectator-frame.test.js",
@@ -7145,8 +7276,8 @@
     },
     {
       "path": "tests/temporary-sessions.test.js",
-      "bytes": 15160,
-      "sha256": "9ef21d3fe617b3f4eb167b2b6c10281006fcb4d88eb4754259f76813efcb0c49"
+      "bytes": 15344,
+      "sha256": "f225ac843cc8861affe27ba7f778c08aa3319efe0fb5d598b72adc66996a29de"
     },
     {
       "path": "tests/temporary-ui.test.js",
@@ -7155,8 +7286,8 @@
     },
     {
       "path": "tests/tournament-bots.test.js",
-      "bytes": 25602,
-      "sha256": "68bb84d9342068b85cb6a601db0fc05a301b5fc6548dc92a6e87460552fb59b6"
+      "bytes": 26059,
+      "sha256": "160aad5c688eeb06e0f6a09e041b89469552894bf5152c7949470fb82cd2ccf6"
     },
     {
       "path": "tests/tournament-client.test.js",
@@ -7175,8 +7306,23 @@
     },
     {
       "path": "tests/tournament.test.js",
-      "bytes": 31774,
-      "sha256": "b4d02cf1c90a50654ecdbf2e4be7ac4d54527c81d5969ade259e0885ee09ed03"
+      "bytes": 32001,
+      "sha256": "e71eb137488f93ad2ad1ca700c9af4e16f53d7ef1e1c0f58f0d92e83c5a06d3d"
+    },
+    {
+      "path": "tests/trident-combat.test.js",
+      "bytes": 7940,
+      "sha256": "e633f65148be724967bff0d4170551bc065db350ee156912d2937745ee062114"
+    },
+    {
+      "path": "tests/trident-online.test.js",
+      "bytes": 4882,
+      "sha256": "d61381bdd98a0d8a882f84769bbac2cc6df44262e3e02fc042a301cf84f01863"
+    },
+    {
+      "path": "tests/trident-renderer.test.js",
+      "bytes": 8315,
+      "sha256": "0290ce8221d81c486ade552f6368fe82e5f1eec6256c87f03ef68d0da41f6efd"
     },
     {
       "path": "tools/build-squarespace-embed.mjs",

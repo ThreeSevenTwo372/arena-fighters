@@ -5,6 +5,7 @@ const escape = value => String(value ?? '').replace(/[&<>"']/g, character => ({ 
 // Native silhouettes from the current arena catalog, not the full 192×160
 // alignment frames. Their registered copies stay untouched for combat.
 export const ARMORY_WEAPON_DISPLAY = Object.freeze({
+  trident: Object.freeze({ width: 26, height: 92 }),
   dagger: Object.freeze({ width: 16, height: 36 }),
   sword: Object.freeze({ width: 24, height: 63 }),
   spear: Object.freeze({ width: 14, height: 95 }),
@@ -16,13 +17,13 @@ export const ARMORY_WEAPON_DISPLAY = Object.freeze({
 });
 const armorWidths = Object.freeze({ light: 49, medium: 47, heavy: 59 });
 const helmetWidths = Object.freeze({ closed_bascinet: 29, barbute: 26, greathelm: 27 });
-const rackOrder = Object.freeze(['sword', 'spear', 'halberd', 'greatsword', 'dagger', 'axe', 'mace', 'flail']);
+const rackOrder = Object.freeze(['sword', 'spear', 'halberd', 'trident', 'greatsword', 'dagger', 'axe', 'mace', 'flail']);
 const chosen = (value, catalog, fallback) => Object.hasOwn(catalog, value) ? value : fallback;
 const check = selected => `<span class="armory-choice-check" aria-hidden="true">${selected ? '✓' : '+'}</span>`;
 const signed = value => value > 0 ? `+${value}` : String(value);
 const weaponButton = (id, current, index) => {
   const weapon = WEAPONS[id], frame = ARMORY_WEAPON_DISPLAY[id], selected = id === current;
-  const texture = id === 'dagger' ? '/assets/clean-gladiator/v014-equipment/weapons/dagger.png' : `/assets/clean-gladiator/v003/weapons/${id}.png`;
+  const texture = id === 'dagger' ? '/assets/clean-gladiator/v014-equipment/weapons/dagger.png' : id === 'trident' ? '/assets/clean-gladiator/v015-equipment/weapons/trident.png' : `/assets/clean-gladiator/v003/weapons/${id}.png`;
   return `<button type="button" class="armory-weapon armory-weapon--${id}${selected ? ' is-selected' : ''}" data-action="weapon" data-index="${index}" data-value="${id}" aria-pressed="${selected}" aria-label="${escape(`${weapon.name}. ${weapon.description} Technique: ${weapon.technique.name}. ${weapon.technique.description}`)}" title="${escape(weapon.description)}">
     <span class="armory-weapon-hook" aria-hidden="true"></span><span class="armory-weapon-silhouette" aria-hidden="true"><img src="${texture}" width="${frame.width}" height="${frame.height}" alt="" draggable="false"></span>
     <span class="armory-nameplate">${escape(weapon.name)}${check(selected)}</span></button>`;

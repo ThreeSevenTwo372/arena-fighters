@@ -93,7 +93,6 @@ export function createArrivalController(options = {}) {
       <div class="arrival-shade" aria-hidden="true"></div>
       <header class="arrival-header"><span class="arrival-wordmark">Arena Fighters</span><button type="button" class="arrival-skip" data-arrival="skip">Skip intro <span aria-hidden="true">→</span></button></header>
       <section class="arrival-invitation" aria-label="Journey controls"><p class="arrival-status" role="status">${reduced ? 'The arena awaits.' : ''}</p><div class="arrival-buttons"><button type="button" class="arrival-enter" data-arrival="enter"${reduced ? '' : ' hidden'}>Enter the arena <span aria-hidden="true">→</span></button><button type="button" class="arrival-play" data-arrival="play"${reduced ? '' : ' hidden'}>${reduced ? 'Watch the arrival' : 'Begin the journey'}</button></div></section>
-      <span class="arrival-caption" aria-hidden="true">Every fighter begins somewhere.</span>
     </main>`;
     video = host.querySelector('.arrival-video');
     // Set properties as well as attributes: muted autoplay must be established before play().

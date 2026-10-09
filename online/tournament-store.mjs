@@ -70,6 +70,8 @@ export class TournamentStore {
         yourLoadout: participating ? match.loadouts[localIndex] : null,
         // Only the resolved combat state is public. Pending choices and unrevealed gear never leave the service.
         duel: match.loadouts.every(Boolean) ? match.duel : null,
+        actionOpensAt: match.phase === 'battle' ? match.actionOpensAt : null,
+        presentationEndsAt: match.presentationEndsAt ?? null,
         decision: match.decision, crowdVote, mercyOpensAt: match.phase === 'mercy' ? match.mercyOpensAt : null, deadline: match.deadline, rules: { ...this.service.rules, entranceMs: this.entranceMs, intermissionMs: this.intermissionMs }, canRematch: false,
       } : null,
     });
@@ -179,6 +181,8 @@ export class TournamentStore {
     this.service.startBattle(tournament.match, now);
     tournament.match.phase = 'entrance';
     tournament.match.deadline = now + this.entranceMs;
+    tournament.match.actionOpensAt = tournament.match.deadline;
+    tournament.match.presentationEndsAt = tournament.match.deadline;
     tournament.match.botRound = null;
     tournament.match.botActionAt = [null, null];
   }
@@ -187,7 +191,7 @@ export class TournamentStore {
     if (match.phase !== 'battle' || !match.players.some(player => player.bot === true) || match.botRound === match.duel.round) return;
     match.botRound = match.duel.round;
     match.botActionAt = match.players.map((player, index) => player.bot === true && !match.actions[index]
-      ? now + Math.min(BOT_ACTION_DELAY_MS, this.service.rules.actionMs) : null);
+      ? Math.max(now, match.actionOpensAt) + Math.min(BOT_ACTION_DELAY_MS, this.service.rules.actionMs) : null);
   }
   commitBotActions(tournament, now) {
     const match = tournament.match;
@@ -197,7 +201,7 @@ export class TournamentStore {
     for (let index = 0; index < 2; index += 1) {
       if (match.players[index].bot !== true || match.actions[index] || match.botActionAt[index] === null || now < match.botActionAt[index]) continue;
       // The CPU receives the resolved public duel only, never either pending choice.
-      match.actions[index] = combat.chooseCpuAction(match.duel, index);
+      match.actions[index] = combat.chooseCpuAction(match.duel, index, match.players[index].botStyle);
       match.botActionAt[index] = null;
       changed = true;
     }
@@ -286,7 +290,8 @@ export class TournamentStore {
       if (match.phase === 'equipment') {
         match.loadouts = match.loadouts.map(value => value ?? defaultGear()); this.startEntrance(tournament, now);
       } else if (match.phase === 'entrance') {
-        match.phase = 'battle'; match.deadline = now + this.service.rules.actionMs;
+        match.phase = 'battle'; match.actionOpensAt = now; match.presentationEndsAt = now;
+        match.deadline = match.actionOpensAt + this.service.rules.actionMs;
       } else if (match.phase === 'battle') {
         match.actions = match.actions.map(value => value ?? 'recover'); this.service.resolveActions(match, now);
       } else if (match.phase === 'mercy') this.service.decide(match, 'spare');
@@ -415,6 +420,7 @@ export class TournamentStore {
       } else if (kind === 'action') {
         if (tournament.phase !== 'battle') fail(409, 'The match is not accepting actions.', 'wrong_phase');
         if (!Number.isInteger(body.round) || body.round !== current.duel.round) fail(409, 'That choice belongs to an earlier round.', 'stale_round');
+        if (now < current.actionOpensAt) fail(409, 'The round is still playing. Choices open after the presentation.', 'actions_not_open');
         if (current.actions[localIndex]) fail(409, 'Your choice is already locked.', 'choice_locked');
         const choice = combat.getActionOptions(current.duel, localIndex).find(option => option.id === body.action);
         if (!choice) fail(400, 'Choose a valid action.');

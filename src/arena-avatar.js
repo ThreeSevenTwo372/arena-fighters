@@ -9,7 +9,7 @@ import { composePresetIdentityPixels, validatePresetCatalog } from './preset-ide
 const CATALOG = '/assets/clean-gladiator/v006/manifest.json';
 const PRESET_CATALOG = '/assets/clean-gladiator/v013/manifest.json';
 const WEAPONS = ['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword'];
-const OPTIONAL_WEAPONS = ['dagger'];
+const OPTIONAL_WEAPONS = ['dagger', 'trident'];
 const HELMETS = ['none', 'closed_bascinet', 'barbute', 'greathelm'];
 const MAX_RENDERS = 24, MAX_TEXTURE_BYTES = 16 * 1024 * 1024;
 let catalog, catalogPromise, baseUrl, textureBytes = 0;
@@ -84,6 +84,12 @@ export async function preloadCleanArt(config = {}) {
         if (!OPTIONAL_WEAPONS.includes(name) || Object.hasOwn(data.weapons, name)) throw new Error('Arena equipment overlay cannot replace a preserved weapon.');
         textureUrl(entry);
         if (!pair(entry.grip) || entry.grip.some((p, axis) => p < 0 || p >= [entry.width, entry.height][axis]) || entry.sourceFacing !== 'W' || entry.parts) throw new Error('Arena optional weapon registration is invalid.');
+        if (entry.offhand) {
+          textureUrl(entry.offhand);
+          if (name !== 'trident' || !pair(entry.offhand.grip)
+            || entry.offhand.grip.some((p, axis) => p < 0 || p >= [entry.offhand.width, entry.offhand.height][axis])
+            || entry.offhand.sourceFacing !== 'W') throw new Error('Arena optional offhand registration is invalid.');
+        }
       }
       data.weapons = { ...data.weapons, ...equipment.weapons };
       data.equipmentRevision = equipment.revision;
@@ -177,7 +183,7 @@ export async function prepareCleanAvatar(appearance, kind = 'battle', loadout = 
         ? composeFixedIdentityPixels(plan.a, catalog.identityTransform)
         : composeDarkIdentityPixels(plan.a, 'chibi', { canvas: [192, 160], anchor: [96, 86] }),
       texture({ ...body, url: body.handsUrl }),
-      texture(catalog.weapons[plan.weapon]), texture(catalog.weapons.shield),
+      texture(catalog.weapons[plan.weapon]), texture(catalog.weapons[plan.weapon].offhand ?? catalog.weapons.shield),
       ...Object.values(catalog.weapons[plan.weapon].parts ?? {}).map(texture),
     ]);
     const helmetTransform = helmet && catalog.identityMode === 'preset-faces-v1' ? catalog.helmetTransformBySex?.[plan.a.sex] ?? catalog.identityTransform : catalog.identityTransform;
@@ -190,7 +196,7 @@ export async function prepareCleanAvatar(appearance, kind = 'battle', loadout = 
     const image = freeze({
       url, width: source.width, height: source.height, pivot: [96, 152], headOrigin: [64, 36], sourceFacing: 'W', nativeWeapon: false,
       mainhandGrip: body.mainhandGrip, offhandGrip: body.offhandGrip,
-      weaponImage: equipmentImage(catalog.weapons[plan.weapon]), shieldImage: equipmentImage(catalog.weapons.shield),
+      weaponImage: equipmentImage(catalog.weapons[plan.weapon]), shieldImage: equipmentImage(catalog.weapons[plan.weapon].offhand ?? catalog.weapons.shield),
       handsImage: { url: textureUrl({ ...body, url: body.handsUrl }), width: hands.width, height: hands.height },
       // Stow on the actual hand's side so long blades never cross the face.
       weaponAngle: rightHand ? 40 : -40, weaponMirror: rightHand ? -1 : 1,

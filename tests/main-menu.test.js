@@ -2,9 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { renderMainMenu, renderMatchBrowser, renderLeaderboard, renderGraveyard } from '../src/main-menu.js';
 
-test('the main menu offers the three requested entries and a personal graveyard', () => {
+test('the main menu offers fighting, learning, records and spectating', () => {
   const output = renderMainMenu();
-  for (const [action, label] of [['menu-fight', 'FIGHT'], ['menu-spectate', 'SPECTATE'], ['menu-leaderboard', 'LEADERBOARD'], ['menu-graveyard', 'Graveyard']]) {
+  for (const [action, label] of [['menu-fight', 'FIGHT'], ['menu-quick-duel', 'QUICK DUEL'], ['menu-learn', 'LEARN TO FIGHT'], ['menu-spectate', 'SPECTATE'], ['menu-leaderboard', 'LEADERBOARD'], ['menu-graveyard', 'Graveyard']]) {
     assert.match(output, new RegExp(`data-action="${action}" aria-label="${label}"`));
     assert.match(output, new RegExp(`<span class="sr-only">${label}</span>`));
   }
@@ -100,7 +100,7 @@ test('temporary records explain expiry only on record pages and do not promise p
 test('pixel lettering uses integer cells and integer display multiples with accessible command labels', () => {
   const output = renderMainMenu();
   const glyphs = [...output.matchAll(/class="menu-pixel-label" width="(\d+)" height="(\d+)" viewBox="0 0 (\d+) 7" fill="currentColor" shape-rendering="crispEdges" aria-hidden="true" focusable="false"><path d="([^"]+)"/g)];
-  assert.equal(glyphs.length, 6, 'Two title lines and four commands use the authored pixel lettering.');
+  assert.equal(glyphs.length, 8, 'Two title lines and six commands use the authored pixel lettering.');
   for (const [, width, height, nativeWidth, path] of glyphs) {
     const scale = Number(height) / 7;
     assert.ok([2, 4].includes(scale));

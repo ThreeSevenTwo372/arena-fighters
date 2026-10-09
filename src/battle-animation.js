@@ -1,6 +1,6 @@
 /** Playback uses resolved public events. It never resolves combat or reads a secret choice. */
 const FIGHTER_INDICES = new Set([0, 1]);
-const WEAPON_IDS = new Set(['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword', 'dagger']);
+const WEAPON_IDS = new Set(['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword', 'dagger', 'trident']);
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
 
 /** Derive visible actions from this round's authoritative events, including canceled moves. */
@@ -37,6 +37,7 @@ export function buildAnimationSteps(before, after, _pending) {
         ...common, type: 'attack', target, action: event.action,
         damage: event.damage, guarded: guarding[target], bypassedGuard: !!event.bypassedGuard,
         ...(event.parried ? { parried: true } : {}), ...(event.counter ? { counter: true } : {}),
+        ...(event.action === 'technique' && weapon === 'trident' && round.events.some(item => item.type === 'entangle' && item.target === target) ? { entangled: true } : {}),
         targetHp: health[target],
       });
       if (health[target] === 0 && !defeated.has(target)) {
@@ -144,7 +145,7 @@ export async function playBattleAnimation(container, steps, { signal, reducedMot
         if (target) {
           emitCue(onCue, step.parried || (step.guarded && !step.bypassedGuard) ? 'parry' : 'hit', step);
           target.dataset.animation = step.parried || (step.guarded && !step.bypassedGuard) ? 'blocked' : 'hit';
-          effect(target, `${step.parried ? 'PARRY ' : ''}−${step.damage}`, step.parried ? 'blocked' : step.bypassedGuard ? 'break' : step.guarded ? 'blocked' : 'hit');
+          effect(target, `${step.parried ? 'PARRY ' : step.entangled ? 'NET ' : ''}−${step.damage}`, step.parried ? 'blocked' : step.bypassedGuard ? 'break' : step.guarded ? 'blocked' : 'hit');
         }
         if (!await pause(reduce ? 150 : 380, signal)) return false;
         if (target) delete target.dataset.animation;

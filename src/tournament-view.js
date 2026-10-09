@@ -1,4 +1,4 @@
-import { WEAPONS, ARMORS } from './combat.js';
+import { WEAPONS, ARMORS, getFighterStatus } from './combat.js';
 import { renderCleanAvatar } from './current-avatar.js';
 import { renderArena } from './arena.js';
 import { renderSpectatorFrame } from './spectator-frame.js';
@@ -13,7 +13,7 @@ const activePhases = new Set(['equipment', 'entrance', 'battle', 'mercy', 'crowd
 const matchLabel = index => index < 4 ? `Quarterfinal ${index + 1}` : index < 6 ? `Semifinal ${index - 3}` : 'The final';
 const activeMatch = view => view.bracket?.find(match => match.index === view.currentMatchIndex) ?? null;
 const gatePoster = '/public/cinematics/arrival-v001/arena-gate.jpg';
-const botBadge = profile => profile?.bot === true ? ' <span class="tournament-bot">Bot</span>' : '';
+const botBadge = profile => profile?.bot === true ? ` <span class="tournament-bot">Bot${({ aggressive: ' · Aggressive', cautious: ' · Cautious', patient: ' · Patient' })[profile.botStyle] || ''}</span>` : '';
 
 function banner(character) {
   const color = /^#[0-9a-f]{6}$/i.test(character?.color ?? '') ? character.color : '#b45143';
@@ -32,7 +32,7 @@ function leaveLabel(view) {
 }
 function roomBar(view, { invite = false } = {}) {
   if (view.role === 'spectator') return `<div class="tournament-room-bar"><div><span class="tournament-room-label">Watching tournament</span><strong class="tournament-room-code">${escape(view.code)}</strong></div><div class="tournament-room-actions"><button type="button" class="button ghost" data-action="observer-leave">Back to matches</button></div></div>`;
-  return `<div class="tournament-room-bar"><div><span class="tournament-room-label">Tournament</span><strong class="tournament-room-code">${escape(view.code)}</strong>${invite ? '<span class="tournament-invite-note">Invite rivals with this code.</span>' : ''}</div><div class="tournament-room-actions">${invite ? '<button type="button" class="button ghost" data-action="copy-room">Copy code</button>' : ''}<button type="button" class="button ghost" data-action="tournament-leave">${leaveLabel(view)}</button></div></div>`;
+  return `<div class="tournament-room-bar"><div><span class="tournament-room-label">Tournament</span><strong class="tournament-room-code">${escape(view.code)}</strong>${invite ? '<span class="tournament-invite-note">Invite rivals with this code.</span>' : ''}</div><div class="tournament-room-actions">${invite ? '<button type="button" class="button ghost" data-action="copy-room">Copy code</button><button type="button" class="button ghost" data-action="copy-invite">Copy invite link</button>' : ''}<button type="button" class="button ghost" data-action="tournament-leave">${leaveLabel(view)}</button></div></div>`;
 }
 function seatState(view, profile, index) {
   if (!profile) return 'Awaiting fighter';
@@ -105,14 +105,17 @@ export function renderTournamentEntrance(view = {}) {
   return `<div class="tournament-view tournament-entrance">${roomBar(view)}<section class="tournament-gate" data-tournament-entrance aria-label="Entering the arena"><video class="tournament-gate-video" muted playsinline preload="auto" src="/public/cinematics/arrival-v001/arena-gate.mp4" poster="${gatePoster}"></video><div class="tournament-gate-caption"><span class="eyebrow">${escape(activeMatch(view)?.label ?? matchLabel(view.currentMatchIndex ?? 0))}</span><h1>The gates are opening.</h1><p>${escape(names[0])}<span class="tournament-versus">vs</span>${escape(names[1])}</p>${deadline(match?.deadline, spectator ? 'Spectating begins in' : 'Battle begins in')}<p class="tournament-gate-role">${spectator ? 'Take your seat in the stands.' : 'Your opponent awaits in the arena.'}</p><button type="button" class="button ghost" data-action="gate-play" hidden>Play gate animation</button></div></section></div>`;
 }
 
-function fighterStatus(fighter, index, view, playing) {
+function fighterStatus(fighter, index, view, playing, duel) {
+  const condition = !playing && fighter.entangle ? getFighterStatus(duel, index) : null;
+  const personality = ({ aggressive: 'Aggressive', cautious: 'Cautious', patient: 'Patient' })[view.match?.players?.[index]?.botStyle];
   const hp = Math.max(0, number(fighter.hp)), maxHp = Math.max(1, number(fighter.maxHp, 1));
   const stamina = Math.max(0, number(fighter.stamina)), maxStamina = Math.max(1, number(fighter.maxStamina, 1));
   const name = fighter.character?.name ?? `Fighter ${index + 1}`;
   const completed = view.match?.duel?.status === 'complete';
   const winner = view.match?.duel?.result?.winner;
   const readiness = playing ? 'Moves revealed' : completed ? winner === null ? 'Draw' : winner === index ? 'Winner' : 'Defeated' : view.match?.pending?.[index] ? 'Choice locked' : 'Choosing a move';
-  return `<section class="spectator-status" aria-label="${escape(name)} status"><div class="spectator-status-heading"><h2>${escape(name)}</h2><span>${index === 0 ? 'West gate' : 'East gate'}</span></div><p>${escape(WEAPONS[fighter.weapon]?.name ?? 'Weapon')} · ${escape(ARMORS[fighter.armor]?.name ?? 'Armor')}</p><div class="meter-label"><span>Health</span><strong>${hp} / ${maxHp}</strong></div><progress class="meter health" max="${maxHp}" value="${Math.min(hp, maxHp)}" aria-label="${escape(name)} health"></progress><div class="meter-label"><span>Stamina</span><strong>${stamina} / ${maxStamina}</strong></div><progress class="meter stamina" max="${maxStamina}" value="${Math.min(stamina, maxStamina)}" aria-label="${escape(name)} stamina"></progress><div class="tournament-fighter-state">${readiness}</div></section>`;
+  const conditionMarkup = `${personality ? `<p>${escape(personality)} opponent</p>` : ''}${condition ? `<p class="fighter-condition">Entangled · Attacks +${condition.attackSurcharge} SP · Guard or Recover clears it</p>` : ''}`;
+  return `<section class="spectator-status" aria-label="${escape(name)} status"><div class="spectator-status-heading"><h2>${escape(name)}</h2><span>${index === 0 ? 'West gate' : 'East gate'}</span></div><p>${escape(WEAPONS[fighter.weapon]?.name ?? 'Weapon')} · ${escape(ARMORS[fighter.armor]?.name ?? 'Armor')}</p>${conditionMarkup}<div class="meter-label"><span>Health</span><strong>${hp} / ${maxHp}</strong></div><progress class="meter health" max="${maxHp}" value="${Math.min(hp, maxHp)}" aria-label="${escape(name)} health"></progress><div class="meter-label"><span>Stamina</span><strong>${stamina} / ${maxStamina}</strong></div><progress class="meter stamina" max="${maxStamina}" value="${Math.min(stamina, maxStamina)}" aria-label="${escape(name)} stamina"></progress><div class="tournament-fighter-state">${readiness}</div></section>`;
 }
 function spectatorNotice(view) {
   if (view.role === 'spectator') return '<p class="tournament-personal-note">Watching from the stands. The fighters choose their moves in secret.</p>';
@@ -148,14 +151,14 @@ export function renderTournamentSpectator(view = {}, { playing = false, duel = n
   const pair = view.match?.slots?.map(slot => fighterName(view, slot)).join(' vs ') ?? '';
   let stage;
   if (visibleBattle) {
-    const hud = liveDuel.fighters.map((fighter, index) => fighterStatus(fighter, index, view, playing)).join('');
+    const hud = liveDuel.fighters.map((fighter, index) => fighterStatus(fighter, index, view, playing, liveDuel)).join('');
     stage = renderSpectatorFrame(`<div class="arena-stage">${renderArena(liveDuel, { perspective: 'stands' })}</div>`, { hud });
   } else stage = waitingMatch(view);
   const mercy = !executing && ['mercy', 'crowd'].includes(view.phase) && Number.isInteger(liveDuel?.result?.winner)
     ? renderMercyPanel({ phase: verdictPhase ?? view.phase, winnerName: liveDuel.fighters[liveDuel.result.winner]?.character?.name,
       deadline: view.match?.deadline, crowdVote: view.match?.crowdVote ?? view.crowdVote, disabled: verdictBusy }) : '';
   const narrative = playing ? 'Both choices are revealed. Watch the round unfold.' : liveDuel?.lastRound ? roundSummary(liveDuel) : 'Both fighters choose their moves in secret. Their choices reveal together.';
-  return `<div class="tournament-view tournament-spectator">${roomBar(view)}<section class="tournament-heading"><span class="eyebrow">A seat in the stands · ${escape(label)}</span><h1>${escape(pair || 'The arena awaits.')}</h1><p>${view.phase === 'equipment' ? 'The fighters are choosing their equipment at the gate.' : view.phase === 'entrance' ? 'The next fighters enter the arena.' : view.phase === 'intermission' ? 'One match at a time. The next pair enters shortly.' : 'Watch the active match from the stands.'}</p></section><div class="tournament-live-layout"><div class="tournament-watch">${stage}${visibleBattle && view.phase === 'battle' && !executing ? `<section class="tournament-commentary" aria-label="Match commentary"><span class="eyebrow">${playing ? 'Round reveal' : `Round ${number(liveDuel.round, 1)}`}</span><p role="status">${escape(narrative)}</p>${playing ? '' : deadline(view.match?.deadline, 'Choices reveal in')}</section>` : ''}${mercy}${view.phase === 'intermission' && !executing ? matchResult(view) : ''}${spectatorNotice(view)}</div><aside class="tournament-side">${roster(view)}</aside></div>${renderTournamentBracket(view)}</div>`;
+  return `<div class="tournament-view tournament-spectator">${roomBar(view)}<section class="tournament-heading"><span class="eyebrow">A seat in the stands · ${escape(label)}</span><h1>${escape(pair || 'The arena awaits.')}</h1><p>${view.phase === 'equipment' ? 'The fighters are choosing their equipment at the gate.' : view.phase === 'entrance' ? 'The next fighters enter the arena.' : view.phase === 'intermission' ? 'One match at a time. The next pair enters shortly.' : 'Watch the active match from the stands.'}</p></section><div class="tournament-live-layout"><div class="tournament-watch">${stage}${visibleBattle && view.phase === 'battle' && !executing ? `<section class="tournament-commentary" aria-label="Match commentary"><span class="eyebrow">${playing ? 'Round reveal' : `Round ${number(liveDuel.round, 1)}`}</span><p role="status">${escape(narrative)}</p>${playing ? '' : Number(view.match?.actionOpensAt) > Date.now() ? `<p class="tournament-clock tournament-choice-opening" role="timer">Choices open in <strong><span data-deadline="${view.match.actionOpensAt}">${Math.ceil((view.match.actionOpensAt - Date.now()) / 1000)}</span>s</strong> · then 20s to choose</p>` : deadline(view.match?.deadline, 'Choices reveal in')}</section>` : ''}${mercy}${view.phase === 'intermission' && !executing ? matchResult(view) : ''}${spectatorNotice(view)}</div><aside class="tournament-side">${roster(view)}</aside></div>${renderTournamentBracket(view)}</div>`;
 }
 
 /** Leaving a finished bracket preserves survivors or opens replacement creation. */

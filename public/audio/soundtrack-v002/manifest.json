@@ -1,0 +1,13 @@
+{
+  "schema": "arena-fighters.soundtrack.v2",
+  "mode": "menu-only",
+  "menu": {
+    "id": "menu-where-the-stars-remember",
+    "title": "Where the Stars Remember",
+    "src": "/public/audio/soundtrack-v002/menu-where-the-stars-remember.mp3",
+    "durationSeconds": 188.32
+  },
+  "battles": [],
+  "effects": {},
+  "note": "Menu theme only. Battle songs and the recorded victory cue are preserved in v001 for later selection; procedural gameplay effects remain active."
+}
