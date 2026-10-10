@@ -84,7 +84,8 @@ test('armory, both arena facings and public attack/execution playback retain the
   assert.equal((arena.match(/v015-equipment\/weapons\/net\.png/g) ?? []).length, 2);
   const after = resolveRound(state, ['technique', 'strike']), steps = buildAnimationSteps(state, after);
   assert.ok(steps.find(step => step.type === 'attack' && step.actor === 0 && step.weapon === 'trident' && step.entangled));
-  assert.ok(steps.length <= 3, 'Net effect is attached to the existing attack, with no added playback interval.');
+  assert.ok(steps.filter(step => step.type !== 'stamina-regeneration').length <= 3, 'Net effect is attached to the existing attack, with no added net playback interval.');
+  assert.equal(steps.filter(step => step.type === 'stamina-regeneration').length, 2);
   const won = structuredClone(state); won.status = 'complete'; won.result = { winner: 0, reason: 'knockout' };
   assert.equal(buildExecutionEvent(won, { decision: 'execute', winner: 0, loser: 1 }).weapon, 'trident');
 });

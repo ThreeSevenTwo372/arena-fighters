@@ -4,6 +4,7 @@ import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { DuelService } from '../online/service.mjs';
+import { BOT_ACTION_DELAY_MS } from '../online/tournament-bots.mjs';
 import { validateCharacter, chooseCpuAction, resolveRound, WEAPONS, ARMORS, HELMETS } from '../src/combat.js';
 
 const character = name => ({ name, stats: { strength: 4, dexterity: 4, speed: 4, defense: 4, intelligence: 4 },
@@ -220,7 +221,8 @@ test('a human secret choice made first does not change the bot action selected f
   assert.deepEqual(view.match.duel, publicDuel);
   await f.tick(2999); assert.equal((await f.view(view.code)).match.duel.round, 1);
   await f.tick(1); view = await f.view(view.code);
-  assert.deepEqual(view.match.duel, resolveRound(publicDuel, actions));
+  const elapsed = [null, null]; elapsed[humanIndex] = 0; elapsed[botIndex] = BOT_ACTION_DELAY_MS;
+  assert.deepEqual(view.match.duel, resolveRound(publicDuel, actions, { choiceElapsedMs: elapsed }));
 });
 
 test('bot equipment and pending actions remain hidden from a human spectating a bot pair', async t => {

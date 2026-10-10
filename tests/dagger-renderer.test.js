@@ -96,7 +96,7 @@ test('armory and both arena facings use the same registered dagger texture', asy
   const armory = renderArmory({ character: characters[0], gear });
   assert.deepEqual(ARMORY_WEAPON_DISPLAY.dagger, { width: 16, height: 36 });
   assert.match(armory, /data-value="dagger" aria-pressed="true"/);
-  assert.match(armory, /\+2 initiative/); assert.match(armory, /Strike 3 stamina/); assert.match(armory, /Technique 5 stamina/); assert.match(armory, /Riposte/);
+  assert.match(armory, /Faster choice at equal priority/); assert.match(armory, /Strike 3 stamina/); assert.match(armory, /Technique 5 stamina/); assert.match(armory, /Riposte/);
   const arena = renderArena(createDuel(characters.map(character => ({ character, ...gear }))));
   assert.equal((arena.match(/v014-equipment\/weapons\/dagger\.png/g) ?? []).length, 2);
   assert.equal((arena.match(/x="-7" y="-29" width="16" height="36"/g) ?? []).length, 2);

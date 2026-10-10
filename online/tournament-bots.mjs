@@ -13,12 +13,12 @@ const NAMES = [
   'Aurelia Nerva', 'Cassia Vindex', 'Octavia Ferox', 'Marcia Corvina',
 ];
 const BUILDS = [
-  { stats: [5, 5, 4, 4, 2], trait: 'balanced' },
-  { stats: [3, 6, 6, 3, 2], trait: 'fleetfoot' },
-  { stats: [8, 2, 2, 6, 2], trait: 'relentless' },
-  { stats: [6, 4, 2, 6, 2], trait: 'steadfast' },
-  { stats: [3, 6, 3, 2, 6], trait: 'specialist' },
-  { stats: [4, 4, 4, 4, 4], trait: 'efficient' },
+  { stats: [6, 6, 5, 3], trait: 'balanced' },
+  { stats: [5, 8, 4, 3], trait: 'balanced' },
+  { stats: [8, 3, 6, 3], trait: 'relentless' },
+  { stats: [6, 5, 6, 3], trait: 'steadfast' },
+  { stats: [4, 7, 3, 6], trait: 'specialist' },
+  { stats: [5, 5, 5, 5], trait: 'efficient' },
 ];
 const SKINS = ['porcelain', 'ivory', 'sand', 'copper', 'umber', 'ebony'];
 const HAIR = ['raven', 'chestnut', 'auburn', 'ashen', 'silver', 'wheat'];
@@ -38,7 +38,7 @@ export function createTournamentBot(players) {
       bot: true, botStyle: pick(Object.keys(BOT_STYLES)), alive: true, duelWins: 0, tournamentWins: 0,
       character: {
         id: randomUUID(), name, trait: build.trait, color: pick(BANNERS),
-        stats: Object.fromEntries(['strength', 'dexterity', 'speed', 'defense', 'intelligence'].map((key, index) => [key, build.stats[index]])),
+        stats: Object.fromEntries(['strength', 'dexterity', 'defense', 'intelligence'].map((key, index) => [key, build.stats[index]])),
         appearance: normalizePresetAppearance({ sex, facePreset, skin: pick(SKINS), hairColor: pick(HAIR) }),
       },
     },
@@ -46,7 +46,7 @@ export function createTournamentBot(players) {
 }
 
 export function chooseTournamentBotLoadout(character) {
-  const { strength, dexterity, speed } = character.stats;
+  const { strength, dexterity } = character.stats;
   const weapon = strength >= 6 ? pick(['axe', 'greatsword', 'halberd']) : dexterity > strength ? pick(['sword', 'spear', 'dagger', 'trident']) : pick(['sword', 'flail', 'trident']);
-  return { weapon, armor: speed >= 6 ? 'light' : character.stats.defense >= 6 ? 'heavy' : 'medium', helmet: 'none' };
+  return { weapon, armor: character.stats.defense >= 6 ? 'heavy' : dexterity >= 6 ? 'light' : 'medium', helmet: 'none' };
 }

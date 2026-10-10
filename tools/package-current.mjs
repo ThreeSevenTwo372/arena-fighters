@@ -12,7 +12,7 @@ export const RELEASE_ENTRIES = Object.freeze([
   'src', 'online', 'assets', 'public', 'tests', 'index.html', 'server.mjs',
   'package.json', 'Start-Prototype.ps1', 'README.md', 'AGENTS.md', 'ART_DIRECTION.md',
   'TOURNAMENTS.md', 'ONLINE_DUELS.md', 'DESIGN.md', 'AVATAR_PORT.md', 'CLEAN_ART.md',
-  'DARK_ART.md', 'CURRENT_VERSION.md', 'tools/package-current.mjs',
+  'DARK_ART.md', 'CURRENT_VERSION.md', 'FIRST_PERSON_COMBAT.md', 'tools/package-current.mjs',
   'HOSTING.md', 'render.yaml', '.node-version', 'tools/build-squarespace-embed.mjs',
 ]);
 const HISTORY_TESTS = new Set([

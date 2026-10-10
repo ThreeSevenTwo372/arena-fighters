@@ -41,7 +41,7 @@ async function finish(f, pair) {
   let count = 0;
   while (view.phase === 'battle') {
     if (view.actionOpensAt > f.now) f.clock(view.actionOpensAt - f.now);
-    const actions = view.duel.fighters.map((_, i) => getActionOptions(view.duel, i).find(item => item.id === 'strike' && item.enabled) ? 'strike' : 'recover');
+    const actions = view.duel.fighters.map((_, i) => getActionOptions(view.duel, i).find(item => item.id === 'strike' && item.enabled) ? 'strike' : 'focus');
     await f.request('POST', `/api/rooms/${view.code}/action`, pair.one.token, command(view, `round-a-${count}`, { round: view.duel.round, action: actions[0] }));
     view = await f.request('POST', `/api/rooms/${view.code}/action`, pair.two.token, command(view, `round-b-${count}`, { round: view.duel.round, action: actions[1] }));
     count += 1;
@@ -110,8 +110,8 @@ test('durable restart restores identity, room, and private committed actions wit
   assert.equal(session.activeRoom, initial.code); assert.equal(session.character.id, initial.players[0].character.id);
   const privateView = await f.request('GET', `/api/rooms/${initial.code}`, pair.two.token);
   assert.deepEqual(privateView.duel, initial.duel); assert.deepEqual(privateView.pending, [true, false]);
-  const resolved = await f.request('POST', `/api/rooms/${initial.code}/action`, pair.two.token, command(initial, 'b', { round: 1, action: 'recover' }));
-  assert.deepEqual(resolved.duel, resolveRound(initial.duel, ['technique', 'recover']));
+  const resolved = await f.request('POST', `/api/rooms/${initial.code}/action`, pair.two.token, command(initial, 'b', { round: 1, action: 'focus' }));
+  assert.deepEqual(resolved.duel, resolveRound(initial.duel, ['technique', 'focus']));
   const repeated = await f.request('POST', `/api/rooms/${initial.code}/action`, pair.one.token, a);
   assert.deepEqual(repeated.duel, resolved.duel);
 });
@@ -132,7 +132,7 @@ test('server deadlines default equipment, missing actions, and mercy; disconnect
   await f.request('POST', `/api/rooms/${view.code}/action`, pair.one.token, command(view, 'a', { round: 1, action: 'strike' }));
   f.clock(80); await f.service.tick();
   view = await f.request('GET', `/api/rooms/${view.code}`, pair.one.token);
-  assert.deepEqual(view.duel.lastRound.actions, ['strike', 'recover']);
+  assert.deepEqual(view.duel.lastRound.actions, ['strike', 'focus']);
   f.clock(320); await f.service.tick();
   view = await f.request('GET', `/api/rooms/${view.code}`, pair.one.token);
   assert.equal(view.phase, 'mercy'); assert.equal(view.duel.result.reason, 'forfeit'); assert.equal(view.duel.result.winner, 0);
@@ -160,18 +160,18 @@ test('default battle window expires at twenty seconds, survives restart, and aut
   f.clock(1); await f.service.tick();
   view = await f.request('GET', `/api/rooms/${initial.code}`, pair.one.token);
   assert.equal(view.duel.round, 2);
-  assert.deepEqual(view.duel.lastRound.actions, ['strike', 'recover']);
+  assert.deepEqual(view.duel.lastRound.actions, ['strike', 'focus']);
   assert.deepEqual(view.pending, [false, false]);
   assert.equal(view.actionOpensAt, 1024000);
   assert.equal(view.deadline, 1044000);
   await f.service.tick();
   assert.equal((await f.request('GET', `/api/rooms/${initial.code}`, pair.one.token)).duel.round, 2, 'one expiry must not resolve twice');
   f.clock(1000);
-  const early = command(view, 'early-a', { round: 2, action: 'recover' });
+  const early = command(view, 'early-a', { round: 2, action: 'focus' });
   await assert.rejects(f.request('POST', `/api/rooms/${view.code}/action`, pair.one.token, early), error(409, 'actions_not_open'));
   assert.deepEqual((await f.request('GET', `/api/rooms/${view.code}`, pair.one.token)).pending, [false, false]);
   f.clock(3000);
-  await f.request('POST', `/api/rooms/${view.code}/action`, pair.one.token, command(view, 'early-a', { round: 2, action: 'recover' }));
+  await f.request('POST', `/api/rooms/${view.code}/action`, pair.one.token, command(view, 'early-a', { round: 2, action: 'focus' }));
   view = await f.request('POST', `/api/rooms/${view.code}/action`, pair.two.token, command(view, 'early-b', { round: 2, action: 'strike' }));
   assert.equal(view.duel.round, 3, 'two committed actions resolve without a continue request');
   assert.equal(view.actionOpensAt, 1028000);
@@ -204,7 +204,7 @@ test('restoring an old longer battle window durably caps its remainder without r
   f.clock(1); await f.service.tick();
   view = await f.request('GET', `/api/rooms/${initial.code}`, pair.one.token);
   assert.equal(view.duel.round, 2);
-  assert.deepEqual(view.duel.lastRound.actions, ['strike', 'recover']);
+  assert.deepEqual(view.duel.lastRound.actions, ['strike', 'focus']);
   assert.equal(view.deadline, 1049000);
 });
 
@@ -280,7 +280,7 @@ test('untrusted body shapes, nested equipment, illegal stats and actions are rej
   await assert.rejects(f.request('POST', `/api/rooms/${pair.room.code}/loadout`, pair.one.token, command(pair.room, 'gear', { loadout: gear('hacked') })), error(400));
   const view = await battle(f, pair);
   await assert.rejects(f.request('POST', `/api/rooms/${view.code}/action`, pair.one.token, command(view, 'action', { round: 1, action: 'kill' })), error(400));
-  await assert.rejects(f.request('POST', `/api/rooms/${view.code}/action`, pair.one.token, command(view, 'action', { round: 1, action: 'recover', overwrite: true })), error(400));
+  await assert.rejects(f.request('POST', `/api/rooms/${view.code}/action`, pair.one.token, command(view, 'action', { round: 1, action: 'focus', overwrite: true })), error(400));
 });
 
 test('persistence failures roll back gameplay before acknowledgment and can retry the same command', async () => {

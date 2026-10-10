@@ -101,14 +101,14 @@ test('the actual app completes and repeats the optional lesson without obtaining
   assert.equal(ui.state.screen, 'tutorial');
   assert.match(ui.app.innerHTML, /Lesson 1 of 3/);
   assert.equal(ui.tutorialPrepared.length, 1);
-  for (const action of ['guard', 'technique', 'recover']) {
+  for (const action of ['guard', 'technique', 'focus']) {
     await ui.click('tutorial-move', { value: action });
     assert.equal(ui.tutorial.phase, 'review');
     await ui.click('tutorial-next');
   }
   assert.equal(ui.tutorial.phase, 'complete');
   assert.equal(ui.animations.length, 3);
-  assert.deepEqual(ui.animations.map(entry => entry.steps[0].after.lastRound.actions), [['guard', 'strike'], ['technique', 'guard'], ['recover', 'technique']]);
+  assert.deepEqual(ui.animations.map(entry => entry.steps[0].after.lastRound.actions), [['guard', 'strike'], ['technique', 'guard'], ['focus', 'technique']]);
   assert.deepEqual(plain(ui.state.drafts), before);
   await ui.pollOnline();
   assert.deepEqual(plain(ui.calls), callsBefore, 'A guestless lesson never sends a session, join or combat command.');

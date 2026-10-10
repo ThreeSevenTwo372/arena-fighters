@@ -44,12 +44,12 @@ for (const tournament of [false, true]) test(`${tournament ? 'tournament' : 'qui
   const taxed = getActionOptions(netted, 1).find(option => option.id === 'strike');
   assert.equal(taxed.cost, netted.fighters[1].strikeCost + 3);
   await f.tickTo(matchOf(view).actionOpensAt ?? 1000000);
-  view = await f.read(); await f.post(0, 'action', { round: 2, action: 'recover' }, 'netter-recover', view);
+  view = await f.read(); await f.post(0, 'action', { round: 2, action: 'focus' }, 'netter-focus', view);
   await assert.rejects(f.post(1, 'action', { round: 2, action: 'strike', damage: 999, cost: 0 }, 'forged-strike', view), error => error.status === 400 && error.code === 'invalid_request');
   assert.deepEqual(matchOf(await f.read()).duel, netted, 'Forged damage/cost fields cannot change the authoritative effect.');
   view = await f.post(1, 'action', { round: 2, action: 'strike' }, 'taxed-strike', view);
   const after = matchOf(view).duel;
-  assert.equal(after.fighters[1].stamina, netted.fighters[1].stamina - taxed.cost, 'The service charges the authoritative preview cost.');
+  assert.equal(after.fighters[1].stamina, Math.min(netted.fighters[1].maxStamina, netted.fighters[1].stamina - taxed.cost + netted.fighters[1].staminaRegen), 'The service charges the authoritative preview cost, then regenerates once at round end.');
   assert.equal(after.fighters[1].entangle, undefined); assert.equal(getFighterStatus(after, 1), null);
   await f.post(1, 'action', { round: 2, action: 'strike' }, 'taxed-strike', view);
   assert.deepEqual(matchOf(await f.read()).duel, after);

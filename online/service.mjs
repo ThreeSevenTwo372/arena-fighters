@@ -31,7 +31,7 @@ function stable(value) {
 
 export function sanitizeCharacter(input) {
   shape(input, ['id', 'name', 'stats', 'trait', 'color', 'appearance'], ['name', 'stats', 'trait']);
-  const keys = combat.STAT_KEYS ?? ['strength', 'dexterity', 'speed', 'defense', 'intelligence'];
+  const keys = input.stats && Object.hasOwn(input.stats, 'speed') ? Object.keys(combat.LEGACY_ATTRIBUTE_LABELS) : combat.STAT_KEYS;
   shape(input.stats, keys);
   if (input.id !== undefined && (typeof input.id !== 'string' || input.id.length > 80)) fail(400, 'Invalid character identity.');
   if (input.appearance !== undefined) {
@@ -230,6 +230,7 @@ export class DuelService {
   }
   startBattle(room, now) {
     room.duel = combat.createDuel(room.players.map((player, index) => ({ character: player.character, ...room.loadouts[index] })));
+    room.choiceElapsedMs = [null, null];
     room.phase = 'battle'; room.actionOpensAt = now; room.presentationEndsAt = now;
     room.deadline = room.actionOpensAt + this.rules.actionMs;
   }
@@ -248,8 +249,27 @@ export class DuelService {
     }
   }
   resolveActions(room, now) {
-    room.duel = combat.resolveRound(room.duel, room.actions);
-    room.actions = [null, null]; this.settleBattle(room, now, true);
+    const timing = room.duel.version >= 5 ? {
+      choiceElapsedMs: [0, 1].map(index => room.choiceElapsedMs?.[index] ?? Math.max(0, room.deadline - room.actionOpensAt)),
+    } : {};
+    room.duel = combat.resolveRound(room.duel, room.actions, timing);
+    room.actions = [null, null];
+    if (room.duel.version >= 5) room.choiceElapsedMs = [null, null];
+    this.settleBattle(room, now, true);
+  }
+  /** Commit timestamps stay private and are written in the same transaction as the receipt. */
+  recordAction(room, index, action, committedAt) {
+    room.actions[index] = action;
+    if (room.duel.version >= 5) {
+      room.choiceElapsedMs ??= [null, null];
+      room.choiceElapsedMs[index] = Math.max(0, committedAt - room.actionOpensAt);
+    }
+  }
+  defaultMissingActions(room) {
+    for (let index = 0; index < 2; index += 1) {
+      if (room.actions[index]) continue;
+      this.recordAction(room, index, combat.getDefaultAction(room.duel), room.deadline);
+    }
   }
   decide(room, decision) {
     const winner = room.duel.result.winner, loser = 1 - winner;
@@ -359,7 +379,9 @@ export class DuelService {
       if (room.phase === 'equipment') {
         room.loadouts = room.loadouts.map(value => value ?? defaultGear()); this.startBattle(room, now);
       } else if (room.phase === 'battle') {
-        room.actions = room.actions.map(value => value ?? 'recover'); this.resolveActions(room, now);
+        // Existing v3 duels retain their acknowledged Recover commitments and
+        // default; newly created duels use Focus. Never rewrite receipts.
+        this.defaultMissingActions(room); this.resolveActions(room, now);
       } else if (room.phase === 'mercy') this.decide(room, 'spare');
       this.touch(room);
     }
@@ -495,8 +517,11 @@ export class DuelService {
           if (typeof body.action !== 'string') fail(400, 'Choose a valid action.');
           const option = combat.getActionOptions(room.duel, index).find(option => option.id === body.action);
           if (!option) fail(400, 'Choose a valid action.');
-          if (!option.enabled) fail(409, 'You cannot afford that action. Choose Recover.', 'unaffordable');
-          room.actions[index] = body.action;
+          if (!option.enabled) {
+            const fallback = combat.getActionOptions(room.duel, index).find(choice => choice.id === combat.getDefaultAction(room.duel));
+            fail(409, `You cannot afford that action. Choose ${fallback.name}.`, 'unaffordable');
+          }
+          this.recordAction(room, index, body.action, now);
           if (room.actions.every(Boolean)) this.resolveActions(room, now);
         } else if (kind === 'mercy') {
           if (!['spare', 'execute', 'crowd'].includes(body.decision)) fail(400, 'Choose spare, execute or the crowd.');

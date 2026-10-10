@@ -124,7 +124,7 @@ export function createAppServer(options = {}) {
       }
       if (!['GET', 'HEAD'].includes(request.method)) throw new ApiError(405, 'Method not allowed.');
       if (pathname === '/') pathname = '/index.html';
-      const publicAsset = /^\/assets\/(?:dpixel-avatar|arena|clean-gladiator|armory)\/[a-zA-Z0-9/_.-]+\.(png|json)$/.test(pathname) && !pathname.split('/').includes('..');
+      const publicAsset = /^\/assets\/(?:dpixel-avatar|arena|clean-gladiator|armory|first-person)\/[a-zA-Z0-9/_.-]+\.(png|json)$/.test(pathname) && !pathname.split('/').includes('..');
       const publicMedia = /^\/public\/cinematics\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\.(mp4|jpg|png)$/.test(pathname);
       const publicAudio = /^\/public\/audio\/soundtrack-v\d+\/[a-zA-Z0-9_-]+\.(mp3|json)$/.test(pathname);
       if (pathname !== '/index.html' && !/^\/src\/[a-zA-Z0-9/_-]+\.(js|css|svg)$/.test(pathname) && !publicAsset && !publicMedia && !publicAudio) throw new ApiError(404, 'Not found.');

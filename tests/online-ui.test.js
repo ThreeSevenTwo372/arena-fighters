@@ -97,7 +97,7 @@ test('an in-flight poll cannot advance a turn while its clicked command waits fo
   const pollResponse = deferred();
   const renderResponse = deferred();
   const before = initialDuel();
-  const after = combat.resolveRound(before, ['recover', 'recover']);
+  const after = combat.resolveRound(before, ['focus', 'focus']);
   const commands = [];
   ui.state.screen = 'battle';
   ui.state.duel = before;
@@ -128,7 +128,7 @@ test('a battle click retains its original duel and round if another server view 
   const ui = fixture();
   const renderResponse = deferred();
   const before = initialDuel();
-  const after = combat.resolveRound(before, ['recover', 'recover']);
+  const after = combat.resolveRound(before, ['focus', 'focus']);
   const commands = [];
   ui.state.screen = 'battle';
   ui.state.duel = before;

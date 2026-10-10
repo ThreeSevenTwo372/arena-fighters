@@ -88,7 +88,7 @@ test('a fresh fighter sees only naming first; Continue rejects empty or overlong
   assert.equal(ui.state.creatorStep, 'customize');
 });
 
-test('the compact creator renders one fighter, five value pickers, and one trait picker without attribute presets or explanations', async () => {
+test('the compact creator renders one fighter, four value pickers, and one trait picker without attribute presets or explanations', async () => {
   const ui = fixture();
   ui.inputName(0, 'Aster');
   await ui.click('name-next');
@@ -100,7 +100,9 @@ test('the compact creator renders one fighter, five value pickers, and one trait
   }
   assert.doesNotMatch(html, /data-action="preset"|quick-presets|Attributes and combat rules/);
   assert.equal((html.match(/data-trait=/g) || []).length, 1);
-  for (const id of Object.keys(combat.TRAITS)) assert.ok(html.includes(`value="${id}"`), `Trait ${id} must be selectable.`);
+  for (const id of Object.keys(combat.TRAITS).filter(id => id !== 'fleetfoot')) assert.ok(html.includes(`value="${id}"`), `Trait ${id} must be selectable.`);
+  assert.doesNotMatch(html, /data-stat="speed"|value="fleetfoot"/);
+  assert.deepEqual(Object.keys(ui.state.drafts[0].stats), ['strength', 'dexterity', 'defense', 'intelligence']);
   assert.ok(html.includes(combat.TRAITS[ui.state.drafts[0].trait].description));
 });
 

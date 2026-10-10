@@ -7,7 +7,7 @@ const character = name => ({ name, stats: { strength: 4, dexterity: 4, speed: 4,
 const initial = (weapon = 'sword', options) => createDuel([
   { character: character('Cassian'), weapon, armor: 'medium' },
   { character: character('Mira'), weapon: 'spear', armor: 'light' },
-], options);
+], { version: 3, ...options });
 const context = (extra = {}) => ({ duel: initial(), mode: 'online', viewer: 0, phase: 'select', pending: [false, false], ...extra });
 
 test('public phase labels distinguish choosing, sending, locked, reconnecting and revealed', () => {

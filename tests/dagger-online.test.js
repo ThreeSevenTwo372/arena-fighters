@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { DuelService } from '../online/service.mjs';
-import { getActionOptions, WEAPONS } from '../src/combat.js';
+import { createDuel, getActionOptions, WEAPONS } from '../src/combat.js';
 
 const character = name => ({ name, stats: { strength: 4, dexterity: 4, speed: 4, defense: 4, intelligence: 4 },
   trait: 'balanced', color: '#b87333', appearance: { sex: 'male', facePreset: 'p05', skin: 'ivory', hairColor: 'chestnut' } });
@@ -45,6 +45,13 @@ async function fixture(t) {
       await arena.post(0, 'loadout', { loadout: daggerGear }, 'dagger-loadout');
       arena.view = await arena.post(1, 'loadout', { loadout: rivalGear(weapon) }, 'rival-loadout');
       if (arena.mode === 'tournament') { await this.tick(8000); arena.view = await arena.read(); }
+      // Retain the exact acknowledged v4 Riposte/cost contract; v5 timing has a dedicated service suite.
+      await service.serialize(() => {
+        const record = arena.mode === 'tournament' ? service.data.tournaments[arena.code].match : service.data.rooms[arena.code];
+        record.duel = createDuel(record.players.map((player, index) => ({ character: player.character, ...record.loadouts[index] })), { version: 4 });
+        service.changed = true;
+      });
+      arena.view = await arena.read();
       assert.equal(matchOf(arena.view).phase, 'battle');
       return arena.view;
     },
@@ -79,7 +86,7 @@ for (const mode of ['room', 'tournament']) {
     const before = matchOf(initial).duel;
     const options = getActionOptions(before, 0), riposte = options.find(option => option.id === 'technique');
     assert.equal(riposte.name, 'Riposte'); assert.equal(riposte.conditional, 'riposte');
-    assert.equal(riposte.enabled, true); assert.equal(riposte.priority, 2); assert.equal(riposte.cost, 5);
+    assert.equal(riposte.enabled, true); assert.equal(riposte.priority, 2); assert.equal(riposte.cost, 4, 'The v4 Speed-4 fighter pays one less stamina for Riposte.');
     const incoming = getActionOptions(before, 1).find(option => option.id === 'strike');
     const enemyCommand = command(initial, 'hidden-strike', { round: before.round, action: 'strike' });
     await f.request('POST', `${arena.base}/${arena.code}/action`, arena.tokens[1], enemyCommand);
@@ -105,8 +112,8 @@ for (const mode of ['room', 'tournament']) {
     assert.equal(counter.damage, riposte.damage);
     assert.equal(after.fighters[0].hp, before.fighters[0].hp - attack.damage);
     assert.equal(after.fighters[1].hp, before.fighters[1].hp - counter.damage);
-    assert.equal(after.fighters[0].stamina, before.fighters[0].stamina - riposte.cost);
-    assert.equal(after.fighters[1].stamina, before.fighters[1].stamina - incoming.cost);
+    assert.equal(after.fighters[0].stamina, Math.min(before.fighters[0].maxStamina, before.fighters[0].stamina - riposte.cost + before.fighters[0].staminaRegen));
+    assert.equal(after.fighters[1].stamina, Math.min(before.fighters[1].maxStamina, before.fighters[1].stamina - incoming.cost + before.fighters[1].staminaRegen));
     assert.equal(after.lastRound.events.filter(event => event.counter === true).length, 1);
   });
 
@@ -128,7 +135,7 @@ for (const mode of ['room', 'tournament']) {
       assert.equal(Boolean(incoming.parried), false, weapon);
       assert.equal(after.lastRound.events.some(event => event.counter === true), false, weapon);
       assert.equal(after.lastRound.events.some(event => event.type === 'attack' && event.actor === 0), false, weapon);
-      assert.equal(after.fighters[0].stamina, before.fighters[0].stamina - riposte.cost, weapon);
+      assert.equal(after.fighters[0].stamina, Math.min(before.fighters[0].maxStamina, before.fighters[0].stamina - riposte.cost + before.fighters[0].staminaRegen), weapon);
       assert.equal(after.fighters[1].hp, before.fighters[1].hp, weapon);
     }
   });

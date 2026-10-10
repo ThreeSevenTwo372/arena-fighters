@@ -33,7 +33,7 @@ function weaponArt(weapon) {
   return `<g class="equipped-weapon"><path d="M41 -42 L62 -102" stroke="#69452b" stroke-width="7" stroke-linecap="round"/><path d="M58 -93 L84 -161 L89 -169 L93 -157 L69 -88 Z" fill="#c9d1c1" stroke="#3d4338" stroke-width="2"/><path d="M63 -94 L89 -167" stroke="#faf5da" stroke-width="2"/><path d="M53 -97 L75 -90" stroke="#bfa261" stroke-width="6" stroke-linecap="round"/><circle cx="41" cy="-43" r="5" fill="#bfa261"/></g>`;
 }
 
-function fighterArt(character = {}, loadout = {}, fallbackColor = '#9e493b', defeated = false) {
+export function renderFighterArt(character = {}, loadout = {}, fallbackColor = '#9e493b', defeated = false) {
   const clean = getCleanAvatarImage(character.appearance, 'battle', loadout);
   if (clean) {
     const [px, py] = clean.pivot;
@@ -136,8 +136,8 @@ export function renderArena(duel = {}, { perspective, fit = 'slice' } = {}) {
     <title id="${id}-title">Arena Fighters arena, round ${round}</title>
     <desc id="${id}-description">${escape(left.character?.name || 'First gladiator')} faces ${escape(right.character?.name || 'Second gladiator')} on the sand, surrounded by seated spectators.</desc>
     <image href="/assets/arena/dark-arena-v001.png" width="920" height="${height}" preserveAspectRatio="xMidYMid slice" class="pixel-sprite arena-backdrop"/>
-    <g class="arena-fighter" data-fighter-index="0" ${number(left.hp, 1) <= 0 ? 'data-defeated="true"' : ''} transform="${leftTransform}">${fighterArt(left.character, loadout(left), '#9e493b', number(left.hp, 1) <= 0)}</g>
-    <g class="arena-fighter" data-fighter-index="1" ${number(right.hp, 1) <= 0 ? 'data-defeated="true"' : ''} transform="${rightTransform}">${fighterArt(right.character, loadout(right), '#436f70', number(right.hp, 1) <= 0)}</g>
+    <g class="arena-fighter" data-fighter-index="0" ${number(left.hp, 1) <= 0 ? 'data-defeated="true"' : ''} transform="${leftTransform}">${renderFighterArt(left.character, loadout(left), '#9e493b', number(left.hp, 1) <= 0)}</g>
+    <g class="arena-fighter" data-fighter-index="1" ${number(right.hp, 1) <= 0 ? 'data-defeated="true"' : ''} transform="${rightTransform}">${renderFighterArt(right.character, loadout(right), '#436f70', number(right.hp, 1) <= 0)}</g>
     <g${stands ? ' visibility="hidden" aria-hidden="true"' : ''} font-family="Consolas, monospace" font-size="12" font-weight="bold" letter-spacing="2" fill="#fff4c8" stroke="#3a302b" stroke-width="4" paint-order="stroke fill"><text x="280" y="${stands ? 402 : 418}" text-anchor="middle">WEST GATE</text><text x="640" y="${stands ? 402 : 418}" text-anchor="middle">EAST GATE</text></g>
   </svg>`;
 }

@@ -1,14 +1,35 @@
 # Arena Fighters
 
-## Intro Caption Removal — v0.10.1, October 9, 2026
+Current local version: **v0.14.1, Axe Facing Correction v001** (October 10, 2026). The first-person axe now points its cutting edge inward toward the rival and its blunt poll outward, across all three armor versions and six skin tones. The additive v004 correction preserves the complete arm, grip, shaft and shield. All nine weapons retain complete pixel poses drawn with arms, sleeves, hands and held equipment together; other weapons remain exact v003. The rival and spectator avatars retain their exact artwork. Typed names survive Online duel, Practice and Pass & play switches.
+
+Four attributes and faster accepted choices at equal priority remain the v5 rules. Existing active v3/v4 duels, saved identities and verdict authority remain preserved. See [FIRST_PERSON_COMBAT.md](FIRST_PERSON_COMBAT.md) for the exact contracts. The independent local snapshot is `releases/Arena_Fighters_v0.14.1_v001`; verification is `artifacts/First_Person_Axe_Direction_v001/VERIFICATION.json`. Earlier releases and artwork remain preserved. This revision has not been published. For disposable art controls, open `/?first-person-art-review=1` on the local server; these controls use the actual renderer and resolved combat animation without creating a guest or touching a fighter save.
+
+## Stamina and Focus v001 — v0.11.0, October 9, 2026
+
+**Local source: v0.11.0. Published game: v0.10.1.** This revision is local. Its independent snapshot location is `releases/Arena_Fighters_v0.11.0_v001`; verification and publication status are recorded separately in `artifacts/Stamina_Focus_v001/VERIFICATION.json`. The preserved rollback is v0.10.1.
+
+New duels use rules v4: **Strike, Weapon Technique, Guard and Focus**. Every living fighter automatically restores `max(1, 2 + floor(Dexterity / 8) + trait adjustment)` stamina after both moves resolve, capped at maximum and applied before the round-limit tiebreak. Base recovery is 2 at Dexterity 0–7 and 3 at Dexterity 8; Vigorous adds 1 and Ironhide subtracts 1. Speed improves initiative and discounts attack stamina costs by `floor(Speed / 4)`, with minimum Strike cost 2 and Technique cost 3.
+
+**Focus** costs no stamina and acts at priority −2. It adds +3 raw attack power before defenses to next round's Strike or Technique, including a triggered Riposte counter. It leaves you open, clears a net when executed, never stacks, and expires after that next round if unused. Missing v4 choices become Focus. Existing v3 matches finish with Recover, their previous stamina behavior and already acknowledged choices.
+
+The menu retains Fight, Quick Duel, Learn to fight, Spectate, Leaderboard and Graveyard. Learning uses three disposable, untimed rounds: Guard versus Strike; sword Feint versus Guard; Focus versus Riposte. Each review explains actual passive recovery. Saved fighters and their exact artwork remain preserved; only the menu theme remains active as music.
+
+Run `node server.mjs` and open [the local game](http://127.0.0.1:4173/), or use Start-Prototype.ps1. Free temporary hosting and session-scoped online records remain selected.
+
+## Historical documentation — v0.10.1 and earlier
+
+The following notes and measurements preserve their original versions. Their older commands, recovery values and release claims are historical; the local v4 rules and publication status above take precedence.
+
+
+### Intro Caption Removal — v0.10.1, October 9, 2026
 
 Current local source is **v0.10.1**. The caption beneath the opening arrival film has been removed; the film and playback controls remain preserved. All v0.10.0 additions and menu-only music are included.
 
 The independent release is `releases/Arena_Fighters_v0.10.1_v001`, with v0.10.0 preserved as rollback. Source, portable-package and publication evidence are separate in `artifacts/Live_Release_v0101_v001/VERIFICATION.json`. Temporary hosting and session-scoped records remain in force.
 
-## Preserved v0.10.0 release notes
+### Preserved v0.10.0 release notes
 
-## Release Readiness v001 — v0.10.0, October 9, 2026
+### Release Readiness v001 — v0.10.0, October 9, 2026
 
 The menu now offers **Learn to fight**, three optional coached rounds using the shared combat rules and exact current male/female avatars, and **Quick Duel**, the existing private two-player flow with a shareable invitation link. Lessons are disposable, untimed, repeatable and guest-free; they preserve an owned surviving fighter and keep the condensed creator unchanged. Invitation URLs carry a public code and mode only, prefill the matching join field and never auto-join, replace an active match, or carry authentication.
 
@@ -24,7 +45,7 @@ Only **Where the Stars Remember** remains active as music. Active manifest publi
 
 Free temporary hosting and session-scoped records remain the selected scope. Durable online progression, coins and unlocks remain separate milestones. This is a **local implementation and independent release**, not a publication claim. Current automated, browser, preservation, package and deployment evidence is recorded separately in artifacts/Release_Readiness_v001/VERIFICATION.json. The preserved rollback is releases/Arena_Fighters_v0.9.4_v001. Physical phone/public-network play and fresh human balance/art judgment remain distinct from automated and resized-browser proof.
 
-## Preserved v0.9.4 documentation
+### Preserved v0.9.4 documentation
 
 **Current local source: 0.9.4 — Arena Lobby Chat v001 (October 8, 2026).**
 
@@ -48,7 +69,7 @@ The interface retains its direction from ancient Roman literature and book prese
 
 The preserved unified game combines the local work from the character-art, cinematics, battle/onboarding, spectator, and tournament chats. New fighters use the v013 roster of ten male and ten female face-and-hair presets. The condensed creator places previous/next preset arrows beside the character, starts new fighters on 05, and contains sex, skin tone, hair color, five attribute values, a banner, and one of ten lifelong traits. The old face gallery and preset eye-color picker are removed. Only the selected trait's exact effects appear; preset descriptions and extra appearance explanations are removed. The complete selected figure uses a native-size preview or 2x where space allows. The manuscript treatment preserves the v013/v006 identity dispatch, complete figure sizing, equipment registration, gameplay, saved identities, authentication and verdict timing.
 
-## Start the current game
+### Start the current game
 
 Node.js 24 or newer is required; no package installation is needed.
 
@@ -58,7 +79,7 @@ node server.mjs
 
 Open [Arena Fighters](http://127.0.0.1:4173/). Start-Prototype.ps1 starts the same version. Keep the server running while playing. Stop it with Ctrl+C. For another port, use node server.mjs --port 4174.
 
-## Current flow
+### Current flow
 
 1. The preserved sky-to-arena Flux animation opens the first visit in each tab. Skip intro or Escape proceeds to the pixel menu. FIGHT continues to naming or resumes your fighter. Reduced motion uses a still with an explicit Enter control.
 2. **NAME YOUR FIGHTER.** leads to the condensed creator. Allocate 20 points across Strength, Dexterity, Speed, Defense, and Intelligence, with 8 maximum in one attribute. Use the arrows to cycle presets, then select skin and hair colors, a banner, and a trait.
@@ -71,13 +92,13 @@ Open [Arena Fighters](http://127.0.0.1:4173/). Start-Prototype.ps1 starts the sa
 
 Practice and Pass & play remain available. The [legacy two-player duel route](http://127.0.0.1:4173/?duel-mode=1) remains available and recovers a saved active tournament through the correct service. The temporary-session game is live on [Black Book Tattoo's Arena Fighters page](https://www.blackbooktattoo.com/arena-fighters), with a [full-page game](https://blackbook-arena-fighters.onrender.com/) on Render's Free plan. The user made the clean game repository public to enable deployment; automatic deploys are off.
 
-## Identity and preservation
+### Identity and preservation
 
 src/current-avatar.js is the shared identity entry point for creator, armory, lobby, arena, and spectators. Explicit facePreset p01..p10 recipes use assets/clean-gladiator/v013. Existing surviving recipes without a face preset keep their exact v006 rendering and saved appearance; they are not visually migrated. Full-head helmets hide the complete identity and restore it when removed. Original artwork, raw sources, masks, bodies, equipment, and all previous versions remain unchanged.
 
 The [two-character face comparison](http://127.0.0.1:4173/?face-presets-review=1) and [spectator sample](http://127.0.0.1:4173/?spectator-frame-review=1) remain optional diagnostic views. Normal creation includes the latest presets without a review URL. Incorporation into this release does not imply acceptance of the entire art roster's quality.
 
-## Verification and release
+### Verification and release
 
 Current v0.9.4 source, preservation, browser and deployment status are recorded separately in artifacts/Arena_Chat_v001/VERIFICATION.json. The independent snapshot is releases/Arena_Fighters_v0.9.4_v001, with releases/Arena_Fighters_v0.9.3_v001 as rollback. Local tests and packaging do not establish deployment. Historical v0.9.3 intro-theme evidence remains in artifacts/Intro_Theme_v001/VERIFICATION.json, and v0.9.2 soundtrack evidence remains in artifacts/Soundtrack_v001/VERIFICATION.json. Audio routing and decoded media checks are distinct from human listening quality and confirmation of the deployed build.
 

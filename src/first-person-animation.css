@@ -1,0 +1,319 @@
+/* Animate nested hand assemblies, preserving all outer placement/grip transforms. */
+.first-person-stage .fp-mainhand-motion,
+.first-person-stage .fp-offhand-motion {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+.first-person-stage .fp-viewmodel[data-animation="attack"] .fp-mainhand-motion {
+  animation: fp-sword-cut 665ms steps(7, end) both;
+}
+.first-person-stage .fp-viewmodel[data-animation="attack"][data-weapon="sword"][data-combat-action="technique"] .fp-mainhand-motion {
+  animation-name: fp-sword-feint;
+}
+.first-person-stage .fp-viewmodel[data-animation="attack"][data-weapon="spear"] .fp-mainhand-motion,
+.first-person-stage .fp-viewmodel[data-animation="attack"][data-weapon="trident"] .fp-mainhand-motion,
+.first-person-stage .fp-viewmodel[data-animation="attack"][data-weapon="halberd"] .fp-mainhand-motion,
+.first-person-stage .fp-viewmodel[data-animation="attack"][data-weapon="dagger"] .fp-mainhand-motion {
+  animation-name: fp-thrust;
+}
+.first-person-stage .fp-viewmodel[data-animation="attack"][data-weapon="axe"] .fp-mainhand-motion,
+.first-person-stage .fp-viewmodel[data-animation="attack"][data-weapon="mace"] .fp-mainhand-motion {
+  animation-name: fp-overhand;
+}
+.first-person-stage .fp-viewmodel[data-animation="attack"][data-weapon="greatsword"] .fp-mainhand-motion {
+  animation-name: fp-heavy-cut;
+}
+.first-person-stage .fp-viewmodel[data-animation="attack"][data-weapon="flail"] .fp-mainhand-motion {
+  animation-name: fp-flail-sweep;
+}
+/* A shaft aimed farther into the arena projects shorter while the near hand
+   advances. Its grip remains at the same origin; the fingers never detach. */
+.first-person-stage .fp-viewmodel[data-weapon="spear"] .fp-weapon-depth { --fp-axis-angle: -35deg; --fp-axis-return: 35deg; }
+.first-person-stage .fp-viewmodel[data-weapon="trident"] .fp-weapon-depth { --fp-axis-angle: -34deg; --fp-axis-return: 34deg; }
+.first-person-stage .fp-viewmodel[data-weapon="halberd"] .fp-weapon-depth { --fp-axis-angle: -31deg; --fp-axis-return: 31deg; }
+.first-person-stage .fp-viewmodel[data-weapon="dagger"] .fp-weapon-depth { --fp-axis-angle: -39deg; --fp-axis-return: 39deg; }
+.first-person-stage .first-person-arena[data-viewmodel-version="v002"] .fp-viewmodel[data-animation="attack"][data-weapon="spear"] .fp-weapon-depth,
+.first-person-stage .first-person-arena[data-viewmodel-version="v002"] .fp-viewmodel[data-animation="attack"][data-weapon="trident"] .fp-weapon-depth,
+.first-person-stage .first-person-arena[data-viewmodel-version="v002"] .fp-viewmodel[data-animation="attack"][data-weapon="halberd"] .fp-weapon-depth,
+.first-person-stage .first-person-arena[data-viewmodel-version="v002"] .fp-viewmodel[data-animation="attack"][data-weapon="dagger"] .fp-weapon-depth {
+  animation: fp-pixel-thrust-depth 665ms steps(6, end) both;
+}
+.first-person-stage .fp-viewmodel[data-animation="attack"][data-weapon="trident"][data-combat-action="technique"] .fp-offhand-motion {
+  animation: fp-net-cast 665ms steps(6, end) both;
+}
+.first-person-stage .fp-viewmodel[data-guarding="true"] .fp-offhand-motion {
+  transform: translate(26px, -33px) rotate(10deg);
+}
+.first-person-stage .fp-viewmodel[data-animation="guard"] .fp-mainhand-motion,
+.first-person-stage .fp-viewmodel[data-animation="blocked"] .fp-mainhand-motion,
+.first-person-stage .fp-viewmodel[data-two-handed="true"][data-guarding="true"] .fp-mainhand-motion,
+.first-person-stage .fp-viewmodel[data-riposting="true"] .fp-mainhand-motion {
+  transform: translate(-19px, -24px) rotate(-22deg);
+}
+.first-person-stage .fp-viewmodel[data-animation="attack"] .fp-mainhand-motion {
+  /* The counter's attack overrides its preceding ready pose. */
+  transform: none;
+}
+.first-person-stage .fp-viewmodel[data-animation="focus"] .fp-mainhand-motion,
+.first-person-stage .fp-viewmodel[data-animation="focus"] .fp-offhand-motion {
+  animation: fp-focus-steady 420ms steps(4, end) both;
+}
+.first-person-stage .fp-viewmodel[data-animation="recover"] .fp-mainhand-motion,
+.first-person-stage .fp-viewmodel[data-animation="stamina-regeneration"] .fp-mainhand-motion {
+  animation: fp-recovery-light 240ms steps(4, end) both;
+}
+.first-person-stage .fp-viewmodel[data-animation="hit"] .fp-mainhand-motion {
+  animation: fp-hand-recoil 380ms steps(5, end) both;
+}
+.first-person-stage .fp-viewmodel[data-defeated="true"] .fp-mainhand-motion,
+.first-person-stage .fp-viewmodel[data-defeated="true"] .fp-offhand-motion {
+  transform: translate(0, 48px) rotate(16deg);
+}
+/* The opponent advances into the camera while the preserved side-view weapon rig swings. */
+.first-person-stage .fp-opponent[data-animation="attack"] .fighter-motion {
+  animation: fp-opponent-lunge 665ms steps(5, end) both;
+}
+.first-person-stage:has(.fp-viewmodel[data-animation="hit"]) .fp-camera {
+  animation: fp-camera-jolt 380ms steps(5, end) both;
+}
+.first-person-stage:has(.fp-viewmodel[data-animation="hit"]) .fp-hit-flash {
+  animation: fp-hit-vignette 380ms steps(4, end) both;
+}
+.first-person-stage:has(.fp-viewmodel[data-animation="blocked"]) .fp-block-flash {
+  animation: fp-hit-vignette 380ms steps(4, end) both;
+}
+/* Stock floating text corrects east-side mirroring; hands are unmirrored in either seat. */
+.first-person-stage .fp-viewmodel .fighter-combat-effect text { transform: none; }
+.first-person-stage .fp-opponent[data-fighter-index="0"] .fighter-combat-effect text { transform: scale(-1, 1); }
+.first-person-stage .battle-animation-caption,
+.first-person-stage .fp-execution-caption { z-index: 5; }
+
+@keyframes fp-sword-cut {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  22% { transform: translate(10px, 9px) rotate(25deg); }
+  43%, 57% { transform: translate(-53px, -40px) rotate(-47deg); }
+  74% { transform: translate(-21px, -16px) rotate(-18deg); }
+}
+@keyframes fp-sword-feint {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  18% { transform: translate(-22px, -11px) rotate(-18deg); }
+  29% { transform: translate(12px, 10px) rotate(26deg); }
+  43%, 62% { transform: translate(-53px, -40px) rotate(-47deg); }
+}
+@keyframes fp-thrust {
+  0%, 100% { transform: translate(0, 0) rotate(0) scale(1); }
+  22% { transform: translate(14px, 18px) rotate(10deg) scale(.94); }
+  43%, 61% { transform: translate(-35px, -60px) rotate(-12deg) scale(1.08); }
+  76% { transform: translate(-11px, -20px) rotate(-4deg) scale(1.02); }
+}
+@keyframes fp-pixel-thrust-depth {
+  0%, 100% { transform: none; }
+  22% { transform: rotate(var(--fp-axis-angle)) scale(1, 1.03) rotate(var(--fp-axis-return)); }
+  43%, 61% { transform: rotate(var(--fp-axis-angle)) scale(1, .8) rotate(var(--fp-axis-return)); }
+  76% { transform: rotate(var(--fp-axis-angle)) scale(1, .94) rotate(var(--fp-axis-return)); }
+}
+@keyframes fp-overhand {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  24% { transform: translate(4px, -24px) rotate(40deg); }
+  43%, 59% { transform: translate(-58px, 6px) rotate(-64deg); }
+  76% { transform: translate(-24px, 4px) rotate(-20deg); }
+}
+@keyframes fp-heavy-cut {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  20%, 30% { transform: translate(16px, 4px) rotate(36deg); }
+  43%, 68% { transform: translate(-66px, -27px) rotate(-65deg); }
+  83% { transform: translate(-24px, -9px) rotate(-24deg); }
+}
+@keyframes fp-flail-sweep {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  20% { transform: translate(16px, 10px) rotate(32deg); }
+  43% { transform: translate(-63px, -25px) rotate(-54deg); }
+  63% { transform: translate(-44px, -14px) rotate(-70deg); }
+  80% { transform: translate(-17px, -5px) rotate(-22deg); }
+}
+@keyframes fp-net-cast {
+  0%, 100% { transform: translate(0, 0) rotate(0); }
+  22% { transform: translate(-9px, 10px) rotate(-10deg); }
+  43%, 62% { transform: translate(33px, -45px) rotate(16deg); }
+  80% { transform: translate(12px, -13px) rotate(4deg); }
+}
+@keyframes fp-focus-steady {
+  0%, 100% { filter: none; transform: translate(0, 0); }
+  35%, 75% { filter: brightness(1.15) drop-shadow(0 -2px 2px #e7ca73); transform: translate(0, -3px); }
+}
+@keyframes fp-recovery-light {
+  0%, 100% { filter: none; }
+  35%, 75% { filter: brightness(1.12) drop-shadow(0 -2px 2px #71d9af); }
+}
+@keyframes fp-hand-recoil {
+  0%, 100% { transform: translate(0, 0); }
+  20%, 50% { transform: translate(6px, 12px) rotate(4deg); }
+  75% { transform: translate(2px, 4px); }
+}
+@keyframes fp-opponent-lunge {
+  0%, 15%, 100% { transform: translate(0, 0) scale(1); }
+  36%, 61% { transform: translate(0, 4px) scale(1.1); }
+}
+@keyframes fp-camera-jolt {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(2px, 3px); }
+  45% { transform: translate(-2px, -1px); }
+  70% { transform: translate(1px, 1px); }
+}
+@keyframes fp-hit-vignette {
+  0% { opacity: .25; }
+  25%, 45% { opacity: .6; }
+  100% { opacity: 0; }
+}
+
+/* The accepted verdict plays inside this same player scene. */
+.fp-execution-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 50%, transparent 25%, #580f20b3);
+  opacity: .12;
+}
+.fp-execution-playback {
+  --fp-finish-ready-x: 16px;
+  --fp-finish-ready-y: -14px;
+  --fp-finish-ready-angle: 36deg;
+  --fp-finish-contact-x: -68px;
+  --fp-finish-contact-y: -26px;
+  --fp-finish-contact-angle: -65deg;
+}
+.fp-execution-playback .fp-mainhand,
+.fp-execution-playback .fp-offhand { animation: none; }
+.fp-execution-playback .fp-viewmodel[data-weapon="spear"],
+.fp-execution-playback .fp-viewmodel[data-weapon="trident"],
+.fp-execution-playback .fp-viewmodel[data-weapon="halberd"],
+.fp-execution-playback .fp-viewmodel[data-weapon="dagger"] {
+  --fp-finish-ready-x: 14px;
+  --fp-finish-ready-y: 18px;
+  --fp-finish-ready-angle: 10deg;
+  --fp-finish-contact-x: -35px;
+  --fp-finish-contact-y: -60px;
+  --fp-finish-contact-angle: -12deg;
+}
+.fp-execution-playback[data-fp-execution-view="victor"][data-fp-execution-phase="windup"] .fp-mainhand-motion {
+  animation: fp-finisher-ready 500ms steps(6, end) both;
+}
+.fp-execution-playback[data-fp-execution-view="victor"][data-fp-execution-phase="strike"] .fp-mainhand-motion {
+  animation: fp-finisher-strike 220ms steps(4, end) both;
+}
+.fp-execution-playback[data-fp-execution-view="victor"][data-fp-execution-phase="impact"] .fp-mainhand-motion {
+  transform: translate(var(--fp-finish-contact-x), var(--fp-finish-contact-y)) rotate(var(--fp-finish-contact-angle));
+}
+.fp-execution-playback[data-fp-execution-view="victor"][data-fp-execution-phase="settle"] .fp-mainhand-motion {
+  animation: fp-finisher-settle 330ms steps(5, end) both;
+}
+.fp-execution-playback[data-fp-execution-view="victor"][data-fp-execution-phase="impact"] .fp-opponent .fighter-motion {
+  animation: fp-opponent-collapse 900ms steps(8, end) both;
+}
+.fp-execution-playback[data-fp-execution-view="victor"][data-fp-execution-phase="settle"] .fp-opponent .fighter-motion {
+  transform: translate(0, 9px) rotate(-76deg);
+  opacity: .65;
+}
+.fp-execution-playback[data-fp-execution-view="defeated"][data-fp-execution-phase="windup"] .fp-opponent .fighter-motion {
+  animation: fp-opponent-approach 500ms steps(6, end) both;
+}
+.fp-execution-playback[data-fp-execution-view="defeated"][data-fp-execution-phase="strike"] .fp-opponent .fighter-motion,
+.fp-execution-playback[data-fp-execution-view="defeated"][data-fp-execution-phase="impact"] .fp-opponent .fighter-motion,
+.fp-execution-playback[data-fp-execution-view="defeated"][data-fp-execution-phase="settle"] .fp-opponent .fighter-motion {
+  transform: translate(0, 12px) scale(1.25);
+}
+.fp-execution-playback[data-fp-execution-view="defeated"][data-fp-execution-phase="strike"] .fp-opponent .fighter-weapon-motion {
+  animation: gladiator-sword-swing 220ms steps(4, end) both;
+}
+.fp-execution-playback[data-fp-execution-phase="strike"] .fp-opponent[data-weapon="spear"] .fighter-weapon-motion,
+.fp-execution-playback[data-fp-execution-phase="strike"] .fp-opponent[data-weapon="trident"] .fighter-weapon-motion {
+  animation-name: gladiator-spear-thrust;
+}
+.fp-execution-playback[data-fp-execution-phase="strike"] .fp-opponent[data-weapon="halberd"] .fighter-weapon-motion { animation-name: gladiator-halberd-thrust; }
+.fp-execution-playback[data-fp-execution-phase="strike"] .fp-opponent[data-weapon="dagger"] .fighter-weapon-motion { animation-name: gladiator-dagger-thrust; }
+.fp-execution-playback[data-fp-execution-phase="strike"] .fp-opponent[data-weapon="axe"] .fighter-weapon-motion { animation-name: gladiator-axe-chop; }
+.fp-execution-playback[data-fp-execution-phase="strike"] .fp-opponent[data-weapon="mace"] .fighter-weapon-motion { animation-name: gladiator-mace-crush; }
+.fp-execution-playback[data-fp-execution-phase="strike"] .fp-opponent[data-weapon="flail"] .fighter-weapon-motion { animation-name: gladiator-flail-sweep; }
+.fp-execution-playback[data-fp-execution-phase="strike"] .fp-opponent[data-weapon="greatsword"] .fighter-weapon-motion { animation-name: gladiator-greatsword-cut; }
+.fp-execution-playback[data-fp-execution-view="defeated"][data-fp-execution-phase="impact"] .fp-mainhand-motion,
+.fp-execution-playback[data-fp-execution-view="defeated"][data-fp-execution-phase="impact"] .fp-offhand-motion {
+  animation: fp-hands-fall 900ms steps(7, end) both;
+}
+.fp-execution-playback[data-fp-execution-view="defeated"][data-fp-execution-phase="settle"] .fp-mainhand-motion,
+.fp-execution-playback[data-fp-execution-view="defeated"][data-fp-execution-phase="settle"] .fp-offhand-motion {
+  transform: translate(0, 80px) rotate(18deg);
+  opacity: .25;
+}
+.fp-execution-playback[data-fp-execution-phase="impact"] .fp-camera { animation: fp-camera-jolt 380ms steps(5, end); }
+.fp-execution-playback[data-fp-execution-phase="impact"] .fp-execution-shade { opacity: .55; }
+.fp-execution-playback[data-fp-execution-view="defeated"][data-fp-execution-phase="impact"] .fp-execution-shade {
+  animation: fp-verdict-darken 900ms steps(6, end) both;
+}
+.fp-execution-playback[data-fp-execution-view="defeated"][data-fp-execution-phase="settle"] .fp-execution-shade {
+  background: #10090fe6;
+  opacity: 1;
+}
+@keyframes fp-finisher-ready {
+  0% { transform: translate(0, 0) rotate(0); }
+  100% { transform: translate(var(--fp-finish-ready-x), var(--fp-finish-ready-y)) rotate(var(--fp-finish-ready-angle)); }
+}
+@keyframes fp-finisher-strike {
+  0% { transform: translate(var(--fp-finish-ready-x), var(--fp-finish-ready-y)) rotate(var(--fp-finish-ready-angle)); }
+  100% { transform: translate(var(--fp-finish-contact-x), var(--fp-finish-contact-y)) rotate(var(--fp-finish-contact-angle)); }
+}
+@keyframes fp-finisher-settle {
+  0% { transform: translate(var(--fp-finish-contact-x), var(--fp-finish-contact-y)) rotate(var(--fp-finish-contact-angle)); }
+  100% { transform: translate(0, 0) rotate(0); }
+}
+@keyframes fp-opponent-collapse {
+  0% { transform: translate(0, 0) rotate(0); opacity: 1; }
+  45% { transform: translate(0, 6px) rotate(-45deg); opacity: .85; }
+  100% { transform: translate(0, 9px) rotate(-76deg); opacity: .65; }
+}
+@keyframes fp-opponent-approach {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(0, 12px) scale(1.25); }
+}
+@keyframes fp-hands-fall {
+  0% { transform: translate(0, 0) rotate(0); opacity: 1; }
+  100% { transform: translate(0, 80px) rotate(18deg); opacity: .25; }
+}
+@keyframes fp-verdict-darken {
+  0% { background: radial-gradient(ellipse, transparent 15%, #780e2bdf); opacity: .7; }
+  100% { background: #10090fe6; opacity: 1; }
+}
+
+/* Short stationary cues preserve captions and contact timing without movement or flashes. */
+.first-person-stage.battle-playback-reduced .fp-mainhand-motion,
+.first-person-stage.battle-playback-reduced .fp-offhand-motion,
+.first-person-stage.battle-playback-reduced .fp-camera,
+.first-person-stage.battle-playback-reduced .fp-hit-flash,
+.first-person-stage.battle-playback-reduced .fp-block-flash,
+.first-person-stage.battle-playback-reduced .fp-weapon,
+.first-person-stage.battle-playback-reduced .fp-weapon-depth,
+.fp-execution-reduced .fp-mainhand-motion,
+.fp-execution-reduced .fp-offhand-motion,
+.fp-execution-reduced .fp-camera,
+.fp-execution-reduced .fp-weapon,
+.fp-execution-reduced .fp-weapon-depth,
+.fp-execution-reduced .fighter-motion,
+.fp-execution-reduced .fighter-weapon-motion,
+.fp-execution-reduced .fp-execution-shade { animation: none !important; transform: none !important; }
+.fp-execution-reduced .fp-execution-shade { background: #330f2033 !important; opacity: .3 !important; }
+.first-person-stage.battle-playback-reduced .fp-viewmodel[data-animation="focus"] .fp-mainhand-motion { filter: brightness(1.12); }
+.first-person-stage.battle-playback-reduced:has(.fp-viewmodel[data-animation="hit"]) .fp-hit-flash { opacity: .15; }
+.first-person-stage.battle-playback-reduced:has(.fp-viewmodel[data-animation="blocked"]) .fp-block-flash { opacity: .4; }
+@media (prefers-reduced-motion: reduce) {
+  .first-person-stage .fp-mainhand-motion,
+  .first-person-stage .fp-offhand-motion,
+  .first-person-stage .fp-camera,
+  .first-person-stage .fp-hit-flash,
+  .first-person-stage .fp-block-flash,
+  .first-person-stage .fp-weapon,
+  .first-person-stage .fp-weapon-depth,
+  .first-person-stage .fighter-motion,
+  .first-person-stage .fighter-weapon-motion,
+  .first-person-stage .fp-execution-shade { animation: none !important; transform: none !important; }
+  .first-person-stage.fp-execution-playback .fp-execution-shade { background: #330f2033 !important; opacity: .3 !important; }
+}

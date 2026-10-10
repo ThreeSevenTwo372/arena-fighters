@@ -1,6 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { RULES, WEAPONS, ARMORS, HELMETS, TRAITS, ATTRIBUTE_LABELS, ATTRIBUTE_HELP, validateCharacter, deriveFighterStats, createDuel, getActionOptions, resolveRound, forfeitDuel, chooseCpuAction } from '../src/combat.js';
+import { RULES, WEAPONS, ARMORS, HELMETS, TRAITS, LEGACY_ATTRIBUTE_LABELS as ATTRIBUTE_LABELS, LEGACY_ATTRIBUTE_HELP as ATTRIBUTE_HELP, validateCharacter, deriveFighterStats as deriveCurrentStats, createDuel as createCurrentDuel, getActionOptions, resolveRound, forfeitDuel, chooseCpuAction } from '../src/combat.js';
+
+// These sealed version-3 regression fixtures protect ongoing Recover duels.
+// The default version-4 contract and balance trials live in focus-combat.test.js.
+const createDuel = (entries, options = {}) => createCurrentDuel(entries, { ...options, version: 3 });
+const deriveFighterStats = (character, loadout) => deriveCurrentStats(character, loadout, { version: 3 });
 
 const balanced = { strength: 4, dexterity: 4, speed: 4, defense: 4, intelligence: 4 };
 const strong = { strength: 8, dexterity: 2, speed: 2, defense: 6, intelligence: 2 };

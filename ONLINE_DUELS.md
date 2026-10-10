@@ -1,6 +1,23 @@
-# Shared combat and retained online duels, current v0.9.4
+# Shared combat and retained online duels
 
-## Release Readiness v001 — v0.10.0, October 9, 2026
+## Stamina and Focus v001 — local v0.11.0, October 9, 2026
+
+Current local source is **v0.11.0**; the published service remains **v0.10.1**. The independent snapshot location is `releases/Arena_Fighters_v0.11.0_v001`, with evidence and publication status recorded separately in `artifacts/Stamina_Focus_v001/VERIFICATION.json`.
+
+New duels use **rules v4**. The four commands are Strike, the weapon's Technique, Guard and Focus. After both moves resolve, each living fighter restores `max(1, 2 + floor(Dexterity / 8) + trait adjustment)` stamina, capped at maximum and applied before the round-limit health/stamina comparison. Base recovery is 2 at Dexterity 0–7 and 3 at Dexterity 8; Vigorous adds 1 and Ironhide subtracts 1. Speed improves initiative and discounts attack stamina costs by `floor(Speed / 4)`, with minimum Strike cost 2 and Technique cost 3; it does not grant active recovery in v4.
+
+**Focus** costs 0 stamina and has priority −2. It readies +3 raw attack power before armor and other defenses for next round's Strike or Technique, including a triggered Riposte counter. It provides no defense, clears Entangle when executed, does not stack, and expires after that next round if unused. Missing v4 choices become Focus. The public Focus and Entangle statuses can coexist; neither reveals a pending move.
+
+Active **v3** duels retain Recover, their prior stamina behavior and already acknowledged choices through completion. The server resolves the rules version recorded in each duel; no in-flight choice or match is converted to v4.
+
+Quick Duel and invitation links retain the existing two-player flow and owned survivor. The optional three-round tutorial is guest-free: Guard versus Strike, sword Feint versus Guard, then Focus versus Riposte. Authentication, hidden commitments, retries, records, mercy and timing authority remain server-owned. Later rounds still reserve four seconds for presentation before the full 20-second action window.
+
+## Historical combat and online documentation — through v0.10.1
+
+The sections below preserve earlier rules, trait recovery values and measured pacing. Their Recover defaults and Speed/armor-based active recovery apply to historical matches, not new v4 duels.
+
+
+### Release Readiness v001 — v0.10.0, October 9, 2026
 
 The menu now offers **Learn to fight**, three optional coached rounds using the shared combat rules and exact current male/female avatars, and **Quick Duel**, the existing private two-player flow with a shareable invitation link. Lessons are disposable, untimed, repeatable and guest-free; they preserve an owned surviving fighter and keep the condensed creator unchanged. Invitation URLs carry a public code and mode only, prefill the matching join field and never auto-join, replace an active match, or carry authentication.
 
@@ -16,7 +33,7 @@ Only **Where the Stars Remember** remains active as music. Active manifest publi
 
 Free temporary hosting and session-scoped records remain the selected scope. Durable online progression, coins and unlocks remain separate milestones. This is a **local implementation and independent release**, not a publication claim. Current automated, browser, preservation, package and deployment evidence is recorded separately in artifacts/Release_Readiness_v001/VERIFICATION.json. The preserved rollback is releases/Arena_Fighters_v0.9.4_v001. Physical phone/public-network play and fresh human balance/art judgment remain distinct from automated and resized-browser proof.
 
-## Preserved v0.9.4 documentation
+### Preserved v0.9.4 documentation
 
 v0.9.4 adds **Arena lobby chat** to tournaments: waiting players and spectators share the same conversation through preparation, entrance, battle and verdict playback. A persistent panel preserves typing and the player's open/closed choice across game polls and resolved animations; a first view as an active duelist starts collapsed. It hides on departure, local play, personal loser outcomes and the death-arrival film. Legacy two-player duels and local/review modes do not gain a tournament chat room.
 
@@ -34,7 +51,7 @@ For a standalone two-player online duel, open `?duel-mode=1`, name and customize
 
 Run `node server.mjs` and open `http://127.0.0.1:4173`. For two devices on the same network, run `node server.mjs --host 0.0.0.0 --port 4173` and use this computer’s LAN address on both devices. Only one process should own the default data store. The temporary-session game is deployed at https://blackbook-arena-fighters.onrender.com and embedded on https://www.blackbooktattoo.com/arena-fighters. The user has tested its earlier alpha with a friend; v0.9.4 deployment and browser status are recorded separately in artifacts/Arena_Chat_v001/VERIFICATION.json, without assuming this local update is already live.
 
-## Attributes
+### Attributes
 
 Allocate exactly 20 points, with each attribute from 0 through 8. Appearance, attributes, and the creation trait stay with the surviving character. Any character can use any weapon and armor; changing equipment before a duel changes its effectiveness.
 
@@ -65,7 +82,7 @@ The creator shows attribute values without explanations or preset buttons. New f
 
 Positive trait cost penalties apply after attribute discounts reach their minimums, so the drawback remains effective. Protection also applies against armor-piercing attacks. The original Measured/Relentless/Steadfast records retain their IDs and effects.
 
-## Privacy and authority
+### Privacy and authority
 
 Members see character attributes. Each equipment selection is sent only to its owner until both current duelists commit. The server then creates the duel and reveals both loadouts. Tournament spectators receive the public resolved duel, meters, and readiness flags; they cannot submit equipment, actions, or the winner's mercy choice. If the winner delegates to the crowd, eligible living spectators may each cast one Spare/Kill vote. Each combat round works the same way: clients submit one action, the service waits for both, resolves the shared rules, and reveals the outcome. Action priority acts before initiative; equal initiative alternates the first fighter. A defeated fighter cannot finish its action. Pending action values remain private from both rivals and spectators.
 
@@ -77,7 +94,7 @@ Base health is now 90 (previously 48), before attribute and trait modifiers. Spe
 
 The service rejects invalid attributes/equipment, unauthorized room reads, stale round/duel commands, and changes to an already committed choice. Repeated command IDs cannot resolve a round, award a win, or execute a character twice. The client retries the same command after a lost response and reconciles room creation/joining through its guest session.
 
-## Timers and records
+### Timers and records
 
 | Window | Default |
 | --- | --- |
@@ -98,7 +115,7 @@ Execution retires the character and a replacement begins with a new identity and
 
 Guest identity is stored in the browser under the unchanged `last-laurel.guest.v1` key. The service atomically saves character, room, and tournament state in `.local-data/online-duels.json` before acknowledging game changes; it stores hashes of guest bearer credentials. The session's persisted `activeTournament` resumes the current roster, match, and bracket after reload. Keep that file when restarting the service. Source/review files, tests, credentials, and this data directory are outside served paths. Browser storage loss does not provide cross-device account recovery.
 
-## Verification and boundaries
+### Verification and boundaries
 
 `node --test tests/*.test.js` checks the current project tests without counting historical snapshot tests. The v0.8.4 root run passes 355 tests with zero failures, cancellations or skips; its log is artifacts/Recovery_Mercy_Validation_v001/npm-test.log. Coverage includes all 3,951 legal attribute allocations, meaningful weapon/armor/stat tradeoffs, bounded duels, combat/animation parity, authentication, hidden choices, duplicate/stale commands, durable restart, timeouts, disconnects, mercy/crowd authority and persistence, loser outcomes, rematches, and client recovery. Current browser proof is in artifacts/Recovery_Mercy_v001/VERIFICATION.json, covering creator/armory, both battle facings, winner-first reveal, crowd delegation and authenticated human/bot voting, majority Kill, native player/spectator execution, personal loser outcomes and automatic arrival replay to empty replacement naming. All 1,255 asset/media files match v0.8.3 in artifacts/Recovery_Mercy_Validation_v001/assets-preservation.json. Portable tests and sealed archive results are recorded in artifacts/Recovery_Mercy_v001/portable-test.log and RELEASE_RECEIPT.json. Browser receipts below establish their stated historical versions.
 

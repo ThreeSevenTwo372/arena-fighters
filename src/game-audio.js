@@ -14,6 +14,7 @@ const EFFECTS = Object.freeze({
   parry: { wave: 'triangle', from: 1200, to: 650, duration: 0.12, gain: 0.13 },
   guard: { wave: 'triangle', from: 550, to: 310, duration: 0.1, gain: 0.1 },
   recover: { wave: 'sine', from: 370, to: 740, duration: 0.22, gain: 0.09 },
+  focus: { wave: 'triangle', from: 330, to: 660, duration: 0.18, gain: 0.08 },
   defeat: { wave: 'triangle', from: 200, to: 45, duration: 0.35, gain: 0.12 },
   round: { wave: 'square', from: 620, to: 820, duration: 0.09, gain: 0.07 },
   execution: { wave: 'square', from: 90, to: 25, duration: 0.17, gain: 0.2 },

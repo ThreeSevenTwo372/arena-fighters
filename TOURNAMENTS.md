@@ -1,6 +1,21 @@
-# Eight-fighter tournaments, current v0.9.4
+# Eight-fighter tournaments
 
-## Release Readiness v001 — v0.10.0, October 9, 2026
+## Stamina and Focus v001 — local v0.11.0, October 9, 2026
+
+The current local tournament build is **v0.11.0**; the published game remains **v0.10.1**. The independent snapshot location is `releases/Arena_Fighters_v0.11.0_v001`, with verification and publication status recorded separately in `artifacts/Stamina_Focus_v001/VERIFICATION.json`.
+
+Every newly created duel uses **rules v4**. After both moves resolve, living fighters restore `max(1, 2 + floor(Dexterity / 8) + trait adjustment)` stamina, capped at maximum, before the round-limit tiebreak. Base recovery is 2 at Dexterity 0–7 and 3 at Dexterity 8; Vigorous adds 1 and Ironhide subtracts 1. Speed improves initiative and discounts attack stamina costs by `floor(Speed / 4)`, with minimum Strike cost 2 and Technique cost 3.
+
+**Focus** replaces Recover: 0 stamina, priority −2, and +3 raw attack power before defenses on next round's Strike or Technique, including a triggered Riposte counter. Focus leaves the fighter open, clears Entangle when executed, does not stack, and expires after that next round if unused. Missing v4 choices become Focus. Active v3 matches keep Recover, their old stamina rules and acknowledged choices through completion; the next new duel uses v4.
+
+The eight-seat lobby, private equipment, sequential bracket, survivor identity, bot styles, shared chat, spectator reactions, full mercy/crowd windows and records retain their contracts. Later rounds reserve four seconds for presentation before the full 20-second action window. The three optional local lessons end with Focus versus Riposte and do not obtain a guest or tournament seat.
+
+## Historical tournament documentation — through v0.10.1
+
+Earlier flow, timing and verification notes below remain preserved for their recorded versions. Their Recover defaults, stamina calculations and pre-presentation action deadlines are historical; current v4 and presentation timing are specified above.
+
+
+### Release Readiness v001 — v0.10.0, October 9, 2026
 
 The menu now offers **Learn to fight**, three optional coached rounds using the shared combat rules and exact current male/female avatars, and **Quick Duel**, the existing private two-player flow with a shareable invitation link. Lessons are disposable, untimed, repeatable and guest-free; they preserve an owned surviving fighter and keep the condensed creator unchanged. Invitation URLs carry a public code and mode only, prefill the matching join field and never auto-join, replace an active match, or carry authentication.
 
@@ -16,13 +31,13 @@ Only **Where the Stars Remember** remains active as music. Active manifest publi
 
 Free temporary hosting and session-scoped records remain the selected scope. Durable online progression, coins and unlocks remain separate milestones. This is a **local implementation and independent release**, not a publication claim. Current automated, browser, preservation, package and deployment evidence is recorded separately in artifacts/Release_Readiness_v001/VERIFICATION.json. The preserved rollback is releases/Arena_Fighters_v0.9.4_v001. Physical phone/public-network play and fresh human balance/art judgment remain distinct from automated and resized-browser proof.
 
-## Preserved v0.9.4 documentation
+### Preserved v0.9.4 documentation
 
 **Arena Lobby Chat v001** is the current local update. Each tournament shares one conversation for players waiting for its lobby to fill and for spectators watching its matches, with the same room through equipment, gate entrance, battle and verdict presentation. The panel preserves the player's open/closed choice; a first view as an active duelist starts collapsed. It keeps its draft/focus through polling and resolved animation playback. It hides on departure, local play, the viewer's personal loser outcome and death arrival. The independent snapshot is releases/Arena_Fighters_v0.9.4_v001; v0.9.3 Intro Theme is the rollback. Source, release, browser and deployment status are recorded separately in artifacts/Arena_Chat_v001/VERIFICATION.json; this documentation does not establish publication of v0.9.4.
 
 The default local site runs one eight-player elimination tournament at a time per lobby. Each browser guest owns a persistent fighter. Bots fill waiting seats after quiet intervals. Human members see the current pairing; only its two duelists can choose equipment and combat actions, with bots controlled by the service. The same combat rules, attributes, traits, and artwork continue from [ONLINE_DUELS.md](ONLINE_DUELS.md).
 
-## Player flow
+### Player flow
 
 1. A first visit in a browser tab plays the preserved 20-second sky-to-arena Flux flight. Skip intro or Escape continues immediately. Reduced motion offers an arena still, Enter, and an optional deliberate playback choice. Completion is remembered in that tab's session storage.
 2. NAME YOUR FIGHTER. precedes the compact character creator. Allocate 20 attribute points, choose a trait and appearance, then press Enter tournament. Surviving saved fighters retain their fixed identity, attributes, trait, and records.
@@ -38,7 +53,7 @@ Spared eliminated players may continue watching or leave after their verdict res
 
 Waiting players and public/member spectators can expand **Arena lobby chat**, write a message and press Enter or Send. Shift+Enter adds a line break while composing. Reading needs no guest or fighter seat; the first send obtains only an ordinary guest identity. The service assigns a tournament member's actual fighter name or a numbered Spectator label. Chat accepts plain text up to 240 Unicode code points, with at least two seconds between sends and ten sends per minute. The room retains up to sixty recent messages for one hour in RAM and loses them on restart in both hosting modes. Durable fighter records stay separate; chat does not grant a move, loadout, mercy or ballot permission.
 
-## Timing and advancement
+### Timing and advancement
 
 | Stage | Window | Automatic behavior |
 | --- | --- | --- |
@@ -62,7 +77,7 @@ The v0.8.4 execution presentation follows an acknowledged Kill verdict from the 
 
 Shared combat uses the 24-round cap and health-proportion, then stamina-proportion comparison. An exact draw advances the fighter with the lower original seed number. That seed comes from the recorded initial shuffle and is preserved through restart; the bracket displays advancement by original seeding. Double withdrawal can still advance the schedule, but an absent or retired final winner cannot receive a champion title. If all entrants withdraw, the bracket may finish without an eligible champion and awards no tournament win.
 
-## API and public state
+### API and public state
 
 The member gameplay endpoints require the existing authenticated guest bearer token. Public arena listing, observer and chat reads require no guest creation. Chat writes require an ordinary guest bearer without joining a tournament. POST bodies use `application/json`. Players cannot provide damage, results, advancement, champion credit or chat author labels.
 
@@ -88,7 +103,7 @@ Only an owner receives `yourLoadout` before both commit. Spectators receive null
 
 Repeated commands preserve their exact ID and body when retried. A command ID reused with different content conflicts; exact duplicates cannot resolve a round, execute a fighter, advance a match, or award a title again. The client reconciles a lost entry acknowledgement through `session.activeTournament` instead of creating a second entry. Deferred browser updates keep the latest server revision while resolved animations finish.
 
-## Records, assets, and implementation
+### Records, assets, and implementation
 
 `online/tournament-store.mjs` shares the existing duel service's serialized atomic transactions. Character records, seeds, bracket, match state, winner/mercy/crowd deadlines, ballot eligibility, committed human votes, scheduled bot votes, execution, title credit, and `session.activeTournament` persist in `.local-data/online-duels.json` before game changes are acknowledged. The browser token key remains `last-laurel.guest.v1`; it is reused by `src/tournament-client.js`. One service process owns this store. Browser-storage loss has no cross-device account-recovery mechanism.
 
@@ -100,7 +115,7 @@ Original cinematic files remain preserved in ArtReview. Runtime H.264 videos and
 
 The retained two-player online flow is available at `?duel-mode=1`. Practice and Pass & play retain local combat and private handoffs. Their local CPU and handoff behavior remains separate from server-controlled tournament bots.
 
-## Verification and remaining scope
+### Verification and remaining scope
 
 The current v0.8.4 root suite passes **355 tests**, with zero failures, cancellations or skips; its log is `artifacts/Recovery_Mercy_Validation_v001/npm-test.log`. Coverage includes winner/mercy/crowd boundaries, authenticated vote authority, human and bot ballot persistence, ties/no votes, withdrawal, native execution framing, loser outcomes and death recovery. Current browser proof in `artifacts/Recovery_Mercy_v001/VERIFICATION.json` covers creator/armory, both battle facings, winner reveal, crowd delegation, authenticated human and paced bot votes, a majority Kill verdict, execution inside the original player/spectator scene, personal loser overlays and automatic arrival replay to empty replacement naming. The portable test log and sealed archive results are in `artifacts/Recovery_Mercy_v001/portable-test.log` and `artifacts/Recovery_Mercy_v001/RELEASE_RECEIPT.json`. All 1,255 asset/media files remain exact v0.8.3 bytes, independently hashed in `artifacts/Recovery_Mercy_Validation_v001/assets-preservation.json`. Recovered source and documentation backups are preserved in `artifacts/Before_Mercy_Crowd_v001` and `artifacts/Recovery_Mercy_v001/before-docs`.
 

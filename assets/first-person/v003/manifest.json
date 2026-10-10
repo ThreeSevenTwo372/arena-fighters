@@ -1,0 +1,1559 @@
+{
+  "schema": 1,
+  "version": "v003",
+  "nativeDisplayScale": 2,
+  "holds": {
+    "sword": {
+      "light": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/sword-light-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/sword-light-main-ivory.png",
+            "sand": "/assets/first-person/v003/sword-light-main-sand.png",
+            "copper": "/assets/first-person/v003/sword-light-main-copper.png",
+            "umber": "/assets/first-person/v003/sword-light-main-umber.png",
+            "ebony": "/assets/first-person/v003/sword-light-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "1e74275060f7c00b39140321a0dfaa2d644c97b3f4a5588fc68758d9db78d5a5",
+            "ivory": "c1051eeafbb486fb287fb5092666422ab3d930abce3afa14e3f0e8b47b310af0",
+            "sand": "4a068d3c35278ee2af85015c8c74f81fb91edf2413668312d90a9e9ea513fb0a",
+            "copper": "2342249a3b0a71563d55b39a6d09aae2f13b4415e5560a7a60b594af71957f38",
+            "umber": "8724c6ffee68617099197368ff3cfb74aff39d5b0c82c2f5a8461c4c16d8b2b7",
+            "ebony": "55016f5c6931b32a49a6054778324017d017da2bdcba161af1b936803470db93"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            355,
+            153
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/sword-light-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/sword-light-off-ivory.png",
+            "sand": "/assets/first-person/v003/sword-light-off-sand.png",
+            "copper": "/assets/first-person/v003/sword-light-off-copper.png",
+            "umber": "/assets/first-person/v003/sword-light-off-umber.png",
+            "ebony": "/assets/first-person/v003/sword-light-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "ed376d39d53d297ab2f7af78a83d95ce478ef0fcd172bb3a5d55f787600ff4e9",
+            "ivory": "4a70eae265e8f789ecb319250ec94f67ff98f3aef823d7a19b8e3499dca625bd",
+            "sand": "a74372a7cb3697c56caec3afc17ea77ca32133e18b39b0a08b03e6e6145ee85d",
+            "copper": "fc3837963897c53120adf86b2d2634a65169842ef5caa72a76bd8b4bd0a32244",
+            "umber": "a20219c9faf687faab8ad4e8b848c940289b9117cf1c391bd3fd5bbc267abead",
+            "ebony": "8b2df5d71bb19fa82b14906ce7da03e833cc674b28ab4c61fccac399a8293912"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            153
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "medium": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/sword-medium-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/sword-medium-main-ivory.png",
+            "sand": "/assets/first-person/v003/sword-medium-main-sand.png",
+            "copper": "/assets/first-person/v003/sword-medium-main-copper.png",
+            "umber": "/assets/first-person/v003/sword-medium-main-umber.png",
+            "ebony": "/assets/first-person/v003/sword-medium-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "b86d2c6e719d12fa9cccd6022936a31ca9ca45a3f629df87cf562d14e6b18976",
+            "ivory": "79a922c5ff5c8d2fa977e76e016570699f2e6bb6f97112f56055a85500ba13e9",
+            "sand": "5544d7293c1b171ff4a4ad22189a85785dd0c8c22d1b296f809dbf6581067d2b",
+            "copper": "170021eacbb5400524534b206eed0615836b22da4243b05a3d6dd01ec3a991fe",
+            "umber": "d94fedc817b5da5382fcfdea9f1a3c32e4109869f91656e329fc06f1e07f7e31",
+            "ebony": "052c66eba90e961af7990afee04e89a167e2f651f056220d8bd006a17467d846"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            355,
+            156
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/sword-medium-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/sword-medium-off-ivory.png",
+            "sand": "/assets/first-person/v003/sword-medium-off-sand.png",
+            "copper": "/assets/first-person/v003/sword-medium-off-copper.png",
+            "umber": "/assets/first-person/v003/sword-medium-off-umber.png",
+            "ebony": "/assets/first-person/v003/sword-medium-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "3d2e035b45874a0c6a3e88e7b09970fc0dc97098c2e61a2281ea8075d2827215",
+            "ivory": "996c00c7bf8a824d85572a35c971fc523a9fde827c690aac490f6c4abf3c9008",
+            "sand": "6cf18f56fab762c98668b5fe69115b2e565bae95cf63c860fd116daf544395b7",
+            "copper": "8e188c9ab9251c97ea00bfec9c4bbed92f27d09d3599820ad70afdb8fbafe4a6",
+            "umber": "277ecbe5b08cb5ce3b1f71e8c87a38128378e0bb4b5ecc5f6d151d7fa97ca81e",
+            "ebony": "71473190321c3580725c10ef9f5dd30ed0a86ab6592766fb57c65fc4045aa49d"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            156
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "heavy": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/sword-heavy-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/sword-heavy-main-ivory.png",
+            "sand": "/assets/first-person/v003/sword-heavy-main-sand.png",
+            "copper": "/assets/first-person/v003/sword-heavy-main-copper.png",
+            "umber": "/assets/first-person/v003/sword-heavy-main-umber.png",
+            "ebony": "/assets/first-person/v003/sword-heavy-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "81f1e4d8b84ce4aa7437a38bfd514bd9220f1e47d187c5fc30da67de53dce31b",
+            "ivory": "46dcea4e29719e6ec126b2bb5d86b1ee9c28b572b5e1041fbcffc4b57b481237",
+            "sand": "7ae6b6c57d2a6753873c9693f5673c2de063f24c5401c260405c4890890274b4",
+            "copper": "47bb37e0278bb80abf0663e5b91534a8a61a185be391ed422fd41497f2a5ee90",
+            "umber": "b0c80d0ce3d1b14b7fb7ff99beb70f822df3cadd7afa88d0b68a2220085344d2",
+            "ebony": "13267a2749687e636b1ce224f96723373306d80a4238e3e8256cc7b82184c676"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            355,
+            155
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/sword-heavy-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/sword-heavy-off-ivory.png",
+            "sand": "/assets/first-person/v003/sword-heavy-off-sand.png",
+            "copper": "/assets/first-person/v003/sword-heavy-off-copper.png",
+            "umber": "/assets/first-person/v003/sword-heavy-off-umber.png",
+            "ebony": "/assets/first-person/v003/sword-heavy-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "780e91b2d3685bfa882fcc0268b50fbb267071c3cbed73eedce929c59eda4c43",
+            "ivory": "b7a8efecf2cfad80b0177aea4e8aeb227f6828a3eaee5fbd24d447172c279990",
+            "sand": "db8e64b35f89dc505684d7113934884d01d20f694582ecc405ba0c3277947e7c",
+            "copper": "4d511d6e2d35640b41ad931b48fedba3613e8ea0c0918f0e4fa296d39aaafb3a",
+            "umber": "afc4cb724221ebe3ff9724d4d8ee1ab32026f0c95804750b9b1e169871e1d3e4",
+            "ebony": "465ddaf6ea522029eaf8a0fbdea3c4baa3e12313a3e65359ee4ba8a998da1cdf"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            156
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "greatsword": {
+      "light": {
+        "mode": "both",
+        "cameraOffset": [
+          100,
+          10
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/greatsword-light-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/greatsword-light-main-ivory.png",
+            "sand": "/assets/first-person/v003/greatsword-light-main-sand.png",
+            "copper": "/assets/first-person/v003/greatsword-light-main-copper.png",
+            "umber": "/assets/first-person/v003/greatsword-light-main-umber.png",
+            "ebony": "/assets/first-person/v003/greatsword-light-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "74c27ab2e05b00d95bde9eaf14f8aa0f6b9b63d2e42197c504156ec10731ba06",
+            "ivory": "c5c8048bac3703a8db3cc9045552f7c7a7bcdac7685c51554069ee892db951eb",
+            "sand": "dfa4072e29bd88cb0e1ca09d4bc9ff2b9ee14b4d1f356d4a64001a1f0b5e5f49",
+            "copper": "2596d7a1d433a6d99b91a9f057421203affe84a1c0370c0c781635d0d2125752",
+            "umber": "2a74354f667950c0c6e35add5849e06f9902751f0e8146294bccbb73a3ae238e",
+            "ebony": "c1e5bbb289eb0b0818ac606416b1b051a45051246635af28e478ef5936545d7c"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            294,
+            171
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "medium": {
+        "mode": "both",
+        "cameraOffset": [
+          100,
+          10
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/greatsword-medium-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/greatsword-medium-main-ivory.png",
+            "sand": "/assets/first-person/v003/greatsword-medium-main-sand.png",
+            "copper": "/assets/first-person/v003/greatsword-medium-main-copper.png",
+            "umber": "/assets/first-person/v003/greatsword-medium-main-umber.png",
+            "ebony": "/assets/first-person/v003/greatsword-medium-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "e091aefc1115cdc4d1c6db30a4dc721e986e1ed3b9decc5b471d6967049a8233",
+            "ivory": "e9a1c3209efd65b3f90c5a39da31727fe5e9d91bde2666f8ee23dec9b5b8da13",
+            "sand": "c6aab1321a9c19478a3b25e4ffaae61336f2711cd0235ffaccba1c10d744fded",
+            "copper": "d8a2b728f30dd53b6d36631546cfa37daddc6591acb0914221fae28a822a4fa6",
+            "umber": "8045223dc546f57724d81064139b11b8aa572a1f5c04ed97fb0d726c6268f849",
+            "ebony": "83281a91636bc710cca4f421bace14920e6037c2a8448bd9d3c6757260fe8446"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            294,
+            171
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "heavy": {
+        "mode": "both",
+        "cameraOffset": [
+          100,
+          10
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/greatsword-heavy-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/greatsword-heavy-main-ivory.png",
+            "sand": "/assets/first-person/v003/greatsword-heavy-main-sand.png",
+            "copper": "/assets/first-person/v003/greatsword-heavy-main-copper.png",
+            "umber": "/assets/first-person/v003/greatsword-heavy-main-umber.png",
+            "ebony": "/assets/first-person/v003/greatsword-heavy-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "4b6ce557320c4467f06ffe2ef84606581f3820bd10c23a18dacb970f81418828",
+            "ivory": "a2cf1502ff9f7f093b9dd93444cb5751ea67ecdbd0f69937302dd6abd6206934",
+            "sand": "ec4dc4dec9a579f5bdc8d423bc3a41fff144857b4f9232ee173667eded4842bc",
+            "copper": "950b9a0723119a19da67d561d3aa012f828d989ee9ad37c96d569d8d4bfc7c3b",
+            "umber": "0032467c9044d559f285a1d8f4c858aebc65481159f48db2ec3c962e1f9e3f2b",
+            "ebony": "a0e720eae2a7aa01ef57095cfc6b3003816617bd3e95fc093449155eec8983d0"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            294,
+            171
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "axe": {
+      "light": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/axe-light-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/axe-light-main-ivory.png",
+            "sand": "/assets/first-person/v003/axe-light-main-sand.png",
+            "copper": "/assets/first-person/v003/axe-light-main-copper.png",
+            "umber": "/assets/first-person/v003/axe-light-main-umber.png",
+            "ebony": "/assets/first-person/v003/axe-light-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "67b0e2d87bb0e0da7cdefeea79bf3770526135b82a37770d4b317238446c0f6d",
+            "ivory": "6acd182bf0906c98167dc25821942594eeffe2af8d1f12dde73b1bf1b925bb3e",
+            "sand": "d34384b449e50435daf4cf819aa646545c7c1a6899e34001afbb33c3d975b8cc",
+            "copper": "289e76a99183aa42a06b1d7482dc066b1cfa34c5af077cdad3150183d0ed6a12",
+            "umber": "94570e9d6c7e0b5ef3b64f0a60f0fa12c02df0020a23c0a31b9e26777eb307a9",
+            "ebony": "a4538033df059548bb73a86e5d88cb17dd67d07cc0796f841d168f9f7fe63fd9"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            347,
+            165
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/axe-light-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/axe-light-off-ivory.png",
+            "sand": "/assets/first-person/v003/axe-light-off-sand.png",
+            "copper": "/assets/first-person/v003/axe-light-off-copper.png",
+            "umber": "/assets/first-person/v003/axe-light-off-umber.png",
+            "ebony": "/assets/first-person/v003/axe-light-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "ef1d658b364df193daff7026ab60f311182ff96160b32f8cb7786dc20d8e533e",
+            "ivory": "deaba43efe48cc6323b2bf100a505e68e895327d69cbfe163038007d74710939",
+            "sand": "746884006578c7ba12123bb26acad7e0280069f3ddd51cded09ea209d7be3783",
+            "copper": "1507ed6248189fe230547dbee24b7bca20eab4c686593d1c1f16b59e643fe4cd",
+            "umber": "91f3e1e37efad31d8e74bb6870a1e57ff34b381577318f76b555910a98e09ad1",
+            "ebony": "53e457e91e5b86d43db38f3fa160a0edf9b82ea7d5af48438cb2a9d26c8e184c"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            156
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "medium": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/axe-medium-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/axe-medium-main-ivory.png",
+            "sand": "/assets/first-person/v003/axe-medium-main-sand.png",
+            "copper": "/assets/first-person/v003/axe-medium-main-copper.png",
+            "umber": "/assets/first-person/v003/axe-medium-main-umber.png",
+            "ebony": "/assets/first-person/v003/axe-medium-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "421e17d24362d9232f7530943138f794dc9d6ed8281fde406bf1f3f3d38df6c4",
+            "ivory": "31c1e80282cf1b13b604fd4d531be748749c94725be388c512ca69e1fcecaa66",
+            "sand": "cf31f97c850788469f62e38be4b6c64d55ec80226831641ebba0eb86b53bdf09",
+            "copper": "a57a52dfc3401a887b395c699d4cc7eec641d471d0f8b2fc9d25d214a0b160e6",
+            "umber": "d4e397e28c1403bddc530ac23b9337c44494c06984dc88cb200bad22bccf99ea",
+            "ebony": "030a73a0a51c602a85058db1df95e51c59ee03ac910bc5641bc821e7422b7943"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            347,
+            165
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/axe-medium-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/axe-medium-off-ivory.png",
+            "sand": "/assets/first-person/v003/axe-medium-off-sand.png",
+            "copper": "/assets/first-person/v003/axe-medium-off-copper.png",
+            "umber": "/assets/first-person/v003/axe-medium-off-umber.png",
+            "ebony": "/assets/first-person/v003/axe-medium-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "dea16242ec12aa9deef826ea2cf7a308819f20146c2715c613c370e469edbbd2",
+            "ivory": "d88566df0873dbaae3586eac6929aa1e232bfcffeada8271d24f413b466a718b",
+            "sand": "dcbb520813477f0f8376665f4c5964126876fae819a7b732ff1f2db84e3e70db",
+            "copper": "6864bdfd40bb5f631b0ad415b0a5ca886fae80462773838d43a44c49a4b5a694",
+            "umber": "84d0125b6101a7adc16c2be2fe81139a6e090475bbaab2cf9c978ad1e9632204",
+            "ebony": "5b2267a970cf82cec0791fab808bbfd1f56017cd230ede7d67ed653331438dbf"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            154
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "heavy": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/axe-heavy-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/axe-heavy-main-ivory.png",
+            "sand": "/assets/first-person/v003/axe-heavy-main-sand.png",
+            "copper": "/assets/first-person/v003/axe-heavy-main-copper.png",
+            "umber": "/assets/first-person/v003/axe-heavy-main-umber.png",
+            "ebony": "/assets/first-person/v003/axe-heavy-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "6f4c7e67a36606f465032ba3edce055debbc51af1a51aef03938c282482b8654",
+            "ivory": "ea2fd014f90997909047d463ff29df8d72c0241a985123a0e64551c677070534",
+            "sand": "deda8e4c8a0e80de22c4f22d31e7e1bc06f984a21d23bbf3c1f0b0d8fbbfc21c",
+            "copper": "9903419987af290f76923c9dd848e778d82e281404daccafd08a1e0fd61a6e6f",
+            "umber": "6245a66c28bede75d6d40cc532bc92842f6afa2a1dcf4ee0f567274b7bd9625f",
+            "ebony": "6d456cc30ef60d5722b078e99f094fb64740e654cd4be85a84e66a9291cb7350"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            347,
+            163
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/axe-heavy-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/axe-heavy-off-ivory.png",
+            "sand": "/assets/first-person/v003/axe-heavy-off-sand.png",
+            "copper": "/assets/first-person/v003/axe-heavy-off-copper.png",
+            "umber": "/assets/first-person/v003/axe-heavy-off-umber.png",
+            "ebony": "/assets/first-person/v003/axe-heavy-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "d2ce1c4381b0bfd3738ac9381d2fd1fdab58552b75670474eada42541d69cbe9",
+            "ivory": "911b165f6c0ca5f1a2f88000d0dfaf94e15c165c919064f29c1eac6e62a76202",
+            "sand": "e5bd1b5d8dc82650b940b622fd1828ffe6c578eb1564edd2956fcb3f4a49648f",
+            "copper": "5abbf0362af3e6a45f68a2b821c39ce7a10e19c4d4b57ee3e09f522168016119",
+            "umber": "b6af3da89b0f50c7137ef61895702e4789f2d29a90393488537ff256bb42a292",
+            "ebony": "529d239e98ac0dd5cf31aa69b9f6c3bbe83980b5adbfdd32dc5a724a5fee83f9"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            153
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "flail": {
+      "light": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/flail-light-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/flail-light-main-ivory.png",
+            "sand": "/assets/first-person/v003/flail-light-main-sand.png",
+            "copper": "/assets/first-person/v003/flail-light-main-copper.png",
+            "umber": "/assets/first-person/v003/flail-light-main-umber.png",
+            "ebony": "/assets/first-person/v003/flail-light-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "bdbb7e03bcf985d321fa347ac2e834fe0349ee11152d1ba480a2a160773bb452",
+            "ivory": "a4cbc6b1a3ba1a125a2a659859633a18a677d5a4e9cbfd867de466cc3643c28b",
+            "sand": "99938f0742035fa6994198b62cc4ef1e29fffe66381dd7a6b1053aacfa79b25f",
+            "copper": "a4a8f53b81ed3eca37dd3c75684c97ef97968d0410a66650f99fe0d9271600c5",
+            "umber": "aae01e0f80b31bc1ed0c0379082c64783e345eaf9ed1813c83d598951e0f6e1e",
+            "ebony": "d7edc39328de0db4e8e1e26a49f55bc0ba22c449f2f1d004a901777cfff816fc"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            351,
+            160
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/flail-light-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/flail-light-off-ivory.png",
+            "sand": "/assets/first-person/v003/flail-light-off-sand.png",
+            "copper": "/assets/first-person/v003/flail-light-off-copper.png",
+            "umber": "/assets/first-person/v003/flail-light-off-umber.png",
+            "ebony": "/assets/first-person/v003/flail-light-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "b1cf567382bfac25a6bdab93f6f2fba64999a18442f939e0247ca8176d034f41",
+            "ivory": "d3edcb61666881f5ee2b77ffe6c1a9c8b1b5d539f15a6a4b030fbf3e79843298",
+            "sand": "7458519499ecd7d5be5bb9771c9891648085df1a92b2dc0fd2e9025c5b20885d",
+            "copper": "27762afff5b6eded6b5d169afbd8900936639467dd4fa3a29b48258531857e9e",
+            "umber": "f6d342d1c2bece9bea732c239a2e0aa2112f06efdcf0d98ff97a5cc44f61a8ae",
+            "ebony": "87ea320130e95307d9d312ce2b8ba0452622f1e547e84cfdb3ae7a161af13f10"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            169,
+            153
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "medium": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/flail-medium-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/flail-medium-main-ivory.png",
+            "sand": "/assets/first-person/v003/flail-medium-main-sand.png",
+            "copper": "/assets/first-person/v003/flail-medium-main-copper.png",
+            "umber": "/assets/first-person/v003/flail-medium-main-umber.png",
+            "ebony": "/assets/first-person/v003/flail-medium-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "7f654694b711ba1f252fe04ec6ce6150c7c9161e88dda73733da2cf5f942a3e0",
+            "ivory": "e16ffa32ee463cf0d78f47af55b4a1f10bf54c0f835611032777366dc8e31849",
+            "sand": "a6e4b5513f0303d6f15e0eaa6edc507a17ecf48a6e288fff354e8c5e8968da01",
+            "copper": "5e73db4b608a76772a08eb478f0210270eedbffb1ef683c6cab6db8312fb654e",
+            "umber": "0794df7abe7a9725b9eaca941d709d1d75399d9bd8d8688ca1690bca930b9080",
+            "ebony": "91be790a15662150a8d7377149a3e9e8e57a300c5ce9918f63689a8bbce1cff9"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            351,
+            156
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/flail-medium-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/flail-medium-off-ivory.png",
+            "sand": "/assets/first-person/v003/flail-medium-off-sand.png",
+            "copper": "/assets/first-person/v003/flail-medium-off-copper.png",
+            "umber": "/assets/first-person/v003/flail-medium-off-umber.png",
+            "ebony": "/assets/first-person/v003/flail-medium-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "007c0e4c3888d27e7a7a82da9111a75d1502dd5f666a512b50a32b7ea57e561d",
+            "ivory": "ff0c43df751217204314aead66e1c983633909b0c68f5427ee139be9c8e407fa",
+            "sand": "cec0222472ac2682d9f26206d7495d7656a7c01698b821effea6724e645e8971",
+            "copper": "1704fbdfaf5ab166a28f4a03a904851e85a3208844097b35ca4833865ae645d5",
+            "umber": "96abafb5d881a57dbe5c116b7825ac2a745bb8e392b93dd642d1f47476f8f41d",
+            "ebony": "6196b79297d34c1f3194b608165d049e0e79961e25ee1e4e378b8dc418700600"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            169,
+            150
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "heavy": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/flail-heavy-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/flail-heavy-main-ivory.png",
+            "sand": "/assets/first-person/v003/flail-heavy-main-sand.png",
+            "copper": "/assets/first-person/v003/flail-heavy-main-copper.png",
+            "umber": "/assets/first-person/v003/flail-heavy-main-umber.png",
+            "ebony": "/assets/first-person/v003/flail-heavy-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "f892ac5c0640abc05bd8fe0c2201039943f135ce59d74f9c69805370d15d904b",
+            "ivory": "4d6611fd0c99616be1e9fe2ec9829574c22cf45e390362deeea721d916196761",
+            "sand": "046d473ddf25a7ada42dccbdae37124355a90709bda068a391d24f3771b3de09",
+            "copper": "43756000b38e30463341c2cd600e73e43f39d65704b7d5f83138b05af39c3170",
+            "umber": "ffaa36641d24d4f13efa59da1fc032e6d54961d5bbb47902db76cc50a8e183fe",
+            "ebony": "51ccd0380e2291480723a5e7d0a4210bad8e46d6ba2491556d2cf7655f8cf9a2"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            351,
+            156
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/flail-heavy-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/flail-heavy-off-ivory.png",
+            "sand": "/assets/first-person/v003/flail-heavy-off-sand.png",
+            "copper": "/assets/first-person/v003/flail-heavy-off-copper.png",
+            "umber": "/assets/first-person/v003/flail-heavy-off-umber.png",
+            "ebony": "/assets/first-person/v003/flail-heavy-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "1ba72d03fbf4c753d6019929748ec4ba33a1e3e113d910245028eb4aefa5809e",
+            "ivory": "37e5907e6d5799464b0f307b182575cb6b4a5b29b3fd3e0e9b9b85785b693132",
+            "sand": "ff81338a8f65bcd4eeed2760b63b6022546c743b076c4887fcb39dbd9bae8230",
+            "copper": "4226dc33bf7e16637e8a912f090162194d187a13f767687e48c225454f72664b",
+            "umber": "46479e57ec42dcb2da88e7562c16f8fe7c6f6a4e275b61346b6d6e3aa5e30188",
+            "ebony": "fa0861d63fa1baedd663e04d9c7371bf5b0cde1852ed2db7e878825b7c23b05a"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            169,
+            149
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "mace": {
+      "light": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/mace-light-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/mace-light-main-ivory.png",
+            "sand": "/assets/first-person/v003/mace-light-main-sand.png",
+            "copper": "/assets/first-person/v003/mace-light-main-copper.png",
+            "umber": "/assets/first-person/v003/mace-light-main-umber.png",
+            "ebony": "/assets/first-person/v003/mace-light-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "1b069c83ce1991926a81aad04d6e22e700ea6599f67605adbb3691816e203885",
+            "ivory": "dd0f196df715467e5e4b4e2c810fb98279dbe7b31d955d632e67040fe0f65e21",
+            "sand": "d4ce5c10f457a46cee5edd102887fc82d18976c5c4e872b3e0d42e54f00cc4cd",
+            "copper": "75631df510a32c12005bb006e25af772cff21e21cc7e4aec85e185a79232c596",
+            "umber": "1ed9c74c851f710944a2a6d0b8aed76848d3ad2795ff5654dccd526a833465b4",
+            "ebony": "228a014d82eb219769c3b540d46bf77912ec6338c654f833f5bf51a06ce61558"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            351,
+            153
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/mace-light-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/mace-light-off-ivory.png",
+            "sand": "/assets/first-person/v003/mace-light-off-sand.png",
+            "copper": "/assets/first-person/v003/mace-light-off-copper.png",
+            "umber": "/assets/first-person/v003/mace-light-off-umber.png",
+            "ebony": "/assets/first-person/v003/mace-light-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "b014ac1107750ecf653886ba73fd9c61c3ab92c5e3faa6b462accaacd2d7ad7a",
+            "ivory": "409e4583f1139dfee4cdba67c76687db4959e5d16b993cbe95fee21e50d79463",
+            "sand": "2a2bb46b5d8e0fa354b75cdb14b36b2183cf23b9b364b285912a863e0af0584e",
+            "copper": "1175c5aee2ba2cf13faf9cea451906e32e50adae251c9fd2657cc98294845f66",
+            "umber": "a0286ac5ddbbbf0428e07d8903f6609af44733bfb504c7b16db803fddad77bbc",
+            "ebony": "93ce3a7ec1ea06b9b3781bea117529d91b5fd6dba0f0727645a934761237f2d7"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            155
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "medium": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/mace-medium-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/mace-medium-main-ivory.png",
+            "sand": "/assets/first-person/v003/mace-medium-main-sand.png",
+            "copper": "/assets/first-person/v003/mace-medium-main-copper.png",
+            "umber": "/assets/first-person/v003/mace-medium-main-umber.png",
+            "ebony": "/assets/first-person/v003/mace-medium-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "5bace7541fd3d8842c7226c843d13544dbca616395042e243dc947b0c762d1a1",
+            "ivory": "95607b0bbc8a5763f5cc8a74d33e643ee351d9c34a98aa9f87af19b9bc3902a0",
+            "sand": "e1f791fc08bb9dfdf7b7941b0283ba0af1e164fce9ba71815bb77912c09d95bb",
+            "copper": "69ad72cdc3a0e3bef4f1a4a7c5cc16be493b931902e2a7bb3881e9c73da0ea07",
+            "umber": "0e27b9a0991cb6db430c22e3be684d7a9b5277b4b26ba9d85dcc31aeadf76dfd",
+            "ebony": "c2745adef0e304d8bca6b15ed1c2c52fb9bf65ddad7378e86c5c35c881f0aee9"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            351,
+            151
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/mace-medium-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/mace-medium-off-ivory.png",
+            "sand": "/assets/first-person/v003/mace-medium-off-sand.png",
+            "copper": "/assets/first-person/v003/mace-medium-off-copper.png",
+            "umber": "/assets/first-person/v003/mace-medium-off-umber.png",
+            "ebony": "/assets/first-person/v003/mace-medium-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "16ded0fd020ec5b87f785420f4932fd4bbfd6df9bc730ed81707ece51512ceb3",
+            "ivory": "f59cefd8ef16b7f6d73fcaaba14067119f1043f4956c93ec4737f09bfe619e1c",
+            "sand": "decccbf042954f532372bed54303f41869437e4c83413e7ef3585b4b6f46669f",
+            "copper": "3e1ea24e030e078728b0486d2f455c4a2beb187c2cd0639c258128f7ebf240cc",
+            "umber": "f3653cf7f05afa69479d6f9742ec24445f35e6b4a635a69668874a30932651e6",
+            "ebony": "9521c2b16eacf3c555eef4ff8511e61e1a1717cabcfdba9bf3f622c09dafea72"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            153
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "heavy": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/mace-heavy-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/mace-heavy-main-ivory.png",
+            "sand": "/assets/first-person/v003/mace-heavy-main-sand.png",
+            "copper": "/assets/first-person/v003/mace-heavy-main-copper.png",
+            "umber": "/assets/first-person/v003/mace-heavy-main-umber.png",
+            "ebony": "/assets/first-person/v003/mace-heavy-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "9692a7e613478584b93b121803d77d988cab64eee2a1b87463dbf7a5a89e2161",
+            "ivory": "99b3e2db9875bf5e1ba5819fc94e10dd8b6ebe03cba91682f3dc88de913fe057",
+            "sand": "791173761e464c1164c383e705792f98cad11fabcb7c4bb0114e94e0f6d0661f",
+            "copper": "978fc46e61f64db01e8feb92f03b12a08f739849b07cd4c87e7ec0de3e63046f",
+            "umber": "a09766e4d98376b78ed49e96d20a8165ce055ffef900da0821fbd62365eba9d5",
+            "ebony": "bd35828a53ef4c51924c83c9fd05f4b071bfb49799db4f28455723cbc15dc64f"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            351,
+            152
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/mace-heavy-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/mace-heavy-off-ivory.png",
+            "sand": "/assets/first-person/v003/mace-heavy-off-sand.png",
+            "copper": "/assets/first-person/v003/mace-heavy-off-copper.png",
+            "umber": "/assets/first-person/v003/mace-heavy-off-umber.png",
+            "ebony": "/assets/first-person/v003/mace-heavy-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "bab80ec928306d111447f37fbad6870222324f296fcc0b3341cbaa26c225d563",
+            "ivory": "9c9346455ee09b34aa44e916281119889c8dee84ea69b4b7675e72d6e67cda48",
+            "sand": "6dfcfa4f4d82834065a67dd6d48f415e4cd3364050a378d745f60ff3f71c740e",
+            "copper": "55a3831c2102bd098e5504673243eec1129d3a79ebcda630cf12862909f319b9",
+            "umber": "3d0b312cf583af6b7b8ae8c51cbc10f3018070f90430e5317eb5f89cc6241eff",
+            "ebony": "5026a5cdca0a8427f5a7a8c133494a76bd235d3c366a942d2794dc288e3033e3"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            150
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "spear": {
+      "light": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/spear-light-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/spear-light-main-ivory.png",
+            "sand": "/assets/first-person/v003/spear-light-main-sand.png",
+            "copper": "/assets/first-person/v003/spear-light-main-copper.png",
+            "umber": "/assets/first-person/v003/spear-light-main-umber.png",
+            "ebony": "/assets/first-person/v003/spear-light-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "e410bab942fb36ec09efd04228c1f5822a958030545c40334c3991629186eab3",
+            "ivory": "2918197e088043ffa65dd6ef3ce7772cabb431da65856062143ce74df16d121b",
+            "sand": "60cac8b118063c0905630d2356919d937f3d72534aec2aa786970ed2973724fc",
+            "copper": "89a54c9e790d4079ff8cd084d1ccc0dea3d6803e1fc51f92e18d07502d46d81e",
+            "umber": "6f9c2ab7ad547a30a56dfcc9381d80cef46d8a7d07a30a0c62a631b0b4b61bdb",
+            "ebony": "582e9a840b35c0de2627ae8ca353fd2eb4bec034824543cfa145c99285e36833"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            341,
+            153
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/spear-light-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/spear-light-off-ivory.png",
+            "sand": "/assets/first-person/v003/spear-light-off-sand.png",
+            "copper": "/assets/first-person/v003/spear-light-off-copper.png",
+            "umber": "/assets/first-person/v003/spear-light-off-umber.png",
+            "ebony": "/assets/first-person/v003/spear-light-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "0fee94d638da0635f35fcbb42a64aba74395c0d7f0ef486209930f8204f88da1",
+            "ivory": "a80aeb8f9b6a2250baf405058b75c734b524f1173d03eaefdfd280cc27094a60",
+            "sand": "707aeadddeded0bbe338cb054d04268a245961dc80eb2b2b63217def1d9ea01d",
+            "copper": "f667efe970fcee3dc9f3fc1eaa47487eb5fbe9ed049f357d1b33c2dd141ec529",
+            "umber": "019047c8f7b35aa68fadf284213bff4940bdf54304d46191b71bef310e463b4c",
+            "ebony": "377aa2fdd96714d2c366a8b707f391ad8334dfb544a70ac3ab8d18637d4939a8"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            162,
+            152
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "medium": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/spear-medium-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/spear-medium-main-ivory.png",
+            "sand": "/assets/first-person/v003/spear-medium-main-sand.png",
+            "copper": "/assets/first-person/v003/spear-medium-main-copper.png",
+            "umber": "/assets/first-person/v003/spear-medium-main-umber.png",
+            "ebony": "/assets/first-person/v003/spear-medium-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "e7dcf959552676d09a2c24a37a886f1283cc507a1060f931e447452c5c1e8012",
+            "ivory": "d9ae04be71c967769dc5e638336b8880f6d295596c2912da88c716f6462a6916",
+            "sand": "3be8ede0bd929f3f595b64261b11ea7a8006f83d2fd3ed5f322990153e948ca7",
+            "copper": "cc37b5ce91d83ad41fd6a0c4d4a024d33c1038452630ca460e89a24b021cd8e2",
+            "umber": "088474bd61b0e3ca76be9c73778cd4b9ad78c20099019b85b7911ba70e70c065",
+            "ebony": "2a05ed859a70467e1f0fe2a5251de312066f1f3e3e82fcd5bf59ee4996125b32"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            341,
+            151
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/spear-medium-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/spear-medium-off-ivory.png",
+            "sand": "/assets/first-person/v003/spear-medium-off-sand.png",
+            "copper": "/assets/first-person/v003/spear-medium-off-copper.png",
+            "umber": "/assets/first-person/v003/spear-medium-off-umber.png",
+            "ebony": "/assets/first-person/v003/spear-medium-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "c6d3bbd33cfb817f0905296764d796957e640d360c1d48df1d04b71a0864be0a",
+            "ivory": "11f6c7e9c27c1509c79a92d869908f0b809221c3e1f9a8de5248febb4cdd922e",
+            "sand": "9ea81cb8fe698c6653ad255baa6a0c94612f92562a38736d7f8622dc5a90ef5f",
+            "copper": "e382a09fa5ae0b9901dee9add2e6a3f0f11173bff30fc1bb906c2d2ab7ad6318",
+            "umber": "ef6119259ca5d3b6af8aea98dac1f0ab58d3c481b9aa02620aea67109c3f5bc1",
+            "ebony": "25d638aa9fb11fd3b436413447be5a69695324d97d9fd5c34c30845d9b654e00"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            162,
+            150
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "heavy": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/spear-heavy-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/spear-heavy-main-ivory.png",
+            "sand": "/assets/first-person/v003/spear-heavy-main-sand.png",
+            "copper": "/assets/first-person/v003/spear-heavy-main-copper.png",
+            "umber": "/assets/first-person/v003/spear-heavy-main-umber.png",
+            "ebony": "/assets/first-person/v003/spear-heavy-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "86bf64385dd1382f7f946d2459869b6b79bc59c207acafebce37645d99be3899",
+            "ivory": "98e266fd9625769cd194f948192aa011b2442b53fe834382a63f99d8c3cc65a3",
+            "sand": "165e551730d88bb587296ac668dd3a33c2c65cbeaa17aca9b575e501ba998628",
+            "copper": "9c5ffdbfd2cedcaf2837941a2abcd1b3709da95456099c83aaedb39cd3d349c0",
+            "umber": "77cd2bdb03f4c8805408e0b077457b61d6032e201c03071f87be90015191fc47",
+            "ebony": "75fab6ece573c691ac89cdf05d7ffc8443947e98a31e8f3b8ac6fefcf9e240d8"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            339,
+            145
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/spear-heavy-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/spear-heavy-off-ivory.png",
+            "sand": "/assets/first-person/v003/spear-heavy-off-sand.png",
+            "copper": "/assets/first-person/v003/spear-heavy-off-copper.png",
+            "umber": "/assets/first-person/v003/spear-heavy-off-umber.png",
+            "ebony": "/assets/first-person/v003/spear-heavy-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "3045f7dad10a8edbc8883ab07088069d4643da93b72262e38318cf7025f08bd9",
+            "ivory": "8e14c20865a9dd6a3194d1592731dc2f70e30f9d2eb1badb2762dca0c5315a1f",
+            "sand": "069168070bb659025eb923558cde71112eceebc70116daefef47e94a6c4f8d81",
+            "copper": "ee5e702b773f8f7aef9e31d26b59e711be1e65ae85e55e9e547b864cab8affdc",
+            "umber": "2aeb22a175b329345878ca8d40a597264549c0001cbc8888401d1f9e572dfd30",
+            "ebony": "cd60edca7124f076d243207a7c0c3840d0118cd2678e3258377aabc23ff417be"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            163,
+            140
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "halberd": {
+      "light": {
+        "mode": "both",
+        "cameraOffset": [
+          80,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/halberd-light-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/halberd-light-main-ivory.png",
+            "sand": "/assets/first-person/v003/halberd-light-main-sand.png",
+            "copper": "/assets/first-person/v003/halberd-light-main-copper.png",
+            "umber": "/assets/first-person/v003/halberd-light-main-umber.png",
+            "ebony": "/assets/first-person/v003/halberd-light-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "b3196fdd9ead06bf1e8a9984866f7d6e8085a88ec7644945dcab547097bd64d0",
+            "ivory": "a9d688ba9f8c06b14f6fe16a4536934240e976cf9ce1b106ca6e2b8f458a0daa",
+            "sand": "cd6200e127fcd69278b24cc5b752be1389e18c672e671976985710a3f23c52a6",
+            "copper": "426a68583da29bdc2158476c6c87ba041867b767964624c67bc344f229f3bc14",
+            "umber": "4988b94cf068186bce67f14f2b83acce5e6950ef3091caabbe960c771d29f1f9",
+            "ebony": "dd355ed048c1bd821c7afefe8af446954bf50e06661c80aaecfc7617de176c2a"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            312,
+            177
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "medium": {
+        "mode": "both",
+        "cameraOffset": [
+          80,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/halberd-medium-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/halberd-medium-main-ivory.png",
+            "sand": "/assets/first-person/v003/halberd-medium-main-sand.png",
+            "copper": "/assets/first-person/v003/halberd-medium-main-copper.png",
+            "umber": "/assets/first-person/v003/halberd-medium-main-umber.png",
+            "ebony": "/assets/first-person/v003/halberd-medium-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "ebbc7cef123fc859d751daf17c6071c32373f31c39ddbb6db4b1fba3896922d5",
+            "ivory": "29fb03edc50ebc2025c97878460abd09891b3696f9dc9feffe8f30b00e11b288",
+            "sand": "581ad227bf503d500723faa01e48731c1343e94c01e43d355cc71b1e0da3b5b9",
+            "copper": "954bfdf606b412718df8c9c16a4a2a34568d4644c1891bbeb703a1ff9586b2d2",
+            "umber": "d1f44da6cb188e836a2189c07e71e3868abcb7a32f84aeb2a166d269d6d53c2c",
+            "ebony": "a3264f3a168f3060540e3625d445dc334295b72ebaff680becc3d5ec50b2120c"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            312,
+            177
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "heavy": {
+        "mode": "both",
+        "cameraOffset": [
+          80,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/halberd-heavy-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/halberd-heavy-main-ivory.png",
+            "sand": "/assets/first-person/v003/halberd-heavy-main-sand.png",
+            "copper": "/assets/first-person/v003/halberd-heavy-main-copper.png",
+            "umber": "/assets/first-person/v003/halberd-heavy-main-umber.png",
+            "ebony": "/assets/first-person/v003/halberd-heavy-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "512373aedaae044baece730b88bd5fc178f89f09fecf735de255a2a721357f3c",
+            "ivory": "d3093df19b986dd5794e2d164d1ff96a6e75c1054e4628e4eb2d08aff68c05f7",
+            "sand": "8ceff00bb71513add156a5b470ca70c3c0aa5629c1326a65c667d7f1e641470c",
+            "copper": "5a8a8afc24c64da1c081b7f2f9594226ad0a00e9cc82a06370a8fc79e37c8762",
+            "umber": "53115e11e835b0e9f5c35c2aa1d4ac45a0baa54a8812d75ebff042650b933bff",
+            "ebony": "813400e7d7f84260157c32f6e62e160dfc2074db3465ff86b6f519bc36c6c89b"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            312,
+            177
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "trident": {
+      "light": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/trident-light-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/trident-light-main-ivory.png",
+            "sand": "/assets/first-person/v003/trident-light-main-sand.png",
+            "copper": "/assets/first-person/v003/trident-light-main-copper.png",
+            "umber": "/assets/first-person/v003/trident-light-main-umber.png",
+            "ebony": "/assets/first-person/v003/trident-light-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "c82642210542e5464b4c5acf4ffb979faaa60fc5eded522a0d1ad56a9ea6a44e",
+            "ivory": "640beb6ade3325b2e69e6f1f91a36d52612ff24a56ed010074cfdbb9dd6ef0ae",
+            "sand": "ddd37cbaa4b30b9cd434f2f6dd9ad433783b0aeef3da1167830d6a26b7b88144",
+            "copper": "25483117389437bc2324f31791237c9e608c3e24d42956dbca7e2c33f057a33f",
+            "umber": "18ab1404f94446de3dd91fa1fab4befc7ce8b2c242a95704b1876265c6c13f10",
+            "ebony": "803139ee3ee5878328c058da568d873491f7023d78dcf2f6ad25f4a510d6e0db"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            342,
+            143
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/trident-light-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/trident-light-off-ivory.png",
+            "sand": "/assets/first-person/v003/trident-light-off-sand.png",
+            "copper": "/assets/first-person/v003/trident-light-off-copper.png",
+            "umber": "/assets/first-person/v003/trident-light-off-umber.png",
+            "ebony": "/assets/first-person/v003/trident-light-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "8a85d786a3006b11759f853bb7a6398e9386e7d8a5fe6976915792e9a42399f0",
+            "ivory": "af1e0f35ea0d39badb67c21f01becfa17e6838c4bbbccb5e9b47401c528e47e8",
+            "sand": "c1dd4337455854464896c2fba183a43bc2e90cc59b934579ec6235186b75c5c7",
+            "copper": "76e5954f6b457d9652b3445499ff7fcd920f5099d671d5f4265396a055881cad",
+            "umber": "45257aafca6a2abbc3b3428f2932a35126ed4f2ec3a7504ee836430488cfabae",
+            "ebony": "c4958121dcd27fb0d120999fd354c5b69baf64f5928dd10967aa334a5c0aac3c"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            152,
+            125
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "medium": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/trident-medium-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/trident-medium-main-ivory.png",
+            "sand": "/assets/first-person/v003/trident-medium-main-sand.png",
+            "copper": "/assets/first-person/v003/trident-medium-main-copper.png",
+            "umber": "/assets/first-person/v003/trident-medium-main-umber.png",
+            "ebony": "/assets/first-person/v003/trident-medium-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "74427af8908e0d275bc55a8803414356147b3c8da528ffe4f50d031fd1612594",
+            "ivory": "fb75377b3b076da35aaf26182e4fbef0c9e53c8e24cf546f69069f7300c2a76e",
+            "sand": "088c1bda66cf0c5b849f5694ad4170d96fb0fcbd26e25cce78f24ae1fb625954",
+            "copper": "190ede5938ce3c3d809cf72bcff0ab085ff09ce8b0b18727f61f3fd7d844a19f",
+            "umber": "d14580b1f99de5c0a2bde5a233e95ef37b8bceb3f830e546e8d8e4eba1574600",
+            "ebony": "2b2509b3ec16b2fea32a84fc909e895581c87d0098ff57b35bc5bfa642ed98f3"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            341,
+            142
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/trident-medium-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/trident-medium-off-ivory.png",
+            "sand": "/assets/first-person/v003/trident-medium-off-sand.png",
+            "copper": "/assets/first-person/v003/trident-medium-off-copper.png",
+            "umber": "/assets/first-person/v003/trident-medium-off-umber.png",
+            "ebony": "/assets/first-person/v003/trident-medium-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "c5f54955e3b948c00776bbe979618db65b1b782d1151dbf09780d9de0662c52e",
+            "ivory": "239d15a975b511a3e5b3d99ecad9bd7be8550092ac5415c0a985f7b044a9bd17",
+            "sand": "a90f687f71e94686a5a0b3d51062ee513438d8b5c588da400a21c7f4fe01642f",
+            "copper": "5e5838fdb53e98a1bcf63351bcf02f2762fe44d9aad08706b9e2857581836923",
+            "umber": "e426ef8a1440520a6f1b4a2c0e2c21a87d0d2921bd8f7e9dba29666761e6dc2c",
+            "ebony": "9eaff475fba704591ef4f4f5c5ce3fa411b559f4cf4e3dfe86b4a4f3d343b84a"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            153,
+            124
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "heavy": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/trident-heavy-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/trident-heavy-main-ivory.png",
+            "sand": "/assets/first-person/v003/trident-heavy-main-sand.png",
+            "copper": "/assets/first-person/v003/trident-heavy-main-copper.png",
+            "umber": "/assets/first-person/v003/trident-heavy-main-umber.png",
+            "ebony": "/assets/first-person/v003/trident-heavy-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "6edc906b50327fd9857d62226356242afeb91282926f24bc5984dfecae5db339",
+            "ivory": "63484fe1e0bafed0bfd26561dc4badd63404a7698e538a70caab06333a8170f1",
+            "sand": "63914a97d9467a97b61bee7fb52fb99768e7decebde6bf169421f2654e0e7fae",
+            "copper": "ad34243189a74d5c01f66f21aeccca0642c82ba50ef8797a074c634425dd2348",
+            "umber": "50042a188e2c25258478b8e962646da3bfa08449d571e6e469585672308d0cae",
+            "ebony": "510df54dd82197cfda8b6d73fe212970092ae094a6862566be05ac0035f6c06b"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            336,
+            136
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/trident-heavy-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/trident-heavy-off-ivory.png",
+            "sand": "/assets/first-person/v003/trident-heavy-off-sand.png",
+            "copper": "/assets/first-person/v003/trident-heavy-off-copper.png",
+            "umber": "/assets/first-person/v003/trident-heavy-off-umber.png",
+            "ebony": "/assets/first-person/v003/trident-heavy-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "6b041507f2ca34dbe49c38c376094c4fcab9776f93d21512733763ea8bf87d92",
+            "ivory": "8b94873f68e5861e0be30acbb385b5a1bc13f2fc02df0954b618e4996647f427",
+            "sand": "2668e0d0fa2e6ef5205bca26ed9ed645b032786daffbebe3dcecfb4c17287c34",
+            "copper": "0cf19cb76cc79847347a283b6dd2aef87dc74e2078f954f02f221e01ce9bc8dd",
+            "umber": "6985bdc3a36fb503172775484198c0bb721c0a26c88a6e7949ad28086c0b3aff",
+            "ebony": "1bae9e3c3e5e57f1604a9de06af4ce1a2bc01db33ee755a648e6879ae08905e1"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            158,
+            120
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      }
+    },
+    "dagger": {
+      "light": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/dagger-light-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/dagger-light-main-ivory.png",
+            "sand": "/assets/first-person/v003/dagger-light-main-sand.png",
+            "copper": "/assets/first-person/v003/dagger-light-main-copper.png",
+            "umber": "/assets/first-person/v003/dagger-light-main-umber.png",
+            "ebony": "/assets/first-person/v003/dagger-light-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "ebe27af1881218dae2f33136b09c1d6d74c903cbfb3267bad4d2d998ea9304e9",
+            "ivory": "b7d51bd3fbd4a5993bb30b4a2268274096c78e15d519ea4be5130bc72207b829",
+            "sand": "b658c2f7db44d89365ac594bad9a674d83ed3bc2ac19c9c929a5732f9813a377",
+            "copper": "a458a4b2f91120a47533a00164781c31626c2144483fbbaff84eee889b6053b5",
+            "umber": "0dfa46d8f42f0484566e1436830c2074b99830a3281578e730ef3bcc0b362f46",
+            "ebony": "9a82696bdc90f7308a4ff055ee2a77b2f68343e920b3ba7fe1b6beb3fd5c4f93"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            343,
+            154
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/dagger-light-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/dagger-light-off-ivory.png",
+            "sand": "/assets/first-person/v003/dagger-light-off-sand.png",
+            "copper": "/assets/first-person/v003/dagger-light-off-copper.png",
+            "umber": "/assets/first-person/v003/dagger-light-off-umber.png",
+            "ebony": "/assets/first-person/v003/dagger-light-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "7000eff0d475a7c63c6e26c1c6a90ac7f742724f6d3fe7ae3d4ceb24540672c1",
+            "ivory": "51c5bd45ab38eb3c5e3c9bc85c7ee8de9e1b5e98a4a3521ed5839b01dfba1f81",
+            "sand": "9eeb0584a8dbb723b88fd0d7ccf071f1a1c5342c9b24b0ca4d08c0029f27eba2",
+            "copper": "55a747ee3a9b81f9fd4487c9a96663d425a75cd0341d3ab9cb95451948d82fe3",
+            "umber": "59d2293dd7b3baa1f66902b61aaf8ee4b3ca1d2ecba67a44d0fd61c207b5d6bb",
+            "ebony": "2ff97ad8d42b9b1de7b78139323e58839bfab06e02d01d81e61d830587b78a0d"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            151
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "medium": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/dagger-medium-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/dagger-medium-main-ivory.png",
+            "sand": "/assets/first-person/v003/dagger-medium-main-sand.png",
+            "copper": "/assets/first-person/v003/dagger-medium-main-copper.png",
+            "umber": "/assets/first-person/v003/dagger-medium-main-umber.png",
+            "ebony": "/assets/first-person/v003/dagger-medium-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "243b31975d5be1e6b6617f0d5e4731c36d7122a5509bfbb90561cb61edbc52c3",
+            "ivory": "2ab1a92645fa6aa956b4bd30523a0ab899ebfe244d45962984e5e2de8665d791",
+            "sand": "b792c5c4c28e28eaf43517600c27aaf892d97aed4d3cbd8e9067231f96f7e71b",
+            "copper": "5ac642dea980027da7b9dcd733803300f09bc9b8f17f265415b4cf631f01d4fd",
+            "umber": "224418ded590d30d80eb5fae495d77d2e077ea4a85d1d8a6560c466f7f30cb5c",
+            "ebony": "823678677b1cdbc522aca36a3fa311b96d5e3845a7259d0c71986a5578d6e5c2"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            343,
+            146
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/dagger-medium-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/dagger-medium-off-ivory.png",
+            "sand": "/assets/first-person/v003/dagger-medium-off-sand.png",
+            "copper": "/assets/first-person/v003/dagger-medium-off-copper.png",
+            "umber": "/assets/first-person/v003/dagger-medium-off-umber.png",
+            "ebony": "/assets/first-person/v003/dagger-medium-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "2733c0c86cbcf7012a4e48f791e72d3e5a9dcb65924e07cc9bffc372e123c868",
+            "ivory": "5e751d827e0986a9d4e65f0268efa6502a457a6d10a2e1754a4ae0835895763f",
+            "sand": "d808e23c48adf5486b316a47c5ed0d9885c7a1daa377d6a50ee81de3fa83dea1",
+            "copper": "8807681e78d04ced3f9ce7e66ebb8bf245573a6985c8b9c3743bc86796272b5f",
+            "umber": "53486ac8b19b2742e286923be0c221bf04163df6cfb4de832e2152e7b6dfd46e",
+            "ebony": "93696eccb8d730e10fdc76f37fd0bdb799fd2cef05f4b59deeb39453ebf3c321"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            146
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      },
+      "heavy": {
+        "mode": "paired",
+        "cameraOffset": [
+          0,
+          0
+        ],
+        "main": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/dagger-heavy-main-porcelain.png",
+            "ivory": "/assets/first-person/v003/dagger-heavy-main-ivory.png",
+            "sand": "/assets/first-person/v003/dagger-heavy-main-sand.png",
+            "copper": "/assets/first-person/v003/dagger-heavy-main-copper.png",
+            "umber": "/assets/first-person/v003/dagger-heavy-main-umber.png",
+            "ebony": "/assets/first-person/v003/dagger-heavy-main-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "0b40c5d62988c90a18ae0bfafe0975b991426d10840caba5c30810d2d8d27c47",
+            "ivory": "77781427b781219f18567ed8d8feabbb34faa62b10c1f34ab4f2dea6a6637397",
+            "sand": "3d04839c4d8cf7547784c81047a5184a8f3d92aa3ac57756ad0498a0cd8301b5",
+            "copper": "ed9b5dad1659366c314fef05e001384b3afd156b20338b83261cac0588cdb8b6",
+            "umber": "3d7bfb91f9a6bd6ed8fa8a139a64bd824b4f2176a86d173317fc1fcd834fc85c",
+            "ebony": "e6902a93f623b497fa6826dbb112c2ec1b0aea8a9f749bf0fba37835dd8210db"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            343,
+            140
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        },
+        "off": {
+          "variants": {
+            "porcelain": "/assets/first-person/v003/dagger-heavy-off-porcelain.png",
+            "ivory": "/assets/first-person/v003/dagger-heavy-off-ivory.png",
+            "sand": "/assets/first-person/v003/dagger-heavy-off-sand.png",
+            "copper": "/assets/first-person/v003/dagger-heavy-off-copper.png",
+            "umber": "/assets/first-person/v003/dagger-heavy-off-umber.png",
+            "ebony": "/assets/first-person/v003/dagger-heavy-off-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "db8384d8d09b5d72f05a494b0cf68cec5ce425d788e3a63e8fda2614af63d452",
+            "ivory": "9013cc8625a1e30a37ea9ab75d1eee37a4f671d94e3ad8e5eb18c3ae719751d3",
+            "sand": "7a1fef8c858789143fc84875836b0d1b676d5d3c9827fe5e67c6adf26e687e77",
+            "copper": "19189429e0d050d280b0e130a32e453f81775efd752d13ffde1794818d611607",
+            "umber": "48d4e95c88e2f3a8b61858cb13c4cce32e314da71214205123ee3cba107aefc9",
+            "ebony": "ebb483dd9b7b587f01fbc38648add3e49287ae61b692f97d71b805afe454fd02"
+          },
+          "width": 460,
+          "height": 220,
+          "pivot": [
+            155,
+            140
+          ],
+          "frameOrigin": [
+            0,
+            0
+          ]
+        }
+      }
+    }
+  },
+  "sourceReceipt": "ArtReview/First_Person_Whole_v001/PREPARATION_RECEIPT.json"
+}

@@ -9,7 +9,7 @@ const character = name => ({ name, stats: { strength: 4, dexterity: 4, speed: 4,
 const initial = () => createDuel([
   { character: character('Cassian'), weapon: 'dagger', armor: 'medium' },
   { character: character('Mira'), weapon: 'sword', armor: 'medium' },
-]);
+], { version: 3 });
 
 test('Riposte preview promises a conditional counter and names all three counters', () => {
   const option = getActionOptions(initial(), 0).find(move => move.id === 'technique');

@@ -53,7 +53,7 @@ async function fixture(t, options = {}) {
       while (view.phase === 'battle') {
         if (view.actionOpensAt > now) await this.tick(view.actionOpensAt - now);
         const round = view.duel.round;
-        const actions = view.duel.fighters.map((_, index) => getActionOptions(view.duel, index).find(option => option.id === 'strike' && option.enabled) ? 'strike' : 'recover');
+        const actions = view.duel.fighters.map((_, index) => getActionOptions(view.duel, index).find(option => option.id === 'strike' && option.enabled) ? 'strike' : 'focus');
         await request('POST', `/api/rooms/${view.code}/action`, pair.one.token, command(view, `round-${round}-0`, { round, action: actions[0] }));
         view = await request('POST', `/api/rooms/${view.code}/action`, pair.two.token, command(view, `round-${round}-1`, { round, action: actions[1] }));
       }

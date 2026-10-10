@@ -191,7 +191,7 @@ export class TournamentStore {
     if (match.phase !== 'battle' || !match.players.some(player => player.bot === true) || match.botRound === match.duel.round) return;
     match.botRound = match.duel.round;
     match.botActionAt = match.players.map((player, index) => player.bot === true && !match.actions[index]
-      ? Math.max(now, match.actionOpensAt) + Math.min(BOT_ACTION_DELAY_MS, this.service.rules.actionMs) : null);
+      ? (match.duel.version >= 5 ? match.actionOpensAt : Math.max(now, match.actionOpensAt)) + Math.min(BOT_ACTION_DELAY_MS, this.service.rules.actionMs) : null);
   }
   commitBotActions(tournament, now) {
     const match = tournament.match;
@@ -201,7 +201,7 @@ export class TournamentStore {
     for (let index = 0; index < 2; index += 1) {
       if (match.players[index].bot !== true || match.actions[index] || match.botActionAt[index] === null || now < match.botActionAt[index]) continue;
       // The CPU receives the resolved public duel only, never either pending choice.
-      match.actions[index] = combat.chooseCpuAction(match.duel, index, match.players[index].botStyle);
+      this.service.recordAction(match, index, combat.chooseCpuAction(match.duel, index, match.players[index].botStyle), match.duel.version >= 5 ? match.botActionAt[index] : now);
       match.botActionAt[index] = null;
       changed = true;
     }
@@ -293,7 +293,7 @@ export class TournamentStore {
         match.phase = 'battle'; match.actionOpensAt = now; match.presentationEndsAt = now;
         match.deadline = match.actionOpensAt + this.service.rules.actionMs;
       } else if (match.phase === 'battle') {
-        match.actions = match.actions.map(value => value ?? 'recover'); this.service.resolveActions(match, now);
+        this.service.defaultMissingActions(match); this.service.resolveActions(match, now);
       } else if (match.phase === 'mercy') this.service.decide(match, 'spare');
       this.syncMatch(tournament, now); this.touch(tournament);
     }
@@ -424,8 +424,11 @@ export class TournamentStore {
         if (current.actions[localIndex]) fail(409, 'Your choice is already locked.', 'choice_locked');
         const choice = combat.getActionOptions(current.duel, localIndex).find(option => option.id === body.action);
         if (!choice) fail(400, 'Choose a valid action.');
-        if (!choice.enabled) fail(409, 'You cannot afford that action. Choose Recover.', 'unaffordable');
-        current.actions[localIndex] = body.action;
+        if (!choice.enabled) {
+          const fallback = combat.getActionOptions(current.duel, localIndex).find(option => option.id === combat.getDefaultAction(current.duel));
+          fail(409, `You cannot afford that action. Choose ${fallback.name}.`, 'unaffordable');
+        }
+        this.service.recordAction(current, localIndex, body.action, now);
         if (current.actions.every(Boolean)) this.service.resolveActions(current, now);
       } else if (kind === 'mercy') {
         if (!['spare', 'execute', 'crowd'].includes(body.decision)) fail(400, 'Choose spare, execute or the crowd.');

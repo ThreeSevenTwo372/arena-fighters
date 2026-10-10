@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createDuel, resolveRound } from '../src/combat.js';
+import { createDuel, resolveRound, getActionOptions, WEAPONS } from '../src/combat.js';
 import { buildAnimationSteps, playBattleAnimation } from '../src/battle-animation.js';
 import { playExecutionAnimation } from '../src/execution-animation.js';
 
@@ -132,6 +132,34 @@ async function playbackClock(run) {
   }
 }
 const step = (type, extra = {}) => ({ type, actor: 0, weapon: 'dagger', text: type, ...extra });
+
+test('every legal new-rule action pair fits the four-second presentation interval, including lethal Riposte', async () => {
+  await playbackClock(async clock => {
+    const character = name => ({ name, trait: 'balanced', stats: { strength: 4, dexterity: 4, speed: 4, defense: 4, intelligence: 4 } });
+    let cases = 0, maximum = 0;
+    for (const left of Object.keys(WEAPONS)) for (const right of Object.keys(WEAPONS)) {
+      const original = createDuel([{ character: character('A'), weapon: left, armor: 'medium' }, { character: character('B'), weapon: right, armor: 'medium' }]);
+      for (const optionA of getActionOptions(original, 0).filter(option => option.enabled)) for (const optionB of getActionOptions(original, 1).filter(option => option.enabled)) {
+        for (const lethal of [false, true]) {
+          const before = structuredClone(original);
+          if (lethal) before.fighters[0].hp = before.fighters[1].hp = 1;
+          const after = resolveRound(before, [optionA.id, optionB.id]);
+          const preserved = structuredClone(after), arena = arenaFixture({ defeated: false }); globalThis.document = arena.doc;
+          const started = clock.elapsed, cues = [];
+          const playback = playBattleAnimation(arena.container, buildAnimationSteps(before, after), { reducedMotion: false, onCue: cue => cues.push(cue.type) });
+          await clock.finish(); assert.equal(await playback, true);
+          const duration = clock.elapsed - started; maximum = Math.max(maximum, duration); cases++;
+          assert.ok(duration <= 4000, `${left}/${optionA.id} vs ${right}/${optionB.id}: ${duration}ms exceeds presentation`);
+          assert.deepEqual(after, preserved);
+          assert.equal(arena.container.querySelectorAll('.fighter-combat-effect').length, 0);
+          assert.ok(!cues.includes('recover'), 'Passive stamina gains do not replay legacy Recover sounds.');
+        }
+      }
+    }
+    assert.equal(cases, 2592);
+    assert.ok(maximum > 3000, 'Exercise the longer counter/defeat paths, not just brief Focus rounds.');
+  });
+});
 
 test('resolved playback cues occur at swing/contact and distinguish Guard, bypass and Riposte', async () => {
   await playbackClock(async clock => {

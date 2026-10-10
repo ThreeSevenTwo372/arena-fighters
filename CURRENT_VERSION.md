@@ -1,14 +1,69 @@
 # Current Arena Fighters version
 
-## Intro Caption Removal — v0.10.1, October 9, 2026
+## Axe Facing Correction v001 — v0.14.1, October 10, 2026
+
+Current local source is **v0.14.1**. The first-person axe's cutting edge now faces inward toward the rival, with its blunt poll facing outward. The additive v004 axe overlay retains the complete arm, grip, shaft and original shield across all three armor versions and six skin tones. Other held poses retain their exact v003 paths; explicit v003 remains available as the prior axe comparison.
+
+The independent local snapshot is `releases/Arena_Fighters_v0.14.1_v001`; evidence is separate in `artifacts/First_Person_Axe_Direction_v001/VERIFICATION.json`. Original and generated sources, prompts and bounded preparation receipts are preserved in `ArtReview/First_Person_Axe_Direction_v001`. V0.14.0 and all earlier releases remain preserved. This correction has not been published and changes no combat rules, saved identity or verdict authority.
+
+## Historical v0.14.0
+
+## Complete First-person Holds v001 — v0.14.0, October 10, 2026
+
+Current local source is **v0.14.0**. Every first-person weapon pose is drawn with its arms, hands, sleeves and held equipment together in one original source. The v003 catalog preserves those complete grips, six skin palettes and three authored armor versions for all nine weapons. One-handed moves animate the complete arm and held object; greatsword and halberd animate one image containing both arms and the continuous weapon. Palette changes preserve the finished pose, and source foreshortening supplies depth. Rival and spectator identities remain exact; typed names still survive mode switches.
+
+New duels retain the v5 rules below. Raw sources, prompts, explicit skin masks and preparation receipts are in `ArtReview/First_Person_Whole_v001`. The independent local snapshot is `releases/Arena_Fighters_v0.14.0_v001`; verification is separate in `artifacts/First_Person_Whole_v001/VERIFICATION.json`. V0.13.0, its modular v002 artwork and earlier releases remain preserved. This revision has not been published. Internal source and browser checks do not establish user art acceptance.
+
+## Historical v0.13.0
+
+## HD First-person Art v001 — v0.13.0, October 10, 2026
+
+Current local source is **v0.13.0**. Playable battles use the versioned `assets/first-person/v002` pixel parts: six skin palettes, three armor cuffs, all nine foreshortened weapons, an angled shield and a hanging net. A broad near grip, receding weapon silhouette and smaller far hand establish depth. Fingers draw over their registered handle; two-handed hands and weapon move together. The exact rival identity and spectator renderer remain intact. Typed names survive switching play modes, including the optional second-player name.
+
+New duels retain the v5 four-attribute and server-owned choice-time rules documented in [FIRST_PERSON_COMBAT.md](FIRST_PERSON_COMBAT.md). Active v3/v4 duels, private choices, saved identities, menu-only music and mercy/crowd authority remain unchanged.
+
+The independent local snapshot is `releases/Arena_Fighters_v0.13.0_v001`; v0.12.0 and earlier releases remain preserved. Separate source, raster, browser, preservation and portable checks are recorded in `artifacts/First_Person_HD_v001/VERIFICATION.json`. Raw artwork and source preparation are preserved in `ArtReview/First_Person_HD_v001`. This revision has not been published. Automated and browser checks do not imply human art acceptance or physical-phone/public-network proof.
+
+## Historical v0.12.0
+
+## First-person Combat v001 — v0.12.0, October 10, 2026
+
+Current local source is **v0.12.0**. Playable battles and the three optional lessons now use visible first-person hands and equipment, short public-event animations and the exact existing rival avatar. Spectators retain the two-avatar stands view. New duels use **v5**: four attributes, with faster accepted choices determining initiative at equal move priority. Guard/Riposte priority remains. Active v3/v4 duels finish unchanged; saved five-stat identities remain preserved.
+
+October 10 local follow-up: typed names now survive switching Online duel, Practice and Pass & play, including an entered second-player name. Focused verification is in `artifacts/Name_Mode_Preservation_v001/VERIFICATION.json`. The sealed v0.12.0 snapshot below preserves the original first-person milestone before this source follow-up.
+
+The independent local snapshot is `releases/Arena_Fighters_v0.12.0_v001`, with v0.11.0 preserved as rollback. Verification is separate in `artifacts/First_Person_v001/VERIFICATION.json`. This revision has not been published. See [FIRST_PERSON_COMBAT.md](FIRST_PERSON_COMBAT.md) for the exact timing, saved-stat and presentation contracts.
+
+## Historical v0.11.0 and earlier
+
+The notes below describe their original versions. The v5 contract above governs new duels.
+
+## Stamina and Focus v001 — v0.11.0, October 9, 2026
+
+Current local source is **v0.11.0, Stamina and Focus v001**. New duels use **combat rules v4**. The published game remains **v0.10.1**; this local revision has not been published. The independent snapshot location is `releases/Arena_Fighters_v0.11.0_v001`, with v0.10.1 preserved as rollback. Source, browser, package and deployment evidence are recorded separately in `artifacts/Stamina_Focus_v001/VERIFICATION.json`.
+
+After both moves resolve, each living fighter automatically restores `max(1, 2 + floor(Dexterity / 8) + trait adjustment)` stamina, capped at their maximum, before the round-limit tiebreak. Base recovery is 2 at Dexterity 0–7 and 3 at Dexterity 8; Vigorous adds 1 and Ironhide subtracts 1. Speed improves initiative and discounts attack costs by `floor(Speed / 4)`, with minimum Strike cost 2 and Technique cost 3.
+
+The fourth command is **Focus**: zero stamina, priority −2, and +3 raw attack power before defenses on the next round's Strike or Weapon Technique, including a triggered Riposte counter. It leaves the fighter open, never stacks, expires after that next round if unused, and clears Entangle when executed. A missed choice defaults to Focus in v4.
+
+Active **v3** matches retain Recover, their old stamina behavior and already acknowledged choices through completion. Their rules are not converted mid-match; newly created duels use v4. The three optional coached lessons now teach Guard against Strike, sword Feint against Guard, and Focus against Riposte, with actual passive restoration and the queued bonus shown.
+
+Menu-only music, intro-caption removal, saved identities, exact artwork, private choices, records and verdict authority carry forward. Free temporary hosting remains selected; existing durable localhost/private saves remain protected.
+
+## Historical release notes — v0.10.1 and earlier
+
+The notes below describe their recorded versions. Earlier Recover behavior and release/publication claims do not override the current local v4 contract above.
+
+
+### Intro Caption Removal — v0.10.1, October 9, 2026
 
 Current local source is **v0.10.1, Intro Caption Removal**. The opening caption beneath the arrival film has been removed. This release carries forward all v0.10.0 additions, menu-only music and the preserved film, playback controls, character artwork and combat rules.
 
 The independent snapshot is `releases/Arena_Fighters_v0.10.1_v001`; `releases/Arena_Fighters_v0.10.0_v001` remains the preserved rollback. Source, portable-package and publication evidence are recorded separately in `artifacts/Live_Release_v0101_v001/VERIFICATION.json`. Packaging alone does not establish publication. Free temporary hosting remains the selected scope, and existing private saves remain protected.
 
-## Preserved v0.10.0 release notes
+### Preserved v0.10.0 release notes
 
-## Release Readiness v001 — v0.10.0, October 9, 2026
+### Release Readiness v001 — v0.10.0, October 9, 2026
 
 The menu now offers **Learn to fight**, three optional coached rounds using the shared combat rules and exact current male/female avatars, and **Quick Duel**, the existing private two-player flow with a shareable invitation link. Lessons are disposable, untimed, repeatable and guest-free; they preserve an owned surviving fighter and keep the condensed creator unchanged. Invitation URLs carry a public code and mode only, prefill the matching join field and never auto-join, replace an active match, or carry authentication.
 
@@ -24,7 +79,7 @@ Only **Where the Stars Remember** remains active as music. Active manifest publi
 
 Free temporary hosting and session-scoped records remain the selected scope. Durable online progression, coins and unlocks remain separate milestones. This is a **local implementation and independent release**, not a publication claim. Current automated, browser, preservation, package and deployment evidence is recorded separately in artifacts/Release_Readiness_v001/VERIFICATION.json. The preserved rollback is releases/Arena_Fighters_v0.9.4_v001. Physical phone/public-network play and fresh human balance/art judgment remain distinct from automated and resized-browser proof.
 
-## Preserved v0.9.4 documentation
+### Preserved v0.9.4 documentation
 
 Current local source: **0.9.4, Arena Lobby Chat v001**, October 8, 2026.
 

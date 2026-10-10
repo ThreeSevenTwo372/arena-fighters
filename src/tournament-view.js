@@ -1,8 +1,8 @@
-import { WEAPONS, ARMORS, getFighterStatus } from './combat.js';
+import { WEAPONS, ARMORS, getFighterStatuses } from './combat.js';
 import { renderCleanAvatar } from './current-avatar.js';
 import { renderArena } from './arena.js';
 import { renderSpectatorFrame } from './spectator-frame.js';
-import { roundSummary } from './battle-presentation.js';
+import { roundSummary, fighterConditionText } from './battle-presentation.js';
 import { renderMercyPanel } from './mercy-presentation.js';
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
@@ -106,7 +106,7 @@ export function renderTournamentEntrance(view = {}) {
 }
 
 function fighterStatus(fighter, index, view, playing, duel) {
-  const condition = !playing && fighter.entangle ? getFighterStatus(duel, index) : null;
+  const conditions = !playing && (fighter.entangle || fighter.focus) ? getFighterStatuses(duel, index) : [];
   const personality = ({ aggressive: 'Aggressive', cautious: 'Cautious', patient: 'Patient' })[view.match?.players?.[index]?.botStyle];
   const hp = Math.max(0, number(fighter.hp)), maxHp = Math.max(1, number(fighter.maxHp, 1));
   const stamina = Math.max(0, number(fighter.stamina)), maxStamina = Math.max(1, number(fighter.maxStamina, 1));
@@ -114,8 +114,8 @@ function fighterStatus(fighter, index, view, playing, duel) {
   const completed = view.match?.duel?.status === 'complete';
   const winner = view.match?.duel?.result?.winner;
   const readiness = playing ? 'Moves revealed' : completed ? winner === null ? 'Draw' : winner === index ? 'Winner' : 'Defeated' : view.match?.pending?.[index] ? 'Choice locked' : 'Choosing a move';
-  const conditionMarkup = `${personality ? `<p>${escape(personality)} opponent</p>` : ''}${condition ? `<p class="fighter-condition">Entangled · Attacks +${condition.attackSurcharge} SP · Guard or Recover clears it</p>` : ''}`;
-  return `<section class="spectator-status" aria-label="${escape(name)} status"><div class="spectator-status-heading"><h2>${escape(name)}</h2><span>${index === 0 ? 'West gate' : 'East gate'}</span></div><p>${escape(WEAPONS[fighter.weapon]?.name ?? 'Weapon')} · ${escape(ARMORS[fighter.armor]?.name ?? 'Armor')}</p>${conditionMarkup}<div class="meter-label"><span>Health</span><strong>${hp} / ${maxHp}</strong></div><progress class="meter health" max="${maxHp}" value="${Math.min(hp, maxHp)}" aria-label="${escape(name)} health"></progress><div class="meter-label"><span>Stamina</span><strong>${stamina} / ${maxStamina}</strong></div><progress class="meter stamina" max="${maxStamina}" value="${Math.min(stamina, maxStamina)}" aria-label="${escape(name)} stamina"></progress><div class="tournament-fighter-state">${readiness}</div></section>`;
+  const conditionMarkup = `${personality ? `<p>${escape(personality)} opponent</p>` : ''}${conditions.map(status => `<p class="fighter-condition">${escape(fighterConditionText(status))}</p>`).join('')}`;
+  return `<section class="spectator-status" aria-label="${escape(name)} status"><div class="spectator-status-heading"><h2>${escape(name)}</h2><span>${index === 0 ? 'West gate' : 'East gate'}</span></div><p>${escape(WEAPONS[fighter.weapon]?.name ?? 'Weapon')} · ${escape(ARMORS[fighter.armor]?.name ?? 'Armor')}</p>${conditionMarkup}<div class="meter-label"><span>Health</span><strong>${hp} / ${maxHp}</strong></div><progress class="meter health" max="${maxHp}" value="${Math.min(hp, maxHp)}" aria-label="${escape(name)} health"></progress><div class="meter-label"><span>Stamina${Number.isFinite(fighter.staminaRegen) ? ` <small class="stamina-regen-note">+${fighter.staminaRegen} / round</small>` : ''}</span><strong>${stamina} / ${maxStamina}</strong></div><progress class="meter stamina" max="${maxStamina}" value="${Math.min(stamina, maxStamina)}" aria-label="${escape(name)} stamina"></progress><div class="tournament-fighter-state">${readiness}</div></section>`;
 }
 function spectatorNotice(view) {
   if (view.role === 'spectator') return '<p class="tournament-personal-note">Watching from the stands. The fighters choose their moves in secret.</p>';

@@ -6,7 +6,7 @@ import { buildAnimationSteps } from '../src/battle-animation.js';
 const entry = (name, weapon = 'sword', armor = 'light') => ({
   character: { name, stats: { strength: 4, dexterity: 4, speed: 4, defense: 4, intelligence: 4 }, trait: 'balanced' }, weapon, armor,
 });
-const makeDuel = (a = entry('A'), b = entry('B')) => createDuel([a, b]);
+const makeDuel = (a = entry('A'), b = entry('B')) => createDuel([a, b], { version: 3 });
 const actionSteps = steps => steps.filter(step => ['attack', 'guard', 'recover'].includes(step.type));
 
 test('playback follows resolved priority and speed, preserving guard and bypass details', () => {

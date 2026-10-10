@@ -289,7 +289,7 @@ test('a duelist finishes its revealed round before applying the queued tournamen
   const animation = deferred(), ui = fixture({ playback: () => animation.promise });
   const raw = view(), before = duelFor(raw);
   await ui.setView(view({ phase: 'battle', revision: 5, ready: [true, true], duel: before }));
-  const after = combat.resolveRound(before, ['strike', 'recover']);
+  const after = combat.resolveRound(before, ['strike', 'focus']);
   ui.applyAnimated(view({ phase: 'battle', revision: 6, ready: [true, true], duel: after }));
   await settle();
   assert.equal(ui.state.phase, 'playback');
@@ -311,7 +311,7 @@ test('a spectator animation failure still releases the queued resolved server vi
   const ui = fixture({ playback: () => animation });
   const raw = view({ slots: [0, 4] }), before = duelFor(raw);
   await ui.setView(view({ phase: 'battle', revision: 5, slots: [0, 4], ready: [true, true], duel: before }));
-  const after = combat.resolveRound(before, ['strike', 'recover']);
+  const after = combat.resolveRound(before, ['strike', 'focus']);
   ui.applyAnimated(view({ phase: 'battle', revision: 6, slots: [0, 4], ready: [true, true], duel: after }));
   await settle();
   assert.equal(ui.state.phase, 'playback');
@@ -330,7 +330,7 @@ test('a spectator animation failure still releases the queued resolved server vi
 test('queued revisions remain monotonic when an earlier match view arrives after the next intermission', async () => {
   for (const slots of [[2, 6], [0, 4]]) {
     const animation = deferred(), ui = fixture({ playback: () => animation.promise });
-    const raw = view({ slots }), before = duelFor(raw), after = combat.resolveRound(before, ['strike', 'recover']);
+    const raw = view({ slots }), before = duelFor(raw), after = combat.resolveRound(before, ['strike', 'focus']);
     await ui.setView(view({ phase: 'battle', revision: 5, slots, ready: [true, true], duel: before }));
     ui.applyAnimated(view({ phase: 'battle', revision: 6, slots, ready: [true, true], duel: after }));
     await settle();
@@ -347,7 +347,7 @@ test('queued revisions remain monotonic when an earlier match view arrives after
 
 test('a spectator carries the newest next-match equipment view through the previous round animation', async () => {
   const animation = deferred(), ui = fixture({ playback: () => animation.promise });
-  const raw = view({ slots: [0, 4] }), before = duelFor(raw), after = combat.resolveRound(before, ['strike', 'recover']);
+  const raw = view({ slots: [0, 4] }), before = duelFor(raw), after = combat.resolveRound(before, ['strike', 'focus']);
   await ui.setView(view({ phase: 'battle', revision: 5, slots: [0, 4], ready: [true, true], duel: before }));
   ui.applyAnimated(view({ phase: 'battle', revision: 6, slots: [0, 4], ready: [true, true], duel: after }));
   await settle();
@@ -369,7 +369,7 @@ test('a spectator carries the newest next-match equipment view through the previ
 
 test('leaving the stands during a pending animation cannot resurrect the tournament when animation finishes', async () => {
   const animation = deferred(), ui = fixture({ playback: () => animation.promise });
-  const raw = view({ slots: [0, 4] }), before = duelFor(raw), after = combat.resolveRound(before, ['strike', 'recover']);
+  const raw = view({ slots: [0, 4] }), before = duelFor(raw), after = combat.resolveRound(before, ['strike', 'focus']);
   await ui.setView(view({ phase: 'battle', revision: 5, slots: [0, 4], ready: [true, true], duel: before }));
   ui.applyAnimated(view({ phase: 'battle', revision: 6, slots: [0, 4], ready: [true, true], duel: after }));
   await settle();
@@ -389,7 +389,7 @@ test('leaving the stands during a pending animation cannot resurrect the tournam
 test('a network interruption and recovery preserve pending playback and clear its recovered connection error', async () => {
   for (const slots of [[2, 6], [0, 4]]) {
     const animation = deferred(), ui = fixture({ playback: () => animation.promise });
-    const raw = view({ slots }), before = duelFor(raw), after = combat.resolveRound(before, ['strike', 'recover']);
+    const raw = view({ slots }), before = duelFor(raw), after = combat.resolveRound(before, ['strike', 'focus']);
     await ui.setView(view({ phase: 'battle', revision: 5, slots, ready: [true, true], duel: before }));
     ui.applyAnimated(view({ phase: 'battle', revision: 6, slots, ready: [true, true], duel: after }));
     await settle();
@@ -587,7 +587,7 @@ test('duelists and spectators retain the complete final-match arena during one l
     const executed = executedTournament(mercy, 21, 'complete');
     ui.applyAnimated(executed); await settle();
     assert.equal(ui.state.screen, slots.includes(6) ? 'battle' : 'tournament-spectator'); assert.equal(calls.length, 1);
-    assert.match(ui.app.innerHTML, /class="arena-stage\s*"/);
+    assert.match(ui.app.innerHTML, slots.includes(6) ? /class="arena-stage first-person-stage\s*"/ : /class="arena-stage\s*"/);
     assert.doesNotMatch(ui.app.innerHTML, /takes the crown|data-action="(?:mercy|fight|tournament-next)"/);
     assert.equal(ui.state.profiles[0].alive, false);
     const cinematic = ui.app.innerHTML;
@@ -608,7 +608,7 @@ test('a queued tournament execute survives the final attack and newer next-match
     const raw = view({ phase: 'battle', revision: 5, slots, ready: [true, true] });
     const before = structuredClone(duelFor(raw)); before.fighters[1].hp = 1; raw.match.duel = before;
     await ui.setView(raw); await settle();
-    const after = combat.resolveRound(before, ['strike', 'recover']); assert.equal(after.status, 'complete');
+    const after = combat.resolveRound(before, ['strike', 'focus']); assert.equal(after.status, 'complete');
     const mercy = view({ phase: 'mercy', revision: 6, slots, ready: [true, true], duel: after });
     ui.applyAnimated(mercy); await settle();
     assert.equal(ui.state.phase, 'playback'); assert.equal(calls.length, 0);
@@ -632,7 +632,7 @@ test('a combined championship knockout and execute resolves its attack before th
   const raw = view({ phase: 'battle', revision: 10, slots: [0, 4], ready: [true, true], currentMatchIndex: 6 });
   const before = structuredClone(duelFor(raw)); before.fighters[1].hp = 1; raw.match.duel = before;
   await ui.setView(raw); await settle();
-  const after = combat.resolveRound(before, ['strike', 'recover']);
+  const after = combat.resolveRound(before, ['strike', 'focus']);
   const completed = { ...raw, match: { ...raw.match, duel: after } };
   ui.applyAnimated(executedTournament(completed, 11, 'complete')); await settle();
   assert.deepEqual(order, ['attack']); assert.equal(ui.state.phase, 'playback');

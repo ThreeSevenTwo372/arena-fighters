@@ -42,7 +42,7 @@ for (const mode of ['room', 'tournament']) {
   test(`${mode}: a resolved round reserves presentation before a full server choice window, including restart and exact boundary retries`, async t => {
     const f = await fixture(t, mode); let view = f.initial, match = f.match(view);
     assert.equal(match.actionOpensAt, f.now); assert.equal(match.deadline - match.actionOpensAt, 20000);
-    await f.post(view, 0, 'action', { round: 1, action: 'recover' });
+    await f.post(view, 0, 'action', { round: 1, action: 'focus' });
     view = await f.post(view, 1, 'action', { round: 1, action: 'guard' }); match = f.match(view);
     const state = structuredClone(match.duel), deadline = match.deadline, opensAt = match.actionOpensAt;
     assert.equal(opensAt, f.now + ROUND_PRESENTATION_MS); assert.equal(match.presentationEndsAt, opensAt);
@@ -58,7 +58,7 @@ for (const mode of ['room', 'tournament']) {
     assert.equal(f.match(view).deadline - f.now, 20000); assert.deepEqual(f.match(view).pending, [true, false]);
     await f.tick(19999); assert.equal(f.match(await f.read()).duel.round, 2);
     await f.tick(1); match = f.match(await f.read());
-    assert.equal(match.duel.round, 3); assert.deepEqual(match.duel.lastRound.actions, ['strike', 'recover']);
+    assert.equal(match.duel.round, 3); assert.deepEqual(match.duel.lastRound.actions, ['strike', 'focus']);
     assert.equal(match.actionOpensAt, f.now + 4000); assert.equal(match.deadline - match.actionOpensAt, 20000);
     await f.tick(0); assert.equal(f.match(await f.read()).duel.round, 3);
   });
@@ -73,7 +73,7 @@ for (const mode of ['room', 'tournament']) {
     });
     let view = await f.read();
     await f.post(view, 0, 'action', { round: 1, action: 'strike' });
-    view = await f.post(view, 1, 'action', { round: 1, action: 'recover' });
+    view = await f.post(view, 1, 'action', { round: 1, action: 'focus' });
     const match = f.match(view), originalDeadline = match.deadline;
     assert.equal(match.phase, 'mercy'); assert.equal(match.duel.result.winner, 0);
     assert.equal(match.presentationEndsAt, f.now + 4000);
@@ -95,7 +95,7 @@ for (const mode of ['room', 'tournament']) {
     const f = await fixture(t, mode, { disconnectMs: 10000 });
     let view = f.initial;
     await f.post(view, 0, 'action', { round: 1, action: 'guard' });
-    view = await f.post(view, 1, 'action', { round: 1, action: 'recover' });
+    view = await f.post(view, 1, 'action', { round: 1, action: 'focus' });
     // Reach the absent opponent's grace boundary while the other fighter is present.
     await f.service.request({ method: 'GET', path: '/api/session', token: f.tokens[0] });
     const opponentId = f.service.session(f.tokens[1]).playerId;

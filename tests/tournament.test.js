@@ -55,7 +55,7 @@ async function fixture(t, options = {}, persistent = false) {
       let rounds = 0;
       while (view.phase === 'battle') {
         if (view.match.actionOpensAt > now) await this.tick(view.match.actionOpensAt - now);
-        const choices = view.match.duel.fighters.map((_, index) => getActionOptions(view.match.duel, index).find(option => option.id === 'strike' && option.enabled) ? 'strike' : 'recover');
+        const choices = view.match.duel.fighters.map((_, index) => getActionOptions(view.match.duel, index).find(option => option.id === 'strike' && option.enabled) ? 'strike' : 'focus');
         await this.commit(view, 0, 'action', { round: view.match.duel.round, action: choices[0] });
         view = await this.commit(view, 1, 'action', { round: view.match.duel.round, action: choices[1] });
         assert.ok(++rounds <= 24);
@@ -211,7 +211,7 @@ test('durable restart restores shuffled bracket, private gear, entrance clock, p
   await f.restart();
   const watching = await f.view(lobby.code, watcher);
   assert.deepEqual(watching.match.pending, [true, false]); assert.deepEqual(watching.match.duel, restored.match.duel);
-  let progressed = await f.commit(restored, 1, 'action', { round: 1, action: 'recover' });
+  let progressed = await f.commit(restored, 1, 'action', { round: 1, action: 'focus' });
   progressed = await f.finish(progressed);
   await f.restart();
   const intermission = await f.view(lobby.code, watcher);

@@ -76,6 +76,12 @@
 .arena-fighter[data-animation="recover"] .fighter-body {
   animation: gladiator-recover-glow 510ms steps(4, end) both;
 }
+.arena-fighter[data-animation="stamina-regeneration"] .fighter-body {
+  animation: gladiator-recover-glow 240ms steps(4, end) both;
+}
+.arena-fighter[data-animation="focus"] .fighter-body {
+  animation: gladiator-focus-glow 420ms steps(4, end) both;
+}
 .arena-fighter[data-defeated="true"] .fighter-motion {
   transform: translate(-4px, 5px) rotate(-18deg);
   opacity: .75;
@@ -113,6 +119,7 @@
 .combat-effect-blocked .combat-impact-spark { fill: #bdedf1; stroke: #6d9fcc; }
 .combat-effect-break .combat-impact-spark { fill: #ffbb89; stroke: #cb523d; }
 .combat-effect-recover text { fill: #a8ecc7; }
+.combat-effect-focus text { fill: #ffe991; }
 .combat-effect-guard text { fill: #bbddee; }
 
 @keyframes gladiator-attack-lean {
@@ -216,6 +223,10 @@
   0%, 100% { filter: none; }
   35%, 70% { filter: brightness(1.17) drop-shadow(0 -2px 3px #71d9af); }
 }
+@keyframes gladiator-focus-glow {
+  0%, 100% { filter: none; }
+  35%, 70% { filter: brightness(1.17) drop-shadow(0 -2px 3px #e7ca73); }
+}
 @keyframes gladiator-combat-number {
   0% { transform: translateY(0); opacity: 1; }
   75% { transform: translateY(-9px); opacity: 1; }
@@ -232,7 +243,9 @@
 .battle-playback-reduced .arena-fighter[data-animation="attack"] .fighter-body,
 .battle-playback-reduced .arena-fighter[data-animation="guard"] .fighter-body { filter: brightness(1.15); }
 .battle-playback-reduced .arena-fighter[data-animation="hit"] .fighter-body { animation: none; filter: brightness(1.4); }
-.battle-playback-reduced .arena-fighter[data-animation="recover"] .fighter-body { animation: none; filter: brightness(1.17); }
+.battle-playback-reduced .arena-fighter[data-animation="recover"] .fighter-body,
+.battle-playback-reduced .arena-fighter[data-animation="focus"] .fighter-body,
+.battle-playback-reduced .arena-fighter[data-animation="stamina-regeneration"] .fighter-body { animation: none; filter: brightness(1.17); }
 @media (prefers-reduced-motion: reduce) {
   .battle-playback .fighter-motion,
   .battle-playback .fighter-weapon-motion,

@@ -1,20 +1,20 @@
-import { createDuel, resolveRound, getActionOptions, WEAPONS, ARMORS } from './combat.js';
+import { createDuel, resolveRound, getActionOptions, getFighterStatuses, WEAPONS, ARMORS } from './combat.js';
 import { normalizePresetAppearance } from './face-presets.js';
 import { preloadCleanArt, prepareCleanAvatar } from './current-avatar.js';
-import { renderArena } from './arena.js';
+import { renderFirstPersonArena } from './first-person-arena.js';
 import { actionPreview, roundSummary } from './battle-presentation.js';
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
 const lessons = Object.freeze([
   Object.freeze({ action: 'guard', opponentAction: 'strike', title: 'Meet a Strike with Guard', instruction: 'The instructor will Strike. Choose Guard to reduce its damage by 65%. Guard acts before attacks, but still lets some damage through.' }),
   Object.freeze({ action: 'technique', opponentAction: 'guard', title: 'Read the weapon technique', instruction: 'The instructor will Guard. Your sword’s Feint ignores Guard and half of armor protection. Techniques differ with each weapon: check their effects before choosing.' }),
-  Object.freeze({ action: 'recover', opponentAction: 'technique', title: 'Recover at the right moment', instruction: 'The instructor will ready dagger Riposte. It counters an ordinary Strike. Choose Recover to restore stamina without triggering that counter. Recover acts last, so an attacking rival could still hurt you.' }),
+  Object.freeze({ action: 'focus', opponentAction: 'technique', title: 'Prepare an attack with Focus', instruction: 'The instructor will ready dagger Riposte. It counters an ordinary Strike. Choose Focus to prepare your next attack without triggering that counter. Focus costs no stamina and leaves you open to attacks this round.' }),
 ]);
 
 /** Disposable practice figures. Creating a lesson never accepts or touches a saved fighter. */
 export function createFightTutorial() {
   const character = (name, sex, facePreset, color) => ({ name, color,
-    stats: { strength: 4, dexterity: 4, speed: 4, defense: 4, intelligence: 4 }, trait: 'balanced',
+    stats: { strength: 5, dexterity: 5, defense: 5, intelligence: 5 }, trait: 'balanced',
     appearance: normalizePresetAppearance({ sex, facePreset, skin: 'ivory', hairColor: 'chestnut' }),
   });
   const duel = createDuel([
@@ -31,17 +31,21 @@ function checkTutorial(state) {
 
 function lessonFeedback(state, duel) {
   const events = duel.lastRound.events;
+  const learner = duel.fighters[0];
+  const staminaCost = getActionOptions(state.duel, 0).find(option => option.id === lessons[state.step].action).cost;
+  const restored = events.find(event => event.type === 'stamina-regeneration' && event.actor === 0).restored;
+  const regeneration = ` Round-end recovery restored ${restored} stamina automatically. Your recovery rate is ${learner.staminaRegen} each round, capped at maximum stamina.`;
   if (state.step === 0) {
     const attack = events.find(event => event.type === 'attack' && event.actor === 1);
     const strike = getActionOptions(state.duel, 1).find(option => option.id === 'strike');
-    return `Guard reduced the instructor’s Strike from ${strike.damage} to ${attack.damage} damage. You spent ${getActionOptions(state.duel, 0).find(option => option.id === 'guard').cost} stamina. Watch both health and stamina.`;
+    return `Guard reduced the instructor’s Strike from ${strike.damage} to ${attack.damage} damage. You spent ${staminaCost} stamina.${regeneration}`;
   }
   if (state.step === 1) {
     const attack = events.find(event => event.type === 'attack' && event.actor === 0);
-    return `Your Feint dealt ${attack.damage} damage through Guard. This is a sword effect: other techniques have their own strengths, costs and counters.`;
+    return `Your Feint dealt ${attack.damage} damage through Guard. This is a sword effect: other techniques have their own strengths, costs and counters.${regeneration}`;
   }
-  const restored = events.find(event => event.type === 'recover' && event.actor === 0).restored;
-  return `You restored ${restored} stamina. Riposte found no Strike to counter, so neither fighter took damage. A technique or Guard also prevents its counter.`;
+  const focused = getFighterStatuses(duel, 0).find(status => status.id === 'focused');
+  return `Focus costs no stamina. Riposte found no Strike to counter, so neither fighter took damage. Your next-round Strike or weapon technique gets +${focused.damageBonus} attack damage before protection. Focus never stacks; an unused bonus expires at the end of the next round.${regeneration}`;
 }
 
 /** Each accepted move resolves once through the same rules as a real duel. */
@@ -69,9 +73,10 @@ export async function prepareFightTutorial(state) {
   })));
 }
 
-function fighterStatus(fighter, index) {
+function fighterStatus(fighter, index, duel) {
   const name = escape(fighter.character.name);
-  return `<section class="tutorial-fighter-status" aria-label="${name} status"><div><h2>${name}</h2><span>${index === 0 ? 'Your move' : 'Coached rival'}</span></div><p>${escape(WEAPONS[fighter.weapon].name)} · ${escape(ARMORS[fighter.armor].name)}</p><div class="meter-label"><span>Health</span><strong>${fighter.hp} / ${fighter.maxHp}</strong></div><progress class="meter health" max="${fighter.maxHp}" value="${fighter.hp}" aria-label="${name} health"></progress><div class="meter-label"><span>Stamina</span><strong>${fighter.stamina} / ${fighter.maxStamina}</strong></div><progress class="meter stamina" max="${fighter.maxStamina}" value="${fighter.stamina}" aria-label="${name} stamina"></progress></section>`;
+  const focused = getFighterStatuses(duel, index).find(status => status.id === 'focused');
+  return `<section class="tutorial-fighter-status" aria-label="${name} status"><div><h2>${name}</h2><span>${index === 0 ? 'Your move' : 'Coached rival'}</span></div><p>${escape(WEAPONS[fighter.weapon].name)} · ${escape(ARMORS[fighter.armor].name)}</p>${focused ? `<p class="tutorial-focus-status"><strong>Focused</strong> · Next-round attack +${focused.damageBonus}</p>` : ''}<div class="meter-label"><span>Health</span><strong>${fighter.hp} / ${fighter.maxHp}</strong></div><progress class="meter health" max="${fighter.maxHp}" value="${fighter.hp}" aria-label="${name} health"></progress><div class="meter-label"><span>Stamina</span><strong>${fighter.stamina} / ${fighter.maxStamina}</strong></div><progress class="meter stamina" max="${fighter.maxStamina}" value="${fighter.stamina}" aria-label="${name} stamina"></progress><p class="tutorial-passive-recovery">Round-end recovery: up to ${fighter.staminaRegen} stamina</p></section>`;
 }
 
 /** The root app owns routing and optional playback. No timer, network or persistent state. */
@@ -87,5 +92,5 @@ export function renderFightTutorial(state, { playing = false } = {}) {
     : state.phase === 'review'
       ? `<button type="button" class="button primary" data-action="tutorial-next" ${playing ? 'disabled' : ''}>${state.step === lessons.length - 1 ? 'Finish lessons' : 'Next lesson'}</button>`
       : `<button type="button" class="button primary tutorial-guided-move" data-action="tutorial-move" data-value="${lesson.action}" ${playing ? 'disabled' : ''}><strong>${escape(option.name)}</strong><span>${option.cost ? `${option.cost} stamina` : 'No stamina cost'} · ${escape(preview.label)}</span></button>`;
-  return `<section class="fight-tutorial" aria-labelledby="tutorial-title"><nav class="tutorial-navigation" aria-label="Tutorial navigation"><button type="button" class="button ghost" data-action="menu-home">Main menu</button><span>Practice · No time limit</span></nav><header class="tutorial-heading"><span class="eyebrow">Learn to fight · ${complete ? 'Complete' : `Lesson ${state.step + 1} of ${lessons.length}`}</span><h1 id="tutorial-title">${complete ? 'Ready for the arena' : escape(lesson.title)}</h1><p>${complete ? 'Read the rival’s equipment, plan your stamina and choose your move. In a real duel, both choices are secret until they reveal together.' : escape(lesson.instruction)}</p></header><div class="tutorial-layout"><div class="tutorial-arena-panel"><div class="arena-stage tutorial-arena">${renderArena({ ...state.duel, round: displayedRound }, { fit: 'meet' })}</div><div class="tutorial-status-pair">${state.duel.fighters.map(fighterStatus).join('')}</div></div><aside class="tutorial-coach" aria-label="Your lesson"><h2>${complete ? 'Three moves to remember' : state.phase === 'review' ? 'What happened' : 'Try this move'}</h2>${complete ? '<ul class="tutorial-recap"><li><strong>Guard</strong> reduces ordinary Strikes and many techniques.</li><li><strong>Weapon techniques</strong> have specific effects and counters.</li><li><strong>Recover</strong> restores stamina, but leaves you open to attacks.</li></ul>' : state.phase === 'review' ? `<p class="tutorial-feedback" role="status">${escape(state.feedback)}</p><p class="tutorial-round-summary">${escape(roundSummary(state.duel))}</p>` : `<p>${escape(preview.detail)}</p><p class="tutorial-predictable-rival">Instructor’s next move: <strong>${escape(getActionOptions(state.duel, 1).find(item => item.id === lesson.opponentAction).name)}</strong></p>`}${playing ? '<p class="tutorial-playback-status" role="status">Watching the round…</p>' : ''}${controls}</aside></div></section>`;
+  return `<section class="fight-tutorial" aria-labelledby="tutorial-title"><nav class="tutorial-navigation" aria-label="Tutorial navigation"><button type="button" class="button ghost" data-action="menu-home">Main menu</button><span>Practice · No time limit</span></nav><header class="tutorial-heading"><span class="eyebrow">Learn to fight · ${complete ? 'Complete' : `Lesson ${state.step + 1} of ${lessons.length}`}</span><h1 id="tutorial-title">${complete ? 'Ready for the arena' : escape(lesson.title)}</h1><p>${complete ? 'Read the rival’s equipment, plan your stamina and choose your move. In a real duel, both choices are secret until they reveal together.' : escape(lesson.instruction)}</p></header><div class="tutorial-layout"><div class="tutorial-arena-panel"><div class="arena-stage tutorial-arena first-person-stage">${renderFirstPersonArena({ ...state.duel, round: displayedRound }, { viewerIndex: 0, fit: 'meet' })}</div><div class="tutorial-status-pair">${state.duel.fighters.map((fighter, index) => fighterStatus(fighter, index, state.duel)).join('')}</div></div><aside class="tutorial-coach" aria-label="Your lesson"><h2>${complete ? 'Three moves to remember' : state.phase === 'review' ? 'What happened' : 'Try this move'}</h2>${complete ? `<ul class="tutorial-recap"><li><strong>Guard</strong> reduces ordinary Strikes and many techniques.</li><li><strong>Weapon techniques</strong> have specific effects and counters.</li><li><strong>Focus</strong> costs no stamina and adds +${option.focusBonus} damage before protection to your next-round attack. It never stacks and expires after that round.</li></ul><p>Stamina recovers automatically after each round. Dexterity 8 adds one recovery. In real duels, faster choices act first at equal move priority; Guard and Riposte ready before attacks.</p>` : state.phase === 'review' ? `<p class="tutorial-feedback" role="status">${escape(state.feedback)}</p><p class="tutorial-round-summary">${escape(roundSummary(state.duel))}</p>` : `<p>${escape(preview.detail)}</p><p class="tutorial-predictable-rival">Instructor’s next move: <strong>${escape(getActionOptions(state.duel, 1).find(item => item.id === lesson.opponentAction).name)}</strong></p>`}${playing ? '<p class="tutorial-playback-status" role="status">Watching the round…</p>' : ''}${controls}</aside></div></section>`;
 }

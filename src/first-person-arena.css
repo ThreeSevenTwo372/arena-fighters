@@ -1,0 +1,135 @@
+/* Foreground registration stays on outer groups. Combat playback may move only
+   the inner hand groups, keeping each hand and weapon on the same grip. */
+.first-person-arena {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #151c25;
+}
+.first-person-arena .fp-camera,
+.first-person-arena .fp-mainhand,
+.first-person-arena .fp-offhand,
+.first-person-arena .fp-mainhand-motion,
+.first-person-arena .fp-offhand-motion,
+.first-person-arena .fp-weapon-depth,
+.first-person-arena .fp-weapon {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+.first-person-arena .fp-viewmodel {
+  pointer-events: none;
+}
+.first-person-arena .fp-pixel-part,
+.first-person-arena .fp-whole-hold { image-rendering: pixelated; }
+.first-person-arena .fp-viewmodel path {
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+.first-person-arena .fp-mainhand {
+  animation: first-person-idle 3.8s steps(6, end) infinite;
+}
+.first-person-arena .fp-offhand {
+  animation: first-person-idle 4.2s steps(6, end) infinite reverse;
+}
+.battle-playback .first-person-arena .fp-mainhand,
+.battle-playback .first-person-arena .fp-offhand,
+.first-person-arena .fp-viewmodel[data-animation] .fp-mainhand,
+.first-person-arena .fp-viewmodel[data-animation] .fp-offhand,
+.first-person-arena .fp-viewmodel[data-defeated="true"] .fp-mainhand,
+.first-person-arena .fp-viewmodel[data-defeated="true"] .fp-offhand {
+  animation: none;
+}
+.first-person-arena .fp-viewmodel[data-defeated="true"] {
+  opacity: .55;
+}
+/* Give the player scene its full framing even on short desktop displays. The
+   existing compact battle rule compresses the old wide arena into 280px; that
+   would shrink foreground hands and leave unused bars around this view. */
+.battle-shell .classic-battle .arena-svg.first-person-arena {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 920 / 440;
+}
+/* Status stays in its own compact row at every width, outside the weapon arcs. */
+.battle-shell .classic-battle .first-person-stage .battle-hud {
+  position: relative;
+  inset: auto;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 8px;
+  margin: 0;
+  border-bottom: 1px solid #526480;
+  background: #151b2a;
+}
+.battle-shell .classic-battle .first-person-stage .fighter-status {
+  width: auto;
+  min-width: 0;
+  max-width: none;
+  padding: 7px 9px;
+}
+.battle-shell .classic-battle .first-person-stage .fighter-status .fighter-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 16px;
+}
+.battle-shell .classic-battle .first-person-stage .fighter-status > p {
+  margin: 3px 0;
+}
+.battle-shell .classic-battle .first-person-stage .fighter-status progress.meter {
+  height: 6px;
+  margin: 3px 0;
+}
+/* Public playback captions append after the SVG and may grow the stage instead
+   of covering the player's gripping fingers or clipping the complete scene. */
+.first-person-stage .battle-animation-caption,
+.first-person-stage .fp-execution-caption {
+  position: relative;
+  inset: auto;
+  width: auto;
+  margin: 0;
+  border: 0;
+  border-top: 2px solid #bda774;
+  border-radius: 0;
+  box-shadow: none;
+  z-index: 5;
+}
+.fight-tutorial .tutorial-arena.first-person-stage { height: auto; }
+@keyframes first-person-idle {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(0, 1px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .first-person-arena .fp-mainhand,
+  .first-person-arena .fp-offhand { animation: none; }
+}
+@media (max-width: 600px) {
+  .battle-shell .classic-battle .first-person-stage .battle-hud { gap: 8px; }
+  .battle-shell .classic-battle .first-person-stage .fighter-status { padding: 6px 7px; }
+  .battle-shell .classic-battle .first-person-stage .fighter-status .fighter-name { font-size: 13px; }
+}
+@media (max-width: 480px) {
+  /* The tutorial's historical fixed-width figure canvas would crop the new
+     foreground shield on narrow displays. Fit this whole scene into its host. */
+  .fight-tutorial .tutorial-arena:has(.first-person-arena) { height: auto; }
+  .fight-tutorial .first-person-arena {
+    left: auto;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    aspect-ratio: 920 / 440;
+    transform: none;
+  }
+}
+.fp-art-preview .fp-art-preview-heading { margin: 22px 0 14px; }
+.fp-art-preview .fp-art-preview-heading h1 { margin: 4px 0; }
+.fp-art-preview-options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 16px 0; }
+.fp-art-preview-options label { display: grid; gap: 5px; font-weight: 700; }
+.fp-art-preview-options select { width: 100%; min-width: 0; }
+.fp-art-preview-controls { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
+.fp-art-preview-message { margin: 10px 0; }
+@media (max-width: 600px) {
+  .fp-art-preview-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

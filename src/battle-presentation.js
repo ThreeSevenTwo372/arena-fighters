@@ -45,6 +45,8 @@ export function roundSummary(duel) {
     if (event.type === 'riposte-miss') return [`${name}'s Riposte found no opening`];
     if (event.type === 'guard') return [`${name} guarded`];
     if (event.type === 'recover') return [`${name} restored ${event.restored} stamina`];
+    if (event.type === 'focus') return [`${name} prepared +${event.damageBonus} attack power for next round`];
+    if (event.type === 'stamina-regeneration' && event.restored > 0) return [`${name} regained ${event.restored} stamina`];
     if (event.type === 'skipped') return [`${name} was defeated before acting`];
     return [];
   });
@@ -54,13 +56,18 @@ export function roundSummary(duel) {
 
 /** All numbers come from the authoritative option; Guard never implies zero damage. */
 export function actionPreview(option) {
+  const rest = option.rulesVersion >= 4 ? 'Focus' : 'Recover';
   if (option.statusEffect === 'entangle') return {
     label: `${option.damage} damage + net`,
-    detail: `Next-round attacks +3 SP · Guard prevents the net · Guard or Recover clears it · ${option.guardedDamage} damage against Guard`,
+    detail: `Next-round attacks +3 SP · Guard prevents the net · Guard or ${rest} clears it · ${option.guardedDamage} damage against Guard`,
   };
   if (option.conditional === 'riposte') return {
     label: `Counter: ${option.damage} damage`,
-    detail: 'Halves an incoming Strike · Counter only if you survive · Techniques, Guard and Recover prevent the counter',
+    detail: `Halves an incoming Strike · Counter only if you survive · Techniques, Guard and ${rest} prevent the counter${option.focusDamageBonus ? ` · Includes +${option.focusDamageBonus} Focus power` : ''}`,
+  };
+  if (option.id === 'focus') return {
+    label: `Next attack +${option.focusBonus} power`,
+    detail: 'No stamina cost · Acts last and leaves you open · Next round only · Does not stack · Clears the net',
   };
   if (option.id === 'recover') return {
     label: `Up to +${option.recovery} SP`,
@@ -72,8 +79,14 @@ export function actionPreview(option) {
   };
   return {
     label: `${option.damage} damage`,
-    detail: `Against an unguarded rival${Number.isFinite(option.guardedDamage) ? ` · ${option.guardedDamage} against Guard` : ''}`,
+    detail: `Against an unguarded rival${Number.isFinite(option.guardedDamage) ? ` · ${option.guardedDamage} against Guard` : ''}${option.focusDamageBonus ? ` · Includes +${option.focusDamageBonus} Focus power` : ''}`,
   };
+}
+
+export function fighterConditionText(status) {
+  if (status.id === 'focused') return `Focused · Next attack +${status.damageBonus} power · This round only`;
+  if (status.id === 'entangled') return `Entangled · Attacks +${status.attackSurcharge} SP this round · Guard or ${status.clearsWith?.includes('focus') ? 'Focus' : 'Recover'} clears the net`;
+  return status.label || '';
 }
 
 export function outcomeReason(duel, viewer = 0) {

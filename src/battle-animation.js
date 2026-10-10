@@ -30,6 +30,10 @@ export function buildAnimationSteps(before, after, _pending) {
       steps.push({ ...common, type: event.type });
     } else if (event.type === 'recover') {
       steps.push({ ...common, type: 'recover', restored: event.restored });
+    } else if (event.type === 'focus') {
+      steps.push({ ...common, type: 'focus', damageBonus: event.damageBonus });
+    } else if (event.type === 'stamina-regeneration' && event.restored > 0) {
+      steps.push({ ...common, type: 'stamina-regeneration', restored: event.restored });
     } else if (event.type === 'attack' && FIGHTER_INDICES.has(event.target) && health[actor] > 0) {
       const target = event.target;
       health[target] = Math.max(0, health[target] - event.damage);
@@ -167,6 +171,13 @@ export async function playBattleAnimation(container, steps, { signal, reducedMot
         emitCue(onCue, 'recover', step);
         effect(fighter, `+${step.restored} SP`, 'recover');
         if (!await pause(reduce ? 180 : 510, signal)) return false;
+      } else if (step.type === 'focus') {
+        emitCue(onCue, 'focus', step);
+        effect(fighter, `FOCUS +${step.damageBonus}`, 'focus');
+        if (!await pause(reduce ? 180 : 420, signal)) return false;
+      } else if (step.type === 'stamina-regeneration') {
+        effect(fighter, `+${step.restored} SP`, 'recover');
+        if (!await pause(reduce ? 120 : 240, signal)) return false;
       } else if (step.type === 'defeat') {
         emitCue(onCue, 'defeat', step);
         fighter.dataset.defeated = 'true';

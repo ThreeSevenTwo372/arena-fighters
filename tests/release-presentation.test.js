@@ -22,5 +22,5 @@ test('Entangle previews disclose its next-round pressure and counters', () => {
   const duel = createDuel([{ character: character('One'), weapon: 'trident', armor: 'medium' }, { character: character('Two'), weapon: 'dagger', armor: 'medium' }]);
   const preview = actionPreview(getActionOptions(duel, 0).find(option => option.id === 'technique'));
   assert.match(preview.label, /damage \+ net/); assert.match(preview.detail, /Next-round attacks \+3 SP/);
-  assert.match(preview.detail, /Guard prevents the net/); assert.match(preview.detail, /Recover clears it/);
+  assert.match(preview.detail, /Guard prevents the net/); assert.match(preview.detail, /Focus clears it/);
 });

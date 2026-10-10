@@ -1,7 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
-import { RULES, WEAPONS, ARMORS, TRAITS, createDuel, deriveFighterStats, getActionOptions, resolveRound, chooseCpuAction } from '../src/combat.js';
+import { RULES, WEAPONS, ARMORS, TRAITS, createDuel as createCurrentDuel, deriveFighterStats as deriveCurrentStats, getActionOptions, resolveRound, chooseCpuAction } from '../src/combat.js';
+
+// Preserve the sealed v3 counter and 13,440-outcome fingerprint; v4 Focus
+// counters and passive stamina are exercised in focus-combat.test.js.
+const createDuel = entries => createCurrentDuel(entries, { version: 3 });
+const deriveFighterStats = (character, loadout) => deriveCurrentStats(character, loadout, { version: 3 });
 
 const legacyWeapons = ['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword'];
 const builds = [
@@ -17,7 +22,7 @@ const edit = (state, change) => { const next = structuredClone(state); change(ne
 
 test('dagger gives a faster, lighter Dexterity strike and a disclosed conditional counter', () => {
   const state = duel(), dagger = state.fighters[0], sword = state.fighters[1], riposte = option(state, 0, 'technique');
-  assert.equal(RULES.VERSION, 3, 'Saved version-3 duels retain validity.');
+  assert.equal(state.version, 3, 'Saved version-3 duels retain validity.');
   assert.deepEqual([dagger.strikePower, dagger.techniquePower, dagger.speed, dagger.strikeCost, dagger.techniqueCost], [15, 16, 8, 3, 5]);
   assert.deepEqual([option(state, 0, 'strike').damage, riposte.damage, riposte.guardedDamage], [11, 12, 0]);
   assert.deepEqual([riposte.conditional, riposte.trigger, riposte.reduction, riposte.priority], ['riposte', 'strike', 0.5, 2]);
@@ -155,7 +160,24 @@ test('conditional options and CPU predictions ignore unrevealed choices and do n
 
 test('all original definitions and 13440 legal original-weapon outcomes match the sealed pre-dagger fingerprint', () => {
   const hash = createHash('sha256');
-  hash.update(JSON.stringify({ rules: RULES, weapons: Object.fromEntries(legacyWeapons.map(id => [id, WEAPONS[id]])), armors: ARMORS, traits: TRAITS }));
+  // V4 changes help text and adds passive-regeneration metadata. Hash the
+  // current numeric legacy effects with their sealed v3 public descriptors,
+  // then every actual v3 state/CPU choice/resolution against the original hash.
+  const rules = { ...RULES, VERSION: 3 }; delete rules.FOCUS_DAMAGE_BONUS;
+  rules.description = 'Choose secretly, reveal together. Priority acts first, then speed. Equal speed alternates its first player each round. At 24 rounds, remaining health percentage, then stamina percentage decides; an exact tie is a draw.';
+  const oldArmorDescriptions = {
+    light: 'No armor protection or speed penalty. Base recovery 8; Speed and Intelligence improve it. Personal Defense still protects.',
+    medium: 'Blocks 2 plus 1 damage per 4 Defense; costs 2 initiative. Base recovery 7, improved by Speed and Intelligence.',
+    heavy: 'Blocks 4 plus 1 damage per 2 Defense; costs 4 initiative and 1 stamina per attack. Base recovery 6, improved by Speed and Intelligence.',
+  };
+  const armors = Object.fromEntries(Object.entries(ARMORS).map(([id, armor]) => [id, { ...armor, description: oldArmorDescriptions[id] }]));
+  const traits = Object.fromEntries(Object.entries(TRAITS).map(([id, trait]) => {
+    const legacy = { ...trait }; delete legacy.regenerationBonus;
+    if (id === 'ironhide') legacy.description = 'Personal protection +2; initiative -3; stamina recovery -2.';
+    if (id === 'vigorous') legacy.description = 'Maximum stamina +5; stamina recovery +2; attack power -2.';
+    return [id, legacy];
+  }));
+  hash.update(JSON.stringify({ rules, weapons: Object.fromEntries(legacyWeapons.map(id => [id, WEAPONS[id]])), armors, traits }));
   let count = 0;
   for (const stats of builds) for (const weapon of legacyWeapons) for (const armor of Object.keys(ARMORS)) for (const trait of Object.keys(TRAITS)) {
     const state = createDuel([entry('A', weapon, armor, stats, trait), entry('B', 'sword', 'medium', builds[0], 'balanced')]);

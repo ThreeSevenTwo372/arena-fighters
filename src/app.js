@@ -5,13 +5,16 @@ import { createArrivalController } from './arrival.js';
 import { renderArmory } from './armory.js';
 import { renderTournamentLobby, renderTournamentSpectator, renderTournamentBracket, renderTournamentEntrance } from './tournament-view.js';
 import { renderArena } from './arena.js';
+import { renderFirstPersonArena } from './first-person-arena.js';
+import { playFirstPersonBattleAnimation, playFirstPersonExecutionAnimation } from './first-person-animation.js';
+import { effectiveCharacterStats, currentTraitDescription, LEGACY_ATTRIBUTE_LABELS } from './combat.js';
 import { avatarChoices, normalizeAppearance } from './avatar.js';
 import { facePresetChoices, normalizePresetAppearance } from './face-presets.js';
 import { preloadCleanArt, prepareCleanAvatar, renderCleanAvatar } from './current-avatar.js';
 import { buildAnimationSteps, playBattleAnimation } from './battle-animation.js';
 import { buildExecutionEvent, playExecutionAnimation } from './execution-animation.js';
 import { renderMercyPanel, playLoserOutcome } from './mercy-presentation.js';
-import { battlePhase, fighterReadiness, roundSummary, actionPreview, outcomeReason } from './battle-presentation.js';
+import { battlePhase, fighterReadiness, roundSummary, actionPreview, outcomeReason, fighterConditionText } from './battle-presentation.js';
 import { renderMainMenu, renderMatchBrowser, renderLeaderboard, renderGraveyard } from './main-menu.js';
 import { createGameAudio } from './game-audio.js';
 import { mountAudioControls } from './audio-controls.js';
@@ -19,7 +22,7 @@ import { mountArenaChat } from './arena-chat.js';
 import { mountArenaReactions } from './arena-reactions.js';
 import { createFightTutorial, advanceFightTutorial, prepareFightTutorial, renderFightTutorial } from './fight-tutorial.js';
 import { createArenaInvite } from './arena-invite.js';
-import { getFighterStatus } from './combat.js';
+import { getFighterStatuses, getDefaultAction } from './combat.js';
 
 const app = document.querySelector('#app');
 const audio = createGameAudio();
@@ -27,20 +30,22 @@ const audioPanel = document.querySelector('#audio-controls');
 if (audioPanel?.id === 'audio-controls') mountAudioControls(audioPanel, audio);
 const presetReview = new URLSearchParams(globalThis.location.search).get('face-presets-review') === '1';
 const spectatorReview = new URLSearchParams(globalThis.location.search).get('spectator-frame-review') === '1';
-let tournamentEnabled = !presetReview && !spectatorReview && new URLSearchParams(globalThis.location.search).get('duel-mode') !== '1' && typeof TournamentClient === 'function';
+const firstPersonReview = new URLSearchParams(globalThis.location.search).get('first-person-art-review') === '1';
+let tournamentEnabled = !presetReview && !spectatorReview && !firstPersonReview && new URLSearchParams(globalThis.location.search).get('duel-mode') !== '1' && typeof TournamentClient === 'function';
 const invitedCode = new URLSearchParams(globalThis.location.search).get('invite') || '';
 let tutorialState = null, tutorialPlaying = false, tutorialController = null;
 const BOT_STYLE_LABELS = { aggressive: 'Aggressive', cautious: 'Cautious', patient: 'Patient' };
 const esc = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const STAT_LABELS = ATTRIBUTE_LABELS;
 const COLORS = ['#b45143', '#5f8795', '#7b8b57', '#99739b', '#b88a45', '#697a9a'];
-const DEFAULT_STATS = { strength: 4, dexterity: 4, speed: 4, defense: 4, intelligence: 4 };
+const DEFAULT_STATS = { strength: 5, dexterity: 5, defense: 5, intelligence: 5 };
 const defaults = () => [
   { name: presetReview ? 'Cassian' : '', stats: { ...DEFAULT_STATS }, trait: 'balanced', color: COLORS[0], appearance: normalizePresetAppearance({ sex: 'male', facePreset: 'p05', hairstyle: 'braided_ponytail', hairColor: 'chestnut', eyes: 'amber' }) },
   { name: 'Mira', stats: { ...DEFAULT_STATS }, trait: 'balanced', color: COLORS[1], appearance: normalizePresetAppearance({ sex: 'female', facePreset: 'p05', hairstyle: 'braided_ponytail', hairColor: 'chestnut', eyes: 'jade' }) }
 ];
 const state = {
   screen: 'creator', mode: presetReview ? 'cpu' : 'online', drafts: defaults(), profiles: [], locked: [false, false],
+  nameDrafts: [null, null],
   creatorStep: presetReview ? 'customize' : 'name', creatorIndex: 0, nameIndex: 0,
   loadouts: [{ weapon: 'sword', armor: 'medium', helmet: 'none' }, { weapon: 'spear', armor: 'light', helmet: 'none' }],
   picker: 0, duel: null, actionTurn: 0, pending: [null, null], phase: 'select',
@@ -61,7 +66,7 @@ let outcomePlayback = null, queuedOutcomeView = null, verdictReveal = null, queu
 const observedOutcomes = new Set(), revealedWinners = new Set(), fallbackDeathReceipts = new Map();
 let verdictTimer, localMercyTimer, localCrowdTimer, deathRetryTimer;
 let localDuelId = 0;
-const onlineClient = spectatorReview ? null : typeof TournamentClient === 'function' ? new TournamentClient({ duelMode: !tournamentEnabled }) : new OnlineClient();
+const onlineClient = spectatorReview || firstPersonReview ? null : typeof TournamentClient === 'function' ? new TournamentClient({ duelMode: !tournamentEnabled }) : new OnlineClient();
 const arenaChatHost = document.querySelector('#arena-chat');
 const arenaChat = arenaChatHost?.id === 'arena-chat' && typeof onlineClient?.chat === 'function'
   ? mountArenaChat(arenaChatHost, { read: code => onlineClient.chat(code), send: (code, payload) => onlineClient.sendChat(code, payload) }) : null;
@@ -117,7 +122,23 @@ function header() {
   return `<header class="masthead"><a class="brand" href="/" aria-label="Arena Fighters home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M13 27C2 23 3 9 11 4m8 23C30 23 29 9 21 4M12 27h8"/><path d="M7 9C1 7 1 14 6 15m0-2c-5 0-4 7 2 7m0-3c-4 2-2 7 4 7M25 9c6-2 6 5 1 6m0-2c5 0 4 7-2 7m0-3c4 2 2 7-4 7"/><path d="m16 9 3 6-3 6-3-6Z"/></svg></span> ARENA FIGHTERS</a>${!presetReview && state.screen === 'creator' && !onlineReplacement ? '<button class="button ghost" data-action="menu-home">Main menu</button>' : `<span class="badge">${state.screen === 'tutorial' ? 'Practice' : observerMode ? 'Spectating' : menuPages.has(state.screen) ? 'The arena' : onlineMode() ? `${tournamentEnabled ? 'Tournament' : 'Online duel'}${onlineView ? ` · ${esc(onlineView.code)}` : ''}` : state.mode === 'cpu' ? 'Practice' : 'Pass & play'}</span>`}</header>`;
 }
 function statChips(character) {
-  return `<div class="rule-strip">${Object.entries(STAT_LABELS).map(([key, label]) => `<span><strong>${character.stats[key]}</strong> ${label}</span>`).join('')}<span>${esc(TRAITS[character.trait]?.name || character.trait)}</span></div>`;
+  const stats = typeof effectiveCharacterStats === 'function' ? effectiveCharacterStats(character, { version: state.duel?.version ?? RULES.VERSION }) : character.stats;
+  const labels = state.duel?.version < 5 && typeof LEGACY_ATTRIBUTE_LABELS !== 'undefined' ? LEGACY_ATTRIBUTE_LABELS : STAT_LABELS;
+  return `<div class="rule-strip">${Object.entries(labels).map(([key, label]) => `<span><strong>${stats[key]}</strong> ${label}</span>`).join('')}<span>${esc(TRAITS[character.trait]?.name || character.trait)}</span></div>`;
+}
+function playerViewIndex() {
+  return onlineMode() ? onlineView?.you : state.mode === 'cpu' ? 0 : state.actionTurn;
+}
+function playableArena(duel) {
+  return typeof renderFirstPersonArena === 'function' ? renderFirstPersonArena(duel, { viewerIndex: playerViewIndex(), fit: 'meet' }) : renderArena(duel, { fit: 'meet' });
+}
+function playParticipantRound(container, steps, options) {
+  return typeof playFirstPersonBattleAnimation === 'function' && container?.querySelector('.first-person-arena')
+    ? playFirstPersonBattleAnimation(container, steps, options) : playBattleAnimation(container, steps, options);
+}
+function playParticipantExecution(container, event, options) {
+  return typeof playFirstPersonExecutionAnimation === 'function' && container?.querySelector('.first-person-arena')
+    ? playFirstPersonExecutionAnimation(container, event, options) : playExecutionAnimation(container, event, options);
 }
 function bannerChip(character, label) {
   const colorIndex = Math.max(0, COLORS.indexOf(character.color));
@@ -134,21 +155,22 @@ function editor(index) {
   const preset = character.appearance.facePreset;
   const presetArrow = direction => `<button type="button" class="preset-arrow ${direction < 0 ? 'previous' : 'next'}" data-action="face-cycle" data-index="${index}" data-delta="${direction}" aria-label="${direction < 0 ? 'Previous' : 'Next'} preset for ${esc(character.name)}" ${locked ? 'disabled' : ''}><svg viewBox="0 0 40 32" aria-hidden="true"><path d="M23 3 6 16 23 29V21H35V11H23Z"/></svg></button>`;
   const avatar = renderCleanAvatar(character.appearance, 'world', IDENTITY_GEAR);
+  const visibleStats = locked && typeof effectiveCharacterStats === 'function' ? effectiveCharacterStats(character) : character.stats;
   return `<section class="panel fighter-editor compact-editor${preset ? ' preset-editor' : ''}" aria-label="Customize ${esc(character.name)}">
     <div class="creator-identity"><div class="arena-identity-preview"><figure class="arena-identity-figure">${preset ? `<div class="preset-character">${presetArrow(-1)}${avatar}${presetArrow(1)}</div>` : avatar}<figcaption>${esc(character.name)}${preset ? `<span class="preset-number" role="status" aria-label="Preset ${esc(preset.slice(1))}" aria-live="polite">${esc(preset.slice(1))}</span>` : ''}</figcaption></figure></div>
       <span class="field-label">Banner</span><div class="color-choices" aria-label="Banner color">${COLORS.map((color, colorIndex) => `<button class="color-choice color-${colorIndex} ${character.color === color ? 'selected' : ''}" data-action="color" data-index="${index}" data-value="${color}" aria-label="${['Red', 'Blue', 'Green', 'Purple', 'Gold', 'Slate'][colorIndex]} banner for ${esc(character.name)}" aria-pressed="${character.color === color}" ${locked ? 'disabled' : ''}>${character.color === color ? '✓' : ''}</button>`).join('')}</div></div>
     <div class="creator-appearance">${appearanceEditor(character, index, locked)}</div>
     <div class="creator-values"><div class="attribute-heading"><h2>Attributes</h2><span class="badge" role="status">${locked ? 'Fixed' : `${left} points left`}</span></div>
       <div class="attribute-limit">${RULES.POINT_BUDGET} points · ${RULES.STAT_CAP} max</div>
-      ${Object.entries(STAT_LABELS).map(([key, label]) => `<div class="stat-row"><strong class="stat-label">${label}</strong><div class="stat-controls"><button data-action="stat" data-index="${index}" data-stat="${key}" data-delta="-1" aria-label="Decrease ${label} for ${esc(character.name)}" ${locked || character.stats[key] === 0 ? 'disabled' : ''}>−</button><span class="stat-value">${character.stats[key]}</span><button data-action="stat" data-index="${index}" data-stat="${key}" data-delta="1" aria-label="Increase ${label} for ${esc(character.name)}" ${locked || left <= 0 || character.stats[key] >= RULES.STAT_CAP ? 'disabled' : ''}>+</button></div></div>`).join('')}
-      <label class="field-label" for="trait-${index}">Trait</label><select id="trait-${index}" data-trait="${index}" aria-describedby="trait-description-${index}" ${locked ? 'disabled' : ''}>${Object.entries(TRAITS).map(([id, trait]) => `<option value="${id}" ${character.trait === id ? 'selected' : ''}>${esc(trait.name)}</option>`).join('')}</select><p class="trait-description" id="trait-description-${index}">${esc(TRAITS[character.trait].description)}</p>
+      ${Object.entries(STAT_LABELS).map(([key, label]) => `<div class="stat-row"><strong class="stat-label">${label}</strong><div class="stat-controls"><button data-action="stat" data-index="${index}" data-stat="${key}" data-delta="-1" aria-label="Decrease ${label} for ${esc(character.name)}" ${locked || character.stats[key] === 0 ? 'disabled' : ''}>−</button><span class="stat-value">${visibleStats[key]}</span><button data-action="stat" data-index="${index}" data-stat="${key}" data-delta="1" aria-label="Increase ${label} for ${esc(character.name)}" ${locked || left <= 0 || character.stats[key] >= RULES.STAT_CAP ? 'disabled' : ''}>+</button></div></div>`).join('')}
+      <label class="field-label" for="trait-${index}">Trait</label><select id="trait-${index}" data-trait="${index}" aria-describedby="trait-description-${index}" ${locked ? 'disabled' : ''}>${Object.entries(TRAITS).filter(([id]) => locked || id !== 'fleetfoot').map(([id, trait]) => `<option value="${id}" ${character.trait === id ? 'selected' : ''}>${esc(trait.name)}</option>`).join('')}</select><p class="trait-description" id="trait-description-${index}">${esc(typeof currentTraitDescription === 'function' ? currentTraitDescription(character.trait) : TRAITS[character.trait].description)}${locked && Object.hasOwn(character.stats, 'speed') ? '<small>Former Speed points are allocated across these four attributes for new duels. Your saved fighter stays intact.</small>' : ''}</p>
     </div>
   </section>`;
 }
 function buildPreview(character, gear = { weapon: 'sword', armor: 'medium', helmet: 'none' }) {
   if (!validateCharacter(character).valid) return '<p class="build-note">Allocate all points to preview your combat values.</p>';
   const values = deriveFighterStats(character, gear);
-  return `<div class="build-preview" aria-label="Equipment effectiveness"><span><strong>${values.maxHp}</strong> Health</span><span><strong>${values.maxStamina}</strong> Stamina</span><span><strong>${values.speed}</strong> Initiative</span><span><strong>${values.mitigation}</strong> Protection</span><span><strong>${values.strikeCost} / ${values.techniqueCost}</strong> Attack costs</span><span><strong>+${values.recovery}</strong> Recovery</span></div><p class="build-note">${esc(WEAPONS[gear.weapon].name)} · ${esc(ARMORS[gear.armor].name)} · Fortune +${values.fortuneBonus}. Intelligence’s small all-round bonus is included in these values.</p>`;
+  return `<div class="build-preview" aria-label="Equipment effectiveness"><span><strong>${values.maxHp}</strong> Health</span><span><strong>${values.maxStamina}</strong> Stamina</span><span><strong>Choice time</strong> Initiative</span><span><strong>${values.mitigation}</strong> Protection</span><span><strong>${values.strikeCost} / ${values.techniqueCost}</strong> Attack costs</span><span><strong>+${values.staminaRegen}</strong> Stamina / round</span></div><p class="build-note">${esc(WEAPONS[gear.weapon].name)} · ${esc(ARMORS[gear.armor].name)} · Fortune +${values.fortuneBonus}. Stamina refills after each round, up to its maximum.</p>`;
 }
 function onlineSetupPanel() {
   if (onlineSessionNeedsRefresh) return '<section class="panel online-setup" role="status"><div class="panel-header"><h2>Reconnecting your fighter…</h2></div><div class="online-setup-body"><p>Your saved fighter will be ready when the connection returns.</p></div></section>';
@@ -186,13 +208,13 @@ function loadout() {
 function fighterCard(index) {
   const fighter = state.duel.fighters[index];
   const record = state.profiles[index];
-  const fighterStatus = typeof getFighterStatus === 'function' ? getFighterStatus(state.duel, index) : null;
+  const fighterStatuses = getFighterStatuses(state.duel, index);
   const botStyle = record?.botStyle || (state.mode === 'cpu' && index === 1 ? ['aggressive', 'cautious', 'patient'][state.practiceDuels % 3] : null);
   const readiness = fighterReadiness(index, battleContext());
   const lowHp = fighter.hp <= fighter.maxHp * .25;
-  return `<section class="combatant-card fighter-status ${onlineMode() && index === onlineView.you ? 'your-fighter' : ''} ${lowHp ? 'critical-health' : ''}"><div class="status-heading"><h2 class="fighter-name">${esc(fighter.character.name)}</h2>${bannerChip(fighter.character, onlineMode() ? index === onlineView.you ? 'You' : 'Rival' : index === 0 ? 'West' : 'East')}</div><p>${esc(WEAPONS[fighter.weapon].name)} · ${esc(ARMORS[fighter.armor].name)} <span class="status-record">· ${record.duelWins} ${record.duelWins === 1 ? 'win' : 'wins'}</span></p>
-    ${botStyle ? `<p class="bot-personality">${esc(BOT_STYLE_LABELS[botStyle] || 'Bot')} opponent</p>` : ''}${fighterStatus ? `<p class="fighter-condition" role="status">Entangled · Attacks +${fighterStatus.attackSurcharge} SP this round · Guard or Recover clears the net</p>` : ''}<div class="meter-label"><span><abbr title="Health">HP</abbr>${lowHp && fighter.hp > 0 ? '<span class="critical-label"> Low</span>' : ''}</span><strong>${fighter.hp} / ${fighter.maxHp}</strong></div><progress class="meter health" max="${fighter.maxHp}" value="${fighter.hp}" aria-label="${esc(fighter.character.name)} health"></progress>
-    <div class="meter-label"><span><abbr title="Stamina">SP</abbr></span><strong>${fighter.stamina} / ${fighter.maxStamina}</strong></div><progress class="meter stamina" max="${fighter.maxStamina}" value="${fighter.stamina}" aria-label="${esc(fighter.character.name)} stamina"></progress><div class="fighter-readiness"><span>${esc(readiness)}</span><small class="initiative-note">Initiative ${fighter.speed}</small></div></section>`;
+  return `<section class="combatant-card fighter-status ${onlineMode() && index === onlineView.you ? 'your-fighter' : ''} ${lowHp ? 'critical-health' : ''}"><div class="status-heading"><h2 class="fighter-name">${esc(fighter.character.name)}</h2>${bannerChip(fighter.character, index === playerViewIndex() ? 'You' : 'Rival')}</div><p>${esc(WEAPONS[fighter.weapon].name)} · ${esc(ARMORS[fighter.armor].name)} <span class="status-record">· ${record.duelWins} ${record.duelWins === 1 ? 'win' : 'wins'}</span></p>
+    ${botStyle ? `<p class="bot-personality">${esc(BOT_STYLE_LABELS[botStyle] || 'Bot')} opponent</p>` : ''}${fighterStatuses.map(status => `<p class="fighter-condition" role="status">${esc(fighterConditionText(status))}</p>`).join('')}<div class="meter-label"><span><abbr title="Health">HP</abbr>${lowHp && fighter.hp > 0 ? '<span class="critical-label"> Low</span>' : ''}</span><strong>${fighter.hp} / ${fighter.maxHp}</strong></div><progress class="meter health" max="${fighter.maxHp}" value="${fighter.hp}" aria-label="${esc(fighter.character.name)} health"></progress>
+    <div class="meter-label"><span><abbr title="Stamina">SP</abbr>${Number.isFinite(fighter.staminaRegen) ? `<small class="stamina-regen-note">+${fighter.staminaRegen} / round</small>` : ''}</span><strong>${fighter.stamina} / ${fighter.maxStamina}</strong></div><progress class="meter stamina" max="${fighter.maxStamina}" value="${fighter.stamina}" aria-label="${esc(fighter.character.name)} stamina"></progress><div class="fighter-readiness"><span>${esc(readiness)}</span><small class="initiative-note">${state.duel.version >= 5 ? 'Faster choice acts first' : `Initiative ${fighter.speed}`}</small></div></section>`;
 }
 function battleContext() {
   return { duel: state.duel, mode: state.mode, phase: state.phase, viewer: onlineMode() ? onlineView.you : state.actionTurn, pending: onlineMode() ? onlineView.pending : state.pending.map(Boolean), busy: onlineBusy, offline: onlineOffline };
@@ -201,6 +223,7 @@ function actionHint(option, fighter) {
   if (option.id === 'strike') return 'Reliable damage. Guard reduces it.';
   if (option.id === 'guard') return 'Block most attacks. Feints, guard breaks, and flail sweeps get through.';
   if (option.id === 'recover') return 'Restore stamina. Acts last, leaving you exposed.';
+  if (option.id === 'focus') return `Prepare +${option.focusBonus} attack power for next round. Leaves you open this round.`;
   return {
     sword: 'Bypass Guard and half of armor.',
     spear: 'Act before ordinary attacks. Guard can stop it.',
@@ -210,7 +233,7 @@ function actionHint(option, fighter) {
     mace: 'Ignore equipment armor. Personal Defense and Guard still protect.',
     greatsword: 'Powerful sweep through half of armor. Acts late; Guard reduces it.',
     dagger: 'Predict Strike: parry half its damage, then counter. Weapon techniques get through.',
-    trident: 'Low damage; net raises next-round attack costs. Guard blocks the net; Guard or Recover clears it.',
+    trident: `Low damage; net raises next-round attack costs. Guard blocks the net; Guard or ${option.rulesVersion >= 4 ? 'Focus' : 'Recover'} clears it.`,
   }[fighter.weapon];
 }
 function actionPanel() {
@@ -218,7 +241,7 @@ function actionPanel() {
   if (state.phase === 'outcome') return '<div class="control-panel" role="status">Final verdict</div>';
   if (state.phase === 'playback') {
     const names = state.pending.map((id, index) => getActionOptions(state.beforeRound, index).find(option => option.id === id)?.name || id);
-    return `<div class="control-panel resolution-panel"><span class="eyebrow">Round ${state.beforeRound.round} · Choices revealed</span><h2>${esc(names[0])} <span class="versus">vs</span> ${esc(names[1])}</h2><p>Moves resolve by priority, then initiative.</p><div class="resolution-status" role="status"><span aria-hidden="true">◆</span> Resolving the round…</div><small>The next round begins automatically.</small></div>`;
+    return `<div class="control-panel resolution-panel"><span class="eyebrow">Round ${state.beforeRound.round} · Choices revealed</span><h2>${esc(names[0])} <span class="versus">vs</span> ${esc(names[1])}</h2><p>${state.duel.version >= 5 ? 'Moves resolve by priority, then faster choice.' : 'Moves resolve by priority, then initiative.'}</p><div class="resolution-status" role="status"><span aria-hidden="true">◆</span> Resolving the round…</div><small>The next round begins automatically.</small></div>`;
   }
   if (state.duel.status !== 'active') return onlineMode() ? onlineResultPanel() : resultPanel();
   const index = state.actionTurn;
@@ -230,7 +253,7 @@ function actionPanel() {
   const opening = onlineMode() && Number(onlineView.actionOpensAt) > Date.now();
   const available = !committed && !onlineBusy && !onlineOffline && !opening;
   const detail = available ? commandPreviewMarkup(preview, fighter) : `<strong>${opening ? 'Preparing the next round' : esc(phase.label)}</strong><span>${opening ? 'Your full 20-second choice window opens after the reveal.' : committed ? 'Both moves will reveal together.' : onlineOffline ? 'Your duel will update when the connection returns.' : 'Your choice is being sent to the arena.'}</span>`;
-  return `<div class="control-panel command-panel"><div class="command-heading"><span class="eyebrow">${esc(fighter.character.name)} · Battle commands</span><h2>${esc(phase.label)}</h2></div>${choiceTimerMarkup()}<div class="action-grid">${options.map((option, optionIndex) => `<button class="action-card command-${option.id} ${available && option.id === preview.id ? 'previewed' : ''}" title="${esc(option.description)}" aria-describedby="command-preview" data-action="fight" data-value="${option.id}" ${option.enabled && available ? '' : 'disabled'}><span class="command-top"><span class="choice-title"><kbd>${optionIndex + 1}</kbd> ${esc(option.name)}</span><span class="command-cost">${option.cost} SP</span></span><span class="choice-description">${esc(actionPreview(option).label)}</span>${option.enabled ? '' : '<span class="unavailable">Not enough stamina</span>'}</button>`).join('')}</div><div class="command-preview" id="command-preview">${detail}</div><small>${committed ? 'Choices reveal together when your rival is ready.' : 'Keys 1–4 · Higher priority acts first'}</small></div>`;
+  return `<div class="control-panel command-panel"><div class="command-heading"><span class="eyebrow">${esc(fighter.character.name)} · Battle commands</span><h2>${esc(phase.label)}</h2></div>${choiceTimerMarkup()}<div class="action-grid">${options.map((option, optionIndex) => `<button class="action-card command-${option.id} ${available && option.id === preview.id ? 'previewed' : ''}" title="${esc(option.description)}" aria-describedby="command-preview" data-action="fight" data-value="${option.id}" ${option.enabled && available ? '' : 'disabled'}><span class="command-top"><span class="choice-title"><kbd>${optionIndex + 1}</kbd> ${esc(option.name)}</span><span class="command-cost">${option.cost} SP</span></span><span class="choice-description">${esc(actionPreview(option).label)}</span>${option.enabled ? '' : '<span class="unavailable">Not enough stamina</span>'}</button>`).join('')}</div><div class="command-preview" id="command-preview">${detail}</div><small>${committed ? 'Choices reveal together when your rival is ready.' : state.duel.version >= 5 ? 'Keys 1–4 · Priority first, then faster choice' : 'Keys 1–4 · Higher priority acts first'}</small></div>`;
 }
 function commandPreviewMarkup(option, fighter) {
   const preview = actionPreview(option);
@@ -279,9 +302,9 @@ function battle() {
   const phase = battlePhase(battleContext());
   const lastMessage = state.phase === 'playback' ? 'Both choices are revealed. The round resolves automatically.' : onlineMode() && onlineOffline ? 'Connection interrupted. Reconnecting to your duel…' : onlineBusy ? 'Sending your choice…' : onlineMode() && onlineView.pending[onlineView.you] ? 'Your choice is locked. Your rival’s move stays private until both are ready.' : duel.status === 'complete' ? state.mode === 'hotseat' ? duel.result.winner === null ? 'The duel ends in a draw.' : `${duel.fighters[duel.result.winner].character.name} wins the duel.` : outcomeReason(duel, onlineMode() ? onlineView.you : 0) : roundSummary(duel);
   return `${header()}${onlineMode() ? onlineRoomBar() : ''}<div class="battle-header"><div><span class="eyebrow">${duel.status === 'active' ? `Round ${duel.round} of ${RULES.MAX_ROUNDS}` : 'Duel complete'}</span><h1>${esc(phase.label)}</h1></div><span class="badge battle-state state-${phase.id}">${state.phase === 'playback' ? 'Resolving' : duel.status === 'active' ? 'Private choices' : 'Final result'}</span></div>
-    <div class="classic-battle"><section class="arena-panel"><div class="arena-stage ${state.reaction ? `reaction-${state.reaction}` : ''}"><div class="fighter-cards battle-hud">${fighterCard(0)}${fighterCard(1)}</div>${renderArena(duel, { fit: 'meet' })}${state.reaction === 'tomato' ? '<div class="tomato-effect" aria-hidden="true">🍅</div>' : ''}${state.reaction === 'cheer' ? '<div class="cheer-effect" aria-hidden="true">✦ ✦ ✦</div>' : ''}</div></section><div class="battle-console"><section class="battle-dialogue" aria-label="Battle message"><span class="eyebrow">${state.phase === 'playback' ? `Round ${duel.round} reveal` : duel.lastRound ? `Round ${duel.lastRound.round} recap` : 'The duel begins'}</span><p role="status">${esc(lastMessage)}</p><small>${state.phase === 'playback' ? 'Both moves are revealed.' : duel.status === 'complete' ? 'The duel has ended.' : onlineMode() ? 'Your rival’s chosen move stays hidden until the reveal.' : 'Both moves reveal together.'}</small></section>${actionPanel()}</div></div>
+    <div class="classic-battle"><section class="arena-panel"><div class="arena-stage first-person-stage ${state.reaction ? `reaction-${state.reaction}` : ''}"><div class="fighter-cards battle-hud">${fighterCard(0)}${fighterCard(1)}</div>${playableArena(duel)}${state.reaction === 'tomato' ? '<div class="tomato-effect" aria-hidden="true">🍅</div>' : ''}${state.reaction === 'cheer' ? '<div class="cheer-effect" aria-hidden="true">✦ ✦ ✦</div>' : ''}</div></section><div class="battle-console"><section class="battle-dialogue" aria-label="Battle message"><span class="eyebrow">${state.phase === 'playback' ? `Round ${duel.round} reveal` : duel.lastRound ? `Round ${duel.lastRound.round} recap` : 'The duel begins'}</span><p role="status">${esc(lastMessage)}</p><small>${state.phase === 'playback' ? 'Both moves are revealed.' : duel.status === 'complete' ? 'The duel has ended.' : onlineMode() ? 'Your rival’s chosen move stays hidden until the reveal.' : 'Both moves reveal together.'}</small></section>${actionPanel()}</div></div>
     <details class="battle-history"><summary>Battle chronicle${duel.lastRound ? ` · Round ${duel.lastRound.round}` : ''}</summary><section class="panel battle-log"><ol>${entries.length ? entries.map(entry => `<li class="log-entry ${esc(entry.type || '')}"><span class="log-round">${entry.round ? `R${entry.round}` : '•'}</span><span>${esc(entry.text || entry)}</span></li>`).join('') : '<li class="log-entry">Choose an action. Both fighters commit before the reveal.</li>'}</ol></section></details>
-    <details class="help-details"><summary>Fighter attributes and counterplay</summary>${duel.fighters.map(fighter => `<h3>${esc(fighter.character.name)}</h3>${statChips(fighter.character)}`).join('')}<p>Guard acts early. Priority resolves before initiative; equal initiative alternates the first fighter. Feint, Guard Break, and Chain Sweep bypass Guard. Armor Crush ignores equipment armor, while personal Defense still helps. Dagger Riposte halves an ordinary Strike and counters if its fighter survives. Any weapon technique bypasses Riposte; Guard or Recover makes it waste stamina. Recover acts late. Equipment remains locked until the duel ends.</p></details>
+    <details class="help-details"><summary>Fighter attributes and counterplay</summary>${duel.fighters.map(fighter => `<h3>${esc(fighter.character.name)}</h3>${statChips(fighter.character)}`).join('')}<p>Guard acts early. ${duel.version >= 5 ? 'At equal move priority, the faster accepted choice acts first; exact ties alternate. Guard and Riposte ready before attacks. Online timing uses server receipt; connection latency counts. Pass & play measures each fighter’s own choice window. Practice compares your choice against a three-second bot response.' : 'Priority resolves before initiative; equal initiative alternates the first fighter.'} Feint, Guard Break, and Chain Sweep bypass Guard. Armor Crush ignores equipment armor, while personal Defense still helps. Dagger Riposte halves an ordinary Strike and counters if its fighter survives. Any weapon technique bypasses Riposte; Guard or ${getDefaultAction(duel) === 'recover' ? 'Recover' : 'Focus'} makes it waste stamina. ${duel.version === 3 ? 'Recover acts late.' : `Focus acts last and prepares +3 attack power for the next round only. Stamina refills at each round end based on Dexterity.${duel.version === 4 ? ' Speed lowers attack costs.' : ''}`} Equipment remains locked until the duel ends.</p></details>
     ${onlineMode() ? '' : `<details class="help-details"><summary>Local crowd reactions</summary><div class="audience-controls"><button class="button ghost" data-action="reaction" data-value="cheer" aria-label="Preview crowd cheer" ${state.phase === 'playback' ? 'disabled' : ''}>Cheer</button><button class="button ghost" data-action="reaction" data-value="tomato" aria-label="Preview tomato throw" ${state.phase === 'playback' ? 'disabled' : ''}>Throw tomato</button><small>Cosmetic practice reactions.</small></div></details>`}
     `;
 }
@@ -295,12 +318,12 @@ function choiceTimerMarkup() {
   if (onlineMode() && Number(onlineView.actionOpensAt) > Date.now()) return `<p class="duel-deadline" role="timer">Choices open in <span data-deadline="${onlineView.actionOpensAt}">${Math.ceil((onlineView.actionOpensAt - Date.now()) / 1000)}</span>s · then ${RULES.TURN_SECONDS}s to choose</p>`;
   const seconds = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
   const duration = (onlineMode() ? onlineView?.rules?.actionMs : RULES.TURN_SECONDS * 1000) || RULES.TURN_SECONDS * 1000;
-  return `<div class="choice-clock" role="timer" data-clock-deadline="${deadline}" data-clock-duration="${duration}"><div><strong><span data-deadline="${deadline}">${seconds}</span>s</strong><span>${onlineMode() && onlineView.pending[onlineView.you] ? 'Waiting for rival' : 'Choose your move'} · timeout: Recover</span></div><progress max="${duration}" value="${Math.max(0, deadline - Date.now())}" aria-label="Time remaining to choose a move"></progress></div>`;
+  return `<div class="choice-clock" role="timer" data-clock-deadline="${deadline}" data-clock-duration="${duration}"><div><strong><span data-deadline="${deadline}">${seconds}</span>s</strong><span>${onlineMode() && onlineView.pending[onlineView.you] ? 'Waiting for rival' : 'Choose your move'} · timeout: ${getDefaultAction(state.duel) === 'recover' ? 'Recover' : 'Focus'}</span></div><progress max="${duration}" value="${Math.max(0, deadline - Date.now())}" aria-label="Time remaining to choose a move"></progress></div>`;
 }
 function deadlineMarkup() {
   if (!onlineView?.deadline) return '';
   const seconds = Math.max(0, Math.ceil((onlineView.deadline - Date.now()) / 1000));
-  const fallback = onlineView.phase === 'equipment' ? 'default equipment' : onlineView.phase === 'mercy' ? 'spare' : 'Recover';
+  const fallback = onlineView.phase === 'equipment' ? 'default equipment' : onlineView.phase === 'mercy' ? 'spare' : onlineView.duel && getDefaultAction(onlineView.duel) === 'recover' ? 'Recover' : 'Focus';
   return `<p class="duel-deadline" role="timer"><span data-deadline="${onlineView.deadline}">${seconds}</span>s remaining · timeout: ${fallback}</p>`;
 }
 function onlineRoomBar() {
@@ -343,11 +366,13 @@ function useOnlineSession(session) {
       state.drafts[0] = structuredClone(state.drafts[0]);
       delete state.drafts[0].id;
       if (session?.character && !session.alive) state.drafts[0].name = `${session.character.name.slice(0, 20)} II`;
+      state.nameDrafts[0] = state.drafts[0].name;
       state.creatorStep = 'name'; state.nameIndex = 0; state.creatorIndex = 0;
     }
     state.locked[0] = false;
     if (session?.character && !session.alive && deathReceipt(session.character.id) === 'complete') {
       state.drafts[0] = defaults()[0]; state.creatorStep = 'name'; state.nameIndex = 0; state.creatorIndex = 0;
+      state.nameDrafts[0] = null;
     }
   }
 }
@@ -517,7 +542,7 @@ async function runExecutionPlayback(transition) {
   try {
     await render({ keepExecution: true, retainArena: true });
     if (transition !== executionPlayback || !['battle', 'tournament-spectator'].includes(state.screen)) return;
-    await playExecutionAnimation(app.querySelector('.arena-stage'), transition.event, { signal: transition.controller.signal, onCue: playAudioCue });
+    await playParticipantExecution(app.querySelector('.arena-stage'), transition.event, { signal: transition.controller.signal, onCue: playAudioCue });
   } catch (error) {
     if (transition === executionPlayback) state.error = `The verdict is final. Its animation could not finish: ${error.message}`;
   } finally {
@@ -610,10 +635,12 @@ async function resetAfterDeath(transition) {
     if (!transition.online && state.mode === 'hotseat') {
       const replacement = defaults()[transition.loser]; replacement.name = '';
       state.drafts = state.profiles.map((profile, index) => index === transition.loser ? replacement : structuredClone(profile.character));
+      state.nameDrafts[transition.loser] = null;
       state.locked = state.profiles.map(profile => profile.alive);
       state.nameIndex = transition.loser; state.creatorIndex = transition.loser;
     } else {
       state.profiles = []; state.drafts = defaults(); state.locked = [false, false]; state.nameIndex = 0; state.creatorIndex = 0;
+      state.nameDrafts = [null, null];
     }
     state.creatorStep = 'name';
     state.pending = [null, null]; state.decision = null; state.error = ''; state.reaction = null;
@@ -991,7 +1018,7 @@ async function tutorialMove(action) {
   tutorialPlaying = true;
   try {
     await render();
-    await playBattleAnimation(app.querySelector('.arena-stage'), buildAnimationSteps(before.duel, after.duel), { signal: controller.signal, onCue: playAudioCue });
+    await playParticipantRound(app.querySelector('.arena-stage'), buildAnimationSteps(before.duel, after.duel), { signal: controller.signal, onCue: playAudioCue });
   } finally {
     if (tutorialController === controller && state.screen === 'tutorial') {
       tutorialState = after; tutorialPlaying = false; tutorialController = null; await render();
@@ -1009,7 +1036,7 @@ function syncArenaChat() {
 }
 function syncGameAudio() {
   if (!arrivalComplete) { audio.setScene({ kind: 'menu' }); return; }
-  if (presetReview || spectatorReview) { audio.setScene({ kind: 'silent' }); return; }
+  if (presetReview || spectatorReview || firstPersonReview) { audio.setScene({ kind: 'silent' }); return; }
   const inBattle = state.screen === 'tutorial' || state.duel && (['battle', 'tournament-spectator', 'tournament-entrance'].includes(state.screen)
     || state.screen === 'handoff' && state.handoff?.kind === 'action');
   const entering = state.screen === 'tournament-entrance' && tournamentView?.match?.duelId;
@@ -1025,7 +1052,7 @@ async function render({ keepPlayback = false, keepExecution = false, keepOutcome
   ensureWinnerReveal();
   const version = ++renderVersion;
   app.classList?.toggle('menu-scene', state.screen === 'menu');
-  const arenaKey = onlineMode() ? verdictKey(tournamentView || onlineView) : `local:${localDuelId}`;
+  const arenaKey = `${onlineMode() ? verdictKey(tournamentView || onlineView) : `local:${localDuelId}`}:${state.screen === 'battle' ? playerViewIndex() : 'stands'}`;
   const retained = retainArena && renderedArena?.screen === state.screen && renderedArena.key === arenaKey ? renderedArena : null;
   const focused = document.activeElement?.dataset;
   renderBusy = true;
@@ -1050,7 +1077,7 @@ async function render({ keepPlayback = false, keepExecution = false, keepOutcome
   const temporary = onlineClient?.sessionMode === 'temporary';
   const content = state.screen === 'tutorial' ? `${header()}${renderFightTutorial(tutorialState, { playing: tutorialPlaying })}` : menuPages.has(state.screen) ? `${header()}${state.screen === 'menu' ? renderMainMenu({ session: onlineSession, temporary }) : state.screen === 'match-browser' ? renderMatchBrowser({ ...menuData, temporary }) : state.screen === 'leaderboard' ? renderLeaderboard({ ...menuData, temporary }) : renderGraveyard({ ...menuData, temporary })}` : state.screen === 'creator' ? creator() : state.screen === 'loadout' ? loadout() : state.screen === 'handoff' ? handoff() : state.screen === 'online-lobby' ? onlineLobby() : state.screen === 'tournament-lobby' ? `${header()}${renderTournamentLobby(tournamentView)}` : state.screen === 'tournament-spectator' ? `${header()}${renderTournamentSpectator(spectatorPlayback ? { ...tournamentView, phase: 'battle' } : tournamentView, { playing: Boolean(spectatorPlayback), duel: state.duel, verdictPhase: verdictReveal ? 'winner' : null, verdictBusy: onlineBusy || onlineOffline, executing: Boolean(executionPlayback) })}` : state.screen === 'tournament-entrance' ? tournamentEntrance() : battle();
   const notice = state.error || (onlineMode() ? onlineClient.storageWarning : null);
-  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.10.1</span></footer></main>`;
+  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.14.1</span></footer></main>`;
   if (retained) {
     const replacementStage = app.querySelector('.arena-stage');
     const originalHud = retained.stage.querySelector('.battle-hud');
@@ -1076,8 +1103,8 @@ async function render({ keepPlayback = false, keepExecution = false, keepOutcome
   if (state.screen === 'tournament-entrance') mountTournamentGate();
 }
 function cpuLoadout(character) {
-  const { strength, dexterity, speed, defense } = character.stats;
-  const preferred = dexterity + speed >= strength + defense ? { weapon: 'spear', armor: 'light' } : strength >= defense ? { weapon: 'axe', armor: 'medium' } : { weapon: 'sword', armor: 'heavy' };
+  const { strength, dexterity, defense, intelligence } = character.stats;
+  const preferred = dexterity + intelligence >= strength + defense ? { weapon: 'spear', armor: 'light' } : strength >= defense ? { weapon: 'axe', armor: 'medium' } : { weapon: 'sword', armor: 'heavy' };
   const weapons = [preferred.weapon, ...Object.keys(WEAPONS).filter(id => id !== preferred.weapon)];
   const armors = [preferred.armor, ...Object.keys(ARMORS).filter(id => id !== preferred.armor)];
   const helmets = Object.keys(HELMETS);
@@ -1096,6 +1123,7 @@ function startLoadouts() {
 function prepareTurn() {
   stopLocalTurnClock();
   state.pending = [null, null];
+  state.choiceElapsedMs = [null, null];
   state.actionTurn = 0;
   state.phase = 'select';
   state.cpuAction = state.mode === 'cpu' ? chooseCpuAction(state.duel, 1, ['aggressive', 'cautious', 'patient'][state.practiceDuels % 3]) : null;
@@ -1110,7 +1138,7 @@ function stopLocalTurnClock() {
 function armLocalTurnClock() {
   stopLocalTurnClock();
   if (onlineMode() || state.duel?.status !== 'active' || state.phase !== 'select' || state.screen !== 'battle') return;
-  const clock = { duel: state.duel, round: state.duel.round, index: state.actionTurn, deadline: Date.now() + RULES.TURN_SECONDS * 1000 };
+  const clock = { duel: state.duel, round: state.duel.round, index: state.actionTurn, openedAt: Date.now(), deadline: Date.now() + RULES.TURN_SECONDS * 1000 };
   localTurnClock = clock;
   state.turnDeadline = clock.deadline;
   localTurnTimer = setTimeout(() => { if (clock === localTurnClock) expireLocalTurn(); }, RULES.TURN_SECONDS * 1000);
@@ -1118,14 +1146,16 @@ function armLocalTurnClock() {
 function expireLocalTurn() {
   const clock = localTurnClock;
   if (!clock || clock.duel !== state.duel || clock.round !== state.duel.round || clock.index !== state.actionTurn || Date.now() < clock.deadline) return;
-  commitLocalAction('recover');
+  commitLocalAction(getDefaultAction(state.duel));
 }
 function commitLocalAction(value) {
   if (onlineMode() || state.screen !== 'battle' || state.phase !== 'select' || state.duel?.status !== 'active' || state.pending[state.actionTurn]) return;
   if (!getActionOptions(state.duel, state.actionTurn).some(option => option.id === value && option.enabled)) return;
+  state.choiceElapsedMs ??= [null, null];
+  state.choiceElapsedMs[state.actionTurn] = localTurnClock ? Math.min(RULES.TURN_SECONDS * 1000, Math.max(0, Date.now() - localTurnClock.openedAt)) : RULES.TURN_SECONDS * 1000;
   stopLocalTurnClock();
   state.pending[state.actionTurn] = value;
-  if (state.mode === 'cpu') { state.pending[1] = state.cpuAction; finishRound(); }
+  if (state.mode === 'cpu') { state.pending[1] = state.cpuAction; state.choiceElapsedMs[1] = 3000; finishRound(); }
   else if (state.actionTurn === 0) { state.actionTurn = 1; state.handoff = { kind: 'action', next: 1 }; state.screen = 'handoff'; void render(); }
   else finishRound();
 }
@@ -1178,7 +1208,7 @@ async function runRoundPlayback(transition) {
   try {
     await render({ keepPlayback: true });
     if (transition !== roundPlayback || state.screen !== 'battle') return;
-    await playBattleAnimation(app.querySelector('.arena-stage'), transition.steps, { signal: transition.controller.signal, onCue: playAudioCue });
+    await playParticipantRound(app.querySelector('.arena-stage'), transition.steps, { signal: transition.controller.signal, onCue: playAudioCue });
   } catch (error) {
     if (transition === roundPlayback) state.error = `Combat animation could not play: ${error.message}`;
   } finally {
@@ -1188,7 +1218,7 @@ async function runRoundPlayback(transition) {
 function finishRound() {
   if (roundPlayback || state.phase !== 'select') return;
   const before = state.duel;
-  const after = resolveRound(before, state.pending);
+  const after = resolveRound(before, state.pending, { choiceElapsedMs: state.choiceElapsedMs });
   clearTimeout(reactionTimer);
   state.reaction = null;
   state.beforeRound = before;
@@ -1200,7 +1230,7 @@ function finishRound() {
   roundPlayback = transition;
   void runRoundPlayback(transition);
 }
-function newSession() {
+function newSession({ preserveNames = false } = {}) {
   arenaChat?.setRoom(null);
   cancelRoundPlayback();
   stopExecutionPlayback();
@@ -1209,8 +1239,10 @@ function newSession() {
   tournamentView = null;
   stopLocalTurnClock();
   clearTimeout(reactionTimer);
+  if (!preserveNames) state.nameDrafts = [null, null];
   state.screen = 'creator'; state.profiles = []; state.drafts = defaults(); state.locked = [false, false];
-  if (state.mode === 'hotseat') state.drafts[1].name = '';
+  if (state.nameDrafts[0] !== null) state.drafts[0].name = state.nameDrafts[0];
+  if (state.mode === 'hotseat') state.drafts[1].name = state.nameDrafts[1] ?? '';
   state.creatorStep = presetReview ? 'customize' : 'name'; state.creatorIndex = 0; state.nameIndex = 0;
   state.duel = null; state.error = ''; state.decision = null; state.practiceDuels = 0;
   state.phase = 'select'; state.pending = [null, null]; state.cpuAction = null; state.beforeRound = null; state.reaction = null; render();
@@ -1236,6 +1268,7 @@ app.addEventListener('input', event => {
   const index = Number(event.target.dataset.name);
   if (state.locked[index]) return;
   state.drafts[index].name = event.target.value;
+  state.nameDrafts[index] = event.target.value;
   const nextName = app.querySelector('[data-action="name-next"]');
   if (nextName) nextName.disabled = !nameValid(index);
   const createButton = app.querySelector('[data-action="create"]');
@@ -1306,6 +1339,7 @@ app.addEventListener('click', async event => {
       event.preventDefault?.();
       if (index !== state.nameIndex || !nameValid(index)) return;
       state.drafts[index].name = state.drafts[index].name.trim();
+      state.nameDrafts[index] = state.drafts[index].name;
       if (state.mode === 'hotseat' && index === 0 && !state.locked[1] && !nameValid(1)) state.nameIndex = 1;
       else { state.creatorStep = 'customize'; state.creatorIndex = index; }
       await render(); window.scrollTo({ top: 0, behavior: 'instant' });
@@ -1324,7 +1358,7 @@ app.addEventListener('click', async event => {
     else if (action === 'mode') {
       onlineEpoch += 1; onlineView = null; onlineReplacement = false;
       const epoch = onlineEpoch;
-      state.mode = value; newSession();
+      state.mode = value; newSession({ preserveNames: state.screen === 'creator' });
       if (onlineMode()) {
         const session = await onlineClient.session({ create: false });
         if (epoch !== onlineEpoch || !onlineMode()) return;
@@ -1447,6 +1481,7 @@ app.addEventListener('click', async event => {
         else {
           state.drafts = defaults();
           state.drafts[0].name = `${own.character.name.slice(0, 20)} II`;
+          state.nameDrafts = [state.drafts[0].name, null];
           state.creatorStep = 'name'; state.nameIndex = 0; state.creatorIndex = 0;
           state.locked = [false, false]; onlineReplacement = true; state.screen = 'creator'; await render();
           window.scrollTo({ top: 0, behavior: 'instant' });
@@ -1460,6 +1495,7 @@ app.addEventListener('click', async event => {
           if (!state.locked[characterIndex]) {
             delete character.id;
             character.name = `${character.name.slice(0, 16)} II`;
+            state.nameDrafts[characterIndex] = character.name;
           }
         });
         state.creatorIndex = state.locked.findIndex(locked => !locked);
@@ -1489,10 +1525,14 @@ globalThis.addEventListener?.('pageshow', () => audio.setVisible(document.visibi
 app.innerHTML = '<main class="app-shell"><section class="panel loading-screen" role="status"><h1>Opening the arena…</h1><p>Loading your character creator.</p></section></main>';
 audio.setVisible(document.visibilityState !== 'hidden');
 void audio.load().then(loaded => {
-  if (loaded && !presetReview && !spectatorReview) void audio.startMusic();
+  if (loaded && !presetReview && !spectatorReview && !firstPersonReview) void audio.startMusic();
 });
 try {
-  if (spectatorReview) {
+  if (firstPersonReview) {
+    audio.setScene({ kind: 'silent' });
+    const { mountFirstPersonPreview } = await import('./first-person-preview.js');
+    await mountFirstPersonPreview(app);
+  } else if (spectatorReview) {
     const { mountSpectatorPreview } = await import('./spectator-preview.js');
     await mountSpectatorPreview(app);
   } else {
@@ -1519,5 +1559,5 @@ try {
   }
 } catch (error) {
   arrival?.dispose(); arrivalComplete = true;
-  app.innerHTML = `<main class="app-shell"><section class="panel loading-screen" role="alert"><h1>${spectatorReview ? 'The spectator preview could not load.' : 'The character creator could not load.'}</h1><p>${esc(error.message)}</p><a class="button primary" href="${spectatorReview ? '/?spectator-frame-review=1' : '/'}">Try again</a></section></main>`;
+  app.innerHTML = `<main class="app-shell"><section class="panel loading-screen" role="alert"><h1>${firstPersonReview ? 'The combat art preview could not load.' : spectatorReview ? 'The spectator preview could not load.' : 'The character creator could not load.'}</h1><p>${esc(error.message)}</p><a class="button primary" href="${firstPersonReview ? '/?first-person-art-review=1' : spectatorReview ? '/?spectator-frame-review=1' : '/'}">Try again</a></section></main>`;
 }

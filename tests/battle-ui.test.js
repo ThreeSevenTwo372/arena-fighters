@@ -34,9 +34,51 @@ const viewFor = (duel, revision = 1, extra = {}) => ({
   duel, decision: null, rematchReady: [false, false], deadline: 120000, ...extra,
 });
 
+test('participant cameras follow the owned seat and resolved playback uses the first-person adapter', async () => {
+  const ui = fixture({ firstPerson: true });
+  await ui.startPractice();
+  assert.match(ui.getHtml(), /data-viewer-index="0"/);
+  const animation = deferred(); ui.setAnimationHook(() => animation.promise);
+  await ui.click('fight', 'strike'); await ui.settle();
+  assert.equal(ui.firstPersonCalls.length, 1);
+  assert.equal(ui.animationCalls.length, 0);
+  animation.resolve(); await ui.settle();
+  ui.state.mode = 'online';
+  ui.applyOnlineView(viewFor(initialDuel(), 1, { you: 1 })); await ui.render();
+  assert.match(ui.getHtml(), /data-viewer-index="1"/);
+  assert.equal(ui.cameraRenders.at(-1), 1);
+});
+
+test('Pass & play initiative measures each private turn and excludes time spent passing the device', async () => {
+  const ui = fixture({ firstPerson: true });
+  await ui.startPractice('hotseat');
+  await ui.click('continue-handoff'); await ui.settle();
+  assert.match(ui.getHtml(), /data-viewer-index="0"/);
+  await ui.advanceTo(ui.now() + 4000); await ui.click('fight', 'strike'); await ui.settle();
+  await ui.advanceTo(ui.now() + 30000);
+  await ui.click('continue-handoff'); await ui.settle();
+  assert.match(ui.getHtml(), /data-viewer-index="1"/);
+  const animation = deferred(); ui.setAnimationHook(() => animation.promise);
+  await ui.advanceTo(ui.now() + 1000); await ui.click('fight', 'strike'); await ui.settle();
+  assert.deepEqual(plain(ui.state.choiceElapsedMs), [4000, 1000]);
+  animation.resolve(); await ui.settle();
+  assert.deepEqual(plain(ui.state.duel.lastRound.order), [1, 0]);
+  assert.deepEqual(plain(ui.state.duel.lastRound.choiceElapsedMs), [4000, 1000]);
+  assert.deepEqual(plain(ui.state.choiceElapsedMs), [null, null]);
+});
+
+test('Practice records a fixed three-second bot choice without exposing its move early', async () => {
+  const ui = fixture(); await ui.startPractice();
+  const animation = deferred(); ui.setAnimationHook(() => animation.promise);
+  await ui.advanceTo(ui.now() + 1200); await ui.click('fight', 'strike'); await ui.settle();
+  assert.deepEqual(plain(ui.state.choiceElapsedMs), [1200, 3000]);
+  animation.resolve(); await ui.settle();
+  assert.deepEqual(plain(ui.state.duel.lastRound.choiceElapsedMs), [1200, 3000]);
+});
+
 // Execute real render, click, key, animation-completion and timer code. Replace
 // only art/network/DOM boundaries, with a clock that advances deterministically.
-function fixture({ receiptValues = new Map() } = {}) {
+function fixture({ receiptValues = new Map(), firstPerson = false } = {}) {
   let now = 100000;
   let nextTimer = 0;
   const timers = new Map();
@@ -50,13 +92,17 @@ function fixture({ receiptValues = new Map() } = {}) {
   const animationCalls = [];
   const executionCalls = [];
   const outcomeCalls = [];
+  const cameraRenders = [];
+  const firstPersonCalls = [];
+  const firstPersonExecutions = [];
+  const arena = { querySelector: selector => selector === '.first-person-arena' ? {} : null };
   const app = {
     innerHTML: '', addEventListener: (kind, handler) => handlers.set(kind, handler),
     querySelectorAll: selector => selector === '[data-action="fight"]' && result
       ? combat.getActionOptions(result.state.duel, result.state.actionTurn).map(option => ({
         disabled: !option.enabled, click: () => result.click('fight', option.id),
       })) : [],
-    querySelector: () => null, setAttribute() {},
+    querySelector: selector => firstPerson && selector === '.arena-stage' ? arena : null, setAttribute() {},
   };
   const schedule = (fn, delay, interval = false) => {
     const id = ++nextTimer;
@@ -78,6 +124,9 @@ function fixture({ receiptValues = new Map() } = {}) {
     document: { querySelector: () => app, addEventListener: (kind, handler) => handlers.set(`document-${kind}`, handler), activeElement: null },
     OnlineClient: class {},
     prepareCleanAvatar: (...args) => prepareHook(...args), renderCleanAvatar: () => '', renderArena: () => '<div class="fixture-arena"></div>',
+    renderFirstPersonArena: (duel, options) => { cameraRenders.push(options.viewerIndex); return `<svg class="first-person-arena" data-viewer-index="${options.viewerIndex}"></svg>`; },
+    playFirstPersonBattleAnimation: (...args) => { firstPersonCalls.push(args); return animationHook(...args); },
+    playFirstPersonExecutionAnimation: (...args) => { firstPersonExecutions.push(args); return executionHook(...args); },
     buildAnimationSteps: () => [], playBattleAnimation: (...args) => {
       animationCalls.push(args);
       return animationHook(...args);
@@ -111,6 +160,9 @@ function fixture({ receiptValues = new Map() } = {}) {
   result.setExecutionHook = hook => { executionHook = hook; };
   result.setOutcomeHook = hook => { outcomeHook = hook; };
   result.animationCalls = animationCalls;
+  result.cameraRenders = cameraRenders;
+  result.firstPersonCalls = firstPersonCalls;
+  result.firstPersonExecutions = firstPersonExecutions;
   result.executionCalls = executionCalls;
   result.outcomeCalls = outcomeCalls;
   result.receiptValues = receiptValues;
@@ -175,6 +227,21 @@ test('a local action plays the full animation and opens the next round automatic
   assert.equal(ui.state.duel.round, 2, 'The removed Next round action cannot advance or reset the new turn.');
 });
 
+test('timeout and counterplay guidance matches new Focus and preserved Recover rules', async () => {
+  for (const version of [3, 4]) {
+    const ui = fixture(), original = initialDuel();
+    const duel = combat.createDuel(original.fighters.map(fighter => ({ character: fighter.character, weapon: fighter.weapon, armor: fighter.armor })), { version });
+    ui.state.mode = 'online';
+    ui.applyOnlineView(viewFor(duel, 1), { animate: false }); await ui.settle();
+    const label = version === 3 ? 'Recover' : 'Focus';
+    assert.match(ui.getHtml(), new RegExp(`timeout: ${label}`));
+    assert.match(ui.getHtml(), new RegExp(`Guard or ${label} makes it waste stamina`));
+    assert.match(ui.getHtml(), new RegExp(`data-value="${label.toLowerCase()}"`));
+    assert.match(ui.getHtml(), /<strong>4<\/strong> Speed/);
+    if (version === 4) assert.doesNotMatch(ui.getHtml(), /Recover/);
+  }
+});
+
 test('committed rival choices change only public readiness before the reveal', async () => {
   const ui = fixture();
   const duel = initialDuel();
@@ -229,7 +296,7 @@ test('online headings distinguish choosing, sending, committed, and reconnecting
   assert.deepEqual(plain(ui.state.pending), [null, null]);
 });
 
-test('the 20-second deadline defaults to Recover exactly once, never a millisecond early', async () => {
+test('the 20-second deadline defaults to Focus exactly once, never a millisecond early', async () => {
   const ui = fixture();
   const animation = deferred();
   ui.setAnimationHook(() => animation.promise);
@@ -242,7 +309,7 @@ test('the 20-second deadline defaults to Recover exactly once, never a milliseco
   assert.equal(ui.state.pending[0], null);
   await ui.advanceTo(start + 20000);
   assert.equal(ui.state.phase, 'playback');
-  assert.equal(ui.state.pending[0], 'recover');
+  assert.equal(ui.state.pending[0], 'focus');
   assert.equal(ui.animationCalls.length, 1);
   await ui.advanceTo(start + 70000);
   assert.equal(ui.animationCalls.length, 1);
@@ -253,7 +320,7 @@ test('the 20-second deadline defaults to Recover exactly once, never a milliseco
   assert.equal(ui.state.turnDeadline, ui.now() + 20000);
 });
 
-test('a late attack click defaults to Recover even if the browser has delayed its timeout callback', async () => {
+test('a late attack click defaults to Focus even if the browser has delayed its timeout callback', async () => {
   const ui = fixture();
   const animation = deferred();
   ui.setAnimationHook(() => animation.promise);
@@ -262,11 +329,11 @@ test('a late attack click defaults to Recover even if the browser has delayed it
   await ui.click('fight', 'strike');
   await ui.settle();
   assert.equal(ui.state.phase, 'playback');
-  assert.equal(ui.state.pending[0], 'recover');
+  assert.equal(ui.state.pending[0], 'focus');
   assert.equal(ui.animationCalls.length, 1);
   animation.resolve();
   await ui.settle();
-  assert.equal(ui.state.duel.lastRound.actions[0], 'recover');
+  assert.equal(ui.state.duel.lastRound.actions[0], 'focus');
 });
 
 test('an old timeout cannot consume the next round while that round waits for art rendering', async () => {
@@ -325,7 +392,7 @@ test('Pass & play gives each player a private timed turn and advances to the nex
   assert.equal(ui.state.pending[1], null);
   await ui.advanceTo(secondStart + 20000);
   assert.equal(ui.state.phase, 'playback');
-  assert.deepEqual(plain(ui.state.pending), ['guard', 'recover']);
+  assert.deepEqual(plain(ui.state.pending), ['guard', 'focus']);
   animation.resolve();
   await ui.settle();
   assert.equal(ui.state.screen, 'handoff');
@@ -551,7 +618,7 @@ test('a final round and its queued execute verdict play in order before the late
   for (const combined of [true, false]) {
     const ui = fixture(), attack = deferred(), execution = deferred(), before = structuredClone(initialDuel());
     before.fighters[1].hp = 1;
-    const after = combat.resolveRound(before, ['strike', 'recover']);
+    const after = combat.resolveRound(before, ['strike', 'focus']);
     assert.equal(after.status, 'complete');
     ui.setAnimationHook(() => attack.promise); ui.setExecutionHook(() => execution.promise);
     ui.state.mode = 'online'; ui.applyOnlineView(viewFor(before), { animate: false }); await ui.settle();
@@ -624,7 +691,7 @@ test('a CPU victory grants mercy after WINNER and shows the human loser one popu
   const popup = deferred(), ui = fixture(); ui.setOutcomeHook(() => popup.promise); await ui.startPractice();
   const saved = plain(ui.state.profiles[0].character);
   ui.state.duel = structuredClone(ui.state.duel); ui.state.duel.fighters[0].hp = 1; ui.state.cpuAction = 'strike';
-  await ui.click('fight', 'recover'); await ui.settle();
+  await ui.click('fight', 'focus'); await ui.settle();
   assert.equal(ui.state.duel.result.winner, 1); assert.equal(ui.state.decision, null);
   await ui.advanceTo(ui.now() + 5000);
   assert.equal(ui.state.decision, 'spare'); assert.equal(ui.outcomeCalls.length, 1); assert.equal(ui.outcomeCalls[0][1], 'spare');

@@ -20,10 +20,10 @@ test('styles make distinct legal decisions from the same public state without ad
   const base = createDuel(['A', 'B'].map(name => ({ character: character(name), weapon: 'sword', armor: 'medium' })));
   const cautiousRound = structuredClone(base); cautiousRound.round = 3;
   assert.equal(chooseCpuAction(cautiousRound, 0, 'cautious'), 'guard');
-  assert.equal(chooseCpuAction(cautiousRound, 0, 'aggressive'), 'strike');
-  const patientRound = structuredClone(base); patientRound.fighters[0].stamina = 7;
-  assert.equal(chooseCpuAction(patientRound, 0, 'patient'), 'recover');
-  assert.equal(chooseCpuAction(patientRound, 0, 'aggressive'), 'strike');
+  assert.equal(chooseCpuAction(cautiousRound, 0, 'aggressive'), 'technique', 'The v5 effective four-stat sword Feint offers more damage than Strike.');
+  const patientRound = structuredClone(base); patientRound.fighters[0].stamina = 5;
+  assert.equal(chooseCpuAction(patientRound, 0, 'patient'), 'focus');
+  assert.equal(chooseCpuAction(patientRound, 0, 'aggressive'), 'technique');
   for (const state of [base, cautiousRound, patientRound]) for (const style of Object.keys(BOT_STYLES)) {
     const before = structuredClone(state), action = chooseCpuAction(state, 0, style);
     assert.ok(getActionOptions(state, 0).some(option => option.id === action && option.enabled));

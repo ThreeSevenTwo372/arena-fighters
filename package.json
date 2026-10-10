@@ -1,9 +1,9 @@
 {
   "name": "arena-fighters-prototype",
-  "version": "0.10.1",
+  "version": "0.14.1",
   "private": true,
   "type": "module",
-  "description": "Arena Fighters with guided practice, Quick Duel invites, fair round timing, bot personalities, spectator reactions, Trident/Entangle and menu-only music.",
+  "description": "Arena Fighters with complete authored first-person pixel holds and server-owned choice-time initiative.",
   "engines": { "node": ">=24 <25" },
   "scripts": {
     "start": "node server.mjs",

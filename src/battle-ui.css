@@ -99,3 +99,4 @@
   .battle-shell .command-preview { min-height: 72px; }
 }
 @media (prefers-reduced-motion: reduce) { .battle-shell .resolution-status > span { animation: none; } }
+.stamina-regen-note { margin-left: 6px; font-size: 9px; white-space: nowrap; }

@@ -1,6 +1,27 @@
 # Gladiator Tournament Design and Build Plan
 
-## Release Readiness v001 — v0.10.0, October 9, 2026
+## First-person Combat v001 — v0.12.0, October 10, 2026
+
+The current local design uses first-person hands and equipment for playable battles and lessons, with existing two-avatar presentation for spectators. New rules v5 use four attributes and faster accepted choices at equal move priority; server-owned timing, protected saved identities and active v3/v4 compatibility are required. See [FIRST_PERSON_COMBAT.md](FIRST_PERSON_COMBAT.md) for the exact implemented contract. This local revision has not been published.
+
+The v0.11.0 and earlier descriptions below are historical for new-duel behavior.
+
+## Stamina and Focus v001 — v0.11.0, October 9, 2026
+
+The current local design is implemented as **v0.11.0**, with new duels using **rules v4**. The published game remains **v0.10.1**. The independent snapshot location is `releases/Arena_Fighters_v0.11.0_v001`; evidence and publication status are separate in `artifacts/Stamina_Focus_v001/VERIFICATION.json`.
+
+Stamina recovery is now automatic: after both moves resolve, living fighters restore `max(1, 2 + floor(Dexterity / 8) + trait adjustment)`, capped at maximum before the round-limit tiebreak. Base recovery is 2 at Dexterity 0–7 and 3 at Dexterity 8; Vigorous adds 1 and Ironhide subtracts 1. Dexterity retains its precise-weapon scaling. Speed improves initiative and discounts attack stamina costs by `floor(Speed / 4)`, with minimum Strike cost 2 and Technique cost 3.
+
+**Focus** replaces Recover for new duels. It costs 0 stamina, has priority −2, and adds +3 raw attack power before defenses to next round's Strike or Technique, including a triggered Riposte counter. It leaves the fighter open, clears Entangle when executed, does not stack, and expires after that next round if unused. Missing v4 actions default to Focus. Active v3 matches retain Recover, their old stamina calculations and acknowledged choices through completion.
+
+The nine weapons and three armor classes remain available, with cosmetic helmets, shared equipment registration and exact v013/v006 identities. Three optional coached rounds teach Guard versus Strike, Feint versus Guard and Focus versus Riposte, showing actual automatic recovery and the next-round bonus. Free temporary hosting, menu-only music and deferred durable online progression remain the selected scope.
+
+## Historical design and implementation notes — through v0.10.1
+
+The following concepts, timings, balance measurements and roadmaps describe their recorded versions. Current v4 behavior above supersedes their older Recover and stamina rules; historical measurements are not new v4 balance proof.
+
+
+### Release Readiness v001 — v0.10.0, October 9, 2026
 
 The menu now offers **Learn to fight**, three optional coached rounds using the shared combat rules and exact current male/female avatars, and **Quick Duel**, the existing private two-player flow with a shareable invitation link. Lessons are disposable, untimed, repeatable and guest-free; they preserve an owned surviving fighter and keep the condensed creator unchanged. Invitation URLs carry a public code and mode only, prefill the matching join field and never auto-join, replace an active match, or carry authentication.
 
@@ -16,13 +37,13 @@ Only **Where the Stars Remember** remains active as music. Active manifest publi
 
 Free temporary hosting and session-scoped records remain the selected scope. Durable online progression, coins and unlocks remain separate milestones. This is a **local implementation and independent release**, not a publication claim. Current automated, browser, preservation, package and deployment evidence is recorded separately in artifacts/Release_Readiness_v001/VERIFICATION.json. The preserved rollback is releases/Arena_Fighters_v0.9.4_v001. Physical phone/public-network play and fresh human balance/art judgment remain distinct from automated and resized-browser proof.
 
-## Preserved v0.9.4 documentation
+### Preserved v0.9.4 documentation
 
 Current local source is **v0.9.4, Arena Lobby Chat v001**. The independent snapshot is releases/Arena_Fighters_v0.9.4_v001; v0.9.3 Intro Theme is the rollback. Current source, browser, release and deployment status are recorded separately in artifacts/Arena_Chat_v001/VERIFICATION.json. The original concept and earlier implementation notes below remain historical context; the October 8 alpha roadmap records the current delivered scope.
 
 Build a browser game in which each player creates a gladiator, adapts equipment to each opponent, and accumulates tournament victories while keeping that character alive. The requested v0.7.0 playable scope is an eight-player sequential tournament. The earlier 2-to-8-player concept remains an expansion direction; smaller brackets are not part of the current implementation.
 
-## Agreed game concept
+### Agreed game concept
 
 - Players create a gladiator with a fixed point budget. Core attributes and creation traits remain fixed for that character's lifetime.
 - A first-tab 20-second sky-to-arena Flux arrival leads to NAME YOUR FIGHTER., then one compact screen for appearance, attribute values, and a trait. Attribute presets and explanations are removed from creation. The ten-trait catalog includes stronger bonuses with explicit drawbacks while preserving existing survivor traits.
@@ -35,7 +56,7 @@ Build a browser game in which each player creates a gladiator, adapts equipment 
 - A spared gladiator can enter another tournament. An executed gladiator cannot; its player creates a new character for another lobby.
 - Tournament victories belong to the individual character. The objective is to win as many tournaments as possible before that character dies.
 
-## Current playable rules
+### Current playable rules
 
 Use five attributes: Strength for heavy attacks and handling, Dexterity for precise weapons/techniques, Speed for initiative, Defense for health and armor effectiveness, and Intelligence for tactical efficiency plus small all-round fortune bonuses. The prototype uses 20 points and a cap of 8. Fortune is currently deterministic and capped at +1. Equal budgets constrain character creation; matchup testing and human play establish whether the choices are balanced. Actual equipment previews and rules are documented in [ONLINE_DUELS.md](ONLINE_DUELS.md).
 
@@ -51,7 +72,7 @@ Future remote cheers and tomatoes should remain cosmetic, with short cooldowns; 
 
 Current windows are 120 seconds for equipment, eight seconds for gate entrance, at most 20 seconds for each action, 90 seconds of disconnect grace, a five-second online winner reveal followed by 20 seconds for mercy, a distinct 20-second delegated crowd ballot, and six seconds between matches. Missing equipment defaults to sword/medium/no helmet; missing actions become Recover; mercy defaults to Spare. The first action deadline starts after gate entrance. See [TOURNAMENTS.md](TOURNAMENTS.md) for advancement, withdrawal, privacy, and persistence.
 
-## Build milestones
+### Build milestones
 
 | Milestone | Deliverable | Completion check |
 | --- | --- | --- |
@@ -60,7 +81,7 @@ Current windows are 120 seconds for equipment, eight seconds for gate entrance, 
 | 3. Complete tournament | Current scope: eight guests, automatic entry/draw, one active duel, live spectator seats, mercy, champion result, and another tournament; smaller brackets/reactions remain extensions | Local service checks complete an eight-guest seven-match bracket; spared identities return, retired identities stay retired, and titles are recorded once |
 | 4. Presentation and submission | Character appearance, arena artwork, animations, sound, mobile layout, public HTTPS URL, and submission materials | Real phone and laptop play; full public tournament; title, cover image, description, and game URL ready for the mission |
 
-## Multiplayer and persistence
+### Multiplayer and persistence
 
 The v0.7.0 service implements the default eight-player tournament and retains the earlier two-player rooms at `?duel-mode=1`. It uses one Node service and the existing atomic `.local-data/online-duels.json` store. Tournament members receive the current live spectator state; only the active pair can commit equipment, actions, or winner mercy. The original browser token key is unchanged, and persisted `activeTournament` restores the roster, match, and bracket. Public HTTPS hosting, real phone testing, smaller brackets, and remote crowd reactions remain pending. The ordinary v006 character renderer and v009 candidate review URL remain preserved.
 
@@ -74,7 +95,7 @@ Use an opaque guest identity to support room codes without player logins. Initia
 
 The service persists the resolved duel and mercy decision before advancing the bracket. Reconnects receive the current state and deadlines. The full eight-guest roster starts automatically, so no host can freeze the draw. An entrant who withdraws before a future scheduled match cannot enter another lobby until their forfeit and verdict resolve; an eliminated fighter whose verdict has resolved may leave and reenter. Guest identity supports casual persistence; it does not establish that each browser belongs to a unique person.
 
-## Validation
+### Validation
 
 Exercise legal attribute allocations and weapon and armor combinations with several tactical policies. Review unusually strong builds, initiative advantages, repeated optimal actions, and stamina deadlocks. Follow this with human matches; automated results alone do not show that prediction feels satisfying.
 
@@ -84,17 +105,17 @@ The separate [live local browser proof receipt](artifacts/Tournament_Flow_v001/B
 
 Test the public build on a phone and laptop. Until that check succeeds, local tests establish local behavior only.
 
-## Contest requirements
+### Contest requirements
 
 The [Handshake mission](https://joinhandshake.com/learn/create-a-multiplayer-game-8d7d59b5/) describes a game created with ChatGPT Work, published at a public URL, and joined by room code without player logins or installations. Confirm that the creation and publication workflow satisfies the mission before committing to a hosting route.
 
 The [official contest rules](https://go.joinhandshake.com/rs/390-ZTF-353/images/%5BAI_Skills_Studio_Challenge%5D_Contest_Official_Rules.pdf?version=0) require a project title, cover image, description, and URL submitted through the Handshake mission. They specify October 30, 2026 at 11:59 PM Pacific, which is October 31 at 2:59 AM Eastern. The mission overview advertises October 31. Plan around the deadline specified in the rules and aim to submit before the final day.
 
-## Later expansion
+### Later expansion
 
 Expand the weapon roster, creation traits, arena presentation, and cosmetic rewards after the full tournament works. Campaigns, equipment grinding, competitive matchmaking, and cross device identity recovery are later features.
 
-## Alpha upgrade roadmap — October 8, 2026
+### Alpha upgrade roadmap — October 8, 2026
 
 October 8 follow-up: the user chose to keep hosting free. Milestone 2 and lasting coin/unlock/betting progression are deferred; do not silently enable filesystem persistence on the ephemeral free host. Dagger/Riposte was delivered in v0.9.1. Soundtrack and Sound Effects was delivered in v0.9.2, with intro/menu continuity in v0.9.3. The current independent milestone is v0.9.4, Arena Lobby Chat; additional strategic weapons and worn equipment remain planned and can proceed independently on the temporary alpha.
 
