@@ -22,10 +22,10 @@ export function createFirstPersonSample({ weapon = 'sword', armor = 'medium', sk
   ]);
 }
 
-export function renderFirstPersonPreview(duel, { viewerIndex = 0, playing = false, message = 'Inspect the hands and weapon, then replay a short combat cue.' } = {}) {
+export function renderFirstPersonPreview(duel, { viewerIndex = 0, playing = false, inspect = false, frame = 43, message = 'Inspect the hands and weapon, then replay a short combat cue.' } = {}) {
   const local = duel.fighters[viewerIndex];
   const choices = (entries, selected) => entries.map(([id, label]) => `<option value="${escape(id)}"${id === selected ? ' selected' : ''}>${escape(label)}</option>`).join('');
-  return `<main class="app-shell battle-shell fp-art-preview"><header class="masthead"><a class="brand" href="/">ARENA FIGHTERS</a><span class="badge">Local art preview</span></header><section class="fp-art-preview-heading"><span class="eyebrow">First-person combat</span><h1>Pixel combat art</h1></section><div class="fp-art-preview-options"><label for="fp-art-weapon">Weapon<select id="fp-art-weapon" data-fp-art="weapon"${playing ? ' disabled' : ''}>${choices(Object.entries(WEAPONS).map(([id, item]) => [id, item.name]), local.weapon)}</select></label><label for="fp-art-armor">Armor<select id="fp-art-armor" data-fp-art="armor"${playing ? ' disabled' : ''}>${choices(Object.entries(ARMORS).map(([id, item]) => [id, item.name]), local.armor)}</select></label><label for="fp-art-skin">Skin tone<select id="fp-art-skin" data-fp-art="skin"${playing ? ' disabled' : ''}>${choices(avatarChoices.skin.map(item => [item.id, item.label]), local.character.appearance.skin)}</select></label><label for="fp-art-viewer">View<select id="fp-art-viewer" data-fp-art="viewer"${playing ? ' disabled' : ''}>${choices([['0', 'Cassian'], ['1', 'Mira']], String(viewerIndex))}</select></label></div><div class="classic-battle"><section class="arena-panel"><div class="arena-stage first-person-stage">${renderFirstPersonArena(duel, { viewerIndex })}</div></section></div><div class="fp-art-preview-controls" aria-label="Combat art playback">${[...cues].map(cue => `<button class="button ${cue === 'strike' ? 'primary' : 'secondary'}" data-fp-art-cue="${cue}"${playing ? ' disabled' : ''}>${cue[0].toUpperCase() + cue.slice(1)}</button>`).join('')}<a class="button ghost" href="/">Back to game</a></div><p class="fp-art-preview-message" role="status">${escape(message)}</p><footer class="page-footer">ARENA FIGHTERS <span>Disposable art controls</span></footer></main>`;
+  return `<main class="app-shell battle-shell fp-art-preview"><header class="masthead"><a class="brand" href="/">ARENA FIGHTERS</a><span class="badge">Local art preview</span></header><section class="fp-art-preview-heading"><span class="eyebrow">First-person combat</span><h1>Pixel combat art</h1></section><div class="fp-art-preview-options"><label for="fp-art-weapon">Weapon<select id="fp-art-weapon" data-fp-art="weapon"${playing ? ' disabled' : ''}>${choices(Object.entries(WEAPONS).map(([id, item]) => [id, item.name]), local.weapon)}</select></label><label for="fp-art-armor">Armor<select id="fp-art-armor" data-fp-art="armor"${playing ? ' disabled' : ''}>${choices(Object.entries(ARMORS).map(([id, item]) => [id, item.name]), local.armor)}</select></label><label for="fp-art-skin">Skin tone<select id="fp-art-skin" data-fp-art="skin"${playing ? ' disabled' : ''}>${choices(avatarChoices.skin.map(item => [item.id, item.label]), local.character.appearance.skin)}</select></label><label for="fp-art-viewer">View<select id="fp-art-viewer" data-fp-art="viewer"${playing ? ' disabled' : ''}>${choices([['0', 'Cassian'], ['1', 'Mira']], String(viewerIndex))}</select></label></div><div class="classic-battle"><section class="arena-panel"><div class="arena-stage first-person-stage">${renderFirstPersonArena(duel, { viewerIndex })}</div></section></div><div class="fp-art-preview-controls" aria-label="Combat art playback">${[...cues].map(cue => `<button class="button ${cue === 'strike' ? 'primary' : 'secondary'}" data-fp-art-cue="${cue}"${playing ? ' disabled' : ''}>${cue[0].toUpperCase() + cue.slice(1)}</button>`).join('')}<a class="button ghost" href="/">Back to game</a></div><div class="fp-art-motion-controls"><label><input id="fp-art-inspect" type="checkbox"${inspect ? ' checked' : ''}${playing ? ' disabled' : ''}> Inspect attack frames</label><label for="fp-art-frame">Swing frame <output id="fp-art-frame-value">${frame}%</output></label><input id="fp-art-frame" type="range" min="0" max="100" step="1" value="${frame}"${!inspect || playing ? ' disabled' : ''} aria-label="Swing frame"></div><p class="fp-art-preview-message" role="status">${escape(message)}</p><footer class="page-footer">ARENA FIGHTERS <span>Disposable art controls</span></footer></main>`;
 }
 
 /** The real renderer and animation consume only a disposable resolved round. */
@@ -33,10 +33,27 @@ export async function mountFirstPersonPreview(app) {
   await preloadCleanArt();
   let settings = { weapon: 'sword', armor: 'medium', skin: 'ivory' };
   let viewerIndex = 0;
+  let inspect = false, frame = 43, inspectedCue = 'strike';
   let before;
   let playback;
   let revision = 0;
-  const draw = options => { app.innerHTML = renderFirstPersonPreview(before, { viewerIndex, ...options }); };
+  const draw = options => {
+    app.innerHTML = renderFirstPersonPreview(before, { viewerIndex, inspect, frame, ...options });
+    if (inspect) {
+      const stage = app.querySelector('.arena-stage');
+      const local = stage.querySelector('.fp-viewmodel');
+      stage.classList.add('battle-playback', 'fp-motion-inspection');
+      stage.style.setProperty('--fp-inspect-delay', `${-frame * 6.65}ms`);
+      const actions = ['guard', 'guard'];
+      actions[viewerIndex] = inspectedCue;
+      const resolved = resolveRound(before, actions, { choiceElapsedMs: [0, 0] });
+      const attack = buildAnimationSteps(before, resolved).find(step => step.actor === viewerIndex && step.type === 'attack');
+      if (attack) {
+        local.dataset.animation = 'attack';
+        local.dataset.combatAction = attack.action;
+      }
+    }
+  };
   const prepare = async () => {
     const current = ++revision;
     const sample = createFirstPersonSample(settings);
@@ -49,6 +66,11 @@ export async function mountFirstPersonPreview(app) {
   };
   await prepare();
   app.addEventListener('change', async event => {
+    if (event.target.id === 'fp-art-inspect' && !playback) {
+      inspect = event.target.checked;
+      draw({ message: inspect ? 'Choose Strike or Technique, then inspect any point of the swing.' : 'Inspect the hands and weapon, then replay a short combat cue.' });
+      return;
+    }
     const control = event.target.closest('select[data-fp-art]');
     if (!control || playback) return;
     const key = control.dataset.fpArt;
@@ -58,10 +80,22 @@ export async function mountFirstPersonPreview(app) {
     try { await prepare(); }
     catch (error) { draw({ message: `This art sample could not load: ${error.message}` }); }
   });
+  app.addEventListener('input', event => {
+    if (event.target.id !== 'fp-art-frame' || !inspect || playback) return;
+    frame = Math.max(0, Math.min(100, Number(event.target.value) || 0));
+    app.querySelector('.arena-stage').style.setProperty('--fp-inspect-delay', `${-frame * 6.65}ms`);
+    app.querySelector('#fp-art-frame-value').textContent = `${frame}%`;
+  });
   app.addEventListener('click', async event => {
     const button = event.target.closest('button[data-fp-art-cue]');
     if (!button || button.disabled || playback || !cues.has(button.dataset.fpArtCue)) return;
     const cue = button.dataset.fpArtCue;
+    if (inspect && (cue === 'strike' || cue === 'technique')) {
+      inspectedCue = cue;
+      draw({ message: 'Paused attack sample. Drag the frame control to inspect the complete arms.' });
+      return;
+    }
+    if (inspect) { inspect = false; }
     const actions = ['guard', 'guard'];
     actions[viewerIndex] = cue;
     actions[1 - viewerIndex] = cue === 'guard' || cue === 'focus' ? 'strike' : 'guard';
@@ -84,3 +118,4 @@ export async function mountFirstPersonPreview(app) {
   });
   globalThis.addEventListener?.('pagehide', () => { revision += 1; playback?.abort(); }, { once: true });
 }
+

@@ -1,6 +1,6 @@
 {
   "name": "arena-fighters-prototype",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "private": true,
   "type": "module",
   "description": "Arena Fighters with complete authored first-person pixel holds and server-owned choice-time initiative.",

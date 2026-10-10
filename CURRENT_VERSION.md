@@ -1,10 +1,20 @@
 # Current Arena Fighters version
 
+## Anchored First-person Motion v001 — v0.14.2, October 10, 2026
+
+Current local source is **v0.14.2**. Complete arm-and-weapon poses now pivot near their forearm roots and extend beyond the viewport so their cropped sleeve ends remain hidden throughout motion. Sword cuts, axe/mace chops, flail swings, spear/trident thrusts, dagger thrusts and two-handed attacks have separate windup, contact and recovery paths. Guard, Focus, recoil, execution and reduced motion retain the same connected holds. Source artwork, authored grips, frame registration and rival/spectator avatars remain exact; the inward-facing v004 axe remains active.
+
+The disposable `/?first-person-art-review=1` controls now include an attack-frame inspector using the actual renderer. Attack duration remains 665 ms with contact at 43%; combat clocks, resolved-event playback, saved identities, name drafts and verdict authority are unchanged. The independent snapshot is `releases/Arena_Fighters_v0.14.2_v001`; local verification is `artifacts/First_Person_Motion_v001/VERIFICATION.json`. V0.14.1 and all earlier releases remain preserved. This snapshot is local; the published game remains v0.14.1 pending separate deployment verification. Automated checks and internal browser review do not establish user art acceptance.
+
+## Historical v0.14.1
+
 ## Axe Facing Correction v001 — v0.14.1, October 10, 2026
 
 Current local source is **v0.14.1**. The first-person axe's cutting edge now faces inward toward the rival, with its blunt poll facing outward. The additive v004 axe overlay retains the complete arm, grip, shaft and original shield across all three armor versions and six skin tones. Other held poses retain their exact v003 paths; explicit v003 remains available as the prior axe comparison.
 
-The independent local snapshot is `releases/Arena_Fighters_v0.14.1_v001`; evidence is separate in `artifacts/First_Person_Axe_Direction_v001/VERIFICATION.json`. Original and generated sources, prompts and bounded preparation receipts are preserved in `ArtReview/First_Person_Axe_Direction_v001`. V0.14.0 and all earlier releases remain preserved. This correction has not been published and changes no combat rules, saved identity or verdict authority.
+The independent local snapshot is `releases/Arena_Fighters_v0.14.1_v001`; evidence is separate in `artifacts/First_Person_Axe_Direction_v001/VERIFICATION.json`. Original and generated sources, prompts and bounded preparation receipts are preserved in `ArtReview/First_Person_Axe_Direction_v001`. V0.14.0 and all earlier releases remain preserved. The axe correction changes no combat rules, saved identity or verdict authority.
+
+**Published October 10, 2026:** v0.14.1 is live at https://www.blackbooktattoo.com/arena-fighters through the existing free temporary-session Render service. Commit `08b4f7c0e5f93c9ab38f9d936bb3bfe9c3bbec8b`, deploy `dep-db5904d9fdbs73c19s50`, completed at 19:21:24 UTC. Separate publication evidence in `artifacts/Live_Release_v0141_v001/VERIFICATION.json` records 400 exact public file comparisons, the website's v0.14.1 menu, a first-person combat round and the live corrected axe. Earlier local evidence and sealed snapshots remain unchanged; historical unpublished notes below describe their original verification dates.
 
 ## Historical v0.14.0
 

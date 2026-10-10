@@ -130,6 +130,15 @@
 .fp-art-preview-options select { width: 100%; min-width: 0; }
 .fp-art-preview-controls { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0; }
 .fp-art-preview-message { margin: 10px 0; }
+.fp-art-motion-controls { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin: 12px 0; }
+.fp-art-motion-controls label { display: flex; align-items: center; gap: 6px; }
+.fp-art-motion-controls input[type="range"] { flex: 1; min-width: 160px; }
+.fp-motion-inspection .fp-mainhand-motion,
+.fp-motion-inspection .fp-offhand-motion,
+.fp-motion-inspection .fp-weapon-depth {
+  animation-play-state: paused !important;
+  animation-delay: var(--fp-inspect-delay) !important;
+}
 @media (max-width: 600px) {
   .fp-art-preview-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

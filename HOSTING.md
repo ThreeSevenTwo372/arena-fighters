@@ -1,5 +1,13 @@
 # Arena Fighters temporary hosting
 
+## Published v0.14.1 — October 10, 2026
+
+The existing [Arena Fighters page](https://www.blackbooktattoo.com/arena-fighters) now serves the sealed v0.14.1 release from [the existing Render host](https://blackbook-arena-fighters.onrender.com/). It includes complete first-person holds for all nine weapons, the inward-facing v004 axe, v5 choice-time combat and typed-name preservation. Spectators retain their original two-avatar view. The Free plan, temporary-session mode, manual deployment setting and Squarespace embed configuration remain unchanged.
+
+Deployment `dep-db5904d9fdbs73c19s50` completed at 19:21:24 UTC from commit `08b4f7c0e5f93c9ab38f9d936bb3bfe9c3bbec8b` on `codex/temporary-sessions`. Source, sealed release, deployment candidate and Git index matched before publication. All 400 checked public files matched after publication, including all 335 first-person asset files. The published iframe displayed v0.14.1 and completed a first-person lesson round; the corrected axe was inspected directly on the public host. Publication evidence is separate in `artifacts/Live_Release_v0141_v001/VERIFICATION.json`; earlier snapshots and local evidence remain unchanged. Zero public tournaments were active before the deployment. Temporary sessions restarted under the existing hosting contract; localhost services and private saves were untouched.
+
+The earlier release sections below describe their original dates.
+
 ## Release Readiness v001 — v0.10.0, October 9, 2026
 
 The menu now offers **Learn to fight**, three optional coached rounds using the shared combat rules and exact current male/female avatars, and **Quick Duel**, the existing private two-player flow with a shareable invitation link. Lessons are disposable, untimed, repeatable and guest-free; they preserve an owned surviving fighter and keep the condensed creator unchanged. Invitation URLs carry a public code and mode only, prefill the matching join field and never auto-join, replace an active match, or carry authentication.

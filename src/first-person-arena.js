@@ -127,10 +127,13 @@ function renderWholeHold(hold, skin, weapon) {
   const offset = hold.cameraOffset ?? [0, 0];
   const completeImage = (part, side) => {
     const [x, y] = part.pivot, [originX, originY] = part.frameOrigin;
+    // Animation pivots belong to the camera-side sleeve entry, while the
+    // authored grip, full image frame and outer registration stay intact.
+    const [rootX, rootY] = hold.mode === 'both' ? [270, 235] : side === 'main' ? [450, 145] : [10, 235];
     const art = `<image class="pixel-sprite fp-whole-hold" data-pixel-layer="whole-${side}" href="${escape(part.variants[skin])}" x="${originX - x}" y="${originY - y}" width="${part.width}" height="${part.height}" preserveAspectRatio="none"/>`;
     const held = side === 'main' ? `<g class="fp-weapon" data-weapon-art="${weapon}">${art}</g>`
       : `<g class="fp-${weapon === 'trident' ? 'net' : 'shield'}">${art}</g>`;
-    return `<g transform="translate(${x * 2 + offset[0]} ${y * 2 + offset[1]}) scale(2)"><g class="fp-${side === 'main' ? 'mainhand' : 'offhand'}"><g class="fp-${side === 'main' ? 'mainhand' : 'offhand'}-motion">${held}</g></g></g>`;
+    return `<g transform="translate(${x * 2 + offset[0]} ${y * 2 + offset[1]}) scale(2)"><g class="fp-${side === 'main' ? 'mainhand' : 'offhand'}"><g class="fp-motion-root" data-motion-root="${rootX} ${rootY}" transform="translate(${rootX - x} ${rootY - y})"><g class="fp-${side === 'main' ? 'mainhand' : 'offhand'}-motion"><g transform="translate(${x - rootX} ${y - rootY})">${held}</g></g></g></g></g>`;
   };
   return `${hold.mode === 'paired' ? completeImage(hold.off, 'off') : ''}${completeImage(hold.main, 'main')}`;
 }
@@ -168,7 +171,7 @@ export function renderFirstPersonArena(duel = {}, { viewerIndex, fit = 'meet', a
       <rect width="920" height="440" fill="url(#${id}-shade)"/>
       <ellipse cx="460" cy="348" rx="87" ry="14" fill="#161e20" opacity=".35"/>
       <g class="arena-fighter fp-opponent fp-effects-mirrored" data-fighter-index="${opponentIndex}"${opponentDefeated ? ' data-defeated="true"' : ''} transform="translate(460 347) scale(-1 1)">${renderFighterArt(opponent.character, loadoutFor(opponent), '#436f70', opponentDefeated)}</g>
-      <g class="arena-fighter fp-viewmodel" data-fighter-index="${viewerIndex}" data-weapon="${weapon}" data-armor="${armor}" data-two-handed="${twoHanded}"${playerDefeated ? ' data-defeated="true"' : ''}>
+      <g class="arena-fighter fp-viewmodel" data-fighter-index="${viewerIndex}" data-weapon="${weapon}" data-armor="${armor}" data-two-handed="${twoHanded}"${wholeHold ? ` data-hold-mode="${wholeHold.mode}"` : ''}${playerDefeated ? ' data-defeated="true"' : ''}>
         ${wholeHold ? renderWholeHold(wholeHold, skin, weapon) : `${twoHanded ? '' : `<g transform="translate(${offPosition}) scale(2)"><g class="fp-offhand"><g class="fp-offhand-motion">${usePixels ? pixelOffhand(weapon, skin, armor) : `<g transform="scale(-1 1)">${forearm(p, true)}</g>${weapon === 'trident' ? netArt(p) : shieldArt(p)}`}</g></g></g>`}<g transform="translate(${mainPosition}) scale(2)"><g class="fp-mainhand"><g class="fp-mainhand-motion">${usePixels ? pixelMainhand(weapon, skin, armor) : `<g transform="rotate(14)">${forearm(p)}${weaponArt(weapon)}${twoHanded ? supportingHand(p) : ''}${grippingHand(p)}</g>`}</g></g></g>`}
         <g class="fighter-effects" transform="translate(460 330)"></g>
       </g>

@@ -1,6 +1,8 @@
 # First-person Combat v001
 
-Local v0.14.1, October 10, 2026. This version has not been published. The preserved prior release is releases/Arena_Fighters_v0.14.0_v001. Source, raster, browser and portable evidence is separate in artifacts/First_Person_Axe_Direction_v001/VERIFICATION.json; the independent new snapshot is releases/Arena_Fighters_v0.14.1_v001.
+Local v0.14.2, October 10, 2026. The published game remains v0.14.1 until separately verified. The preserved prior release is releases/Arena_Fighters_v0.14.1_v001. Source, geometry, browser and portable evidence is separate in artifacts/First_Person_Motion_v001/VERIFICATION.json; the independent new snapshot is releases/Arena_Fighters_v0.14.2_v001.
+
+Complete holds pivot around the forearm rather than the wrist, with resting overscan hiding the authored sleeve cutoff. Each weapon's windup, contact and recovery keeps those edges outside the viewport. Greatsword and halberd retain one continuous two-handed image. Attack duration remains 665 ms and impact remains at 43%; only presentation changes. Guard, Focus, recoil, execution and reduced motion preserve the same hold geometry. The art preview adds a disposable frame inspector for actual attack poses; it creates no guest and changes no combat or saved fighter.
 
 The additive `assets/first-person/v004` axe overlay corrects the blade's facing: sharpened edge inward toward the rival, blunt poll outward. Only the bounded authored head region changes; arms, hands, shaft, offhand, frames, skin masks and pivots remain exact v003. Other weapons use v003, and explicit v003 retains the prior axe comparison. Correction sources and receipts are in `ArtReview/First_Person_Axe_Direction_v001`.
 

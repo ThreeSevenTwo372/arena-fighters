@@ -1,9 +1,9 @@
 {
   "schema": "arena-fighters.local-release.v1",
   "status": "complete",
-  "version": "0.14.1",
-  "createdAt": "2026-10-10T18:49:46.977Z",
-  "directory": "releases/Arena_Fighters_v0.14.1_v001",
+  "version": "0.14.2",
+  "createdAt": "2026-10-10T19:55:32.371Z",
+  "directory": "releases/Arena_Fighters_v0.14.2_v001",
   "identity": {
     "active": {
       "version": "v013",
@@ -66,8 +66,8 @@
     "copiedBytesVerified": true,
     "catalogReferencesVerified": true
   },
-  "fileCount": 1782,
-  "totalBytes": 103972254,
+  "fileCount": 1783,
+  "totalBytes": 104007563,
   "catalogs": [
     {
       "path": "assets/clean-gladiator/v013/manifest.json",
@@ -187,13 +187,13 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 27255,
-      "sha256": "311a5acbcfc52ed403047b4b9072e12899e13ef2b384d16392aa4ba4529b318c"
+      "bytes": 28607,
+      "sha256": "45efa38936002326eb46b10ea4a2571d7f285449a929a40ef03cba770a3ac634"
     },
     {
       "path": "ART_DIRECTION.md",
-      "bytes": 33536,
-      "sha256": "ba6ac3fccdf9b4e230b4ff367b4e6b0f4151dcd4f1f76b76039699bc07a5df60"
+      "bytes": 34506,
+      "sha256": "aee14b0961e8619e17ecd7dc494594250353f8bcc3f40475b47d18dcecc0a4de"
     },
     {
       "path": "AVATAR_PORT.md",
@@ -207,8 +207,8 @@
     },
     {
       "path": "CURRENT_VERSION.md",
-      "bytes": 27799,
-      "sha256": "13f118229e4d528540763d546529c9a4da39ad1633b58baf21406c794b9cdefe"
+      "bytes": 29722,
+      "sha256": "c581fcdd5db45ceecb37135d12f2d293503a64690364131528977d54b82ec1a5"
     },
     {
       "path": "DARK_ART.md",
@@ -222,13 +222,13 @@
     },
     {
       "path": "FIRST_PERSON_COMBAT.md",
-      "bytes": 5006,
-      "sha256": "98b998fda96afd16e3cf2818551e22587ab1a6b0459ef76a7fb8499e5309e470"
+      "bytes": 5597,
+      "sha256": "d88c861e06653db7c5876068db4f95445dc001c58770004be36ec2092aeb7af0"
     },
     {
       "path": "HOSTING.md",
-      "bytes": 11981,
-      "sha256": "b471b9c316fe678a13ee4e1a808a97410fc7af55397f8f15110f5bcd60ddeb80"
+      "bytes": 13409,
+      "sha256": "f298a942ba7fd9c6ed3512c7b8ab3f913f16742806a03865f153638f506db024"
     },
     {
       "path": "ONLINE_DUELS.md",
@@ -237,8 +237,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 23762,
-      "sha256": "f4a815138a8c1156b27634c6c382bed711776293b46a3b8b5e1802bc11e0bf26"
+      "bytes": 23845,
+      "sha256": "513a08db003634e5429421f73c083e8d6a46eafc2dcb536a44c5a2301731cbb4"
     },
     {
       "path": "Start-Prototype.ps1",
@@ -8313,7 +8313,7 @@
     {
       "path": "package.json",
       "bytes": 358,
-      "sha256": "831a5fdc89060f45ea41d93e22b6d1fc4956c2ab30c5bf2b07070abbda03c85e"
+      "sha256": "4bd5e94d2b6ab54983cd71a0a54c1bfae96fb303b232678b5588f2769767031d"
     },
     {
       "path": "public/audio/soundtrack-v001/beyond-the-last-lantern-day.mp3",
@@ -8448,7 +8448,7 @@
     {
       "path": "src/app.js",
       "bytes": 118582,
-      "sha256": "b2a0accab9f6e6ed7ed4128134acdeb5773f7fac99e70cfe4e3ff72d81259e7b"
+      "sha256": "7ef15023d8c59d9f7f376503c31084ed1ee081e1c1a3423fc74ee1b9bdae5723"
     },
     {
       "path": "src/arena-avatar.js",
@@ -8597,8 +8597,8 @@
     },
     {
       "path": "src/first-person-animation.css",
-      "bytes": 17417,
-      "sha256": "b2576a4599783c4dadf88e2a918b7ca9ff8d158de8c61da04617bf4488083de7"
+      "bytes": 28237,
+      "sha256": "1190297107dd476ea5ff0b5a6a1c3136641d5da0ea9ad515b2412c8d89bd98ce"
     },
     {
       "path": "src/first-person-animation.js",
@@ -8607,13 +8607,13 @@
     },
     {
       "path": "src/first-person-arena.css",
-      "bytes": 4823,
-      "sha256": "7f07ff1e81f5962f4b97dec92e03250ee194299cdcd53814abfa764ef05a45bb"
+      "bytes": 5312,
+      "sha256": "3155090ef6960bc2bb1b18c0d632c10a60683e58e327f12b7aaeb0ab9c952005"
     },
     {
       "path": "src/first-person-arena.js",
-      "bytes": 18499,
-      "sha256": "ee0fb5a97bffad9f1f16398d6b144f1e917913c8529f35df373bb865f80a6535"
+      "bytes": 18982,
+      "sha256": "45defa6f583a11f0f94972f496499f1c038bcfaf5866850177d1dd471d220721"
     },
     {
       "path": "src/first-person-axe-catalog.js",
@@ -8627,8 +8627,8 @@
     },
     {
       "path": "src/first-person-preview.js",
-      "bytes": 6353,
-      "sha256": "9afa9111983555df9c231cddc857b11756699aa12ae55614fee45988478cbd1f"
+      "bytes": 8501,
+      "sha256": "8fec5a3af22640985a46cd5971849a144623cb731c1544999f34eb4b66121bc8"
     },
     {
       "path": "src/first-person-whole-catalog.js",
@@ -8889,6 +8889,11 @@
       "path": "tests/first-person-http.test.js",
       "bytes": 3426,
       "sha256": "3f41632a2c93ed68634bc15879b7c5a0dfeeb5e8197de7d7877155943cfed8f1"
+    },
+    {
+      "path": "tests/first-person-motion.test.js",
+      "bytes": 15022,
+      "sha256": "a8fe17d55df1f8b2033881ea3ed20631e2d829bb9a036aac6fcb16454ddd213f"
     },
     {
       "path": "tests/fixed-identity.test.js",
