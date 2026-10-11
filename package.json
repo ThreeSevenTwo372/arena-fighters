@@ -1,6 +1,6 @@
 {
   "name": "arena-fighters-prototype",
-  "version": "0.17.0",
+  "version": "0.17.1",
   "private": true,
   "type": "module",
   "description": "Arena Fighters with Single Player bot tournaments, direct mobile launch, and authored first-person combat.",

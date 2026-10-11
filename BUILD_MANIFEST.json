@@ -1,9 +1,9 @@
 {
   "schema": "arena-fighters.local-release.v1",
   "status": "complete",
-  "version": "0.17.0",
-  "createdAt": "2026-10-11T17:26:12.467Z",
-  "directory": "releases/Arena_Fighters_v0.17.0_v001",
+  "version": "0.17.1",
+  "createdAt": "2026-10-11T17:58:06.120Z",
+  "directory": "releases/Arena_Fighters_v0.17.1_v001",
   "identity": {
     "active": {
       "version": "v013",
@@ -17,7 +17,7 @@
   "provenance": [
     {
       "chatId": "01a12685-cde0-7ed1-a172-a3d1289dc25b",
-      "note": "Single Player replaces Quick Duel: one human and seven bots, automatic roster and results for skipped bot-only matches. Prior artwork, rules, identities and releases preserved. Local implementation; live publication is separately verified."
+      "note": "Bounded phone entrance framing repair for player/spectator scenes. Exact video, artwork, gameplay, saves and prior releases preserved. Local-only until separately published."
     }
   ],
   "entries": [
@@ -72,7 +72,7 @@
     "catalogReferencesVerified": true
   },
   "fileCount": 2778,
-  "totalBytes": 177357067,
+  "totalBytes": 177371087,
   "catalogs": [
     {
       "path": "assets/clean-gladiator/v013/manifest.json",
@@ -192,8 +192,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 42481,
-      "sha256": "bad87a44d6e9ac6349e6b041f0507e3d8147867a6cbd763869883800aa742b0c"
+      "bytes": 44444,
+      "sha256": "6e77ca9028cebf84c89a67739e0735dd9301d24abc99c3d6a0438c88c5c55509"
     },
     {
       "path": "ART_DIRECTION.md",
@@ -212,8 +212,8 @@
     },
     {
       "path": "CURRENT_VERSION.md",
-      "bytes": 42400,
-      "sha256": "c139de2e7da90b6d2d15daa9c95583c34245f5eeebe5b50823fb802ec0936bc1"
+      "bytes": 44363,
+      "sha256": "e3a4f69ef01b7e9ebc20d11507f0cc07b2a781273edd725451de0a35bf8dc867"
     },
     {
       "path": "DARK_ART.md",
@@ -227,23 +227,23 @@
     },
     {
       "path": "FIRST_PERSON_COMBAT.md",
-      "bytes": 15854,
-      "sha256": "4226f03ce966282022bbe5cb7bf98ad20b1632a0024063e259558d4b8fb254bb"
+      "bytes": 17817,
+      "sha256": "5ad445de1d239d0f933ef8d08f74656313dc92948ab08413a8ca4d669e9e698c"
     },
     {
       "path": "HOSTING.md",
-      "bytes": 21909,
-      "sha256": "eca248ca847d456b89729359a5a3d797466025c60ba4597ff023dc2df8eb7d3a"
+      "bytes": 23872,
+      "sha256": "a71a9bebccb3cff390557fa7fec48a3274ca0d166d5353c69ebc3bd82211851a"
     },
     {
       "path": "ONLINE_DUELS.md",
-      "bytes": 26959,
-      "sha256": "30a208b109ea01245c1e35995dc8f0be652e7543ac3aea4451dddd4525056a2e"
+      "bytes": 28922,
+      "sha256": "c7fd8ab8c59afeff541431e69f2bd5bbb805e9d1f734b016829678f9a46a6405"
     },
     {
       "path": "README.md",
-      "bytes": 32558,
-      "sha256": "78bf1d424dadb8dde7455fd0f39746b912184d1035751e8ff4c0e1ba94d597ac"
+      "bytes": 34521,
+      "sha256": "364f60e361f84c1ce02f19615745aecabe42609eb88de8eaf5b7e9f6c1ac52d9"
     },
     {
       "path": "Start-Prototype.ps1",
@@ -252,8 +252,8 @@
     },
     {
       "path": "TOURNAMENTS.md",
-      "bytes": 29160,
-      "sha256": "5fd3b6de36a564f5b3d7c6f96790bd0e64e16e18ef435efb540585eabcff678f"
+      "bytes": 31123,
+      "sha256": "1fe8376574826b7903063d3d757e0bad29acb4527eeef3c5b334c3a42c615c14"
     },
     {
       "path": "assets/arena/ARENA_PROVENANCE.md",
@@ -13168,7 +13168,7 @@
     {
       "path": "package.json",
       "bytes": 361,
-      "sha256": "15aed854c9a00839eb8cdeb42357a1f2f749cc716ad4516a6e894df92d4ab096"
+      "sha256": "4262dc904580eb8467b28e9cb9f8bf3aeed9f3728ccb5b8e18d61cb7c5cfa6f3"
     },
     {
       "path": "public/app-v001/icon-180.png",
@@ -13328,7 +13328,7 @@
     {
       "path": "src/app.js",
       "bytes": 122683,
-      "sha256": "6a212c273368c4f1ce378a313bebc3b1f7d272f2da8fe7ce0d28c5ef6a949f3e"
+      "sha256": "20a872a011b04782a49b38569f245582b0500ee6dc340dae12464d2e89859d5c"
     },
     {
       "path": "src/arena-avatar.js",
@@ -13587,8 +13587,8 @@
     },
     {
       "path": "src/mobile.css",
-      "bytes": 6121,
-      "sha256": "352387f5334a50da0eb92b84c4feeafae42ca64e06fa1c7f8b56b3a69fb7a445"
+      "bytes": 6400,
+      "sha256": "7fceaaa5f9e2df8174a625bb4432697d300ec5725919016e8cb101e5f371d08e"
     },
     {
       "path": "src/onboarding.css",

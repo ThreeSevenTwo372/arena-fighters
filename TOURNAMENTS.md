@@ -1,12 +1,23 @@
 # Eight-fighter tournaments
 
-## Single Player Tournament v001 — local v0.17.0, October 11, 2026
+## Mobile Entrance Framing v001 — local v0.17.1, October 11, 2026
 
-Current local source is **v0.17.0**; published remains **v0.16.1** until separately verified. Snapshot: `releases/Arena_Fighters_v0.17.0_v001`; local evidence: `artifacts/Single_Player_v001/VERIFICATION.json`. Single Player replaces the former Quick Duel menu command and lesson completion link. Use the normal name/creator flow or the exact surviving fighter; Start tournament creates one human and seven service-controlled bots immediately in its own tournament. The player takes the opening match and chooses equipment normally. Ordinary Fight remains the multiplayer tournament entry, and existing private duel invitation links retain their original routing.
+Current local source is **v0.17.1**; published remains **v0.17.0** until separately verified. Snapshot: `releases/Arena_Fighters_v0.17.1_v001`; local evidence: `artifacts/Mobile_Entrance_v001/VERIFICATION.json`. On phones and short landscape screens, the entrance gate has an explicit width bounded to its content column. This prevents its minimum height and widescreen aspect ratio from expanding the scene beyond the viewport. Player and spectator captions wrap within the gate, including long fighter names. Preserve the existing minimum height, video, poster, aspect ratio, source art, battle framing and all gameplay/presentation clocks. Never hide document overflow to mask a layout defect.
+
+Single Player, multiplayer, spectators, private choices, Mercy, saved identities, full gold Stamina meters, mobile launcher and Home Screen support retain their existing behavior. Preserve private saves, running local services, all previous assets and releases. Local/browser/package checks and live publication are separately recorded.
+
+## Historical v0.17.0
+
+
+## Single Player Tournament v001 — v0.17.0, October 11, 2026
+
+Current local and published source is **v0.17.0**. Snapshot: `releases/Arena_Fighters_v0.17.0_v001`; local evidence: `artifacts/Single_Player_v001/VERIFICATION.json`. Single Player replaces the former Quick Duel menu command and lesson completion link. Use the normal name/creator flow or the exact surviving fighter; Start tournament creates one human and seven service-controlled bots immediately in its own tournament. The player takes the opening match and chooses equipment normally. Ordinary Fight remains the multiplayer tournament entry, and existing private duel invitation links retain their original routing.
 
 Single Player calculates bot-versus-bot results with the shared combat rules and advances their bracket entries without showing those battles or waiting through bot presentation clocks. Only the player's matches are played. Retain the completed human match through its normal presentation/intermission before advancing, so winner reveals, Mercy and execution/outcome playback stay authoritative. Keep ordinary multiplayer draws and bot timing unchanged. Solo creation retries resume the same owned solo tournament; other humans cannot join its fighter roster. The mode survives refresh and the next-tournament action.
 
 Preserve all authored artwork, v013/v006 identities, surviving fighter data, typed name drafts, gameplay rules, Stamina labels/gold meters, mobile launch/Home Screen support, private saves, local services and previous releases. Local/package/browser evidence and live publication remain separate.
+
+Separate publication evidence: `artifacts/Live_Release_v0170_v001/VERIFICATION.json`. Commit `1a496f7961e68a799138a72ab38be1a21c327e79`; deployment `dep-db5shdvavr4c739u2k80` completed October 11, 2026 at 1:35 PM EDT (17:35:25 UTC). The existing free Render service and Squarespace page serve v0.17.0. Live phone browser checks verified Single Player entry with one human and seven bots, the opening human equipment choice, refresh recovery, actual human combat and full gold Stamina labels without command overflow. The live QA bracket also reached all seven completed nodes after human departure or elimination. Controlled-clock service tests separately verify winning-human semifinal/final advancement, generated bot results, rollback and crown accounting. Physical iPhone installation remains untested. Historical local-only receipts and all earlier snapshots remain unchanged.
 
 ## Historical v0.16.1
 

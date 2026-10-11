@@ -70,10 +70,16 @@
   .tournament-fighter-slots { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .tournament-slot-identity h3 { font-size: 17px; }
   .tournament-slot-identity p, .tournament-slot-record { font-size: 12px; }
-  .tournament-gate-scene, .tournament-gate { min-height: min(420px, 65svh); }
+  /* Definite width prevents the gate's minimum height and 16:9 ratio from
+     expanding its automatic width beyond the phone's content column. */
+  .tournament-gate-scene, .tournament-gate {
+    width: 100%; min-width: 0; max-width: 100%;
+    min-height: min(420px, 65svh);
+  }
   .tournament-gate-heading { padding: 18px 12px 10px; }
   .tournament-gate-heading h2 { font-size: 24px; }
   .tournament-gate-caption { padding: 18px 12px; }
+  .tournament-gate-caption > * { max-width: 100%; overflow-wrap: anywhere; }
   .arrival-header { padding: max(16px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) 16px max(12px, env(safe-area-inset-left, 0px)); }
   .arrival-invitation { bottom: max(96px, calc(76px + env(safe-area-inset-bottom, 0px))); }
   .toast { max-width: calc(100vw - 24px); bottom: calc(var(--phone-audio-space) + 12px); overflow-wrap: anywhere; }
