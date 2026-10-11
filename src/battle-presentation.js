@@ -59,7 +59,7 @@ export function actionPreview(option) {
   const rest = option.rulesVersion >= 4 ? 'Focus' : 'Recover';
   if (option.statusEffect === 'entangle') return {
     label: `${option.damage} damage + net`,
-    detail: `Next-round attacks +3 SP · Guard prevents the net · Guard or ${rest} clears it · ${option.guardedDamage} damage against Guard`,
+    detail: `Next-round attacks +3 Stamina · Guard prevents the net · Guard or ${rest} clears it · ${option.guardedDamage} damage against Guard`,
   };
   if (option.conditional === 'riposte') return {
     label: `Counter: ${option.damage} damage`,
@@ -70,7 +70,7 @@ export function actionPreview(option) {
     detail: 'No stamina cost · Acts last and leaves you open · Next round only · Does not stack · Clears the net',
   };
   if (option.id === 'recover') return {
-    label: `Up to +${option.recovery} SP`,
+    label: `Up to +${option.recovery} Stamina`,
     detail: 'Acts last · Capped at maximum stamina',
   };
   if (option.id === 'guard') return {
@@ -85,7 +85,7 @@ export function actionPreview(option) {
 
 export function fighterConditionText(status) {
   if (status.id === 'focused') return `Focused · Next attack +${status.damageBonus} power · This round only`;
-  if (status.id === 'entangled') return `Entangled · Attacks +${status.attackSurcharge} SP this round · Guard or ${status.clearsWith?.includes('focus') ? 'Focus' : 'Recover'} clears the net`;
+  if (status.id === 'entangled') return `Entangled · Attacks +${status.attackSurcharge} Stamina this round · Guard or ${status.clearsWith?.includes('focus') ? 'Focus' : 'Recover'} clears the net`;
   return status.label || '';
 }
 

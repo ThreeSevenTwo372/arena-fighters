@@ -49,6 +49,50 @@ test('HTTPS public origin works behind a proxy while cross-site mutations remain
   assert.equal((await guest({ Origin: 'https://arena.example', 'Sec-Fetch-Site': 'cross-site' })).status, 403);
 });
 
+test('Home Screen manifest and icons are public without issuing a guest or exposing private files', async t => {
+  const { base, server } = await app(t);
+  await server.duels.initialized;
+  assert.equal(Object.keys(server.duels.data.sessions).length, 0);
+  const page = await fetch(base);
+  const html = await page.text();
+  assert.match(html, /<meta name="apple-mobile-web-app-capable" content="yes">/);
+  assert.match(html, /<link rel="manifest" href="\/public\/app-v001\/manifest\.webmanifest">/);
+  assert.match(html, /<link rel="apple-touch-icon" sizes="180x180" href="\/public\/app-v001\/icon-180\.png">/);
+  assert.match(page.headers.get('content-security-policy'), /manifest-src 'self';/);
+  assert.match(page.headers.get('content-security-policy'), /script-src 'self'; style-src 'self';/);
+  const response = await fetch(`${base}/public/app-v001/manifest.webmanifest`);
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get('content-type'), /^application\/manifest\+json/);
+  const manifest = await response.json();
+  assert.equal(manifest.name, 'Arena Fighters');
+  assert.equal(manifest.start_url, '/');
+  assert.equal(manifest.scope, '/');
+  assert.equal(manifest.display, 'standalone');
+  assert.equal(manifest.theme_color, '#201b18');
+  for (const size of [180, 192, 512]) {
+    const icon = await fetch(`${base}/public/app-v001/icon-${size}.png`);
+    assert.equal(icon.status, 200);
+    assert.equal(icon.headers.get('content-type'), 'image/png');
+    const png = Buffer.from(await icon.arrayBuffer());
+    assert.deepEqual(png.subarray(0, 8), Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]));
+    assert.equal(png.readUInt32BE(16), size);
+    assert.equal(png.readUInt32BE(20), size);
+  }
+  for (const icon of manifest.icons) assert.equal((await fetch(new URL(icon.src, base))).status, 200);
+  const svg = await fetch(`${base}/public/app-v001/icon.svg`);
+  assert.equal(svg.headers.get('content-type'), 'image/svg+xml');
+  assert.equal(await svg.text(), decodeURIComponent(html.match(/href="data:image\/svg\+xml,([^"]+)"/)[1]));
+  const head = await fetch(`${base}/public/app-v001/manifest.webmanifest`, { method: 'HEAD' });
+  assert.equal(head.status, 200);
+  assert.equal(await head.text(), '');
+  for (const path of ['/public/app-v001/', '/public/app-v001/manifest.json', '/public/app-v001/sub/icon.svg', '/public/app-v001/.hidden.svg', '/public/app-v001/..%2F..%2Fserver.mjs', '/server.mjs', '/.local-data/online-duels.json']) {
+    assert.equal((await fetch(`${base}${path}`)).status, 404, path);
+  }
+  assert.equal(Object.keys(server.duels.data.sessions).length, 0);
+  assert.equal(Object.keys(server.duels.data.rooms).length, 0);
+  assert.equal(Object.keys(server.duels.data.tournaments).length, 0);
+});
+
 test('authenticated poll quotas are separate for guests behind one hosting proxy', async t => {
   const { base, guest } = await app(t);
   const first = await guest(), second = await guest();

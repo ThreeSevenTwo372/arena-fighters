@@ -86,7 +86,7 @@ test('nonattack previews describe minimum guarded damage and capped, late recove
   assert.match(guard.detail, /65% reduction/);
   assert.match(guard.detail, /Minimum 1 damage/);
   assert.match(guard.detail, /techniques bypass Guard/);
-  assert.equal(recover.label, `Up to +${recoverOption.recovery} SP`);
+  assert.equal(recover.label, `Up to +${recoverOption.recovery} Stamina`);
   assert.equal(recover.detail, 'Acts last · Capped at maximum stamina');
 });
 

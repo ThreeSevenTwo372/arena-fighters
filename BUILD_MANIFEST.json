@@ -1,9 +1,9 @@
 {
   "schema": "arena-fighters.local-release.v1",
   "status": "complete",
-  "version": "0.16.0",
-  "createdAt": "2026-10-11T05:10:37.665Z",
-  "directory": "releases/Arena_Fighters_v0.16.0_v001",
+  "version": "0.16.1",
+  "createdAt": "2026-10-11T15:52:46.364Z",
+  "directory": "releases/Arena_Fighters_v0.16.1_v001",
   "identity": {
     "active": {
       "version": "v013",
@@ -17,7 +17,7 @@
   "provenance": [
     {
       "chatId": "01a12685-cde0-7ed1-a172-a3d1289dc25b",
-      "note": "Phone Layout v001: safe-area framing, touch controls, fitted complete characters, portrait/landscape combat, and prepared responsive Squarespace embed. Local implementation; published remains v0.15.3."
+      "note": "Direct phone launch from Squarespace, standalone Home Screen metadata and unchanged shield app icons, consistent gold Stamina labels. Local implementation with separate live publication evidence."
     }
   ],
   "entries": [
@@ -71,8 +71,8 @@
     "copiedBytesVerified": true,
     "catalogReferencesVerified": true
   },
-  "fileCount": 2769,
-  "totalBytes": 177263833,
+  "fileCount": 2776,
+  "totalBytes": 177299677,
   "catalogs": [
     {
       "path": "assets/clean-gladiator/v013/manifest.json",
@@ -192,8 +192,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 38558,
-      "sha256": "97bd5ce495f206a54f3d2397dd899e7b6d5905e3b88c406b3785f4b4f8ccaa43"
+      "bytes": 40205,
+      "sha256": "d1dca74b566fd98c72fe5ebec6699e26d6b783b2a372ebf3b2f91aead0bc2ea6"
     },
     {
       "path": "ART_DIRECTION.md",
@@ -212,8 +212,8 @@
     },
     {
       "path": "CURRENT_VERSION.md",
-      "bytes": 38444,
-      "sha256": "5d0d48e600ceae4a28879f90159b17a1b105d42ed8c9fa3901a5adcc6098b87c"
+      "bytes": 40124,
+      "sha256": "6105464ab42c59c76cb234376e68d6883554051ba1b2bcba6f7694a89f564d73"
     },
     {
       "path": "DARK_ART.md",
@@ -227,13 +227,13 @@
     },
     {
       "path": "FIRST_PERSON_COMBAT.md",
-      "bytes": 11857,
-      "sha256": "c9d305d2f12ab848d3b37535ebe44d7bd512909770b555a9f15cb51e9dc6d082"
+      "bytes": 13578,
+      "sha256": "b07f785c625a1a602650ddf3da56b88c492ed173d01676b7435269b0fc914e6e"
     },
     {
       "path": "HOSTING.md",
-      "bytes": 17232,
-      "sha256": "dbf79c91a07e936e5a5b73467a36f354372d7a4522cdaa130fc74e936b44cdc9"
+      "bytes": 19633,
+      "sha256": "49dca4f024e48520edff0cc6913dd05659a252935457276400197caf13196f19"
     },
     {
       "path": "ONLINE_DUELS.md",
@@ -242,8 +242,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 28465,
-      "sha256": "bb1d0d564c97b822940ecf61acefff8382d055d49f63cbd9781cfc0a0ac1fb74"
+      "bytes": 30282,
+      "sha256": "c5e97f2798f87952188abb5118c0d559d10ad306889c67907946fade12f4d632"
     },
     {
       "path": "Start-Prototype.ps1",
@@ -13132,8 +13132,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 2653,
-      "sha256": "1d3548631823da9173721a588d2d64e4acfeee567d38bfd2dadb1db97f4fb47f"
+      "bytes": 3031,
+      "sha256": "7797070f10150b644c463282bb64d4aa9655ed7cdd1e27ae39bac544f3e1fff9"
     },
     {
       "path": "online/arena-chat.mjs",
@@ -13167,8 +13167,33 @@
     },
     {
       "path": "package.json",
-      "bytes": 383,
-      "sha256": "1477b1768710edcbe2ee89b2b3bedafcf49bab47cd8e4beb82dd37c40d3d28cb"
+      "bytes": 382,
+      "sha256": "c9911f4b8190d673ec19e6d73c6d2e53b08bf4dc5686495e1fcc25fc6b836fb2"
+    },
+    {
+      "path": "public/app-v001/icon-180.png",
+      "bytes": 2741,
+      "sha256": "0b75f2447f31a8a1d0bb9a3e75739458677df323542a8dcb5fcaca97e92d4d26"
+    },
+    {
+      "path": "public/app-v001/icon-192.png",
+      "bytes": 2990,
+      "sha256": "66dc0f6c23f7b694466ba45760e0a2f8d7579308589e860e84dfb5eea7c7c7f8"
+    },
+    {
+      "path": "public/app-v001/icon-512.png",
+      "bytes": 12597,
+      "sha256": "df38a963a2879111914e345da9f28d0f13595f0a9e2894d29a9dd9df1913e2d1"
+    },
+    {
+      "path": "public/app-v001/icon.svg",
+      "bytes": 177,
+      "sha256": "f1a339ebb71fd746d2c2ec74a727e21aae5904aafebcd17379f182959bc143af"
+    },
+    {
+      "path": "public/app-v001/manifest.webmanifest",
+      "bytes": 536,
+      "sha256": "47bf46b1210325d15aa49b72408a6d3c55a09a42d347156d2fe0df0b66c6ebdb"
     },
     {
       "path": "public/audio/soundtrack-v001/beyond-the-last-lantern-day.mp3",
@@ -13297,13 +13322,13 @@
     },
     {
       "path": "server.mjs",
-      "bytes": 11357,
-      "sha256": "d82431da03f3936735c50f87b783d1c15d7dfccddce3092796779e4ad978fb94"
+      "bytes": 11554,
+      "sha256": "d9c3c39ea9bbba17e11fa58bd457d843b1716c5d4490a615b2eedcb8aaea299f"
     },
     {
       "path": "src/app.js",
-      "bytes": 121054,
-      "sha256": "af9bad5b7245a9b7e026522b4b07d71d7ee96a8e429741292994c728681dc97d"
+      "bytes": 121035,
+      "sha256": "8c4f158c78f5e892acfe08dc47ca4516710ae40b6600b95e1066d3d1c4d97a24"
     },
     {
       "path": "src/arena-avatar.js",
@@ -13387,18 +13412,18 @@
     },
     {
       "path": "src/battle-animation.js",
-      "bytes": 12946,
-      "sha256": "30bfe703b5240f7c12b934b1c2a369681c56191da595682f22bf1b71624c11a8"
+      "bytes": 12956,
+      "sha256": "9517a36c8c3d5405f23345983acc43d2898e97f97a600e965c6650c2bb251e0e"
     },
     {
       "path": "src/battle-presentation.js",
-      "bytes": 6090,
-      "sha256": "f8d27329b75f256f807613e1419a674ec4590fb9ecbb31a7dd4cc1e5dac4e4f6"
+      "bytes": 6105,
+      "sha256": "21a257c4ab20f088df96bb5b6a2b3024dcb46a22f3ef9f8d5486fb1a09c4c648"
     },
     {
       "path": "src/battle-ui.css",
-      "bytes": 8269,
-      "sha256": "891225c52b7dfde0c664b1cf96a8ef3f6e6736860666e52395bac7e18ff3da01"
+      "bytes": 8286,
+      "sha256": "c2a4417a18791fd41536071f96fd791b6a0e7e764c32e30fec2717a23982bd48"
     },
     {
       "path": "src/clean-avatar.js",
@@ -13422,8 +13447,8 @@
     },
     {
       "path": "src/duel-ui.css",
-      "bytes": 8654,
-      "sha256": "f9f2dcbfcfdec3cc62635df72c7361b410f00e28e860a8e4c44fc5c6dd3bb78d"
+      "bytes": 8628,
+      "sha256": "015a8739aab0e21b950e6f68bbf1f8b904bb30a802d028bf684ff9dfcfc68a3d"
     },
     {
       "path": "src/execution-animation.css",
@@ -13554,6 +13579,11 @@
       "path": "src/mobile-creator.css",
       "bytes": 8091,
       "sha256": "99248c6275096d584ffe9c521ec23f77946c37cb591abddb9363309eb47da0a6"
+    },
+    {
+      "path": "src/mobile-launch.js",
+      "bytes": 1065,
+      "sha256": "7f6cf8edde14fd8b1bdbce46255311cbab7436b2c68197aaff4e57e7fe4aa5f0"
     },
     {
       "path": "src/mobile.css",
@@ -13692,8 +13722,8 @@
     },
     {
       "path": "tests/battle-presentation.test.js",
-      "bytes": 6159,
-      "sha256": "ab89978cc839e56f729da99286ff41dc71abb6cfd4414f0864383c6f40cfc805"
+      "bytes": 6164,
+      "sha256": "bf780193483d07a6608e981d13e7d609d6e6cc117bc65752217011bdeaca872e"
     },
     {
       "path": "tests/battle-ui.test.js",
@@ -13787,8 +13817,8 @@
     },
     {
       "path": "tests/first-person-animation.test.js",
-      "bytes": 18002,
-      "sha256": "edfdf206b4bcbcf6512150261d436127bf283dd4b4ca55015794b8332d2a9d1f"
+      "bytes": 18007,
+      "sha256": "668f874dc4c41728e45162aa20fd4abb7eafefb3385ae92017e06db195cee435"
     },
     {
       "path": "tests/first-person-arena.test.js",
@@ -13852,8 +13882,8 @@
     },
     {
       "path": "tests/hosting.test.js",
-      "bytes": 5246,
-      "sha256": "1c3a4cacb1e2de6cdfdede002fa38c94176bad500102bc93f9ebcb93cc894b29"
+      "bytes": 7994,
+      "sha256": "be7fd8ff225e7ac234a4dd71bd3773e0a7ba26a6e89f71c17dbab370441e54cd"
     },
     {
       "path": "tests/main-menu.test.js",
@@ -13879,6 +13909,11 @@
       "path": "tests/mercy-presentation.test.js",
       "bytes": 11926,
       "sha256": "84aff2981896beb9be675c400a89e4e8336e78a56a27319fedc73e09c26ee81a"
+    },
+    {
+      "path": "tests/mobile-launch.test.js",
+      "bytes": 3072,
+      "sha256": "fee362192ec5847745372933ccd04a0fcdb4b7b16c5fcf56bdaa5f21c90a8e5c"
     },
     {
       "path": "tests/onboarding-ui.test.js",
@@ -13932,8 +13967,8 @@
     },
     {
       "path": "tests/release-presentation.test.js",
-      "bytes": 2054,
-      "sha256": "a09fb441a9aef6093a998f1fd4cd92d600a5fc07e40cb2113a968984218623ee"
+      "bytes": 2064,
+      "sha256": "5416d2761b4e0875e5d1ff40fdab4244b1281a7f8a6077dc79a5563fa9bd368c"
     },
     {
       "path": "tests/release-readiness-ui.test.js",
@@ -14022,8 +14057,8 @@
     },
     {
       "path": "tools/build-squarespace-embed.mjs",
-      "bytes": 1567,
-      "sha256": "c896b4f96199b98cd9ee508fca6c1077a5758bb1ab74fd90b3e7921e848c6c02"
+      "bytes": 1628,
+      "sha256": "69cc88bd32f4f6360da6772bb3e77ca6ce23b176e7c8ae150aa9c4212052ee28"
     },
     {
       "path": "tools/package-current.mjs",

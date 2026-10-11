@@ -43,8 +43,8 @@
 .classic-battle progress.meter { height: 8px; margin: 4px 0 5px; border: 1px solid #101626; }
 .classic-battle progress.health::-webkit-progress-value { background: linear-gradient(#9ecc9e, #5b986d); }
 .classic-battle progress.health::-moz-progress-bar { background: #80bb8a; }
-.classic-battle progress.stamina::-webkit-progress-value { background: linear-gradient(#aac2e5, #5d82c5); }
-.classic-battle progress.stamina::-moz-progress-bar { background: #83a6da; }
+.classic-battle progress.stamina::-webkit-progress-value { background: #d4a638; }
+.classic-battle progress.stamina::-moz-progress-bar { background: #d4a638; }
 .classic-battle .initiative-note { color: #b8bfd4; font-size: 9px; }
 .battle-console { display: grid; grid-template-columns: minmax(220px, .85fr) minmax(0, 1.6fr); gap: 0; border-top: 3px double #b5b4a7; background: linear-gradient(120deg, #243752, #151d36 70%); }
 .battle-dialogue { padding: 21px 20px; border-right: 2px solid #727d95; }

@@ -227,14 +227,14 @@ export async function playBattleAnimation(container, steps, { signal, reducedMot
         if (!await pause(reduce ? 140 : 320, signal)) return false;
       } else if (step.type === 'recover') {
         emitCue(onCue, 'recover', step);
-        effect(fighter, `+${step.restored} SP`, 'recover');
+        effect(fighter, `+${step.restored} Stamina`, 'recover');
         if (!await pause(reduce ? 180 : 510, signal)) return false;
       } else if (step.type === 'focus') {
         emitCue(onCue, 'focus', step);
         effect(fighter, `FOCUS +${step.damageBonus}`, 'focus');
         if (!await pause(reduce ? 180 : 420, signal)) return false;
       } else if (step.type === 'stamina-regeneration') {
-        effect(fighter, `+${step.restored} SP`, 'recover');
+        effect(fighter, `+${step.restored} Stamina`, 'recover');
         if (!await pause(reduce ? 120 : 240, signal)) return false;
       } else if (step.type === 'defeat') {
         emitCue(onCue, 'defeat', step);

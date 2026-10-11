@@ -1,8 +1,17 @@
 # Arena Fighters
 
-Current local version: **v0.16.0, Phone Layout v001** (October 11, 2026). Phone screens receive larger touch controls, readable form fields, fitted complete character previews, compact battle status, two-column commands below the arena, safe-area spacing and a short landscape combat layout. Source art, attacks, pixel blood, combat clocks and saved identities stay exact. Snapshot: `releases/Arena_Fighters_v0.16.0_v001`; local verification: `artifacts/Mobile_Layout_v001/VERIFICATION.json`.
+## Mobile App Launch and Stamina v001 — local v0.16.1, October 11, 2026
 
-**Published remains v0.15.3.** The responsive replacement for the existing Squarespace code block is `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html`. Its frame follows viewport height instead of the old fixed 900px. Browser viewport simulations support layout review; physical iPhone/Safari and keyboard behavior require device testing. Local source, packaging and publication remain separate evidence.
+Current local source is **v0.16.1**; published remains **v0.16.0** until separately verified. Snapshot: `releases/Arena_Fighters_v0.16.1_v001`; local evidence: `artifacts/Mobile_App_v001/VERIFICATION.json`. The published Squarespace parent can launch phones directly into the same game origin, preserving only valid public invite and duel-mode parameters. Desktop embedding and the direct link remain. The launch script does not run in editor previews, nested frames or unrelated pages. Phone detection covers portrait, short landscape and coarse-pointer touch devices; navigation replaces the Squarespace history entry. Home Screen metadata/manifest enable standalone launch, with icons rasterized from the exact existing shield favicon. Normal Safari tabs retain browser controls; Home Screen launch is separate from browser layout proof. No service worker or offline gameplay is introduced.
+
+Combat HUD, costs, recovery and Entangle presentation consistently spell Stamina. Combat meters retain the tutorial gold #d4a638 in both WebKit and Firefox fill rules. Command headings wrap on narrow cards. Keep all existing gameplay, private choice/clock/verdict authority, attack timings, authored art, identities, typed names, private saves, and earlier releases unchanged.
+
+## Historical v0.16.0
+
+
+Current local and published version: **v0.16.0, Phone Layout v001** (October 11, 2026). Phone screens receive larger touch controls, readable form fields, fitted complete character previews, compact battle status, two-column commands below the arena, safe-area spacing and a short landscape combat layout. Source art, attacks, pixel blood, combat clocks and saved identities stay exact. Snapshot: `releases/Arena_Fighters_v0.16.0_v001`; local verification: `artifacts/Mobile_Layout_v001/VERIFICATION.json`.
+
+**Published v0.16.0** is available at [Arena Fighters](https://www.blackbooktattoo.com/arena-fighters). Separate publication evidence: `artifacts/Live_Release_v0160_v001/VERIFICATION.json`. Commit `e108446260901324ff3f2793720f54c9f4a6de64`; deployment `dep-db5i31o473hc73b8h5qg` completed October 11, 2026 at 05:42:05 UTC. The existing Render host and public Squarespace embed were verified. Historical local-only receipts and all earlier snapshots remain unchanged. The responsive code now applied to the Squarespace game block is `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html`. Its frame follows viewport height instead of the old fixed 900px. Browser viewport simulations support layout review; physical iPhone/Safari and keyboard behavior require device testing. Local source, packaging and publication remain separate evidence.
 
 ## Historical v0.15.3 — Pixel Blood
 

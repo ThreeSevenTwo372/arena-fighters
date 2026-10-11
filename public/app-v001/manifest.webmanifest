@@ -1,0 +1,15 @@
+{
+  "id": "/",
+  "name": "Arena Fighters",
+  "short_name": "Arena Fighters",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#201b18",
+  "theme_color": "#201b18",
+  "icons": [
+    { "src": "/public/app-v001/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/public/app-v001/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/public/app-v001/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

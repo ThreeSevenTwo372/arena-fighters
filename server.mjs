@@ -9,7 +9,7 @@ import { DuelService, ApiError } from './online/service.mjs';
 import { MemoryStore } from './online/store.mjs';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.mp3': 'audio/mpeg', '.json': 'application/json; charset=utf-8' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.mp3': 'audio/mpeg', '.json': 'application/json; charset=utf-8', '.webmanifest': 'application/manifest+json; charset=utf-8' };
 const BODY_LIMIT = 16 * 1024;
 
 function originList(value) {
@@ -97,7 +97,7 @@ export function createAppServer(options = {}) {
     response.setHeader('Referrer-Policy', 'no-referrer');
     response.setHeader('Cache-Control', 'no-store');
     const frameParents = embedOrigins.length ? `'self' ${embedOrigins.join(' ')}` : "'none'";
-    response.setHeader('Content-Security-Policy', `default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors ${frameParents}`);
+    response.setHeader('Content-Security-Policy', `default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; media-src 'self'; connect-src 'self'; manifest-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors ${frameParents}`);
     try {
       let pathname;
       try { pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname); }
@@ -127,7 +127,8 @@ export function createAppServer(options = {}) {
       const publicAsset = /^\/assets\/(?:dpixel-avatar|arena|clean-gladiator|armory|first-person)\/[a-zA-Z0-9/_.-]+\.(png|json)$/.test(pathname) && !pathname.split('/').includes('..');
       const publicMedia = /^\/public\/cinematics\/[a-zA-Z0-9_-]+\/[a-zA-Z0-9_-]+\.(mp4|jpg|png)$/.test(pathname);
       const publicAudio = /^\/public\/audio\/soundtrack-v\d+\/[a-zA-Z0-9_-]+\.(mp3|json)$/.test(pathname);
-      if (pathname !== '/index.html' && !/^\/src\/[a-zA-Z0-9/_-]+\.(js|css|svg)$/.test(pathname) && !publicAsset && !publicMedia && !publicAudio) throw new ApiError(404, 'Not found.');
+      const publicApp = /^\/public\/app-v001\/[a-zA-Z0-9_-]+\.(webmanifest|png|svg)$/.test(pathname);
+      if (pathname !== '/index.html' && !/^\/src\/[a-zA-Z0-9/_-]+\.(js|css|svg)$/.test(pathname) && !publicAsset && !publicMedia && !publicAudio && !publicApp) throw new ApiError(404, 'Not found.');
       const target = resolve(root, `.${pathname}`);
       if (!target.startsWith(`${resolve(root)}${sep}`)) throw new ApiError(403, 'Forbidden.');
       if (publicMedia || publicAudio && extname(target) === '.mp3') {

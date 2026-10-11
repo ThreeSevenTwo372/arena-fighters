@@ -1,8 +1,25 @@
 # Arena Fighters temporary hosting
 
-## Local v0.16.0 phone candidate — October 11, 2026
+## Mobile App Launch and Stamina v001 — local v0.16.1, October 11, 2026
 
-Published v0.15.3 remains unchanged. Local v0.16.0 has phone layouts and safe-area spacing. The prepared `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html` replaces the old 900px iframe with bounded viewport-relative height and preserves the same verified origin, autoplay/fullscreen permissions and full-screen link. The generator validates an HTTPS origin with no credentials or path. Applying the code block and deploying the local candidate are separate publication steps. Local browser and viewport proof is in `artifacts/Mobile_Layout_v001/VERIFICATION.json`; actual physical iPhone/Safari and keyboard behavior are not yet tested.
+Current local source is **v0.16.1**; published remains **v0.16.0** until separately verified. Snapshot: `releases/Arena_Fighters_v0.16.1_v001`; local evidence: `artifacts/Mobile_App_v001/VERIFICATION.json`. The published Squarespace parent can launch phones directly into the same game origin, preserving only valid public invite and duel-mode parameters. Desktop embedding and the direct link remain. The launch script does not run in editor previews, nested frames or unrelated pages. Phone detection covers portrait, short landscape and coarse-pointer touch devices; navigation replaces the Squarespace history entry. Home Screen metadata/manifest enable standalone launch, with icons rasterized from the exact existing shield favicon. Normal Safari tabs retain browser controls; Home Screen launch is separate from browser layout proof. No service worker or offline gameplay is introduced.
+
+Combat HUD, costs, recovery and Entangle presentation consistently spell Stamina. Combat meters retain the tutorial gold #d4a638 in both WebKit and Firefox fill rules. Command headings wrap on narrow cards. Keep all existing gameplay, private choice/clock/verdict authority, attack timings, authored art, identities, typed names, private saves, and earlier releases unchanged.
+
+## Historical v0.16.0
+
+
+## Published v0.16.0 — October 11, 2026
+
+The existing [Arena Fighters page](https://www.blackbooktattoo.com/arena-fighters) serves the sealed phone layout from [the existing Render host](https://blackbook-arena-fighters.onrender.com/). Its Squarespace code block now uses the prepared bounded viewport-relative iframe, the same game address, and unchanged autoplay/fullscreen permissions. The complete embed is preserved in `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html`.
+
+Separate publication evidence: `artifacts/Live_Release_v0160_v001/VERIFICATION.json`. Commit `e108446260901324ff3f2793720f54c9f4a6de64`; deployment `dep-db5i31o473hc73b8h5qg` completed October 11, 2026 at 05:42:05 UTC. The existing Render host and public Squarespace embed were verified. Historical local-only receipts and all earlier snapshots remain unchanged.
+
+All 2,769 sealed source files and 2,771 committed deployment files matched. The previously completed 731 source and 689 portable checks were hash-verified; all 78 checked public files matched, including all 66 runtime files. Public browser checks covered embedded portrait/landscape layouts, 44px or larger principal touch controls, Guard reducing 13 to 4 damage, Feint dealing 16 damage through Guard, and effect cleanup with no game errors. Browser simulations remain distinct from physical iPhone/Safari and keyboard tests.
+
+The Free plan, temporary sessions, manual deployment setting, localhost services, private saves and all prior releases remain unchanged. Zero public tournaments were active before deployment. Only current root publication documentation was updated afterward; sealed local receipts and snapshot bytes stay preserved.
+
+## Historical v0.15.3 publication
 
 ## Published v0.15.3 — October 11, 2026
 

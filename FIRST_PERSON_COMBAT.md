@@ -1,6 +1,17 @@
 # First-person Combat v001
 
-Local v0.16.0 adds phone layouts around the complete existing arena; publication remains v0.15.3. Source canvases, geometry, frame catalogs, blood placement, 665-ms attacks, contact points and authority stay unchanged. Phone commands sit directly beneath the arena and short landscape uses two columns; safe-area spacing reserves room for sound controls. See artifacts/Mobile_Layout_v001/VERIFICATION.json for local layout proof and releases/Arena_Fighters_v0.16.0_v001 for the independent snapshot.
+## Mobile App Launch and Stamina v001 — local v0.16.1, October 11, 2026
+
+Current local source is **v0.16.1**; published remains **v0.16.0** until separately verified. Snapshot: `releases/Arena_Fighters_v0.16.1_v001`; local evidence: `artifacts/Mobile_App_v001/VERIFICATION.json`. The published Squarespace parent can launch phones directly into the same game origin, preserving only valid public invite and duel-mode parameters. Desktop embedding and the direct link remain. The launch script does not run in editor previews, nested frames or unrelated pages. Phone detection covers portrait, short landscape and coarse-pointer touch devices; navigation replaces the Squarespace history entry. Home Screen metadata/manifest enable standalone launch, with icons rasterized from the exact existing shield favicon. Normal Safari tabs retain browser controls; Home Screen launch is separate from browser layout proof. No service worker or offline gameplay is introduced.
+
+Combat HUD, costs, recovery and Entangle presentation consistently spell Stamina. Combat meters retain the tutorial gold #d4a638 in both WebKit and Firefox fill rules. Command headings wrap on narrow cards. Keep all existing gameplay, private choice/clock/verdict authority, attack timings, authored art, identities, typed names, private saves, and earlier releases unchanged.
+
+## Historical v0.16.0
+
+
+Local and published v0.16.0 adds phone layouts around the complete existing arena. Source canvases, geometry, frame catalogs, blood placement, 665-ms attacks, contact points and authority stay unchanged. Phone commands sit directly beneath the arena and short landscape uses two columns; safe-area spacing reserves room for sound controls. See artifacts/Mobile_Layout_v001/VERIFICATION.json for local layout proof and releases/Arena_Fighters_v0.16.0_v001 for the independent snapshot.
+
+Separate publication evidence: `artifacts/Live_Release_v0160_v001/VERIFICATION.json`. Commit `e108446260901324ff3f2793720f54c9f4a6de64`; deployment `dep-db5i31o473hc73b8h5qg` completed October 11, 2026 at 05:42:05 UTC. The existing Render host and public Squarespace embed were verified. Historical local-only receipts and all earlier snapshots remain unchanged.
 
 ## Preserved v0.15.3 combat contract
 

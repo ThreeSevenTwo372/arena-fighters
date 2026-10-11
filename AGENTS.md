@@ -1,10 +1,21 @@
 # Arena Fighters project instructions
 
-## Phone Layout v001 — local v0.16.0, October 11, 2026
+## Mobile App Launch and Stamina v001 — local v0.16.1, October 11, 2026
 
-Current local source is **v0.16.0**; published source remains **v0.15.3**. Independent snapshot: `releases/Arena_Fighters_v0.16.0_v001`; separate local evidence: `artifacts/Mobile_Layout_v001/VERIFICATION.json`. Phone layouts use additive `mobile.css`, `mobile-creator.css` and `mobile-battle.css` after existing scene styles. Preserve the registered scene viewBoxes and complete integer-size creator/equipment figures, exact source artwork, authored attack/blood playback, saved identities, typed names, private choices, server clocks and verdict authority. Use safe-area spacing, 16px mobile form fields, at least 44px principal touch controls, and two-column battle commands directly below the arena. Short landscape battles arrange arena and commands side by side. Never hide document overflow to conceal a fitting defect.
+Current local source is **v0.16.1**; published remains **v0.16.0** until separately verified. Snapshot: `releases/Arena_Fighters_v0.16.1_v001`; local evidence: `artifacts/Mobile_App_v001/VERIFICATION.json`. The published Squarespace parent can launch phones directly into the same game origin, preserving only valid public invite and duel-mode parameters. Desktop embedding and the direct link remain. The launch script does not run in editor previews, nested frames or unrelated pages. Phone detection covers portrait, short landscape and coarse-pointer touch devices; navigation replaces the Squarespace history entry. Home Screen metadata/manifest enable standalone launch, with icons rasterized from the exact existing shield favicon. Normal Safari tabs retain browser controls; Home Screen launch is separate from browser layout proof. No service worker or offline gameplay is introduced.
 
-The prepared `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html` uses viewport-relative iframe height. The existing published Squarespace iframe remains fixed at 900px until that page's code block is replaced; local game CSS cannot alter a cross-origin parent. Browser width simulations do not establish physical iPhone/Safari or keyboard testing. All prior releases, raw assets, localhost services and private saves remain preserved.
+Combat HUD, costs, recovery and Entangle presentation consistently spell Stamina. Combat meters retain the tutorial gold #d4a638 in both WebKit and Firefox fill rules. Command headings wrap on narrow cards. Keep all existing gameplay, private choice/clock/verdict authority, attack timings, authored art, identities, typed names, private saves, and earlier releases unchanged.
+
+## Historical v0.16.0
+
+
+## Phone Layout v001 — v0.16.0, October 11, 2026
+
+Current local and published source is **v0.16.0**. Independent snapshot: `releases/Arena_Fighters_v0.16.0_v001`; separate local evidence: `artifacts/Mobile_Layout_v001/VERIFICATION.json`. Phone layouts use additive `mobile.css`, `mobile-creator.css` and `mobile-battle.css` after existing scene styles. Preserve the registered scene viewBoxes and complete integer-size creator/equipment figures, exact source artwork, authored attack/blood playback, saved identities, typed names, private choices, server clocks and verdict authority. Use safe-area spacing, 16px mobile form fields, at least 44px principal touch controls, and two-column battle commands directly below the arena. Short landscape battles arrange arena and commands side by side. Never hide document overflow to conceal a fitting defect.
+
+The prepared `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html` uses viewport-relative iframe height. The public Squarespace code block now uses that responsive embed, replacing its fixed 900px frame. Browser width simulations do not establish physical iPhone/Safari or keyboard testing. All prior releases, raw assets, localhost services and private saves remain preserved.
+
+Separate publication evidence: `artifacts/Live_Release_v0160_v001/VERIFICATION.json`. Commit `e108446260901324ff3f2793720f54c9f4a6de64`; deployment `dep-db5i31o473hc73b8h5qg` completed October 11, 2026 at 05:42:05 UTC. The existing Render host and public Squarespace embed were verified. Historical local-only receipts and all earlier snapshots remain unchanged.
 
 ## Historical v0.15.3
 

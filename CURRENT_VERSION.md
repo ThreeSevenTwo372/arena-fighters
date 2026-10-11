@@ -1,8 +1,19 @@
 # Current Arena Fighters version
 
+## Mobile App Launch and Stamina v001 — local v0.16.1, October 11, 2026
+
+Current local source is **v0.16.1**; published remains **v0.16.0** until separately verified. Snapshot: `releases/Arena_Fighters_v0.16.1_v001`; local evidence: `artifacts/Mobile_App_v001/VERIFICATION.json`. The published Squarespace parent can launch phones directly into the same game origin, preserving only valid public invite and duel-mode parameters. Desktop embedding and the direct link remain. The launch script does not run in editor previews, nested frames or unrelated pages. Phone detection covers portrait, short landscape and coarse-pointer touch devices; navigation replaces the Squarespace history entry. Home Screen metadata/manifest enable standalone launch, with icons rasterized from the exact existing shield favicon. Normal Safari tabs retain browser controls; Home Screen launch is separate from browser layout proof. No service worker or offline gameplay is introduced.
+
+Combat HUD, costs, recovery and Entangle presentation consistently spell Stamina. Combat meters retain the tutorial gold #d4a638 in both WebKit and Firefox fill rules. Command headings wrap on narrow cards. Keep all existing gameplay, private choice/clock/verdict authority, attack timings, authored art, identities, typed names, private saves, and earlier releases unchanged.
+
+## Historical v0.16.0
+
+
 ## Phone Layout v001 — v0.16.0, October 11, 2026
 
-Current local source is **v0.16.0**; published source remains **v0.15.3**. Snapshot: `releases/Arena_Fighters_v0.16.0_v001`; local evidence: `artifacts/Mobile_Layout_v001/VERIFICATION.json`. Additive phone styles fit creation, equipment, menu, battle, tutorial and spectator controls to narrow portrait and short landscape viewports. They retain all source art, complete scene aspect ratios, authored frame/blood playback, combat and save contracts. Safe-area padding and 16px form fields support mobile layout; principal controls are at least 44px. The prepared responsive Squarespace code is `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html`; the public page's fixed 900px frame remains unchanged until separately applied. Local/viewport checks are distinct from publication and physical-device testing.
+Current local and published source is **v0.16.0**. Snapshot: `releases/Arena_Fighters_v0.16.0_v001`; local evidence: `artifacts/Mobile_Layout_v001/VERIFICATION.json`. Additive phone styles fit creation, equipment, menu, battle, tutorial and spectator controls to narrow portrait and short landscape viewports. They retain all source art, complete scene aspect ratios, authored frame/blood playback, combat and save contracts. Safe-area padding and 16px form fields support mobile layout; principal controls are at least 44px. The prepared responsive Squarespace code is `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html`; the public page now uses that responsive frame. Local/viewport checks are distinct from publication and physical-device testing.
+
+Separate publication evidence: `artifacts/Live_Release_v0160_v001/VERIFICATION.json`. Commit `e108446260901324ff3f2793720f54c9f4a6de64`; deployment `dep-db5i31o473hc73b8h5qg` completed October 11, 2026 at 05:42:05 UTC. The existing Render host and public Squarespace embed were verified. Historical local-only receipts and all earlier snapshots remain unchanged.
 
 ## Historical v0.15.3
 

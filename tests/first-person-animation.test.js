@@ -179,7 +179,7 @@ test('Focus, guard and actual passive restoration share public captions and neve
     await clock.step();
     await clock.step();
     assert.equal(arena.local.dataset.animation, 'stamina-regeneration');
-    assert.equal(arena.local.querySelector('text').textContent, '+2 SP');
+    assert.equal(arena.local.querySelector('text').textContent, '+2 Stamina');
     await clock.finish();
     assert.equal(await playback, true);
     assert.deepEqual(cues.map(cue => cue.type), ['focus', 'guard']);
