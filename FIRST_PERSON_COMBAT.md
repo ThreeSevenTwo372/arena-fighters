@@ -1,6 +1,10 @@
 # First-person Combat v001
 
-Local v0.15.3, October 11, 2026; published remains v0.14.2. Snapshot path: releases/Arena_Fighters_v0.15.3_v001; separate verification: artifacts/Pixel_Blood_v001/VERIFICATION.json.
+Local v0.16.0 adds phone layouts around the complete existing arena; publication remains v0.15.3. Source canvases, geometry, frame catalogs, blood placement, 665-ms attacks, contact points and authority stay unchanged. Phone commands sit directly beneath the arena and short landscape uses two columns; safe-area spacing reserves room for sound controls. See artifacts/Mobile_Layout_v001/VERIFICATION.json for local layout proof and releases/Arena_Fighters_v0.16.0_v001 for the independent snapshot.
+
+## Preserved v0.15.3 combat contract
+
+Local and published v0.15.3, October 11, 2026. Snapshot path: releases/Arena_Fighters_v0.15.3_v001; local verification: artifacts/Pixel_Blood_v001/VERIFICATION.json; separate live publication verification: artifacts/Live_Release_v0153_v001/VERIFICATION.json. The published game includes all current authored attack poses, the corrected greatsword and consistent armor, and pixel blood. Historical local-only receipts retain their original publication status.
 
 Pixel blood is presentation only. Resolved public damage above zero produces a deterministic square-particle burst whose count increases with damage, capped at 72; zero/invalid damage produces none, while positive guarded/parried chip damage still produces a small burst. Accepted executions use 96 particles in the existing player or spectator scene. Rival bursts retain registered torso anchors; received first-person hits use camera coordinates. Existing contact points, durations, choices, verdict gating, server deadlines and saves are unchanged. Reduced motion uses compact stationary particles. Every temporary layer is removed by the existing step/finally cleanup without extra timers. The disposable art preview can pause blood with the frame control and replay Execution, with Cassian as victor and Mira as defeated; it creates no guest or fighter save.
 

@@ -1,0 +1,195 @@
+/* Phone preparation layouts. Complete registered figures keep native or 2x
+   dimensions; these rules change spacing and controls, never artwork. */
+@media (max-width: 600px) {
+  .creator-heading {
+    align-items: flex-start;
+    gap: 12px;
+    padding: 18px 0 14px;
+  }
+  .creator-heading h1 { font-size: 28px; }
+  .creator-heading .button,
+  .creator-player-tabs .button {
+    min-height: 44px;
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  .creator-player-tabs { flex-wrap: wrap; }
+  .creator-player-tabs .button { flex: 1; }
+  .panel.fighter-editor.compact-editor,
+  .panel.fighter-editor.compact-editor.preset-editor {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "identity" "appearance" "values";
+    gap: 18px;
+    padding: 12px;
+  }
+  .compact-editor > .creator-identity { grid-area: identity; align-self: start; }
+  .compact-editor > .creator-appearance { grid-area: appearance; }
+  .compact-editor > .creator-values { grid-area: values; }
+  .compact-editor .arena-identity-figure,
+  .preset-editor .arena-identity-figure {
+    grid-template-rows: 128px auto;
+    padding: 8px;
+    gap: 10px;
+  }
+  .compact-editor .arena-identity-figure > .clean-avatar {
+    width: 160px;
+    height: 128px;
+    max-width: none;
+    overflow: visible;
+  }
+  .preset-character {
+    grid-template-columns: 44px 160px 44px;
+    width: 248px;
+    height: 128px;
+  }
+  .preset-character > .clean-avatar { width: 160px; height: 128px; }
+  .preset-arrow { width: 44px; height: 48px; }
+  .compact-editor .arena-identity-figure figcaption { font-size: 14px; }
+  .compact-editor .creator-identity > .field-label {
+    margin: 14px 0 10px;
+    text-align: center;
+  }
+  .compact-editor .color-choices {
+    display: grid;
+    grid-template-columns: repeat(6, 44px);
+    justify-content: center;
+    gap: 8px;
+  }
+  .compact-editor .color-choice { width: 44px; height: 44px; }
+  .compact-editor .appearance-fields,
+  .preset-editor .appearance-fields {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    padding: 12px;
+  }
+  .compact-editor .appearance-fields label { font-size: 14px; }
+  .compact-editor .appearance-fields select,
+  .compact-editor .creator-values > select {
+    min-height: 48px;
+    font-size: 16px;
+    padding: 9px 8px;
+  }
+  .attribute-heading { flex-wrap: wrap; }
+  .attribute-heading h2 { font-size: 24px; }
+  .attribute-heading .badge { font-size: 12px; padding: 6px 8px; }
+  .compact-editor .attribute-limit { font-size: 13px; margin: 8px 0 10px; }
+  .compact-editor .stat-row { min-height: 58px; gap: 10px; padding: 7px 0; }
+  .compact-editor .stat-label { font-size: 16px; }
+  .compact-editor .stat-controls { flex-shrink: 0; gap: 8px; }
+  .compact-editor .stat-controls button {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    font-size: 24px;
+  }
+  .compact-editor .stat-value { min-width: 25px; font-size: 24px; }
+  .compact-editor .trait-description { font-size: 14px; line-height: 1.6; }
+  .creator-actions { flex-direction: column; align-items: stretch; gap: 12px; }
+  .creator-actions > .button { width: 100%; min-width: 0; min-height: 48px; font-size: 16px; }
+  .creator-actions .compact-room-join { width: 100%; }
+  .creator-actions .compact-room-join input { flex: 1; width: 0; min-height: 48px; font-size: 16px; }
+  .creator-actions .compact-room-join .button { min-height: 48px; padding: 10px 12px; font-size: 14px; }
+  .creator-actions .tournament-invite-join { margin-left: 0; width: 100%; }
+  .creator-actions .tournament-invite-join summary { min-height: 44px; padding: 10px 0; font-size: 14px; }
+  .creator-actions .build-note { font-size: 13px; }
+  .creator-game-mode summary { min-height: 44px; padding: 10px 0; font-size: 14px; }
+
+  .preparation-heading { padding: 18px 0 14px; }
+  .preparation-heading h1 { font-size: 28px; overflow-wrap: anywhere; }
+  .preparation-heading > p { font-size: 14px; }
+  .preparation-rival summary { min-height: 44px; padding: 10px 0; font-size: 14px; }
+  .armory-room-heading { padding: 20px 12px 8px; }
+  .armory-room-heading p { font-size: 13px; }
+  .armory-scene { gap: 20px; padding: 4px 12px 20px; }
+  .armory-fighter { min-height: 210px; padding: 0; }
+  .armory-live-avatar,
+  .armory-live-avatar .linked-avatar {
+    width: 160px;
+    height: 128px;
+    max-width: none;
+  }
+  .armory-live-avatar { margin: 0; }
+  .armory-live-avatar .linked-avatar-loading { min-height: 128px; }
+  .armory-fighter-light { left: 0; width: 100%; }
+  .armory-fighter-floor { width: min(70%, 220px); margin-top: -9px; }
+  .armory-fighter figcaption { margin-top: 8px; }
+  .armory-fighter figcaption strong { max-width: 100%; font-size: 23px; }
+  .armory-fighter figcaption > span:not(.armory-fighter-kicker),
+  .armory-fighter figcaption > small { font-size: 13px; }
+  .armory-zone-title { font-size: 18px; flex-wrap: wrap; }
+  .armory-zone-title > small { font-size: 11px; }
+  .armory-weapon-rack {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: none;
+    grid-auto-rows: 166px;
+    gap: 6px;
+    padding: 8px 4px;
+    border-width: 6px;
+  }
+  .armory-weapon-rack::before,
+  .armory-weapon-rack::after { box-shadow: none; }
+  .armory-weapon { padding: 6px 0 0; }
+  .armory-weapon-hook { top: 5px; }
+  .armory-weapon-silhouette { padding-top: 10px; align-items: center; }
+  .armory-weapon-silhouette img {
+    width: calc(var(--weapon-width) * 1px);
+    height: calc(var(--weapon-height) * 1px);
+  }
+  .armory-weapon--dagger .armory-weapon-silhouette img { width: 16px; height: 36px; }
+  .armory-nameplate,
+  .armory-helmet .armory-nameplate {
+    min-height: 44px;
+    font-size: 12px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: center;
+    gap: 4px;
+    padding: 6px 3px;
+  }
+  .armory-choice-check { width: 16px; height: 16px; }
+  .armory-armor-stands { gap: 6px; padding-inline: 0; }
+  .armory-mannequin { height: 108px; }
+  .armory-mannequin img { height: 70px; }
+  .armory-neck-cap { top: 16px; }
+  .armory-armor-short { font-size: 11px; }
+  .armory-helmet-shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .armory-helmet-object { height: 64px; }
+  .armory-helmet-object img { height: 35px; }
+  .armory-selected-details > section { padding: 16px 12px; }
+  .armory-selected-details h3 { font-size: 24px; }
+  .armory-selected-details h3 small { font-size: 14px; margin: 4px 0 0; display: block; }
+  .armory-selected-details p { font-size: 14px; }
+  .armory-properties { font-size: 13px; gap: 5px 12px; }
+  .preparation-footer { align-items: stretch; }
+  .preparation-footer > div { min-width: 0; width: 100%; }
+  .preparation-footer .build-preview { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .preparation-footer .build-preview > span { font-size: 13px; }
+  .preparation-footer .build-preview strong { font-size: 18px; overflow-wrap: anywhere; }
+  .preparation-footer p { font-size: 13px; }
+  .preparation-footer .primary { min-width: 0; min-height: 48px; width: 100%; font-size: 16px; }
+}
+
+/* Keep six clear targets without squeezing a 320px phone's inner panel. */
+@media (max-width: 359px) {
+  .compact-editor .color-choices { grid-template-columns: repeat(3, 44px); }
+  .creator-heading { flex-wrap: wrap; }
+}
+
+/* The full 320px equipped figure fits once both phone gutters are available. */
+@media (min-width: 390px) and (max-width: 600px) {
+  .armory-fighter { min-height: 330px; }
+  .armory-live-avatar,
+  .armory-live-avatar .linked-avatar { width: 320px; height: 256px; }
+  .armory-live-avatar .linked-avatar-loading { min-height: 256px; }
+  .armory-fighter-floor { margin-top: -18px; }
+}
+
+/* The complete 408px figure-and-arrow row fits at 2x on wider phones. */
+@media (min-width: 500px) and (max-width: 600px) {
+  .compact-editor .arena-identity-figure,
+  .preset-editor .arena-identity-figure { grid-template-rows: 256px auto; }
+  .compact-editor .arena-identity-figure > .clean-avatar,
+  .preset-character > .clean-avatar { width: 320px; height: 256px; }
+  .preset-character { grid-template-columns: 44px 320px 44px; width: 408px; height: 256px; }
+}

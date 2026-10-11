@@ -1,0 +1,95 @@
+/* Phone framing; artwork and combat remain in their registered scene canvases. */
+@media (max-width: 600px), (max-width: 1000px) and (max-height: 500px) {
+  :root { --phone-audio-space: calc(64px + env(safe-area-inset-bottom, 0px)); }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body { min-width: 0; padding-bottom: var(--phone-audio-space); }
+  .arena-game-layout, #app { width: 100%; min-width: 0; }
+  .app-shell {
+    width: 100%;
+    min-width: 0;
+    min-height: calc(100svh - var(--phone-audio-space));
+    padding: max(0px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) 18px max(12px, env(safe-area-inset-left, 0px));
+    border-inline: 0;
+  }
+  .app-shell.menu-shell { min-height: calc(100svh - var(--phone-audio-space)); padding-inline: max(12px, env(safe-area-inset-left, 0px)) max(12px, env(safe-area-inset-right, 0px)); }
+  .masthead, .menu-shell .masthead { min-height: 56px; gap: 8px; }
+  .masthead .brand { min-width: 0; font-size: 15px; gap: 8px; letter-spacing: .04em; }
+  .masthead .brand-mark { display: none; }
+  .masthead .badge { padding: 4px 6px; font-size: 10px; letter-spacing: 0; }
+  .masthead .button { padding: 8px 10px; min-height: 44px; }
+  .page-footer, .menu-shell .page-footer { gap: 12px; margin-top: 20px; padding-top: 12px; font-size: 11px; }
+  button, summary, a.button { touch-action: manipulation; }
+  .button { min-height: 48px; font-size: 14px; padding: 10px 14px; }
+  input[type='text'], input:not([type]), input[type='search'], input[type='email'], textarea, select,
+  .menu-record-page .menu-watch-code-controls input, .compact-room-join input, .arena-chat-input,
+  .compact-editor .appearance-fields select, .compact-editor .creator-values > select {
+    min-width: 0; max-width: 100%; min-height: 48px; font-size: 16px;
+  }
+  .game-audio-controls {
+    left: max(12px, env(safe-area-inset-left, 0px));
+    right: max(12px, env(safe-area-inset-right, 0px));
+    bottom: max(8px, env(safe-area-inset-bottom, 0px));
+    max-width: none;
+  }
+  .audio-bar { align-items: flex-end; justify-content: space-between; gap: 8px; }
+  .audio-toggle, .audio-options > summary { min-height: 44px; padding: 9px 12px; font-size: 13px; }
+  .audio-options { flex: 0 1 180px; min-width: 0; max-width: 100%; position: relative; }
+  .audio-options[open] .audio-settings {
+    position: absolute; right: 0; bottom: calc(100% + 8px);
+    width: min(290px, calc(100vw - 24px)); max-height: calc(100dvh - 100px);
+    overflow: auto; border-top: 1px solid #ad8c61;
+  }
+  .name-screen { min-height: calc(100svh - 170px - env(safe-area-inset-bottom, 0px)); padding: 24px 0; }
+  .name-screen h1 { font-size: clamp(28px, 8vw, 38px); margin-bottom: 24px; }
+  .name-form { width: 100%; max-width: 420px; }
+  .name-form input { font-size: 18px; }
+  .onboarding-modes { margin-top: 24px; width: 100%; max-width: 420px; }
+  .mode-toggle { width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2px; }
+  .mode-toggle button { min-height: 48px; min-width: 0; padding: 8px 5px; font-size: 13px; }
+  .menu-shell .arena-main-menu { width: min(360px, 100%); margin: 18px auto auto; padding: 18px 16px; }
+  .menu-primary { gap: 10px; }
+  .arena-main-menu .button { min-height: 48px; padding: 10px 12px; }
+  .menu-primary-entry p, .menu-memorial-entry p { font-size: 12px; line-height: 1.45; }
+  .menu-page-navigation { gap: 8px; margin-bottom: 18px; }
+  .menu-page-navigation .button { font-size: 13px; }
+  .menu-record-heading { margin-bottom: 18px; }
+  .menu-watch-code { padding: 14px 12px; }
+  .menu-watch-code p, .menu-empty p { font-size: 13px; }
+  .menu-watch-code-controls { grid-template-columns: minmax(0, 1fr) auto; }
+  .menu-record-page .menu-watch-code-controls input { padding-inline: 8px; }
+  .menu-tournament { min-width: 0; padding: 14px 12px; }
+  .menu-tournament-details h2 { overflow-wrap: anywhere; }
+  .menu-leaderboard { table-layout: fixed; width: 100%; }
+  .menu-leaderboard th, .menu-leaderboard td { overflow-wrap: anywhere; }
+  .menu-grave-list { grid-template-columns: minmax(0, 1fr); }
+  .tournament-room-bar { flex-wrap: wrap; padding: 12px; }
+  .tournament-room-actions { width: 100%; flex-wrap: wrap; }
+  .tournament-room-actions .button { flex: 1; }
+  .tournament-room-code { font-size: 20px; }
+  .tournament-invite-note, .tournament-lobby-draw-note { font-size: 13px; }
+  .tournament-fighter-slots { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .tournament-slot-identity h3 { font-size: 17px; }
+  .tournament-slot-identity p, .tournament-slot-record { font-size: 12px; }
+  .tournament-gate-scene, .tournament-gate { min-height: min(420px, 65svh); }
+  .tournament-gate-heading { padding: 18px 12px 10px; }
+  .tournament-gate-heading h2 { font-size: 24px; }
+  .tournament-gate-caption { padding: 18px 12px; }
+  .arrival-header { padding: max(16px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) 16px max(12px, env(safe-area-inset-left, 0px)); }
+  .arrival-invitation { bottom: max(96px, calc(76px + env(safe-area-inset-bottom, 0px))); }
+  .toast { max-width: calc(100vw - 24px); bottom: calc(var(--phone-audio-space) + 12px); overflow-wrap: anywhere; }
+  .overlay-panel { padding: 12px; overflow: auto; }
+  .overlay-panel > div, .overlay-panel > section { max-width: 100%; padding: 24px 16px; max-height: calc(100dvh - 24px); overflow: auto; }
+}
+@media (min-width: 390px) and (max-width: 600px) {
+  .tournament-fighter-slots { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 601px) and (max-width: 1000px) and (max-height: 500px) {
+  .compact-editor .stat-controls button { width: 44px; height: 44px; min-height: 44px; }
+  .game-audio-controls { right: auto; width: min(280px, calc(100vw - 24px)); }
+  .audio-bar { justify-content: flex-start; }
+  .name-screen { min-height: 0; padding: 18px 0; }
+  .name-screen h1 { font-size: 30px; margin-bottom: 12px; }
+  .onboarding-modes { margin-top: 14px; }
+  .menu-shell .arena-main-menu { margin: 12px auto auto; }
+  .tournament-fighter-slots { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

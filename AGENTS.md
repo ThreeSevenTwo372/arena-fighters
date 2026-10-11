@@ -1,8 +1,16 @@
 # Arena Fighters project instructions
 
-## Pixel Blood v001 — local v0.15.3, October 11, 2026
+## Phone Layout v001 — local v0.16.0, October 11, 2026
 
-Current local source is **v0.15.3**; published remains **v0.14.2**. Snapshot: `releases/Arena_Fighters_v0.15.3_v001`; evidence: `artifacts/Pixel_Blood_v001/VERIFICATION.json`. Local implementation does not establish publication.
+Current local source is **v0.16.0**; published source remains **v0.15.3**. Independent snapshot: `releases/Arena_Fighters_v0.16.0_v001`; separate local evidence: `artifacts/Mobile_Layout_v001/VERIFICATION.json`. Phone layouts use additive `mobile.css`, `mobile-creator.css` and `mobile-battle.css` after existing scene styles. Preserve the registered scene viewBoxes and complete integer-size creator/equipment figures, exact source artwork, authored attack/blood playback, saved identities, typed names, private choices, server clocks and verdict authority. Use safe-area spacing, 16px mobile form fields, at least 44px principal touch controls, and two-column battle commands directly below the arena. Short landscape battles arrange arena and commands side by side. Never hide document overflow to conceal a fitting defect.
+
+The prepared `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html` uses viewport-relative iframe height. The existing published Squarespace iframe remains fixed at 900px until that page's code block is replaced; local game CSS cannot alter a cross-origin parent. Browser width simulations do not establish physical iPhone/Safari or keyboard testing. All prior releases, raw assets, localhost services and private saves remain preserved.
+
+## Historical v0.15.3
+
+## Pixel Blood v001 — v0.15.3, October 11, 2026
+
+Current local and published source is **v0.15.3**. Snapshot: `releases/Arena_Fighters_v0.15.3_v001`; local evidence: `artifacts/Pixel_Blood_v001/VERIFICATION.json`. Publication is separately verified in `artifacts/Live_Release_v0153_v001/VERIFICATION.json`, commit `bb10531a8076f41344b655d820b74b552be08d3d`, deploy `dep-db5h9unlot8c73evdn90`. The public game includes the complete authored attack frames, greatsword blade/crossguard and armor-continuity corrections, and damage-scaled pixel blood. Existing free temporary hosting and the Squarespace embed remain unchanged; prior local-only receipts retain their original publication status.
 
 Blood is a temporary procedural SVG layer, never fighter artwork or combat authority. Use only the resolved public attack's positive `damage`: `min(72, 4 + 3 * min(24, ceil(damage)))` square particles. Zero/invalid damage emits none; positive Guard/Riposte chip damage retains its smaller burst. Execution uses 96 particles only inside existing accepted execution playback. Rival/spectator bursts use registered torso coordinates; incoming first-person hits use a separate camera-space origin. Preserve 285-ms attack contact, the 665-ms attack, 720/740-ms first-person/stands execution contacts, 1950/2550-ms execution durations and all server clocks. Reduced motion uses stationary compact pixels; existing finally/step cleanup owns every effect, without extra timers or persistent stains in fighter data. Keep strict CSP intact by setting trajectory variables through CSSOM.
 

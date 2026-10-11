@@ -1,0 +1,351 @@
+/* Phone layout only. The complete arena viewBox, registered art and playback
+   layers remain untouched; this stylesheet arranges their surrounding UI. */
+@media (max-width: 600px) {
+  .battle-shell .battle-header {
+    align-items: start;
+    gap: 8px;
+    padding: 12px 0 10px;
+  }
+  .battle-shell .battle-header > div { min-width: 0; }
+  .battle-shell .battle-header h1 {
+    margin: 2px 0 0;
+    font-size: 22px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+  .battle-shell .battle-header .eyebrow {
+    margin-bottom: 0;
+    font-size: 10px;
+    letter-spacing: .08em;
+  }
+  .battle-shell .battle-state {
+    flex-shrink: 0;
+    max-width: 42%;
+    padding: 6px 7px;
+    font-size: 10px;
+    line-height: 1.3;
+    white-space: normal;
+    text-align: center;
+  }
+  .battle-shell .classic-battle {
+    min-width: 0;
+    box-shadow: 0 2px 6px #49301914;
+  }
+  .battle-shell .classic-battle .first-person-stage .battle-hud {
+    gap: 6px;
+    padding: 6px;
+  }
+  .battle-shell .classic-battle .first-person-stage .fighter-status {
+    padding: 6px 7px;
+    border-width: 1px;
+  }
+  .battle-shell .classic-battle .status-heading {
+    align-items: start;
+    gap: 4px;
+  }
+  .battle-shell .classic-battle .first-person-stage .fighter-name {
+    min-width: 0;
+    font-size: 14px;
+    line-height: 1.25;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+  .battle-shell .classic-battle .status-heading .banner-chip {
+    flex-shrink: 0;
+    padding: 2px 4px;
+    font-size: 9px;
+    letter-spacing: 0;
+  }
+  .battle-shell .classic-battle .first-person-stage .fighter-status > p {
+    margin: 3px 0;
+    font-size: 11px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+  .battle-shell .classic-battle .fighter-status .meter-label,
+  .battle-shell .classic-battle .fighter-status .meter-label strong {
+    font-size: 11px;
+    line-height: 1.3;
+  }
+  .battle-shell .classic-battle .fighter-status .meter-label { gap: 4px; }
+  .battle-shell .classic-battle .fighter-status .meter-label > span { min-width: 0; }
+  .battle-shell .classic-battle .fighter-status .meter-label strong { flex-shrink: 0; }
+  .battle-shell .stamina-regen-note,
+  .spectator-status .stamina-regen-note {
+    display: inline-block;
+    margin-left: 3px;
+    font-size: 9px;
+    white-space: normal;
+  }
+  .battle-shell .classic-battle .first-person-stage .fighter-status progress.meter {
+    height: 6px;
+    margin: 2px 0;
+  }
+  .battle-shell .fighter-readiness {
+    margin-top: 3px;
+    font-size: 11px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+  /* Commands follow the arena; the round recap remains directly below them. */
+  .battle-shell .battle-console {
+    display: flex;
+    flex-direction: column;
+  }
+  .battle-shell .battle-console > .control-panel,
+  .battle-shell .battle-console > .mercy-panel { order: 1; }
+  .battle-shell .battle-console > .battle-dialogue {
+    order: 2;
+    padding: 10px 12px;
+    border: 0;
+    border-top: 1px solid var(--line);
+  }
+  .battle-shell .battle-dialogue p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+  .battle-shell .classic-battle .control-panel { padding: 10px 11px; }
+  .battle-shell .command-heading { gap: 3px 8px; }
+  .battle-shell .command-heading .eyebrow {
+    font-size: 10px;
+    letter-spacing: .04em;
+    overflow-wrap: anywhere;
+  }
+  .battle-shell .classic-battle .command-heading h2 {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.3;
+  }
+  .battle-shell .choice-clock { margin-top: 6px; padding-top: 5px; }
+  .battle-shell .choice-clock > div { font-size: 11px; }
+  .battle-shell .choice-clock strong { font-size: 18px; }
+  .battle-shell .classic-battle .action-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin: 8px 0;
+  }
+  .battle-shell .classic-battle .action-card {
+    min-width: 0;
+    min-height: 72px;
+    padding: 9px 10px;
+    touch-action: manipulation;
+  }
+  .battle-shell .command-top { gap: 3px 5px; }
+  .battle-shell .classic-battle .action-card .choice-title {
+    font-size: 16px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+  }
+  .battle-shell .classic-battle .action-card kbd { display: none; }
+  .battle-shell .command-cost { font-size: 12px; }
+  .battle-shell .classic-battle .action-card .choice-description,
+  .battle-shell .classic-battle .unavailable {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1.35;
+  }
+  .battle-shell .command-preview {
+    min-height: 0;
+    margin-bottom: 3px;
+    padding: 7px 9px;
+    font-size: 12px;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+  .battle-shell .command-preview small,
+  .battle-shell .command-panel > small { font-size: 11px; line-height: 1.4; }
+  .battle-shell .resolution-panel { min-height: 150px; }
+  .battle-shell .battle-history { margin-top: 12px; padding: 0 12px; }
+  .battle-shell .battle-history summary,
+  .battle-shell .help-details summary {
+    display: list-item;
+    list-style-position: inside;
+    min-height: 44px;
+    padding: 12px 0;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+  .battle-shell .battle-history .battle-log {
+    margin: 0 0 10px;
+    padding: 0;
+    max-height: 230px;
+    overscroll-behavior: contain;
+  }
+  .battle-shell .battle-log .log-entry {
+    gap: 7px;
+    padding: 8px 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .battle-shell .battle-log .log-entry > span:last-child { min-width: 0; overflow-wrap: anywhere; }
+  .battle-shell .help-details { padding: 0 12px 10px; font-size: 13px; }
+  .battle-shell .help-details h3 { overflow-wrap: anywhere; }
+  .battle-shell .audience-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+  .battle-shell .audience-controls .button { min-height: 44px; font-size: 14px; }
+  .battle-shell .audience-controls small { flex-basis: 100%; }
+  .battle-shell .online-room-bar { gap: 7px; margin-top: 10px; font-size: 12px; }
+  .battle-shell .online-room-bar .button { min-height: 44px; padding: 8px 10px; font-size: 13px; }
+  .battle-shell .online-room-bar .connection-status { flex-basis: 100%; }
+  .first-person-stage .battle-animation-caption,
+  .first-person-stage .fp-execution-caption {
+    padding: 7px 10px;
+    font-size: 12px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+  .fight-tutorial { padding-top: 12px; }
+  .tutorial-navigation { gap: 8px; margin-bottom: 14px; }
+  .tutorial-navigation .button { min-height: 44px; font-size: 14px; }
+  .tutorial-navigation > span { font-size: 12px; line-height: 1.3; }
+  .tutorial-heading { margin-bottom: 14px; }
+  .tutorial-heading h1 { margin: 5px 0 8px; font-size: 25px; line-height: 1.2; }
+  .tutorial-heading p { font-size: 14px; line-height: 1.45; }
+  .tutorial-layout { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .fight-tutorial .tutorial-arena.first-person-stage { height: auto; }
+  .fight-tutorial .tutorial-arena .first-person-arena {
+    left: auto;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    aspect-ratio: 920 / 440;
+    transform: none;
+  }
+  .tutorial-status-pair { gap: 7px; margin-top: 10px; }
+  .tutorial-fighter-status { padding: 8px; }
+  .tutorial-fighter-status h2 { font-size: 15px; line-height: 1.3; overflow-wrap: anywhere; }
+  .tutorial-fighter-status > div:first-child > span { font-size: 11px; }
+  .tutorial-fighter-status p { margin: 5px 0 7px; font-size: 11px; line-height: 1.35; overflow-wrap: anywhere; }
+  .tutorial-fighter-status .meter-label,
+  .tutorial-fighter-status .meter-label strong { font-size: 11px; }
+  .tutorial-fighter-status .meter { height: 6px; margin: 3px 0; }
+  .tutorial-fighter-status .tutorial-passive-recovery { margin-top: 6px; font-size: 11px; }
+  .tutorial-coach { padding: 13px; }
+  .tutorial-coach h2 { margin-bottom: 8px; font-size: 20px; }
+  .tutorial-coach p, .tutorial-recap { font-size: 14px; line-height: 1.5; }
+  .tutorial-predictable-rival, .tutorial-round-summary { padding-top: 9px; }
+  .tutorial-guided-move { min-height: 64px; padding: 10px 12px; touch-action: manipulation; }
+  .tutorial-guided-move strong { font-size: 18px; }
+  .tutorial-guided-move span { font-size: 13px; }
+  .tutorial-completion-actions .button { flex: 1 1 130px; min-height: 48px; font-size: 14px; }
+  .spectator-battle-hud { gap: 7px; padding: 8px 0; }
+  .spectator-status, .tournament-view .spectator-status { padding: 7px 8px; }
+  .spectator-status-heading, .tournament-view .spectator-status-heading { flex-wrap: wrap; gap: 3px 7px; }
+  .spectator-status-heading h2, .tournament-view .spectator-status-heading h2 {
+    min-width: 0;
+    font-size: 15px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+  .spectator-status-heading span { font-size: 10px; letter-spacing: .04em; }
+  .spectator-status > p, .tournament-view .spectator-status > p {
+    min-height: 0;
+    margin: 4px 0;
+    font-size: 11px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+  .spectator-status .meter-label, .spectator-status .meter-label strong,
+  .tournament-view .spectator-status .meter-label,
+  .tournament-view .spectator-status .meter-label strong { font-size: 11px; gap: 4px; }
+  .spectator-status .meter-label strong { flex-shrink: 0; }
+  .spectator-status .meter { height: 6px; margin: 3px 0; }
+  .spectator-status .tournament-fighter-state { font-size: 11px; line-height: 1.35; overflow-wrap: anywhere; }
+  .spectator-preview-controls .button { min-height: 44px; font-size: 14px; }
+  .tournament-commentary, .tournament-match-result { margin-top: 10px; padding: 12px; }
+  .tournament-commentary p, .tournament-match-result > p,
+  .tournament-personal-note { font-size: 13px; line-height: 1.5; overflow-wrap: anywhere; }
+  .tournament-commentary .eyebrow, .tournament-clock { font-size: 11px; }
+  .tournament-room-actions .button { min-height: 44px; font-size: 13px; }
+  .mercy-panel { min-width: 0; padding: 12px; }
+  .mercy-winner { gap: 5px 9px; }
+  .mercy-winner strong { font-size: 22px; line-height: 1.3; }
+  .mercy-winner > span { font-size: 14px; }
+  .mercy-question-row { gap: 9px; margin: 12px 0; }
+  .mercy-question-row h2 { min-width: 0; font-size: 23px; overflow-wrap: anywhere; }
+  .mercy-clock { flex-shrink: 0; min-width: 46px; }
+  .mercy-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .mercy-actions .button { min-height: 48px; font-size: 16px; touch-action: manipulation; }
+  .mercy-actions .mercy-crowd { grid-column: 1 / -1; }
+  .crowd-vote-counts { gap: 8px; }
+  .crowd-vote-counts > span { min-width: 0; padding: 9px; font-size: 14px; }
+  .mercy-vote-status { font-size: 13px; line-height: 1.45; }
+  .loser-outcome-overlay { padding: 16px; }
+  .loser-outcome-overlay h2 { overflow-wrap: anywhere; }
+  .loser-outcome-spared h2 { max-width: 100%; padding: 18px; }
+  .arena-chat-host, .arena-reactions { width: calc(100% - 24px); }
+  .arena-chat-heading { box-sizing: border-box; min-height: 48px; padding: 11px 12px; }
+  .arena-chat-body { padding: 0 12px 12px; }
+  .arena-chat-log { max-height: 190px; }
+  .arena-chat-input { font-size: 16px; }
+  .arena-chat-hint { flex-basis: 100%; }
+  .arena-chat-counter { margin-right: auto; }
+  .arena-chat-send { min-height: 44px; font-size: 14px; touch-action: manipulation; }
+  .arena-reaction-controls { gap: 8px; padding: 10px; }
+  .arena-reaction-controls > div { width: 100%; gap: 7px; }
+  .arena-reaction-controls button { flex: 1 1 90px; min-height: 44px; padding: 8px; font-size: 14px; }
+  .arena-reaction-controls [role='status'] { font-size: 13px; line-height: 1.4; }
+}
+
+/* A sideways phone has useful width but little height. Keep the same complete
+   scene beside the commands, without introducing a different camera crop. */
+@media (min-width: 601px) and (max-width: 1000px) and (max-height: 500px) and (orientation: landscape) {
+  .battle-shell .masthead { min-height: 44px; }
+  .battle-shell .battle-header { padding: 5px 0; }
+  .battle-shell .battle-header .eyebrow { margin-bottom: 2px; font-size: 10px; }
+  .battle-shell .battle-header h1 { margin: 0; font-size: 20px; }
+  .battle-shell .classic-battle {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(260px, 1fr);
+    align-items: start;
+  }
+  .battle-shell .classic-battle .battle-console {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    border-top: 0;
+    border-left: 1px solid var(--line);
+  }
+  .battle-shell .battle-console > .control-panel,
+  .battle-shell .battle-console > .mercy-panel { order: 1; }
+  .battle-shell .battle-console > .battle-dialogue {
+    order: 2;
+    padding: 9px 11px;
+    border: 0;
+    border-top: 1px solid var(--line);
+  }
+  .battle-shell .battle-dialogue p { font-size: 12px; line-height: 1.4; }
+  .battle-shell .classic-battle .control-panel { padding: 9px 10px; }
+  .battle-shell .classic-battle .action-grid { gap: 7px; }
+  .battle-shell .classic-battle .action-card { min-height: 56px; padding: 7px 8px; touch-action: manipulation; }
+  .battle-shell .classic-battle .action-card .choice-title { font-size: 15px; }
+  .battle-shell .classic-battle .action-card .choice-description { font-size: 11px; }
+  .battle-shell .classic-battle .action-card kbd { display: none; }
+  .battle-shell .command-preview { min-height: 0; font-size: 12px; }
+  .battle-shell .resolution-panel { min-height: 150px; }
+  .fight-tutorial { padding-top: 10px; }
+  .tutorial-navigation, .tutorial-heading { margin-bottom: 12px; }
+  .tutorial-heading h1 { font-size: 24px; }
+  .tutorial-heading p { font-size: 14px; line-height: 1.4; }
+  .tutorial-layout { grid-template-columns: minmax(0, 1.25fr) minmax(250px, 1fr); gap: 14px; }
+  .fight-tutorial .tutorial-arena.first-person-stage { height: auto; }
+  .fight-tutorial .tutorial-arena .first-person-arena {
+    left: auto;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+    aspect-ratio: 920 / 440;
+    transform: none;
+  }
+  .tutorial-status-pair { gap: 7px; margin-top: 8px; }
+  .tutorial-fighter-status { padding: 8px; }
+  .tutorial-fighter-status h2 { font-size: 15px; }
+  .tutorial-fighter-status p { font-size: 11px; margin: 5px 0; }
+  .tutorial-coach { padding: 12px; }
+  .tutorial-coach h2 { font-size: 20px; margin-bottom: 8px; }
+  .tutorial-coach p { font-size: 14px; line-height: 1.45; }
+  .tutorial-guided-move { min-height: 56px; touch-action: manipulation; }
+  .tutorial-navigation .button, .tutorial-completion-actions .button { min-height: 44px; }
+}

@@ -1,8 +1,14 @@
 # Arena Fighters
 
+Current local version: **v0.16.0, Phone Layout v001** (October 11, 2026). Phone screens receive larger touch controls, readable form fields, fitted complete character previews, compact battle status, two-column commands below the arena, safe-area spacing and a short landscape combat layout. Source art, attacks, pixel blood, combat clocks and saved identities stay exact. Snapshot: `releases/Arena_Fighters_v0.16.0_v001`; local verification: `artifacts/Mobile_Layout_v001/VERIFICATION.json`.
+
+**Published remains v0.15.3.** The responsive replacement for the existing Squarespace code block is `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html`. Its frame follows viewport height instead of the old fixed 900px. Browser viewport simulations support layout review; physical iPhone/Safari and keyboard behavior require device testing. Local source, packaging and publication remain separate evidence.
+
+## Historical v0.15.3 — Pixel Blood
+
 Current local version: **v0.15.3, Pixel Blood v001** (October 11, 2026). Attacks now produce crisp red square particles at resolved contact, with more blood for more actual public damage and a bounded 72-particle maximum. Accepted executions use a larger 96-particle spray in both player and spectator views. Reduced motion uses compact stationary pixels. Zero-damage impacts produce no blood. Existing attack/execution clocks, combat rules, verdict authority, saved identities and complete v008 artwork remain unchanged.
 
-Snapshot: `releases/Arena_Fighters_v0.15.3_v001`; separate local evidence: `artifacts/Pixel_Blood_v001/VERIFICATION.json`. **Published remains v0.14.2** with its existing separate deployment evidence. The disposable `/?first-person-art-review=1` preview can pause blood at contact and replay Execution; Cassian is the sample victor and switching View shows Mira's defeated perspective. These controls create no guest and touch no fighter save. All prior assets and releases remain preserved. Local verification does not establish publication or human visual acceptance.
+Snapshot: `releases/Arena_Fighters_v0.15.3_v001`; separate local evidence: `artifacts/Pixel_Blood_v001/VERIFICATION.json`. **Published v0.15.3** is available at [Arena Fighters](https://www.blackbooktattoo.com/arena-fighters), with separate evidence in `artifacts/Live_Release_v0153_v001/VERIFICATION.json`. The live game includes the current frame-by-frame attacks, corrected greatsword and consistent forearm armor, and pixel blood. The disposable `/?first-person-art-review=1` preview can pause blood at contact and replay Execution; Cassian is the sample victor and switching View shows Mira's defeated perspective. These controls create no guest and touch no fighter save. All prior assets and releases remain preserved. Local verification alone does not establish publication or human visual acceptance; historical local receipts retain their original status.
 
 ## Historical v0.15.2 — Greatsword Armor Continuity
 

@@ -1,8 +1,14 @@
 # Current Arena Fighters version
 
+## Phone Layout v001 — v0.16.0, October 11, 2026
+
+Current local source is **v0.16.0**; published source remains **v0.15.3**. Snapshot: `releases/Arena_Fighters_v0.16.0_v001`; local evidence: `artifacts/Mobile_Layout_v001/VERIFICATION.json`. Additive phone styles fit creation, equipment, menu, battle, tutorial and spectator controls to narrow portrait and short landscape viewports. They retain all source art, complete scene aspect ratios, authored frame/blood playback, combat and save contracts. Safe-area padding and 16px form fields support mobile layout; principal controls are at least 44px. The prepared responsive Squarespace code is `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html`; the public page's fixed 900px frame remains unchanged until separately applied. Local/viewport checks are distinct from publication and physical-device testing.
+
+## Historical v0.15.3
+
 ## Pixel Blood v001 — v0.15.3, October 11, 2026
 
-Current local source is **v0.15.3**; published remains **v0.14.2**. Independent snapshot: `releases/Arena_Fighters_v0.15.3_v001`; separate evidence: `artifacts/Pixel_Blood_v001/VERIFICATION.json`.
+Current local and published source is **v0.15.3**. Independent snapshot: `releases/Arena_Fighters_v0.15.3_v001`; local evidence: `artifacts/Pixel_Blood_v001/VERIFICATION.json`. Separate publication evidence: `artifacts/Live_Release_v0153_v001/VERIFICATION.json`. Deployment `dep-db5h9unlot8c73evdn90` completed October 11, 2026 at 04:48:32 UTC from commit `bb10531a8076f41344b655d820b74b552be08d3d` on `codex/temporary-sessions`; the existing public host and Squarespace embed were verified afterward. Historical receipts and release snapshots remain unchanged.
 
 Positive resolved attack damage determines the density of a temporary square-pixel blood burst, capped at 72 particles. Executions use a larger 96-particle spray in first-person and spectator views. Zero-damage impacts produce no blood; reduced motion shows stationary compact pixels. Both viewer seats use their existing arena, contact points and playback cleanup. Attack/execution durations, combat rules, deadlines, verdict authority, saved fighters, complete v008 artwork and all prior releases remain preserved. The disposable art preview includes an Execution cue and paused blood inspection. Local/browser/portable checks do not establish publication or human visual acceptance.
 

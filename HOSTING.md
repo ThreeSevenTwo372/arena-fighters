@@ -1,5 +1,19 @@
 # Arena Fighters temporary hosting
 
+## Local v0.16.0 phone candidate — October 11, 2026
+
+Published v0.15.3 remains unchanged. Local v0.16.0 has phone layouts and safe-area spacing. The prepared `artifacts/Mobile_Layout_v001/squarespace-embed-v001.html` replaces the old 900px iframe with bounded viewport-relative height and preserves the same verified origin, autoplay/fullscreen permissions and full-screen link. The generator validates an HTTPS origin with no credentials or path. Applying the code block and deploying the local candidate are separate publication steps. Local browser and viewport proof is in `artifacts/Mobile_Layout_v001/VERIFICATION.json`; actual physical iPhone/Safari and keyboard behavior are not yet tested.
+
+## Published v0.15.3 — October 11, 2026
+
+The existing [Arena Fighters page](https://www.blackbooktattoo.com/arena-fighters) serves sealed v0.15.3 from [the existing Render host](https://blackbook-arena-fighters.onrender.com/). It includes four authored attack poses per weapon, the rigid greatsword blade and perpendicular crossguard, consistent greatsword forearm armor, and damage-scaled square-pixel blood with a larger execution spray.
+
+Deployment `dep-db5h9unlot8c73evdn90` completed at 04:48:32 UTC from commit `bb10531a8076f41344b655d820b74b552be08d3d` on `codex/temporary-sessions`. All 2,766 sealed source files and all 2,768 deployment Git files matched before publication. The 731 source and 689 portable checks were verified. All 1,377 checked public files matched, including all 1,305 first-person asset files. The Squarespace iframe displayed v0.15.3 and completed Guard/Feint lessons; the public inspector showed all four v008 greatsword poses, a 25-pixel burst for 7 damage, and 96-pixel execution effects in victor and defeated perspectives. No game errors or CSP violations appeared in the browser; unrelated Squarespace loader warnings are retained in the evidence. Separate publication evidence is `artifacts/Live_Release_v0153_v001/VERIFICATION.json`.
+
+The Free plan, temporary sessions, manual deployment setting and Squarespace embed configuration remain unchanged. Zero public tournaments were active immediately before publication. Localhost services, private saves and all earlier snapshots remain preserved. The sealed snapshot, deployment commit and earlier local-only verification receipts are unchanged; only current root documentation was updated afterward to record publication.
+
+## Historical v0.14.2 publication
+
 ## Published v0.14.2 — October 10, 2026
 
 The existing [Arena Fighters page](https://www.blackbooktattoo.com/arena-fighters) serves the sealed v0.14.2 motion revision from [the existing Render host](https://blackbook-arena-fighters.onrender.com/). Complete holds pivot near their forearms with overscan hiding the cropped sleeve ends, plus weapon-specific windup, impact and recovery. The disposable art preview includes an attack-frame inspector. All artwork, combat clocks, saved identities and verdict authority remain unchanged.
