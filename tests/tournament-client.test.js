@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import { TournamentClient } from '../src/tournament-client.js';
 
 const fighter = { name: 'Aster' };
-const makeClient = ({ duelMode = false, responder = () => ({}) } = {}) => {
+const makeClient = ({ duelMode = false, singlePlayer = false, responder = () => ({}) } = {}) => {
   const requests = [];
-  const client = new TournamentClient({ duelMode,
+  const client = new TournamentClient({ duelMode, singlePlayer,
     storage: { getItem: () => 'qa-token' },
     fetcher: async (path, options) => {
       const request = { path, method: options.method, body: options.body === undefined ? null : JSON.parse(options.body), authorization: options.headers.Authorization };
@@ -26,6 +26,37 @@ test('ordinary entry and friend joining retain the tournament endpoints and exis
   ]);
   assert.ok(requests.every(request => request.authorization === 'Bearer qa-token'));
   assert.equal(client.legacyRoom, false);
+});
+
+test('Single Player atomically enters its dedicated tournament endpoint and retains normal member commands', async () => {
+  const { client, requests } = makeClient({ singlePlayer: true });
+  await client.create(fighter);
+  await client.room('ABC234');
+  await client.command({ type: 'tournament', code: 'ABC234', duelId: 'match-1' }, 'loadout', { loadout: { weapon: 'sword' } });
+  assert.deepEqual(requests.filter(request => request.method === 'POST').map(request => request.path), [
+    '/api/tournaments/single-player', '/api/tournaments/ABC234/loadout',
+  ]);
+  assert.deepEqual(requests.find(request => request.path === '/api/tournaments/single-player').body, { character: fighter });
+  assert.equal(client.legacyRoom, false);
+  assert.ok(requests.every(request => request.authorization === 'Bearer qa-token'));
+});
+
+test('Single Player recovers a lost creation acknowledgement without making a second bot roster', async () => {
+  let entered = false;
+  const { client, requests } = makeClient({ singlePlayer: true, responder: ({ path }) => {
+    if (path === '/api/tournaments/single-player') { entered = true; throw new TypeError('Lost response'); }
+    if (path === '/api/session') return { activeTournament: entered ? 'ABC234' : null, activeRoom: null };
+    return { type: 'tournament', singlePlayer: true, code: 'ABC234' };
+  } });
+  assert.equal((await client.create(fighter)).singlePlayer, true);
+  assert.equal(requests.filter(request => request.path === '/api/tournaments/single-player').length, 1);
+  assert.equal(requests.at(-1).path, '/api/tournaments/ABC234');
+});
+
+test('legacy duel invitations retain room routing even when a Single Player preference is present', async () => {
+  const { client, requests } = makeClient({ duelMode: true, singlePlayer: true });
+  await client.create(fighter);
+  assert.equal(requests.at(-1).path, '/api/rooms');
 });
 
 test('diagnostic duel entry, friend joining, reading and commands use the retained room endpoints', async () => {

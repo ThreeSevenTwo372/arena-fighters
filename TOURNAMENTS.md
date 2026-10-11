@@ -1,5 +1,16 @@
 # Eight-fighter tournaments
 
+## Single Player Tournament v001 — local v0.17.0, October 11, 2026
+
+Current local source is **v0.17.0**; published remains **v0.16.1** until separately verified. Snapshot: `releases/Arena_Fighters_v0.17.0_v001`; local evidence: `artifacts/Single_Player_v001/VERIFICATION.json`. Single Player replaces the former Quick Duel menu command and lesson completion link. Use the normal name/creator flow or the exact surviving fighter; Start tournament creates one human and seven service-controlled bots immediately in its own tournament. The player takes the opening match and chooses equipment normally. Ordinary Fight remains the multiplayer tournament entry, and existing private duel invitation links retain their original routing.
+
+Single Player calculates bot-versus-bot results with the shared combat rules and advances their bracket entries without showing those battles or waiting through bot presentation clocks. Only the player's matches are played. Retain the completed human match through its normal presentation/intermission before advancing, so winner reveals, Mercy and execution/outcome playback stay authoritative. Keep ordinary multiplayer draws and bot timing unchanged. Solo creation retries resume the same owned solo tournament; other humans cannot join its fighter roster. The mode survives refresh and the next-tournament action.
+
+Preserve all authored artwork, v013/v006 identities, surviving fighter data, typed name drafts, gameplay rules, Stamina labels/gold meters, mobile launch/Home Screen support, private saves, local services and previous releases. Local/package/browser evidence and live publication remain separate.
+
+## Historical v0.16.1
+
+
 ## Stamina and Focus v001 — local v0.11.0, October 9, 2026
 
 The current local tournament build is **v0.11.0**; the published game remains **v0.10.1**. The independent snapshot location is `releases/Arena_Fighters_v0.11.0_v001`, with verification and publication status recorded separately in `artifacts/Stamina_Focus_v001/VERIFICATION.json`.

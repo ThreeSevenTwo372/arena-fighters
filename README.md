@@ -1,10 +1,23 @@
 # Arena Fighters
 
-## Mobile App Launch and Stamina v001 — local v0.16.1, October 11, 2026
+## Single Player Tournament v001 — local v0.17.0, October 11, 2026
 
-Current local source is **v0.16.1**; published remains **v0.16.0** until separately verified. Snapshot: `releases/Arena_Fighters_v0.16.1_v001`; local evidence: `artifacts/Mobile_App_v001/VERIFICATION.json`. The published Squarespace parent can launch phones directly into the same game origin, preserving only valid public invite and duel-mode parameters. Desktop embedding and the direct link remain. The launch script does not run in editor previews, nested frames or unrelated pages. Phone detection covers portrait, short landscape and coarse-pointer touch devices; navigation replaces the Squarespace history entry. Home Screen metadata/manifest enable standalone launch, with icons rasterized from the exact existing shield favicon. Normal Safari tabs retain browser controls; Home Screen launch is separate from browser layout proof. No service worker or offline gameplay is introduced.
+Current local source is **v0.17.0**; published remains **v0.16.1** until separately verified. Snapshot: `releases/Arena_Fighters_v0.17.0_v001`; local evidence: `artifacts/Single_Player_v001/VERIFICATION.json`. Single Player replaces the former Quick Duel menu command and lesson completion link. Use the normal name/creator flow or the exact surviving fighter; Start tournament creates one human and seven service-controlled bots immediately in its own tournament. The player takes the opening match and chooses equipment normally. Ordinary Fight remains the multiplayer tournament entry, and existing private duel invitation links retain their original routing.
+
+Single Player calculates bot-versus-bot results with the shared combat rules and advances their bracket entries without showing those battles or waiting through bot presentation clocks. Only the player's matches are played. Retain the completed human match through its normal presentation/intermission before advancing, so winner reveals, Mercy and execution/outcome playback stay authoritative. Keep ordinary multiplayer draws and bot timing unchanged. Solo creation retries resume the same owned solo tournament; other humans cannot join its fighter roster. The mode survives refresh and the next-tournament action.
+
+Preserve all authored artwork, v013/v006 identities, surviving fighter data, typed name drafts, gameplay rules, Stamina labels/gold meters, mobile launch/Home Screen support, private saves, local services and previous releases. Local/package/browser evidence and live publication remain separate.
+
+## Historical v0.16.1
+
+
+## Mobile App Launch and Stamina v001 — v0.16.1, October 11, 2026
+
+Current local and published source is **v0.16.1**. Snapshot: `releases/Arena_Fighters_v0.16.1_v001`; local evidence: `artifacts/Mobile_App_v001/VERIFICATION.json`. The published Squarespace parent can launch phones directly into the same game origin, preserving only valid public invite and duel-mode parameters. Desktop embedding and the direct link remain. The launch script does not run in editor previews, nested frames or unrelated pages. Phone detection covers portrait, short landscape and coarse-pointer touch devices; navigation replaces the Squarespace history entry. Home Screen metadata/manifest enable standalone launch, with icons rasterized from the exact existing shield favicon. Normal Safari tabs retain browser controls; Home Screen launch is separate from browser layout proof. No service worker or offline gameplay is introduced.
 
 Combat HUD, costs, recovery and Entangle presentation consistently spell Stamina. Combat meters retain the tutorial gold #d4a638 in both WebKit and Firefox fill rules. Command headings wrap on narrow cards. Keep all existing gameplay, private choice/clock/verdict authority, attack timings, authored art, identities, typed names, private saves, and earlier releases unchanged.
+
+Separate publication evidence: `artifacts/Live_Release_v0161_v001/VERIFICATION.json`. Commit `041f66264b16fa0efdd14f68947bf90842a345fb`; deployment `dep-db5r4aavcj2c738vuli0` completed October 11, 2026 at 11:59 AM EDT (15:59:11 UTC). The existing Render host and Squarespace launcher were verified. Portrait and short-landscape public visits open the direct game page; desktop retains the embed. Live Practice shows full Stamina labels and gold meters with no command overflow or game errors. Home Screen metadata is verified; physical iPhone installation remains untested. Historical local-only receipts and all earlier snapshots remain unchanged.
 
 ## Historical v0.16.0
 

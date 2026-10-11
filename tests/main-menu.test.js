@@ -4,11 +4,13 @@ import { renderMainMenu, renderMatchBrowser, renderLeaderboard, renderGraveyard 
 
 test('the main menu offers fighting, learning, records and spectating', () => {
   const output = renderMainMenu();
-  for (const [action, label] of [['menu-fight', 'FIGHT'], ['menu-quick-duel', 'QUICK DUEL'], ['menu-learn', 'LEARN TO FIGHT'], ['menu-spectate', 'SPECTATE'], ['menu-leaderboard', 'LEADERBOARD'], ['menu-graveyard', 'Graveyard']]) {
+  for (const [action, label] of [['menu-fight', 'FIGHT'], ['menu-single-player', 'SINGLE PLAYER'], ['menu-learn', 'LEARN TO FIGHT'], ['menu-spectate', 'SPECTATE'], ['menu-leaderboard', 'LEADERBOARD'], ['menu-graveyard', 'Graveyard']]) {
     assert.match(output, new RegExp(`data-action="${action}" aria-label="${label}"`));
     assert.match(output, new RegExp(`<span class="sr-only">${label}</span>`));
   }
   assert.match(output, /id="arena-menu-title" aria-label="ARENA FIGHTERS"/);
+  assert.match(output, /Seven bots\. Play only your rounds\./);
+  assert.doesNotMatch(output, /QUICK DUEL|menu-quick-duel/);
   assert.doesNotMatch(output, /portrait|canvas|data-appearance|data-action="online-create"/);
 });
 

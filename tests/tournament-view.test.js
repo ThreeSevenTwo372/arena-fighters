@@ -14,6 +14,21 @@ function fixture() {
   return { type: 'tournament', code: 'ABC234', tournamentId: 'tournament-1', duelId: 'duel-1', phase: 'battle', revision: 4, you: 7, players, bracket, currentMatchIndex: 0, match: { code: 'ABC234', duelId: 'duel-1', revision: 4, you: null, slots: [0, 1], players: players.slice(0, 2), ready: [true, true], pending: [false, true], yourLoadout: null, duel, decision: null, deadline: Date.now() + 20000, rules: {}, canRematch: false }, spectator: true, nextMatchAt: null, champion: null, capacity: 8 };
 }
 
+test('Single Player entrance and completion retain tournament controls without lobby codes or invitations', () => {
+  const view = fixture(); view.singlePlayer = true; view.role = 'member'; view.you = 0;
+  const before = structuredClone(view);
+  const entrance = renderTournamentEntrance({ ...view, phase: 'entrance' });
+  const between = renderTournamentSpectator({ ...view, phase: 'intermission' });
+  const outcome = renderTournamentOutcome({ ...view, phase: 'complete', champion: 0 });
+  for (const output of [entrance, between, outcome]) {
+    assert.match(output, /Single Player/);
+    assert.doesNotMatch(output, /ABC234|Copy code|Copy invite|Invite rivals/);
+  }
+  assert.match(between, /Other bot results are generated automatically/);
+  assert.match(outcome, /data-action="tournament-next"/);
+  assert.deepEqual(view, before);
+});
+
 test('the waiting lobby displays eight fighter slots and identities only for joined entrants', () => {
   const view = fixture();
   view.phase = 'waiting'; view.players = view.players.slice(0, 3); view.you = 1; view.currentMatchIndex = null; view.match = null;

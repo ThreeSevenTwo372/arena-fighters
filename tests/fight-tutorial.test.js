@@ -138,7 +138,7 @@ test('each tutorial phase shows the actual state with optional exit and no comba
   assert.match(output, /Focus costs no stamina and leaves you open to attacks/);
   for (const action of ['focus', 'next']) state = advanceFightTutorial(state, action);
   output = renderFightTutorial(state);
-  for (const action of ['menu-fight', 'menu-quick-duel', 'tutorial-restart', 'menu-home']) assert.match(output, new RegExp(`data-action="${action}"`));
+  for (const action of ['menu-fight', 'menu-single-player', 'tutorial-restart', 'menu-home']) assert.match(output, new RegExp(`data-action="${action}"`));
   assert.doesNotMatch(output, /data-action="tutorial-move"/);
   assert.match(output, /both choices are secret until they reveal together/);
   assert.match(output, /<strong>Focused<\/strong> · Next-round attack \+3/);

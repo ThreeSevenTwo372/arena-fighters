@@ -58,7 +58,7 @@ export class TournamentStore {
     return copy({
       type: 'tournament', code: tournament.code, tournamentId: tournament.tournamentId,
       duelId: match?.duelId ?? tournament.tournamentId, phase: tournament.phase, revision: tournament.revision, you: index,
-      capacity: 8, players: tournament.players.map((_, i) => this.profileView(tournament, i)),
+      capacity: 8, singlePlayer: tournament.singlePlayer === true, players: tournament.players.map((_, i) => this.profileView(tournament, i)),
       bracket: tournament.bracket, currentMatchIndex: tournament.currentMatchIndex,
       spectator: !participating, nextMatchAt: tournament.nextMatchAt, nextBotAt: tournament.nextBotAt ?? null, champion: tournament.champion,
       crowdVote,
@@ -88,8 +88,14 @@ export class TournamentStore {
   start(tournament, now) {
     tournament.nextBotAt = null;
     const slots = tournament.players.map((_, index) => index);
-    for (let i = slots.length - 1; i > 0; i -= 1) {
-      const j = randomInt(i + 1); [slots[i], slots[j]] = [slots[j], slots[i]];
+    // Solo play opens on the human's quarterfinal; only their bot opponents are shuffled.
+    const shuffleFrom = tournament.singlePlayer === true ? 1 : 0;
+    if (shuffleFrom) {
+      const human = slots.findIndex(slot => tournament.players[slot].bot !== true);
+      slots.unshift(...slots.splice(human, 1));
+    }
+    for (let i = slots.length - 1; i > shuffleFrom; i -= 1) {
+      const j = randomInt(shuffleFrom, i + 1); [slots[i], slots[j]] = [slots[j], slots[i]];
     }
     tournament.seeds = Array(8).fill(null);
     slots.forEach((slot, index) => { tournament.seeds[slot] = index + 1; });
@@ -106,6 +112,18 @@ export class TournamentStore {
     this.startMatch(tournament, 0, now);
   }
   startMatch(tournament, index, now) {
+    // Keep the accepted human verdict/intermission on screen, then fast-forward
+    // only the bot-only nodes before opening the next human match on the real clock.
+    for (let skipped = 0; skipped < PLAN.length; skipped += 1) {
+      this.prepareMatch(tournament, index, now);
+      if (tournament.singlePlayer !== true || !tournament.match.players.every(player => player.bot === true)) return;
+      if (tournament.phase === 'equipment') this.resolveSoloBotMatch(tournament, now);
+      if (tournament.phase !== 'intermission') return;
+      index = tournament.currentMatchIndex + 1;
+    }
+    throw new Error('The Single Player bracket exceeded its match limit.');
+  }
+  prepareMatch(tournament, index, now) {
     const bracket = tournament.bracket[index];
     const predecessors = PLAN[index][2];
     if (predecessors) bracket.slots = predecessors.map(previous => tournament.bracket[previous].winner);
@@ -128,10 +146,30 @@ export class TournamentStore {
     tournament.phase = 'equipment';
     this.touch(tournament);
     if (tournament.match.left.some(Boolean)) this.forfeitAbsent(tournament, now);
-    else if (tournament.match.loadouts.every(Boolean)) {
+    else if (tournament.match.loadouts.every(Boolean) && !(tournament.singlePlayer === true && tournament.match.players.every(player => player.bot === true))) {
       this.startEntrance(tournament, now);
       this.syncMatch(tournament, now);
     }
+  }
+  resolveSoloBotMatch(tournament, now) {
+    const match = tournament.match;
+    this.service.startBattle(match, now);
+    let rounds = 0;
+    while (match.phase === 'battle' && rounds < combat.RULES.MAX_ROUNDS) {
+      // Both bots choose from the same resolved public state. A virtual clock
+      // keeps their normal accepted-choice delay without delaying the human.
+      const choices = match.players.map((player, index) => combat.chooseCpuAction(match.duel, index, player.botStyle));
+      const acceptedAt = match.actionOpensAt + Math.min(BOT_ACTION_DELAY_MS, this.service.rules.actionMs);
+      choices.forEach((choice, index) => this.service.recordAction(match, index, choice, acceptedAt));
+      this.service.resolveActions(match, acceptedAt);
+      rounds += 1;
+    }
+    if (match.phase === 'battle') throw new Error('The generated bot match exceeded the combat round limit.');
+    // Bot winners already Spare in ordinary tournaments. Generated matches use
+    // the same verdict and publish no entrance, attack or verdict wait clocks.
+    if (match.phase === 'mercy') this.service.decide(match, 'spare');
+    match.presentationEndsAt = now; match.mercyOpensAt = null;
+    this.finishMatch(tournament, now);
   }
   finishMatch(tournament, now) {
     const match = tournament.match;
@@ -312,10 +350,12 @@ export class TournamentStore {
   }
   request({ method, path, session, body, now }) {
     if (!path.startsWith('/api/tournaments')) return null;
-    if (method === 'POST' && ['/api/tournaments', '/api/tournaments/join', '/api/tournaments/enter'].includes(path)) {
-      const joining = path.endsWith('/join'), auto = path.endsWith('/enter'); shape(body, joining ? ['code', 'character'] : ['character']);
-      if (auto && session.activeTournament) {
+    if (method === 'POST' && ['/api/tournaments', '/api/tournaments/join', '/api/tournaments/enter', '/api/tournaments/single-player'].includes(path)) {
+      const joining = path.endsWith('/join'), auto = path.endsWith('/enter'), singlePlayer = path.endsWith('/single-player');
+      shape(body, joining ? ['code', 'character'] : ['character']);
+      if ((auto || singlePlayer) && session.activeTournament) {
         const current = this.member(session, session.activeTournament);
+        if (singlePlayer && current.tournament.singlePlayer !== true) fail(409, 'Leave your current lobby before entering another.', 'active_room');
         // Repeated entry with the same identity resumes the durable lobby.
         this.service.profile(session, body.character);
         return this.view(current.tournament, current.index);
@@ -328,9 +368,10 @@ export class TournamentStore {
         if (typeof body.code !== 'string' || !/^[A-Z2-9]{6}$/.test(body.code.toUpperCase())) fail(400, 'Lobby codes contain six letters or digits.');
         tournament = this.data[body.code.toUpperCase()];
         if (!tournament) fail(404, 'Tournament lobby not found.', 'room_not_found');
+        if (tournament.singlePlayer === true) fail(409, 'This Single Player tournament is reserved for its player and bots.', 'single_player_room');
         if (tournament.phase !== 'waiting' || tournament.players.length >= 8) fail(409, 'This tournament lobby is full or already started.', 'room_full');
-      } else if (auto && Object.values(this.data).some(lobby => lobby.phase === 'waiting' && lobby.players.length < 8)) {
-        tournament = Object.values(this.data).filter(lobby => lobby.phase === 'waiting' && lobby.players.length < 8)
+      } else if (auto && Object.values(this.data).some(lobby => lobby.singlePlayer !== true && lobby.phase === 'waiting' && lobby.players.length < 8)) {
+        tournament = Object.values(this.data).filter(lobby => lobby.singlePlayer !== true && lobby.phase === 'waiting' && lobby.players.length < 8)
           .sort((a, b) => a.createdAt - b.createdAt || a.code.localeCompare(b.code))[0];
       } else {
         session.roomStarts = session.roomStarts.filter(time => now - time < 3600000);
@@ -342,16 +383,25 @@ export class TournamentStore {
         while (this.data[code] || this.service.data.rooms[code]);
         tournament = { code, tournamentId: randomUUID(), phase: 'waiting', revision: 1, playerIds: [], players: [],
           left: [], eliminated: [], seeds: [], bracket: [], currentMatchIndex: null, match: null, nextMatchAt: null,
-          champion: null, commands: {}, createdAt: now, nextBotAt: now + LOBBY_BOT_INTERVAL_MS };
+          champion: null, commands: {}, createdAt: now, nextBotAt: now + LOBBY_BOT_INTERVAL_MS,
+          ...(singlePlayer ? { singlePlayer: true } : {}) };
         this.data[code] = tournament; session.roomStarts.push(now);
       }
+      const humanIndex = tournament.players.length;
       tournament.playerIds.push(session.playerId); tournament.players.push(profile);
       tournament.left.push(false); tournament.eliminated.push(false); tournament.seeds.push(null);
       tournament.nextBotAt = now + LOBBY_BOT_INTERVAL_MS;
       session.profile = copy(profile); session.activeTournament = tournament.code;
+      if (singlePlayer) {
+        while (tournament.players.length < 8) {
+          const bot = createTournamentBot(tournament.players);
+          tournament.playerIds.push(bot.playerId); tournament.players.push(bot.profile);
+          tournament.left.push(false); tournament.eliminated.push(false); tournament.seeds.push(null);
+        }
+      }
       if (tournament.players.length === 8) this.start(tournament, now);
       this.touch(tournament);
-      return this.view(tournament, tournament.players.length - 1);
+      return this.view(tournament, humanIndex);
     }
     const match = /^\/api\/tournaments\/([A-Z2-9]{6})(?:\/(loadout|action|mercy|vote|leave))?$/.exec(path);
     if (!match) fail(404, 'Tournament endpoint not found.');

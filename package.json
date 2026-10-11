@@ -1,9 +1,9 @@
 {
   "name": "arena-fighters-prototype",
-  "version": "0.16.1",
+  "version": "0.17.0",
   "private": true,
   "type": "module",
-  "description": "Arena Fighters with direct mobile launch, Home Screen app support, consistent Stamina meters, and authored first-person combat.",
+  "description": "Arena Fighters with Single Player bot tournaments, direct mobile launch, and authored first-person combat.",
   "engines": { "node": ">=24 <25" },
   "scripts": {
     "start": "node server.mjs",

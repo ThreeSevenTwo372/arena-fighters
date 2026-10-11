@@ -94,6 +94,7 @@ let observerMode = false, menuEpoch = 0, lastMenuRefresh = 0, watchCodeDraft = '
 const menuPages = new Set(['menu', 'match-browser', 'leaderboard', 'graveyard']);
 const menuData = { loading: false, tournaments: [], fighters: [], graves: [] };
 const onlineMode = () => state.mode === 'online';
+const singlePlayerMode = () => Boolean(onlineClient?.singlePlayer) && !onlineClient?.duelMode;
 const creatorValid = () => (onlineMode() ? [state.drafts[0]] : state.drafts).every(character => validateCharacter(character).valid);
 const nameValid = index => typeof state.drafts[index]?.name === 'string' && state.drafts[index].name.trim().length >= 1 && state.drafts[index].name.trim().length <= 24;
 
@@ -120,7 +121,7 @@ function legacyAppearanceEditor(character, index, locked) {
 }
 
 function header() {
-  return `<header class="masthead"><a class="brand" href="/" aria-label="Arena Fighters home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M13 27C2 23 3 9 11 4m8 23C30 23 29 9 21 4M12 27h8"/><path d="M7 9C1 7 1 14 6 15m0-2c-5 0-4 7 2 7m0-3c-4 2-2 7 4 7M25 9c6-2 6 5 1 6m0-2c5 0 4 7-2 7m0-3c4 2 2 7-4 7"/><path d="m16 9 3 6-3 6-3-6Z"/></svg></span> ARENA FIGHTERS</a>${!presetReview && state.screen === 'creator' && !onlineReplacement ? '<button class="button ghost" data-action="menu-home">Main menu</button>' : `<span class="badge">${state.screen === 'tutorial' ? 'Practice' : observerMode ? 'Spectating' : menuPages.has(state.screen) ? 'The arena' : onlineMode() ? `${tournamentEnabled ? 'Tournament' : 'Online duel'}${onlineView ? ` · ${esc(onlineView.code)}` : ''}` : state.mode === 'cpu' ? 'Practice' : 'Pass & play'}</span>`}</header>`;
+  return `<header class="masthead"><a class="brand" href="/" aria-label="Arena Fighters home"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M13 27C2 23 3 9 11 4m8 23C30 23 29 9 21 4M12 27h8"/><path d="M7 9C1 7 1 14 6 15m0-2c-5 0-4 7 2 7m0-3c-4 2-2 7 4 7M25 9c6-2 6 5 1 6m0-2c5 0 4 7-2 7m0-3c4 2 2 7-4 7"/><path d="m16 9 3 6-3 6-3-6Z"/></svg></span> ARENA FIGHTERS</a>${!presetReview && state.screen === 'creator' && !onlineReplacement ? '<button class="button ghost" data-action="menu-home">Main menu</button>' : `<span class="badge">${state.screen === 'tutorial' ? 'Practice' : observerMode ? 'Spectating' : menuPages.has(state.screen) ? 'The arena' : onlineMode() ? `${singlePlayerMode() ? 'Single Player' : tournamentEnabled ? 'Tournament' : 'Online duel'}${onlineView && !singlePlayerMode() ? ` · ${esc(onlineView.code)}` : ''}` : state.mode === 'cpu' ? 'Practice' : 'Pass & play'}</span>`}</header>`;
 }
 function statChips(character) {
   const stats = typeof effectiveCharacterStats === 'function' ? effectiveCharacterStats(character, { version: state.duel?.version ?? RULES.VERSION }) : character.stats;
@@ -176,12 +177,13 @@ function buildPreview(character, gear = { weapon: 'sword', armor: 'medium', helm
 function onlineSetupPanel() {
   if (onlineSessionNeedsRefresh) return '<section class="panel online-setup" role="status"><div class="panel-header"><h2>Reconnecting your fighter…</h2></div><div class="online-setup-body"><p>Your saved fighter will be ready when the connection returns.</p></div></section>';
   if (onlineSession?.pendingMercyTournament) return `<section class="panel online-setup"><div class="panel-header"><h2>Awaiting the verdict</h2><span class="badge">Lobby ${esc(onlineSession.pendingMercyTournament)}</span></div><div class="online-setup-body"><p>You withdrew from that tournament. Your fighter can enter another lobby after the scheduled match and mercy verdict resolve.</p>${onlineSession.pendingMercyTournamentDeadline ? `<p class="duel-deadline"><span data-deadline="${onlineSession.pendingMercyTournamentDeadline}">${Math.max(0, Math.ceil((onlineSession.pendingMercyTournamentDeadline - Date.now()) / 1000))}</span>s remaining · timeout: spare</p>` : ''}<p class="build-note">Your character and record update here automatically.</p></div></section>`;
+  if (singlePlayerMode()) return `<section class="creator-actions" aria-label="Start a single player tournament">${onlineSession?.character && !onlineSession.alive ? `<p class="memorial-note">${esc(onlineSession.character.name)} · Final record: ${onlineSession.duelWins} duel wins · ${onlineSession.tournamentWins || 0} tournament wins</p>` : ''}<button class="button primary" data-action="online-create" ${creatorValid() && !onlineBusy ? '' : 'disabled'}>Start tournament <span aria-hidden="true">→</span></button><p class="build-note tournament-entry-note">Play only your rounds against seven bots. Choose equipment before each duel.</p></section>`;
   if (tournamentEnabled) return `<section class="creator-actions" aria-label="Enter a tournament">${onlineSession?.character && !onlineSession.alive ? `<p class="memorial-note">${esc(onlineSession.character.name)} · Final record: ${onlineSession.duelWins} duel wins · ${onlineSession.tournamentWins || 0} tournament wins</p>` : ''}<button class="button primary" data-action="online-create" ${creatorValid() && !onlineBusy ? '' : 'disabled'}>${state.locked[0] ? 'Enter another tournament' : 'Enter tournament'} <span aria-hidden="true">→</span></button><details class="tournament-invite-join" ${roomCodeDraft ? 'open' : ''}><summary>Join friends with a lobby code</summary><div class="compact-room-join"><label class="sr-only" for="room-code">Lobby code</label><input id="room-code" data-room-code maxlength="6" value="${esc(roomCodeDraft)}" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="LOBBY CODE"><button class="button secondary" data-action="online-join" ${creatorValid() && roomCodeDraft.trim().length === 6 && !onlineBusy ? '' : 'disabled'}>Join lobby</button></div></details><p class="build-note tournament-entry-note">Eight fighters. One duel at a time. Watch from the stands until your match.</p></section>`;
   if (onlineSession?.pendingMercyRoom) return `<section class="panel online-setup"><div class="panel-header"><h2>Awaiting the verdict</h2><span class="badge">Room ${esc(onlineSession.pendingMercyRoom)}</span></div><div class="online-setup-body"><p>You forfeited the duel. Your rival has a brief window to choose mercy before this gladiator can enter another room.</p><p class="duel-deadline"><span data-deadline="${onlineSession.pendingMercyDeadline}">${Math.max(0, Math.ceil((onlineSession.pendingMercyDeadline - Date.now()) / 1000))}</span>s remaining · timeout: spare</p><p class="build-note">The verdict and your character’s record will update here automatically.</p></div></section>`;
   return `<section class="creator-actions" aria-label="Enter a duel">${onlineSession?.character && !onlineSession.alive ? `<p class="memorial-note">${esc(onlineSession.character.name)} · Final record: ${onlineSession.duelWins} wins</p>` : ''}${onlineReplacement ? `<button class="button primary" data-action="online-replacement" ${creatorValid() && !onlineBusy ? '' : 'disabled'}>Ready for rematch</button>` : `<button class="button primary" data-action="online-create" ${creatorValid() && !onlineBusy ? '' : 'disabled'}>Create room</button><div class="compact-room-join"><label class="sr-only" for="room-code">Room code</label><input id="room-code" data-room-code maxlength="6" value="${esc(roomCodeDraft)}" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ROOM CODE"><button class="button secondary" data-action="online-join" ${creatorValid() && roomCodeDraft.trim().length === 6 && !onlineBusy ? '' : 'disabled'}>Join room</button></div>`}</section>`;
 }
 function modePicker() {
-  return `<div class="mode-toggle" aria-label="Game mode"><button data-action="mode" data-value="online" aria-pressed="${onlineMode()}" class="${onlineMode() ? 'selected' : ''}">${tournamentEnabled ? 'Tournament' : 'Online duel'}</button><button data-action="mode" data-value="cpu" aria-pressed="${state.mode === 'cpu'}" class="${state.mode === 'cpu' ? 'selected' : ''}">Practice</button><button data-action="mode" data-value="hotseat" aria-pressed="${state.mode === 'hotseat'}" class="${state.mode === 'hotseat' ? 'selected' : ''}">Pass & play</button></div>`;
+  return `<div class="mode-toggle" aria-label="Game mode"><button data-action="mode" data-value="online" aria-pressed="${onlineMode()}" class="${onlineMode() ? 'selected' : ''}">${singlePlayerMode() ? 'Single Player' : tournamentEnabled ? 'Tournament' : 'Online duel'}</button><button data-action="mode" data-value="cpu" aria-pressed="${state.mode === 'cpu'}" class="${state.mode === 'cpu' ? 'selected' : ''}">Practice</button><button data-action="mode" data-value="hotseat" aria-pressed="${state.mode === 'hotseat'}" class="${state.mode === 'hotseat' ? 'selected' : ''}">Pass & play</button></div>`;
 }
 function nameScreen() {
   const index = state.nameIndex;
@@ -329,6 +331,7 @@ function deadlineMarkup() {
 }
 function onlineRoomBar() {
   const active = ['equipment', 'entrance', 'battle'].includes(onlineView.phase);
+  if (singlePlayerMode()) return `<div class="online-room-bar"><span>Single Player</span><span class="connection-status" role="status">${onlineOffline ? 'Reconnecting…' : 'Connected'}</span><button class="button ghost leave-room" data-action="tournament-leave" ${onlineBusy ? 'disabled' : ''}>${active ? 'Forfeit & leave' : 'Leave tournament'}</button></div>`;
   return `<div class="online-room-bar"><span>ROOM <strong>${esc(onlineView.code)}</strong></span><button class="button ghost" data-action="copy-room" ${['playback', 'execution'].includes(state.phase) ? 'disabled' : ''}>Copy code</button><button class="button ghost" data-action="copy-invite">Copy invite link</button><span class="connection-status" role="status">${onlineOffline ? 'Reconnecting…' : 'Connected'}</span><button class="button ghost leave-room" data-action="online-leave" ${onlineBusy ? 'disabled' : ''}>${active ? 'Forfeit & leave' : 'Leave room'}</button></div>`;
 }
 function onlineLobby() {
@@ -721,6 +724,10 @@ function applyTournamentView(view, { animate = true, execution = animate, outcom
   const previous = tournamentView;
   const before = state.duel;
   tournamentView = view;
+  if (!observerMode) {
+    onlineClient.singlePlayer = Boolean(view.singlePlayer);
+    if (onlineClient.singlePlayer) { tournamentEnabled = true; onlineClient.duelMode = false; onlineClient.legacyRoom = false; }
+  }
   onlineOffline = false;
   const match = view.match;
   const duelist = match && match.you !== null && ['equipment', 'entrance', 'battle', 'mercy', 'crowd'].includes(view.phase);
@@ -760,6 +767,7 @@ function applyOnlineView(view, { animate = true, execution = animate, outcome = 
   const previous = onlineView;
   const before = state.duel;
   const enteringBattle = state.screen !== 'battle' && view.duel;
+  if (!tournamentView) onlineClient.singlePlayer = false;
   onlineView = view;
   onlineOffline = false;
   if (onlineReplacement && previous?.duelId === view.duelId && view.phase === 'complete') { updateOnlineIndicators(); return; }
@@ -865,17 +873,17 @@ async function openMenu(page = 'menu') {
   if (presetReview || spectatorReview || !menuPages.has(page) || onlineView && !observerMode) return;
   tutorialController?.abort(); tutorialPlaying = false; tutorialState = null;
   tournamentEnabled = typeof TournamentClient === 'function';
-  if (onlineClient) { onlineClient.duelMode = false; onlineClient.resetMatchContext?.(); }
+  if (onlineClient) { onlineClient.duelMode = false; onlineClient.singlePlayer = false; onlineClient.resetMatchContext?.(); }
   detachObserver(); menuEpoch += 1; menuData.loading = false;
   state.mode = 'online'; state.screen = page; state.error = ''; state.phase = 'select';
   await render();
   if (page !== 'menu') await refreshMenu();
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
-async function enterFromMenu({ quick = false } = {}) {
+async function enterFromMenu({ singlePlayer = false } = {}) {
   tutorialController?.abort(); tutorialPlaying = false; tutorialState = null;
-  tournamentEnabled = !quick && typeof TournamentClient === 'function';
-  onlineClient.duelMode = quick; onlineClient.resetMatchContext?.();
+  tournamentEnabled = typeof TournamentClient === 'function';
+  onlineClient.duelMode = false; onlineClient.singlePlayer = singlePlayer; onlineClient.resetMatchContext?.();
   detachObserver(); menuEpoch += 1; onlineEpoch += 1;
   const epoch = onlineEpoch;
   state.mode = 'online'; state.screen = 'creator'; onlineBusy = true;
@@ -1088,7 +1096,7 @@ async function render({ keepPlayback = false, keepExecution = false, keepOutcome
   const temporary = onlineClient?.sessionMode === 'temporary';
   const content = state.screen === 'tutorial' ? `${header()}${renderFightTutorial(tutorialState, { playing: tutorialPlaying })}` : menuPages.has(state.screen) ? `${header()}${state.screen === 'menu' ? renderMainMenu({ session: onlineSession, temporary }) : state.screen === 'match-browser' ? renderMatchBrowser({ ...menuData, temporary }) : state.screen === 'leaderboard' ? renderLeaderboard({ ...menuData, temporary }) : renderGraveyard({ ...menuData, temporary })}` : state.screen === 'creator' ? creator() : state.screen === 'loadout' ? loadout() : state.screen === 'handoff' ? handoff() : state.screen === 'online-lobby' ? onlineLobby() : state.screen === 'tournament-lobby' ? `${header()}${renderTournamentLobby(tournamentView)}` : state.screen === 'tournament-spectator' ? `${header()}${renderTournamentSpectator(spectatorPlayback ? { ...tournamentView, phase: 'battle' } : tournamentView, { playing: Boolean(spectatorPlayback), duel: state.duel, verdictPhase: verdictReveal ? 'winner' : null, verdictBusy: onlineBusy || onlineOffline, executing: Boolean(executionPlayback) })}` : state.screen === 'tournament-entrance' ? tournamentEntrance() : battle();
   const notice = state.error || (onlineMode() ? onlineClient.storageWarning : null);
-  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.16.1</span></footer></main>`;
+  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.17.0</span></footer></main>`;
   if (retained) {
     const replacementStage = app.querySelector('.arena-stage');
     const originalHud = retained.stage.querySelector('.battle-hud');
@@ -1335,7 +1343,7 @@ app.addEventListener('click', async event => {
   try {
     if (action === 'menu-home') await openMenu();
     else if (action === 'menu-fight' && ['menu', 'tutorial'].includes(state.screen)) await enterFromMenu();
-    else if (action === 'menu-quick-duel' && ['menu', 'tutorial'].includes(state.screen)) await enterFromMenu({ quick: true });
+    else if (action === 'menu-single-player' && ['menu', 'tutorial'].includes(state.screen)) await enterFromMenu({ singlePlayer: true });
     else if (action === 'menu-learn' || action === 'tutorial-restart') await openTutorial();
     else if (action === 'tutorial-move' && state.screen === 'tutorial') await tutorialMove(value);
     else if (action === 'tutorial-next' && state.screen === 'tutorial') { tutorialState = advanceFightTutorial(tutorialState, 'next'); await render(); app.querySelector('[data-action="tutorial-move"]')?.focus({ preventScroll: true }); }
@@ -1386,6 +1394,7 @@ app.addEventListener('click', async event => {
     }
     else if (action === 'online-create' || action === 'online-join') {
       if (onlineSessionNeedsRefresh) return;
+      if (action === 'online-join' && singlePlayerMode()) return;
       if (!creatorValid()) throw new Error('Allocate all points and give your gladiator a name.');
       await performOnline(() => action === 'online-create' ? onlineClient.create(state.drafts[0]) : onlineClient.join(roomCodeDraft, state.drafts[0]));
     }

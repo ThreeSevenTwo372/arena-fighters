@@ -88,7 +88,7 @@ export function renderFightTutorial(state, { playing = false } = {}) {
   const preview = actionPreview(option);
   const displayedRound = state.phase === 'choose' ? state.duel.round : state.duel.lastRound?.round ?? state.duel.round;
   const controls = complete
-    ? '<div class="tutorial-completion-actions"><button type="button" class="button primary" data-action="menu-fight">Fight</button><button type="button" class="button secondary" data-action="menu-quick-duel">Quick Duel</button><button type="button" class="button ghost" data-action="tutorial-restart">Repeat lessons</button></div>'
+    ? '<div class="tutorial-completion-actions"><button type="button" class="button primary" data-action="menu-fight">Fight</button><button type="button" class="button secondary" data-action="menu-single-player">Single Player</button><button type="button" class="button ghost" data-action="tutorial-restart">Repeat lessons</button></div>'
     : state.phase === 'review'
       ? `<button type="button" class="button primary" data-action="tutorial-next" ${playing ? 'disabled' : ''}>${state.step === lessons.length - 1 ? 'Finish lessons' : 'Next lesson'}</button>`
       : `<button type="button" class="button primary tutorial-guided-move" data-action="tutorial-move" data-value="${lesson.action}" ${playing ? 'disabled' : ''}><strong>${escape(option.name)}</strong><span>${option.cost ? `${option.cost} stamina` : 'No stamina cost'} · ${escape(preview.label)}</span></button>`;

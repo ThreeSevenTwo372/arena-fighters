@@ -2,9 +2,10 @@ import { OnlineClient } from './online-client.js';
 
 /** Tournament commands reuse the durable guest identity and request retries. */
 export class TournamentClient extends OnlineClient {
-  constructor({ duelMode = false, ...options } = {}) {
+  constructor({ duelMode = false, singlePlayer = false, ...options } = {}) {
     super(options);
     this.duelMode = Boolean(duelMode);
+    this.singlePlayer = Boolean(singlePlayer);
     this.legacyRoom = this.duelMode;
   }
   async enter(path, payload) {
@@ -21,7 +22,7 @@ export class TournamentClient extends OnlineClient {
   }
   create(character) {
     this.legacyRoom = this.duelMode;
-    return this.duelMode ? super.create(character) : this.enter('/api/tournaments/enter', { character });
+    return this.duelMode ? super.create(character) : this.enter(this.singlePlayer ? '/api/tournaments/single-player' : '/api/tournaments/enter', { character });
   }
   host(character) { this.legacyRoom = false; return this.enter('/api/tournaments', { character }); }
   join(code, character) {

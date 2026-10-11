@@ -1,9 +1,9 @@
 {
   "schema": "arena-fighters.local-release.v1",
   "status": "complete",
-  "version": "0.16.1",
-  "createdAt": "2026-10-11T15:52:46.364Z",
-  "directory": "releases/Arena_Fighters_v0.16.1_v001",
+  "version": "0.17.0",
+  "createdAt": "2026-10-11T17:26:12.467Z",
+  "directory": "releases/Arena_Fighters_v0.17.0_v001",
   "identity": {
     "active": {
       "version": "v013",
@@ -17,7 +17,7 @@
   "provenance": [
     {
       "chatId": "01a12685-cde0-7ed1-a172-a3d1289dc25b",
-      "note": "Direct phone launch from Squarespace, standalone Home Screen metadata and unchanged shield app icons, consistent gold Stamina labels. Local implementation with separate live publication evidence."
+      "note": "Single Player replaces Quick Duel: one human and seven bots, automatic roster and results for skipped bot-only matches. Prior artwork, rules, identities and releases preserved. Local implementation; live publication is separately verified."
     }
   ],
   "entries": [
@@ -71,8 +71,8 @@
     "copiedBytesVerified": true,
     "catalogReferencesVerified": true
   },
-  "fileCount": 2776,
-  "totalBytes": 177299677,
+  "fileCount": 2778,
+  "totalBytes": 177357067,
   "catalogs": [
     {
       "path": "assets/clean-gladiator/v013/manifest.json",
@@ -192,8 +192,8 @@
     },
     {
       "path": "AGENTS.md",
-      "bytes": 40205,
-      "sha256": "d1dca74b566fd98c72fe5ebec6699e26d6b783b2a372ebf3b2f91aead0bc2ea6"
+      "bytes": 42481,
+      "sha256": "bad87a44d6e9ac6349e6b041f0507e3d8147867a6cbd763869883800aa742b0c"
     },
     {
       "path": "ART_DIRECTION.md",
@@ -212,8 +212,8 @@
     },
     {
       "path": "CURRENT_VERSION.md",
-      "bytes": 40124,
-      "sha256": "6105464ab42c59c76cb234376e68d6883554051ba1b2bcba6f7694a89f564d73"
+      "bytes": 42400,
+      "sha256": "c139de2e7da90b6d2d15daa9c95583c34245f5eeebe5b50823fb802ec0936bc1"
     },
     {
       "path": "DARK_ART.md",
@@ -227,23 +227,23 @@
     },
     {
       "path": "FIRST_PERSON_COMBAT.md",
-      "bytes": 13578,
-      "sha256": "b07f785c625a1a602650ddf3da56b88c492ed173d01676b7435269b0fc914e6e"
+      "bytes": 15854,
+      "sha256": "4226f03ce966282022bbe5cb7bf98ad20b1632a0024063e259558d4b8fb254bb"
     },
     {
       "path": "HOSTING.md",
-      "bytes": 19633,
-      "sha256": "49dca4f024e48520edff0cc6913dd05659a252935457276400197caf13196f19"
+      "bytes": 21909,
+      "sha256": "eca248ca847d456b89729359a5a3d797466025c60ba4597ff023dc2df8eb7d3a"
     },
     {
       "path": "ONLINE_DUELS.md",
-      "bytes": 25284,
-      "sha256": "cf420daf6fcd02d4a6a83bf5a3219179689f2050fb40f792be0eeee72f491c82"
+      "bytes": 26959,
+      "sha256": "30a208b109ea01245c1e35995dc8f0be652e7543ac3aea4451dddd4525056a2e"
     },
     {
       "path": "README.md",
-      "bytes": 30282,
-      "sha256": "c5e97f2798f87952188abb5118c0d559d10ad306889c67907946fade12f4d632"
+      "bytes": 32558,
+      "sha256": "78bf1d424dadb8dde7455fd0f39746b912184d1035751e8ff4c0e1ba94d597ac"
     },
     {
       "path": "Start-Prototype.ps1",
@@ -252,8 +252,8 @@
     },
     {
       "path": "TOURNAMENTS.md",
-      "bytes": 27485,
-      "sha256": "5582b950f85b7a08855e864afa5e80bd0d48d377c9ec2a681dfc36e1cadd65be"
+      "bytes": 29160,
+      "sha256": "5fd3b6de36a564f5b3d7c6f96790bd0e64e16e18ef435efb540585eabcff678f"
     },
     {
       "path": "assets/arena/ARENA_PROVENANCE.md",
@@ -13162,13 +13162,13 @@
     },
     {
       "path": "online/tournament-store.mjs",
-      "bytes": 28720,
-      "sha256": "69cae16e104a4789753a3a8fe4df6c7a00902ac3c82f8b4059775e0481d61da3"
+      "bytes": 32061,
+      "sha256": "7614d11922589457fb21685d5a6435fe082eed1a23d6b7e9e3c266bfe97fe729"
     },
     {
       "path": "package.json",
-      "bytes": 382,
-      "sha256": "c9911f4b8190d673ec19e6d73c6d2e53b08bf4dc5686495e1fcc25fc6b836fb2"
+      "bytes": 361,
+      "sha256": "15aed854c9a00839eb8cdeb42357a1f2f749cc716ad4516a6e894df92d4ab096"
     },
     {
       "path": "public/app-v001/icon-180.png",
@@ -13327,8 +13327,8 @@
     },
     {
       "path": "src/app.js",
-      "bytes": 121035,
-      "sha256": "8c4f158c78f5e892acfe08dc47ca4516710ae40b6600b95e1066d3d1c4d97a24"
+      "bytes": 122683,
+      "sha256": "6a212c273368c4f1ce378a313bebc3b1f7d272f2da8fe7ce0d28c5ef6a949f3e"
     },
     {
       "path": "src/arena-avatar.js",
@@ -13472,8 +13472,8 @@
     },
     {
       "path": "src/fight-tutorial.js",
-      "bytes": 10024,
-      "sha256": "09c1f48f8ae2cc1a44483d275991e9de53b0f3d678cbe9ecb45d5c9db2f0dd18"
+      "bytes": 10030,
+      "sha256": "ad62ea7f4be6368c0bbdff1c7e2bce7c7167ee145b7d76f251fa2a4e58134cc8"
     },
     {
       "path": "src/first-person-animation.css",
@@ -13557,8 +13557,8 @@
     },
     {
       "path": "src/main-menu.js",
-      "bytes": 12661,
-      "sha256": "1406611cafc4de518d4e436e3a9be5c6fd797da137bc95c1e99eae0705fe4ff5"
+      "bytes": 12631,
+      "sha256": "b65a80fa1815d4e1d72b030bcc73b48b608f13f0d6c7e08bd73cf805caa09054"
     },
     {
       "path": "src/mercy-presentation.css",
@@ -13647,13 +13647,13 @@
     },
     {
       "path": "src/tournament-client.js",
-      "bytes": 2773,
-      "sha256": "d39b687a70fbe8ecaf97ebdbf6674fc97162c0751a9cf545212ff38170c27a94"
+      "bytes": 2897,
+      "sha256": "1409db1f232a7c288523d599165ea4a72b6e81e58eb259099167eab39163c958"
     },
     {
       "path": "src/tournament-view.js",
-      "bytes": 23277,
-      "sha256": "eb5fd86efeafbc51bbe9dcf381837fc4870f94325c6985c549ca0325dada1eb5"
+      "bytes": 24081,
+      "sha256": "aaaa7d3614997b4b638f5d1325cf4c7497bf4bf299a217e3d3ddb9d79ae801c7"
     },
     {
       "path": "src/tournament.css",
@@ -13812,8 +13812,8 @@
     },
     {
       "path": "tests/fight-tutorial.test.js",
-      "bytes": 11324,
-      "sha256": "ef98c9e049a402692fce75d1ff86726a492f9149dc4f7a8616da0aa44ce010fd"
+      "bytes": 11327,
+      "sha256": "aa4fcc87c33507556cbd5e0227f9a6801ac7ec80e8071428fa80c789169ad8b9"
     },
     {
       "path": "tests/first-person-animation.test.js",
@@ -13887,8 +13887,8 @@
     },
     {
       "path": "tests/main-menu.test.js",
-      "bytes": 7611,
-      "sha256": "d2cc390e8993912b13b55878ee108232d29cf3703f0f27aa14f60fed4d53068d"
+      "bytes": 7742,
+      "sha256": "0b98ecdff606a15167ad310428a51925f720de6cf19b46ae866521f290159a9c"
     },
     {
       "path": "tests/menu-only-audio.test.js",
@@ -13972,13 +13972,23 @@
     },
     {
       "path": "tests/release-readiness-ui.test.js",
-      "bytes": 13893,
-      "sha256": "43bb9aefd19c15c0eccd918dfdda4ee1e062c749cc0fd1a278763501b434f0c8"
+      "bytes": 19886,
+      "sha256": "7e745fbd5156196311907e7bae140ea6232f126d830fe8fa990b00d26ce2ddfb"
     },
     {
       "path": "tests/round-pacing.test.js",
       "bytes": 7194,
       "sha256": "b7346799c137053bb73f18450364aa3e514190427b794ea934a1d7e4127d56de"
+    },
+    {
+      "path": "tests/single-player-http.test.js",
+      "bytes": 3386,
+      "sha256": "1b10715df28edebe7c2b5f6af58aec0fa795c8af3f1654b02b2461875fc1a0d4"
+    },
+    {
+      "path": "tests/single-player-tournament.test.js",
+      "bytes": 24525,
+      "sha256": "a00672d7752e8de38c89b62b093084b906ec0b7c9d3cc8c804ad68a590820415"
     },
     {
       "path": "tests/soundtrack-http.test.js",
@@ -14022,8 +14032,8 @@
     },
     {
       "path": "tests/tournament-client.test.js",
-      "bytes": 4262,
-      "sha256": "11eeba447b06f6a717f8d45787843d36c4456b6c92e1183bb91db31f845574f7"
+      "bytes": 6170,
+      "sha256": "09e4d14feae5cbff1587f4d43b16385b5802882f4ba2dd8cfc3ff6b9a7c9fd2e"
     },
     {
       "path": "tests/tournament-ui.test.js",
@@ -14032,8 +14042,8 @@
     },
     {
       "path": "tests/tournament-view.test.js",
-      "bytes": 15243,
-      "sha256": "fc8cd24ad3ae73413b93147f99f05f5deb74b46425a8d8d843eb60ae3a131753"
+      "bytes": 16085,
+      "sha256": "304b30d7bc01d1ed26fef0938273ac6337e7924b0f1ed9e1db23f9ea90c834f4"
     },
     {
       "path": "tests/tournament.test.js",
