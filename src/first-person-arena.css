@@ -139,6 +139,18 @@
   animation-play-state: paused !important;
   animation-delay: var(--fp-inspect-delay) !important;
 }
+.fp-motion-inspection .pixel-blood-particle,
+.fp-execution-inspection .pixel-blood-particle {
+  animation-play-state: paused !important;
+  animation-delay: var(--blood-inspect-delay, 0ms) !important;
+}
+.fp-execution-inspection .fighter-motion,
+.fp-execution-inspection .fp-camera,
+.fp-execution-inspection .fp-mainhand-motion,
+.fp-execution-inspection .fp-offhand-motion {
+  animation-play-state: paused !important;
+  animation-delay: var(--fp-inspect-delay, 0ms) !important;
+}
 @media (max-width: 600px) {
   .fp-art-preview-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

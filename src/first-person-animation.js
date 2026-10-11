@@ -1,4 +1,6 @@
 import { playBattleAnimation } from './battle-animation.js';
+import { preparedFirstPersonFrameClip, applyFirstPersonFrame } from './first-person-frames.js';
+import { createPixelBloodEffect } from './pixel-blood.js';
 
 /** First-person playback consumes the same resolved public steps as the stands view. */
 const INDICES = new Set([0, 1]);
@@ -28,10 +30,23 @@ function firstPersonRig(container) {
 export async function playFirstPersonBattleAnimation(container, steps, options = {}) {
   const rig = firstPersonRig(container);
   if (!rig || options.signal?.aborted || !Array.isArray(steps)) return false;
-  const names = ['data-animation', 'data-combat-action', 'data-guarding', 'data-riposting', 'data-defeated', 'data-weapon'];
+  const names = ['data-animation', 'data-combat-action', 'data-guarding', 'data-riposting', 'data-defeated', 'data-weapon', 'data-frame-pose'];
   const restore = [rig.local, rig.opponent].map(node => saveAttributes(node, names));
+  const image = rig.local.querySelector('.fp-authored-frame');
+  if (image) restore.push(saveAttributes(image, ['href']));
+  const clip = image && preparedFirstPersonFrameClip({ weapon: rig.local.dataset.weapon, armor: rig.local.dataset.armor,
+    skin: rig.local.dataset.skin, artVersion: rig.local.dataset.frameVersion });
+  const onAttackFrame = frame => {
+    if (frame.step.actor === rig.localIndex && clip && !options.signal?.aborted) {
+      if (frame.elapsedMs === 665) {
+        rig.local.removeAttribute('data-frame-pose');
+        image.removeAttribute('href');
+      } else applyFirstPersonFrame(rig.local, clip, frame.elapsedMs, frame.step.action);
+    }
+    return options.onAttackFrame?.(frame);
+  };
   try {
-    return await playBattleAnimation(container, steps, options);
+    return await playBattleAnimation(container, steps, { ...options, ...(clip ? { onAttackFrame } : {}) });
   } finally {
     // Existing identity/equipment nodes remain mounted through the entire round.
     for (const reset of restore) reset();
@@ -56,6 +71,20 @@ function pause(duration, signal) {
   });
 }
 
+/** Disposable visual layer shared by accepted playback and the local art inspector. */
+export function mountFirstPersonExecutionBlood(container, loser, { reducedMotion = false, seed = 0 } = {}) {
+  const rig = firstPersonRig(container);
+  if (!rig || !INDICES.has(loser)) return null;
+  const localHit = loser === rig.localIndex;
+  const anchor = localHit ? container.querySelector('.fp-impact') : rig.opponent.querySelector('.gladiator');
+  if (!anchor) return null;
+  const blood = createPixelBloodEffect(container.ownerDocument || globalThis.document,
+    { execution: true, reducedMotion, seed, view: localHit ? 'screen' : 'fighter' });
+  blood.setAttribute('transform', localHit ? 'translate(460 270)' : 'translate(0 -65)');
+  anchor.append(blood);
+  return blood;
+}
+
 /** Show an already-authorized execution in the player's existing arena; never resolve it. */
 export async function playFirstPersonExecutionAnimation(container, event, { signal, reducedMotion, onCue } = {}) {
   const rig = firstPersonRig(container);
@@ -75,6 +104,7 @@ export async function playFirstPersonExecutionAnimation(container, event, { sign
   if (gladiator) restore.push(saveAttributes(gladiator, ['class']));
   let caption;
   let shade;
+  let blood;
   const attached = () => !signal?.aborted && container.isConnected && camera.isConnected
     && rig.local.isConnected && rig.opponent.isConnected;
   const wait = async duration => await pause(duration, signal) && attached();
@@ -109,6 +139,7 @@ export async function playFirstPersonExecutionAnimation(container, event, { sign
     if (reduce) {
       container.dataset.fpExecutionPhase = 'impact';
       impactCue();
+      blood = mountFirstPersonExecutionBlood(container, event.loser, { reducedMotion: reduce, seed: event.winner });
       return await wait(650);
     }
     container.dataset.fpExecutionPhase = 'windup';
@@ -117,11 +148,13 @@ export async function playFirstPersonExecutionAnimation(container, event, { sign
     if (!await wait(220)) return false;
     container.dataset.fpExecutionPhase = 'impact';
     impactCue();
+    blood = mountFirstPersonExecutionBlood(container, event.loser, { seed: event.winner });
     if (!await wait(900)) return false;
     container.dataset.fpExecutionPhase = 'settle';
     if (!await wait(330)) return false;
     return attached();
   } finally {
+    blood?.remove();
     caption?.remove();
     shade?.remove();
     for (const reset of restore.reverse()) reset();

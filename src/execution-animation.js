@@ -1,4 +1,6 @@
 /** Execution playback is presentation of an accepted verdict, never a combat resolver. */
+import { createPixelBloodEffect } from './pixel-blood.js';
+
 const INDICES = new Set([0, 1]);
 const WEAPONS = new Set(['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword', 'dagger', 'trident']);
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
@@ -84,7 +86,7 @@ function wrapMotion(document, motion) {
   }
 }
 
-function bloodEffect(document, weapon) {
+function bloodEffect(document, weapon, { reducedMotion, seed }) {
   const effect = svgNode(document, 'g', {
     class: 'execution-blood', 'aria-hidden': 'true', 'shape-rendering': 'crispEdges',
   });
@@ -99,25 +101,9 @@ function bloodEffect(document, weapon) {
     }));
   }
   effect.append(stains);
-  const spray = svgNode(document, 'g', { class: 'execution-spray', transform: 'translate(0 -65)' });
-  // Fixed integer cells are reproducible and stay in the defeated fighter's native coordinates.
-  for (let i = 0; i < 46; i++) {
-    const side = i % 2 ? -1 : 1;
-    const travel = side * (14 + (i * 17) % 74);
-    const rise = -12 - (i * 13) % 65;
-    const fall = 56 + (i * 7) % 21;
-    const size = 2 + i % 4;
-    const pixel = svgNode(document, 'rect', {
-      class: 'execution-blood-pixel', x: (i % 5) - 2, y: (i % 7) - 4,
-      width: size, height: i % 7 === 0 ? size * 3 : size,
-      fill: palette[i % palette.length],
-    });
-    pixel.style.setProperty('--burst-x', `${travel}px`);
-    pixel.style.setProperty('--burst-rise', `${rise}px`);
-    pixel.style.setProperty('--burst-fall', `${fall}px`);
-    pixel.style.setProperty('--burst-delay', `${(i % 6) * 13}ms`);
-    spray.append(pixel);
-  }
+  const spray = createPixelBloodEffect(document, { execution: true, seed, reducedMotion });
+  spray.classList.add('execution-spray');
+  spray.setAttribute('transform', 'translate(0 -65)');
   effect.append(spray);
   const slash = svgNode(document, 'g', { class: 'execution-slash' });
   const crushing = weapon === 'mace' || weapon === 'flail';
@@ -193,7 +179,7 @@ export async function playExecutionAnimation(container, event, { signal, reduced
     if (reduce) {
       container.setAttribute('data-execution-phase', 'impact');
       impactCue();
-      blood = bloodEffect(document, event.weapon);
+      blood = bloodEffect(document, event.weapon, { reducedMotion: reduce, seed: event.winner * 17 + event.loser });
       gladiators[event.loser].append(blood);
       return await wait(650);
     }
@@ -203,7 +189,7 @@ export async function playExecutionAnimation(container, event, { signal, reduced
     if (!await wait(220)) return false;
     container.setAttribute('data-execution-phase', 'impact');
     impactCue();
-    blood = bloodEffect(document, event.weapon);
+    blood = bloodEffect(document, event.weapon, { reducedMotion: reduce, seed: event.winner * 17 + event.loser });
     gladiators[event.loser].append(blood);
     if (!await wait(1280)) return false;
     container.setAttribute('data-execution-phase', 'settle');

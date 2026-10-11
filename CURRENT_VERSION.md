@@ -1,10 +1,56 @@
 # Current Arena Fighters version
 
+## Pixel Blood v001 — v0.15.3, October 11, 2026
+
+Current local source is **v0.15.3**; published remains **v0.14.2**. Independent snapshot: `releases/Arena_Fighters_v0.15.3_v001`; separate evidence: `artifacts/Pixel_Blood_v001/VERIFICATION.json`.
+
+Positive resolved attack damage determines the density of a temporary square-pixel blood burst, capped at 72 particles. Executions use a larger 96-particle spray in first-person and spectator views. Zero-damage impacts produce no blood; reduced motion shows stationary compact pixels. Both viewer seats use their existing arena, contact points and playback cleanup. Attack/execution durations, combat rules, deadlines, verdict authority, saved fighters, complete v008 artwork and all prior releases remain preserved. The disposable art preview includes an Execution cue and paused blood inspection. Local/browser/portable checks do not establish publication or human visual acceptance.
+
+## Historical v0.15.2
+
+## Greatsword Armor Continuity v001 — v0.15.2, October 11, 2026
+
+Current local source is **v0.15.2**; published remains **v0.14.2**. Snapshot path: `releases/Arena_Fighters_v0.15.2_v001`. Separate evidence: `artifacts/First_Person_Armor_Continuity_v001/VERIFICATION.json`. This is a local implementation; publication remains separately verified for v0.14.2.
+
+Additive `assets/first-person/v008` gives the greatsword one consistent forearm design through windup, contact, follow-through and recovery in all three armor materials and six hand palettes. Both forearms use their armor's preserved ready-bracer design: cloth wraps for light armor, fixed leather bands and buckle for medium armor, and fixed plates, rivets and gold wrist binding for heavy armor. The 72 complete 460×220 images change only audited garment pixels. Preserve every authored hand, blade, crossguard, grip, pommel, alpha byte and pixel outside the twelve garment masks against effective v007: the corrected v007 windup and the exact v005 other poses. The rigid windup blade and perpendicular crossguard remain intact. Every other weapon and the separate trident cast inherit exact v007 frames. Original v003/v004 ready holds remain at both ends.
+
+Default authored playback uses v008 over effective v007. Explicit v005, v006 and v007 remain exact prior-art comparisons; the disposable preview accepts `first-person-art-version=v005`, `v006` or `v007`. Keep each action as one full image; never fit a separate sleeve, hand or weapon at runtime. Canonical bracer detail is sampled directly from preserved raw ready sources through recorded anatomical surface coordinates, using nearest-neighbor sampling without alpha-bounds recentering or resampling the tiny prepared holds. Sources, candidates, semantic masks, per-armor mapping receipts and diagnostic controls remain in `ArtReview/First_Person_Armor_Continuity_v001`.
+
+The unchanged 665-ms public-event clock, 285-ms actual contact, full-image predecode barrier and complete anchored fallback remain in force. Guard, Focus, recoil, execution, reduced motion, rival/spectator identities, combat rules, saved fighters, typed names and verdict authority retain their contracts. Local packaging and automated/browser checks do not establish publication or human art acceptance. All prior assets, sources and releases remain preserved.
+
+Final preparation: `ArtReview/First_Person_Armor_Continuity_v001/PREPARATION_RECEIPT.json`.
+
+## Historical v0.15.1
+
+## Greatsword Axis Correction v001 — v0.15.1, October 10, 2026
+
+Current local source is **v0.15.1**. The greatsword windup now keeps its blade aligned with the rigid grip and its crossguard perpendicular to the blade. The additive v007 replacement changes only the audited blade and crossguard region for all three armor materials and six skin palettes. Both hands, grip, pommel, sleeves, frame registration and every other action pose retain their existing pixels. Exact v005 artwork and the rejected v006 blade-only candidate remain available through explicit prior-version playback.
+
+Attack duration remains 665 ms with contact at 285 ms on the same resolved public-event clock. Predecode, the complete anchored loading fallback, reduced motion, all other commands, execution, rival/spectator identities, combat rules, saved fighters and typed names remain unchanged. Preserved sources and blade-and-crossguard correction masks are in `ArtReview/First_Person_Greatsword_Axis_v001`. The disposable preview remains `/?first-person-art-review=1`; add `&first-person-art-version=v005` or `v006` to compare the prior frames.
+
+Independent local snapshot: `releases/Arena_Fighters_v0.15.1_v001`. Separate verification: `artifacts/First_Person_Greatsword_Axis_v001/VERIFICATION.json`. This is a local implementation; **published remains v0.14.2**. All prior releases and artwork remain preserved. Internal browser and automated checks do not establish human art acceptance.
+
+Final authored blade-and-crossguard preparation: `ArtReview/First_Person_Greatsword_Axis_v001/v007/PREPARATION_RECEIPT.json`. The v006 blade-only candidate and its original receipt remain preserved for comparison.
+
+## Historical v0.15.0
+
+## Authored First-person Frames v001 — v0.15.0, October 10, 2026
+
+Current local source is **v0.15.0**. Attacks now swap four newly drawn complete poses: windup, contact, follow-through and recovery, with the original ready hold at both ends. All nine weapons have distinct cut, chop, thrust or chain-swing poses in light, medium and heavy armor with six hand palettes. Trident Entangle uses a separate release-and-flying-net sequence; sword Feint has a false approach before its actual contact. Each frame keeps both arms and all held equipment together, with authored foreshortening and sleeves entering through camera boundaries.
+
+Attack duration remains 665 ms; contact is exactly 285 ms on the existing public-event clock. Predecoded image swaps introduce no attack loading delay. Guard, Focus, recoil, execution, reduced motion, spectators, combat rules, saved identities and typed names retain their contracts. Raw sources, prompts, hand-only masks, fixed original-source sampling and rejected atlas attempts are preserved in `ArtReview/First_Person_Frames_v001`. The disposable `/?first-person-art-review=1` controls can scrub the actual drawn poses or replay a resolved sample.
+
+Independent local snapshot: `releases/Arena_Fighters_v0.15.0_v001`. Separate verification: `artifacts/First_Person_Frames_v001/VERIFICATION.json`. This is a local implementation; **published remains v0.14.2**, with its separate existing publication evidence below. All prior releases and artwork remain preserved. Internal browser and automated checks do not establish human art acceptance.
+
+## Historical v0.14.2
+
 ## Anchored First-person Motion v001 — v0.14.2, October 10, 2026
 
 Current local source is **v0.14.2**. Complete arm-and-weapon poses now pivot near their forearm roots and extend beyond the viewport so their cropped sleeve ends remain hidden throughout motion. Sword cuts, axe/mace chops, flail swings, spear/trident thrusts, dagger thrusts and two-handed attacks have separate windup, contact and recovery paths. Guard, Focus, recoil, execution and reduced motion retain the same connected holds. Source artwork, authored grips, frame registration and rival/spectator avatars remain exact; the inward-facing v004 axe remains active.
 
-The disposable `/?first-person-art-review=1` controls now include an attack-frame inspector using the actual renderer. Attack duration remains 665 ms with contact at 43%; combat clocks, resolved-event playback, saved identities, name drafts and verdict authority are unchanged. The independent snapshot is `releases/Arena_Fighters_v0.14.2_v001`; local verification is `artifacts/First_Person_Motion_v001/VERIFICATION.json`. V0.14.1 and all earlier releases remain preserved. This snapshot is local; the published game remains v0.14.1 pending separate deployment verification. Automated checks and internal browser review do not establish user art acceptance.
+The disposable `/?first-person-art-review=1` controls now include an attack-frame inspector using the actual renderer. Attack duration remains 665 ms with contact at 43%; combat clocks, resolved-event playback, saved identities, name drafts and verdict authority are unchanged. The independent snapshot is `releases/Arena_Fighters_v0.14.2_v001`; local verification is `artifacts/First_Person_Motion_v001/VERIFICATION.json`. V0.14.1 and all earlier releases remain preserved. This snapshot records local verification before publication. Automated checks and internal browser review do not establish user art acceptance.
+
+**Published October 10, 2026:** v0.14.2 is live at https://www.blackbooktattoo.com/arena-fighters through the existing free temporary-session Render service. Commit `c10537d0583c70326ba81f76ecdde676909599f6`, deploy `dep-db59hlajnfac739mq950`, completed at 19:58:47 UTC. Separate evidence in `artifacts/Live_Release_v0142_v001/VERIFICATION.json` records 400 exact public file comparisons, the website's v0.14.2 menu, completed Guard/Feint lesson rounds and the anchored public axe strike. Earlier sealed snapshots and local evidence remain unchanged.
 
 ## Historical v0.14.1
 

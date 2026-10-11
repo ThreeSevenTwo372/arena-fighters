@@ -229,6 +229,12 @@ test('execution stages use either facing, expose the defeated fighter, and resto
         'Blood uses the defeated figure’s local coordinates, including its arena facing');
       assert.equal(arena.fighters[winner].querySelector('.execution-blood'), null);
       assert.equal(blood.getAttribute('shape-rendering'), 'crispEdges');
+      const spray = blood.querySelector('.pixel-blood-effect');
+      assert.equal(spray.getAttribute('data-blood-execution'), 'true');
+      assert.equal(spray.getAttribute('data-blood-particles'), '96');
+      assert.equal(spray.querySelectorAll('.pixel-blood-particle').length, 96);
+      assert.equal(spray.getAttribute('transform'), 'translate(0 -65)');
+      assert.equal(spray.getAttribute('data-reduced-motion'), 'false');
       for (const rect of blood.querySelectorAll('rect')) {
         for (const name of ['x', 'y', 'width', 'height']) assert.equal(Number.isInteger(Number(rect.getAttribute(name))), true);
       }
@@ -255,6 +261,7 @@ test('reduced motion gives a brief stationary impact with no windup or strike ph
     assert.equal(arena.container.classList.contains('execution-playback-reduced'), true);
     assert.equal(arena.container.getAttribute('data-execution-phase'), 'impact');
     assert.ok(arena.fighters[1].querySelector('.execution-blood'));
+    assert.equal(arena.fighters[1].querySelector('.pixel-blood-effect').getAttribute('data-reduced-motion'), 'true');
     assert.equal(clock.pending, 1);
     await clock.step();
     assert.equal(await playback, true);

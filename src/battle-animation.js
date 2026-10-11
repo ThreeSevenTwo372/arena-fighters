@@ -1,4 +1,6 @@
 /** Playback uses resolved public events. It never resolves combat or reads a secret choice. */
+import { createPixelBloodEffect } from './pixel-blood.js';
+
 const FIGHTER_INDICES = new Set([0, 1]);
 const WEAPON_IDS = new Set(['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword', 'dagger', 'trident']);
 const SVG_NAMESPACE = 'http://www.w3.org/2000/svg';
@@ -102,6 +104,33 @@ function clearEffects(container) {
   container.querySelectorAll('.fighter-combat-effect').forEach(node => node.remove());
 }
 
+/** Add damage feedback at contact, using only the resolved public damage. */
+export function presentAttackBlood(container, target, step, { reducedMotion = false } = {}) {
+  if (!container || !target) return null;
+  const document = container.ownerDocument || globalThis.document;
+  const screen = (target.getAttribute('class') || '').split(/\s+/).includes('fp-viewmodel');
+  const layer = screen ? container.querySelector('.arena-svg') : target.querySelector('.fighter-effects');
+  if (!layer) return null;
+  const seed = (Number(step?.round) || 0) * 31 + (Number(step?.actor) || 0) * 11 + (Number(step?.target) || 0) * 17;
+  const blood = createPixelBloodEffect(document, {
+    damage: step?.damage, seed, reducedMotion, view: screen ? 'screen' : 'fighter',
+  });
+  if (!blood) return null;
+  // Cleanup belongs to the existing playback. Keep the camera translation on a
+  // child so the shared floating-label/reduced-motion CSS cannot replace it.
+  const wrapper = document.createElementNS(SVG_NAMESPACE, 'g');
+  wrapper.setAttribute('class', 'fighter-combat-effect pixel-blood-combat');
+  wrapper.setAttribute('aria-hidden', 'true');
+  if (screen) {
+    const origin = document.createElementNS(SVG_NAMESPACE, 'g');
+    origin.setAttribute('transform', 'translate(460 270)');
+    origin.append(blood);
+    wrapper.append(origin);
+  } else wrapper.append(blood);
+  layer.append(wrapper);
+  return wrapper;
+}
+
 // Audio follows public playback and cannot interrupt its commit or cleanup.
 function emitCue(onCue, type, step = {}) {
   if (typeof onCue !== 'function') return;
@@ -109,12 +138,19 @@ function emitCue(onCue, type, step = {}) {
   try { onCue(cue)?.catch?.(() => {}); } catch { /* A media failure must not change combat. */ }
 }
 
+// Complete first-person pose frames follow this same public playback clock.
+// A failed presentation callback cannot interrupt the accepted combat result.
+function emitAttackFrame(onAttackFrame, step, elapsedMs) {
+  const frame = Object.freeze({ step, elapsedMs });
+  try { onAttackFrame(frame)?.catch?.(() => {}); } catch { /* Presentation failure is not combat authority. */ }
+}
+
 /**
  * Play already-resolved events, returning false when interrupted and true when complete.
  * The caller blocks the surrounding action controls until this promise completes.
  * Abort on screen changes, then render the final combat state after successful playback.
  */
-export async function playBattleAnimation(container, steps, { signal, reducedMotion, onCue } = {}) {
+export async function playBattleAnimation(container, steps, { signal, reducedMotion, onCue, onAttackFrame } = {}) {
   if (!container || signal?.aborted) return false;
   const reduce = reducedMotion ?? globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
   const fighters = [0, 1].map(index => container.querySelector(`.arena-fighter[data-fighter-index="${index}"]`));
@@ -141,17 +177,39 @@ export async function playBattleAnimation(container, steps, { signal, reducedMot
       if (step.weapon) fighter.dataset.weapon = step.weapon;
       if (step.action) fighter.dataset.combatAction = step.action;
       if (step.type === 'attack') {
+        const presentedStep = !reduce && typeof onAttackFrame === 'function' ? Object.freeze({ ...step }) : null;
+        let elapsedMs = 0;
+        const attached = () => !signal?.aborted && container.isConnected;
+        const frameAt = time => {
+          if (!attached()) return false;
+          emitAttackFrame(onAttackFrame, presentedStep, time);
+          return attached();
+        };
+        const advanceFrames = async times => {
+          for (const time of times) {
+            if (!await pause(time - elapsedMs, signal)) return false;
+            elapsedMs = time;
+            if (!frameAt(time)) return false;
+          }
+          return true;
+        };
+        if (presentedStep && !frameAt(0)) return false;
         // The hand-mounted weapon moves first; the target reacts at the contact frame.
         emitCue(onCue, 'swing', step);
-        if (!await pause(reduce ? 90 : 285, signal)) return false;
+        if (presentedStep) {
+          if (!await advanceFrames([90, 180, 285])) return false;
+        } else if (!await pause(reduce ? 90 : 285, signal)) return false;
         if (signal?.aborted || !container.isConnected) return false;
         const target = fighters[step.target];
         if (target) {
           emitCue(onCue, step.parried || (step.guarded && !step.bypassedGuard) ? 'parry' : 'hit', step);
           target.dataset.animation = step.parried || (step.guarded && !step.bypassedGuard) ? 'blocked' : 'hit';
           effect(target, `${step.parried ? 'PARRY ' : step.entangled ? 'NET ' : ''}−${step.damage}`, step.parried ? 'blocked' : step.bypassedGuard ? 'break' : step.guarded ? 'blocked' : 'hit');
+          presentAttackBlood(container, target, step, { reducedMotion: reduce });
         }
-        if (!await pause(reduce ? 150 : 380, signal)) return false;
+        if (presentedStep) {
+          if (!await advanceFrames([365, 475, 570, 665])) return false;
+        } else if (!await pause(reduce ? 150 : 380, signal)) return false;
         if (target) delete target.dataset.animation;
       } else if (step.type === 'guard') {
         emitCue(onCue, 'guard', step);

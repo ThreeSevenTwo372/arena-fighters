@@ -149,6 +149,9 @@ test('either seat uses resolved attack contact frames and keeps its equipment an
     assert.equal(arena.local.querySelector('.fighter-combat-effect').querySelector('text').textContent, '−7');
     assert.deepEqual(cues.map(cue => cue.type), ['swing', 'hit']);
     assert.equal(arena.container.querySelector('.fp-weapon'), arena.weapon);
+    assert.equal(arena.container.querySelector('.pixel-blood-effect').dataset.bloodDamage, '7');
+    assert.equal(arena.container.querySelector('.pixel-blood-effect').dataset.bloodView, 'screen');
+    assert.equal(arena.container.querySelectorAll('.pixel-blood-particle').length, 25);
     assert.deepEqual(snapshot(arena.weapon), weaponBefore);
     await clock.finish();
     assert.equal(await playback, true);
@@ -245,6 +248,7 @@ test('accepted execution stays in the same stage for either seat and either outc
     await settle();
     assert.equal(arena.container.dataset.fpExecutionView, winner === localIndex ? 'victor' : 'defeated');
     assert.equal(arena.container.dataset.fpExecutionPhase, 'windup');
+    assert.equal(arena.container.querySelector('.pixel-blood-effect'), null, 'Execution blood starts at accepted contact only');
     assert.equal(arena.container.querySelector('.fp-execution-caption').textContent, event.text);
     assert.equal(arena.container.querySelector('.fp-execution-caption').getAttribute('role'), 'status');
     assert.equal(arena.container.querySelector('.first-person-arena'), arena.svg);
@@ -255,6 +259,11 @@ test('accepted execution stays in the same stage for either seat and either outc
     await clock.step();
     assert.equal(arena.container.dataset.fpExecutionPhase, 'impact');
     assert.deepEqual(cues, [{ type: 'execution', weapon: 'trident' }]);
+    const blood = arena.container.querySelector('.pixel-blood-effect');
+    assert.equal(blood.dataset.bloodExecution, 'true');
+    assert.equal(blood.dataset.bloodView, winner === localIndex ? 'fighter' : 'screen');
+    assert.equal(blood.parentNode, winner === localIndex ? arena.opponent.querySelector('.gladiator') : arena.svg.querySelector('.fp-impact'));
+    assert.equal(arena.container.querySelectorAll('.pixel-blood-particle').length, 96);
     await clock.finish();
     assert.equal(await playback, true);
     assert.equal(clock.elapsed, 1950);
@@ -273,6 +282,7 @@ test('reduced execution has a single stationary contact and abort/navigation res
     await settle();
     assert.equal(arena.container.dataset.fpExecutionPhase, 'impact');
     assert.equal(arena.container.classList.contains('fp-execution-reduced'), true);
+    assert.equal(arena.container.querySelector('.pixel-blood-effect').dataset.reducedMotion, 'true');
     if (mode === 'abort') controller.abort();
     else {
       if (mode === 'detach') arena.container.rootConnected = false;

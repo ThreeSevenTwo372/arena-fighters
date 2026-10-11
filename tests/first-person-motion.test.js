@@ -233,7 +233,7 @@ test('attack frame inspection remains optional disposable presentation with the 
   assert.match(inspected, /Disposable art controls/);
   assert.deepEqual(duel, before);
   const preview = await read('src/first-person-preview.js'), server = await read('server.mjs');
-  assert.match(preview, /if \(inspect && \(cue === 'strike' \|\| cue === 'technique'\)\)/);
+  assert.match(preview, /if \(inspect && \(cue === 'strike' \|\| cue === 'technique' \|\| cue === 'execution'\)\)/);
   assert.match(preview, /frame = Math\.max\(0, Math\.min\(100,/);
   assert.doesNotMatch(preview, /fetch\(|sessionStorage|localStorage|online\/|\.local-data/);
   assert.match(server, /script-src 'self'; style-src 'self'; img-src 'self' data:/);

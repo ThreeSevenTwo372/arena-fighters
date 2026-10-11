@@ -6,6 +6,7 @@ import { renderArena, renderFighterArt } from './arena.js';
 import { FIRST_PERSON_PIXEL_CATALOG as pixelCatalog } from './first-person-pixel-catalog.js';
 import { FIRST_PERSON_WHOLE_CATALOG as wholeCatalog } from './first-person-whole-catalog.js';
 import { FIRST_PERSON_AXE_CATALOG as axeCatalog } from './first-person-axe-catalog.js';
+import { getFirstPersonFrameClip } from './first-person-frames.js';
 
 let illustrationId = 0;
 const weapons = new Set(['sword', 'spear', 'axe', 'flail', 'halberd', 'mace', 'greatsword', 'dagger', 'trident']);
@@ -139,7 +140,7 @@ function renderWholeHold(hold, skin, weapon) {
 }
 
 /** Invalid/missing ownership keeps the existing public third-person arena. */
-export function renderFirstPersonArena(duel = {}, { viewerIndex, fit = 'meet', artVersion = 'v004' } = {}) {
+export function renderFirstPersonArena(duel = {}, { viewerIndex, fit = 'meet', artVersion = 'v008' } = {}) {
   if ((viewerIndex !== 0 && viewerIndex !== 1) || !Array.isArray(duel.fighters) || duel.fighters.length !== 2) return renderArena(duel, { fit });
   const player = duel.fighters[viewerIndex] ?? {}, opponentIndex = 1 - viewerIndex;
   const opponent = duel.fighters[opponentIndex] ?? {}, loadout = loadoutFor(player);
@@ -148,7 +149,7 @@ export function renderFirstPersonArena(duel = {}, { viewerIndex, fit = 'meet', a
   const requestedArmor = itemId(loadout.armor, 'light');
   const armor = ({ cloth: 'light', leather: 'medium', plate: 'heavy' })[requestedArmor] ?? (['light', 'medium', 'heavy'].includes(requestedArmor) ? requestedArmor : 'light');
   const p = palette(player, armor), id = `first-person-${++illustrationId}`;
-  const correctedAxe = artVersion === 'v004' && weapon === 'axe' ? axeCatalog.holds.axe?.[armor] : null;
+  const correctedAxe = ['v004', 'v005', 'v006', 'v007', 'v008'].includes(artVersion) && weapon === 'axe' ? axeCatalog.holds.axe?.[armor] : null;
   const candidate = correctedAxe ?? wholeCatalog.holds[weapon]?.[armor];
   const wholeHold = artVersion !== 'v001' && artVersion !== 'v002' && candidate
     && (twoHanded ? candidate.mode === 'both' : candidate.mode === 'paired' && candidate.off) ? candidate : null;
@@ -156,6 +157,7 @@ export function renderFirstPersonArena(duel = {}, { viewerIndex, fit = 'meet', a
   const viewmodelVersion = wholeHold ? wholeHold === correctedAxe ? 'v004' : 'v003' : usePixels ? 'v002' : 'v001';
   const requestedSkin = player.character?.appearance?.skin;
   const skin = Object.hasOwn(pixelCatalog.parts.hand.variants, requestedSkin) ? requestedSkin : 'ivory';
+  const frameClip = wholeHold && ['v005', 'v006', 'v007', 'v008'].includes(artVersion) && getFirstPersonFrameClip({ weapon, armor, skin, artVersion });
   const mainPosition = usePixels && weapon === 'halberd' ? '650 340'
     : usePixels && weapon === 'flail' ? '755 354'
       : usePixels && twoHanded ? '600 340' : `685 ${twoHanded ? 334 : 354}`;
@@ -171,8 +173,9 @@ export function renderFirstPersonArena(duel = {}, { viewerIndex, fit = 'meet', a
       <rect width="920" height="440" fill="url(#${id}-shade)"/>
       <ellipse cx="460" cy="348" rx="87" ry="14" fill="#161e20" opacity=".35"/>
       <g class="arena-fighter fp-opponent fp-effects-mirrored" data-fighter-index="${opponentIndex}"${opponentDefeated ? ' data-defeated="true"' : ''} transform="translate(460 347) scale(-1 1)">${renderFighterArt(opponent.character, loadoutFor(opponent), '#436f70', opponentDefeated)}</g>
-      <g class="arena-fighter fp-viewmodel" data-fighter-index="${viewerIndex}" data-weapon="${weapon}" data-armor="${armor}" data-two-handed="${twoHanded}"${wholeHold ? ` data-hold-mode="${wholeHold.mode}"` : ''}${playerDefeated ? ' data-defeated="true"' : ''}>
+      <g class="arena-fighter fp-viewmodel" data-fighter-index="${viewerIndex}" data-weapon="${weapon}" data-armor="${armor}" data-skin="${skin}" data-two-handed="${twoHanded}"${wholeHold ? ` data-hold-mode="${wholeHold.mode}"` : ''}${frameClip ? ` data-frame-capable="true" data-frame-version="${artVersion}"` : ''}${playerDefeated ? ' data-defeated="true"' : ''}>
         ${wholeHold ? renderWholeHold(wholeHold, skin, weapon) : `${twoHanded ? '' : `<g transform="translate(${offPosition}) scale(2)"><g class="fp-offhand"><g class="fp-offhand-motion">${usePixels ? pixelOffhand(weapon, skin, armor) : `<g transform="scale(-1 1)">${forearm(p, true)}</g>${weapon === 'trident' ? netArt(p) : shieldArt(p)}`}</g></g></g>`}<g transform="translate(${mainPosition}) scale(2)"><g class="fp-mainhand"><g class="fp-mainhand-motion">${usePixels ? pixelMainhand(weapon, skin, armor) : `<g transform="rotate(14)">${forearm(p)}${weaponArt(weapon)}${twoHanded ? supportingHand(p) : ''}${grippingHand(p)}</g>`}</g></g></g>`}
+        ${frameClip ? '<image class="pixel-sprite fp-authored-frame" x="0" y="0" width="920" height="440" preserveAspectRatio="none" aria-hidden="true"/>' : ''}
         <g class="fighter-effects" transform="translate(460 330)"></g>
       </g>
     </g>

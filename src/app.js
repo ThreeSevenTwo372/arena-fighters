@@ -7,6 +7,7 @@ import { renderTournamentLobby, renderTournamentSpectator, renderTournamentBrack
 import { renderArena } from './arena.js';
 import { renderFirstPersonArena } from './first-person-arena.js';
 import { playFirstPersonBattleAnimation, playFirstPersonExecutionAnimation } from './first-person-animation.js';
+import { preloadFirstPersonFrames } from './first-person-frames.js';
 import { effectiveCharacterStats, currentTraitDescription, LEGACY_ATTRIBUTE_LABELS } from './combat.js';
 import { avatarChoices, normalizeAppearance } from './avatar.js';
 import { facePresetChoices, normalizePresetAppearance } from './face-presets.js';
@@ -1066,7 +1067,17 @@ async function render({ keepPlayback = false, keepExecution = false, keepOutcome
         ? state.duel.fighters.map(fighter => prepareCleanAvatar(fighter.character.appearance, 'battle', { weapon: fighter.weapon, armor: fighter.armor, helmet: fighter.helmet }))
         : state.screen === 'tournament-lobby' ? tournamentView.players.filter(player => player && !player.left).map(player => prepareCleanAvatar(player.character.appearance, 'battle', IDENTITY_GEAR))
           : state.screen === 'online-lobby' ? [prepareCleanAvatar(onlineView.players[onlineView.you].character.appearance, 'battle', state.loadouts[onlineView.you])] : [];
-  try { if (state.screen === 'tutorial') await prepareFightTutorial(tutorialState); await Promise.all(requests); }
+  // Decode complete poses before the playable controls open, alongside avatar art.
+  // Public equipment is sufficient; neither loading nor playback reads choices.
+  const frameFighters = state.screen === 'tutorial' ? tutorialState?.duel.fighters.slice(0, 1)
+    : state.screen === 'battle' ? state.duel?.fighters
+      : state.screen === 'loadout' ? [{ character: state.profiles[state.picker]?.character, ...state.loadouts[state.picker] }] : [];
+  if (typeof preloadFirstPersonFrames === 'function') for (const fighter of frameFighters || []) {
+    const requestedSkin = fighter.character?.appearance?.skin;
+    const skin = avatarChoices.skin.some(entry => entry.id === requestedSkin) ? requestedSkin : 'ivory';
+    requests.push(preloadFirstPersonFrames({ weapon: fighter.weapon, armor: fighter.armor, skin }));
+  }
+  try { if (state.screen === 'tutorial') requests.push(prepareFightTutorial(tutorialState)); await Promise.all(requests); }
   catch (error) { if (version === renderVersion) state.error = `Character art could not load: ${error.message}`; }
   if (version !== renderVersion) return;
   syncGameAudio();
@@ -1077,7 +1088,7 @@ async function render({ keepPlayback = false, keepExecution = false, keepOutcome
   const temporary = onlineClient?.sessionMode === 'temporary';
   const content = state.screen === 'tutorial' ? `${header()}${renderFightTutorial(tutorialState, { playing: tutorialPlaying })}` : menuPages.has(state.screen) ? `${header()}${state.screen === 'menu' ? renderMainMenu({ session: onlineSession, temporary }) : state.screen === 'match-browser' ? renderMatchBrowser({ ...menuData, temporary }) : state.screen === 'leaderboard' ? renderLeaderboard({ ...menuData, temporary }) : renderGraveyard({ ...menuData, temporary })}` : state.screen === 'creator' ? creator() : state.screen === 'loadout' ? loadout() : state.screen === 'handoff' ? handoff() : state.screen === 'online-lobby' ? onlineLobby() : state.screen === 'tournament-lobby' ? `${header()}${renderTournamentLobby(tournamentView)}` : state.screen === 'tournament-spectator' ? `${header()}${renderTournamentSpectator(spectatorPlayback ? { ...tournamentView, phase: 'battle' } : tournamentView, { playing: Boolean(spectatorPlayback), duel: state.duel, verdictPhase: verdictReveal ? 'winner' : null, verdictBusy: onlineBusy || onlineOffline, executing: Boolean(executionPlayback) })}` : state.screen === 'tournament-entrance' ? tournamentEntrance() : battle();
   const notice = state.error || (onlineMode() ? onlineClient.storageWarning : null);
-  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.14.2</span></footer></main>`;
+  app.innerHTML = `<main class="app-shell ${state.screen === 'menu' ? 'menu-shell' : state.screen === 'battle' ? 'battle-shell' : state.screen === 'creator' ? 'creator-shell' : tournamentView ? 'tournament-shell' : ''}">${content}${notice ? `<div class="toast" role="alert">${esc(notice)}</div>` : ''}<footer class="page-footer">ARENA FIGHTERS <span>v0.15.3</span></footer></main>`;
   if (retained) {
     const replacementStage = app.querySelector('.arena-stage');
     const originalHud = retained.stage.querySelector('.battle-hud');

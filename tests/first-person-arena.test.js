@@ -256,8 +256,13 @@ test('axe correction overlay retains all armor and skin frames, exact prepared h
   }
 });
 
-test('default axe uses corrected complete holds in both seats while explicit v003 and other weapons remain exact', () => {
-  const stableSvg = svg => normalizedArt(svg).replaceAll(/first-person-\d+/g, 'first-person-registered');
+test('default authored-frame renderer retains exact corrected axe and prior ready holds in both seats', () => {
+  // The action overlay is initially empty; removing only that additive image and
+  // its capability marker must leave every earlier ready-pose node exact.
+  const stableSvg = svg => normalizedArt(svg).replaceAll(/first-person-\d+/g, 'first-person-registered')
+    .replaceAll(' data-frame-capable="true"', '')
+    .replaceAll(/ data-frame-version="v00[5678]"/g, '')
+    .replaceAll('<image class="pixel-sprite fp-authored-frame" x="0" y="0" width="920" height="440" preserveAspectRatio="none" aria-hidden="true"/>', '');
   for (const [weapon, armors] of Object.entries(wholeCatalog.holds)) for (const armor of Object.keys(armors)) {
     for (const skin of avatarChoices.skin) for (const viewerIndex of [0, 1]) {
       const player = fighter('female', true, { weapon, armor });
@@ -265,6 +270,7 @@ test('default axe uses corrected complete holds in both seats while explicit v00
       const fighters = viewerIndex ? [fighter('male'), player] : [player, fighter('male')];
       const duel = freeze({ fighters, round: 2 }), before = structuredClone(duel);
       const svg = renderFirstPersonArena(duel, { viewerIndex });
+      assert.match(svg, /data-frame-version="v008"/, 'Normal battles select the admitted complete garment frames.');
       const original = renderFirstPersonArena(duel, { viewerIndex, artVersion: 'v003' });
       if (weapon !== 'axe') {
         assert.equal(stableSvg(svg), stableSvg(original), 'Unchanged weapons use their exact existing composition.');

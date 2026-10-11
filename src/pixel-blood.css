@@ -1,0 +1,28 @@
+.pixel-blood-effect {
+  pointer-events: none;
+  shape-rendering: crispEdges;
+}
+.fighter-combat-effect.pixel-blood-combat {
+  animation: none;
+}
+.pixel-blood-effect .pixel-blood-particle {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  animation: pixel-blood-scatter var(--blood-duration, 380ms) steps(5, end) both;
+}
+@keyframes pixel-blood-scatter {
+  0% { transform: translate(0, 0); opacity: 1; }
+  30% { transform: translate(var(--blood-mid-x), var(--blood-mid-y)); opacity: 1; }
+  70% { transform: translate(var(--blood-end-x), var(--blood-end-y)); opacity: .92; }
+  100% { transform: translate(var(--blood-final-x), var(--blood-final-y)); opacity: 0; }
+}
+.pixel-blood-effect[data-reduced-motion="true"] .pixel-blood-particle {
+  animation: none;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pixel-blood-effect .pixel-blood-particle {
+    animation: none;
+    transform: none;
+  }
+}

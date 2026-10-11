@@ -1,0 +1,188 @@
+// Generated from assets/first-person/v007/manifest.json; bounded complete-pose blade and crossguard correction.
+export const FIRST_PERSON_AXIS_CATALOG = {
+  "schema": 1,
+  "version": "v007",
+  "baseVersion": "v005",
+  "fullFrame": true,
+  "durationMs": 665,
+  "contactMs": 285,
+  "overrides": {
+    "greatsword": {
+      "medium": {
+        "windup": {
+          "pose": "windup",
+          "width": 460,
+          "height": 220,
+          "variants": {
+            "porcelain": "/assets/first-person/v007/greatsword-medium-windup-porcelain.png",
+            "ivory": "/assets/first-person/v007/greatsword-medium-windup-ivory.png",
+            "sand": "/assets/first-person/v007/greatsword-medium-windup-sand.png",
+            "copper": "/assets/first-person/v007/greatsword-medium-windup-copper.png",
+            "umber": "/assets/first-person/v007/greatsword-medium-windup-umber.png",
+            "ebony": "/assets/first-person/v007/greatsword-medium-windup-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "bd64c398e99a29a426cec46403b37b7bc7c9ecade024c8826411c083d08989fa",
+            "ivory": "ea4f6d4fc7bf5cd08a0e285041a1726c2b4e866dc85d7bb41a37c2058d6f535b",
+            "sand": "760e35d8ca8f45a67323291ce9eb492be790a25b5b607d94fecc3286e747db1c",
+            "copper": "00e704cf2e6c861a66f1e16fcdf782a793612676a07f481dfd00c45041cc6e76",
+            "umber": "46cbac77034c327436d049fb73f19a48fb60d3607b9160e6337da8c09f5a7a04",
+            "ebony": "dadb236d4be598274617e2f522fda1d0c7043e865abbaf40d0945beb9fbef187"
+          },
+          "maskUrl": "/assets/first-person/v005/greatsword-medium-windup-hand-mask.png",
+          "correctionMaskUrl": "/assets/first-person/v007/greatsword-medium-windup-correction-mask.png",
+          "axis": {
+            "pommel": [
+              301,
+              188
+            ],
+            "handle": [
+              296,
+              111
+            ],
+            "guardBladeIntersection": [
+              293.203,
+              56.7259
+            ],
+            "bladeExit": [
+              289.5194805194805,
+              0
+            ],
+            "guardLeft": [
+              246.0426,
+              71.2122
+            ],
+            "guardRight": [
+              341.2421,
+              65.0304
+            ],
+            "guardCenter": [
+              294,
+              69
+            ],
+            "bladeGuardDotProduct": 0.0010441657129831583,
+            "bladeGuardNormalizedDotProduct": 1.9254221872227317e-07,
+            "angleBetweenBladeAndGuardDegrees": 89.9999889681435
+          }
+        }
+      },
+      "heavy": {
+        "windup": {
+          "pose": "windup",
+          "width": 460,
+          "height": 220,
+          "variants": {
+            "porcelain": "/assets/first-person/v007/greatsword-heavy-windup-porcelain.png",
+            "ivory": "/assets/first-person/v007/greatsword-heavy-windup-ivory.png",
+            "sand": "/assets/first-person/v007/greatsword-heavy-windup-sand.png",
+            "copper": "/assets/first-person/v007/greatsword-heavy-windup-copper.png",
+            "umber": "/assets/first-person/v007/greatsword-heavy-windup-umber.png",
+            "ebony": "/assets/first-person/v007/greatsword-heavy-windup-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "017e4bbbe1a3977edcbcea1d4853fdb27b20b8040f86e9f3a3d60dbbbb807f45",
+            "ivory": "78e2c9aec4496f2cff404027bcbc06f1109c474de657403c9a6170d841544168",
+            "sand": "631dd0ec78a6cfd620e0668568c493d61814e09f372c27ae3390aeffc8984a04",
+            "copper": "c4395f37a07b08af7537e52b6a6c350f11908ddaed27a8b7186707dda67a691c",
+            "umber": "fb2360e4cfd4b3c0dae5dbef147059a145b8d921ec66d19ba67d7aa3928237a3",
+            "ebony": "04a42e9dee5286b66551625ce631d6608fc3dc0bdc955dc93d8090c351d2f949"
+          },
+          "maskUrl": "/assets/first-person/v005/greatsword-heavy-windup-hand-mask.png",
+          "correctionMaskUrl": "/assets/first-person/v007/greatsword-heavy-windup-correction-mask.png",
+          "axis": {
+            "pommel": [
+              301,
+              188
+            ],
+            "handle": [
+              296,
+              111
+            ],
+            "guardBladeIntersection": [
+              293.203,
+              56.7259
+            ],
+            "bladeExit": [
+              289.5194805194805,
+              0
+            ],
+            "guardLeft": [
+              246.0426,
+              71.2122
+            ],
+            "guardRight": [
+              341.2421,
+              65.0304
+            ],
+            "guardCenter": [
+              294,
+              69
+            ],
+            "bladeGuardDotProduct": 0.0010441657129831583,
+            "bladeGuardNormalizedDotProduct": 1.9254221872227317e-07,
+            "angleBetweenBladeAndGuardDegrees": 89.9999889681435
+          }
+        }
+      },
+      "light": {
+        "windup": {
+          "pose": "windup",
+          "width": 460,
+          "height": 220,
+          "variants": {
+            "porcelain": "/assets/first-person/v007/greatsword-light-windup-porcelain.png",
+            "ivory": "/assets/first-person/v007/greatsword-light-windup-ivory.png",
+            "sand": "/assets/first-person/v007/greatsword-light-windup-sand.png",
+            "copper": "/assets/first-person/v007/greatsword-light-windup-copper.png",
+            "umber": "/assets/first-person/v007/greatsword-light-windup-umber.png",
+            "ebony": "/assets/first-person/v007/greatsword-light-windup-ebony.png"
+          },
+          "sha256s": {
+            "porcelain": "585584a5015c83f94c01739986bf00a3a4c90d3e1fe618293cc3bfb72b46b7b2",
+            "ivory": "20dcd86c32ae8a40c751ed44537d0871c75db88ae9ad16fec522009ce19fde72",
+            "sand": "18414418df957c6cae27b4ca96c8e07a054f8a7de1136b9d97c831aa0e2ebfba",
+            "copper": "dab5d1a676a8058d7d42e1bc838fd1b81f1e630da743e36aa0a05d657a84cdcc",
+            "umber": "704b585060b636b4d6c409eb1ed0ea1d2b6a7cdcab17c14f691468618d2baef9",
+            "ebony": "46ab3c64450e71495269385766a2f18a07eeeddcc56b24abec0691eaa1adc126"
+          },
+          "maskUrl": "/assets/first-person/v005/greatsword-light-windup-hand-mask.png",
+          "correctionMaskUrl": "/assets/first-person/v007/greatsword-light-windup-correction-mask.png",
+          "axis": {
+            "pommel": [
+              301,
+              188
+            ],
+            "handle": [
+              296,
+              111
+            ],
+            "guardBladeIntersection": [
+              293.203,
+              56.7259
+            ],
+            "bladeExit": [
+              289.5194805194805,
+              0
+            ],
+            "guardLeft": [
+              246.0426,
+              71.2122
+            ],
+            "guardRight": [
+              341.2421,
+              65.0304
+            ],
+            "guardCenter": [
+              294,
+              69
+            ],
+            "bladeGuardDotProduct": 0.0010441657129831583,
+            "bladeGuardNormalizedDotProduct": 1.9254221872227317e-07,
+            "angleBetweenBladeAndGuardDegrees": 89.9999889681435
+          }
+        }
+      }
+    }
+  },
+  "sourceReceipt": "ArtReview/First_Person_Greatsword_Axis_v001/v007/PREPARATION_RECEIPT.json"
+};

@@ -1,8 +1,54 @@
 # Arena Fighters project instructions
 
-## Anchored First-person Motion v001 — local v0.14.2, October 10, 2026
+## Pixel Blood v001 — local v0.15.3, October 11, 2026
 
-Current local source is **v0.14.2**. Snapshot: `releases/Arena_Fighters_v0.14.2_v001`; local evidence: `artifacts/First_Person_Motion_v001/VERIFICATION.json`. Publication remains v0.14.1 until separately verified. Animate complete v003/v004 holds around the runtime forearm roots: paired main [450,145], offhand [10,235], and two-handed [270,235] in the 460×220 native frame. SVG translation/countertranslation preserves the authored full frame and grip registration. Resting overscan is main [24,12], offhand [-24,12], both [0,12]; weapon-specific motion keeps sleeve cutoff edges outside the viewport throughout interpolation. Do not resume wrist-centered wide rotations or detach weapons from their authored hands. Preserve 665 ms attacks, 43% contact, public-event authority, execution clocks and reduced motion. The disposable art preview can pause/scrub attack frames without affecting a duel or save. No artwork changes are part of this motion revision. All prior assets and releases remain preserved.
+Current local source is **v0.15.3**; published remains **v0.14.2**. Snapshot: `releases/Arena_Fighters_v0.15.3_v001`; evidence: `artifacts/Pixel_Blood_v001/VERIFICATION.json`. Local implementation does not establish publication.
+
+Blood is a temporary procedural SVG layer, never fighter artwork or combat authority. Use only the resolved public attack's positive `damage`: `min(72, 4 + 3 * min(24, ceil(damage)))` square particles. Zero/invalid damage emits none; positive Guard/Riposte chip damage retains its smaller burst. Execution uses 96 particles only inside existing accepted execution playback. Rival/spectator bursts use registered torso coordinates; incoming first-person hits use a separate camera-space origin. Preserve 285-ms attack contact, the 665-ms attack, 720/740-ms first-person/stands execution contacts, 1950/2550-ms execution durations and all server clocks. Reduced motion uses stationary compact pixels; existing finally/step cleanup owns every effect, without extra timers or persistent stains in fighter data. Keep strict CSP intact by setting trajectory variables through CSSOM.
+
+The disposable art inspector can pause actual resolved attack blood and replay an Execution sample. Cassian is the sample victor; switching View shows Mira's defeated perspective. This creates no guest or save and grants no verdict authority. Complete v008 frames, armor continuity, exact avatars, private choices, saved identities, typed names, Mercy labels and all prior releases/assets remain preserved.
+
+## Historical v0.15.2
+
+## Greatsword Armor Continuity v001 — local v0.15.2, October 11, 2026
+
+Current local source is **v0.15.2**; published remains **v0.14.2**. Snapshot path: `releases/Arena_Fighters_v0.15.2_v001`. Separate evidence: `artifacts/First_Person_Armor_Continuity_v001/VERIFICATION.json`. This is a local implementation; publication remains separately verified for v0.14.2.
+
+Additive `assets/first-person/v008` gives the greatsword one consistent forearm design through windup, contact, follow-through and recovery in all three armor materials and six hand palettes. Both forearms use their armor's preserved ready-bracer design: cloth wraps for light armor, fixed leather bands and buckle for medium armor, and fixed plates, rivets and gold wrist binding for heavy armor. The 72 complete 460×220 images change only audited garment pixels. Preserve every authored hand, blade, crossguard, grip, pommel, alpha byte and pixel outside the twelve garment masks against effective v007: the corrected v007 windup and the exact v005 other poses. The rigid windup blade and perpendicular crossguard remain intact. Every other weapon and the separate trident cast inherit exact v007 frames. Original v003/v004 ready holds remain at both ends.
+
+Default authored playback uses v008 over effective v007. Explicit v005, v006 and v007 remain exact prior-art comparisons; the disposable preview accepts `first-person-art-version=v005`, `v006` or `v007`. Keep each action as one full image; never fit a separate sleeve, hand or weapon at runtime. Canonical bracer detail is sampled directly from preserved raw ready sources through recorded anatomical surface coordinates, using nearest-neighbor sampling without alpha-bounds recentering or resampling the tiny prepared holds. Sources, candidates, semantic masks, per-armor mapping receipts and diagnostic controls remain in `ArtReview/First_Person_Armor_Continuity_v001`.
+
+The unchanged 665-ms public-event clock, 285-ms actual contact, full-image predecode barrier and complete anchored fallback remain in force. Guard, Focus, recoil, execution, reduced motion, rival/spectator identities, combat rules, saved fighters, typed names and verdict authority retain their contracts. Local packaging and automated/browser checks do not establish publication or human art acceptance. All prior assets, sources and releases remain preserved.
+
+Final preparation: `ArtReview/First_Person_Armor_Continuity_v001/PREPARATION_RECEIPT.json`.
+
+## Historical v0.15.1
+
+## Greatsword Axis Correction v001 — local v0.15.1, October 10, 2026
+
+Current local source is **v0.15.1**; published remains **v0.14.2**. The independent local snapshot is `releases/Arena_Fighters_v0.15.1_v001`, with evidence in `artifacts/First_Person_Greatsword_Axis_v001/VERIFICATION.json`. Local packaging does not establish publication or human art acceptance.
+
+Additive `assets/first-person/v007` corrects only the greatsword windup blade and crossguard in light, medium and heavy armor across six skin palettes. The blade continues along the rigid grip axis, with the crossguard perpendicular to it. Preserve every authored hand, grip, pommel, sleeve and pixel outside the recorded blade-and-crossguard correction masks. Each replacement remains one complete 460×220 action image. All other v005 frames, v003/v004 ready holds and prior releases remain exact. Correction sources, bounded preparation and comparisons are in `ArtReview/First_Person_Greatsword_Axis_v001`. Default playback uses v007; explicit v005 preserves the original frame and v006 preserves the rejected blade-only candidate. The disposable preview accepts `first-person-art-version=v005` or `v006` for those comparisons.
+
+The unchanged 665-ms public-event clock, 285-ms contact, full-image predecode barrier and complete anchored fallback remain in force. Do not split the corrected image, fit a separate blade at runtime, add a loading wait to an attack or alter combat, saved identities, spectator art or verdict authority. The authored-frame contracts below continue to apply.
+
+The final blade-and-crossguard preparation receipt is `ArtReview/First_Person_Greatsword_Axis_v001/v007/PREPARATION_RECEIPT.json`. The earlier v006 steel-only receipt and candidate remain preserved as historical evidence.
+
+## Historical v0.15.0
+
+## Authored First-person Frames v001 — local v0.15.0, October 10, 2026
+
+Current local source is **v0.15.0**; published remains **v0.14.2**. The independent local snapshot is `releases/Arena_Fighters_v0.15.0_v001`, with evidence in `artifacts/First_Person_Frames_v001/VERIFICATION.json`. Local implementation and packaging do not establish publication or human art acceptance.
+
+Additive `assets/first-person/v005` provides four newly drawn complete attack poses for each of nine weapons, all three armor materials and six skin palettes, plus separate trident Entangle casts. Preserve the exact v003/v004 ready holds at both ends, the inward axe cutting edge, continuous two-handed grips and exact rival/spectator identities. Each action frame contains both arms, sleeves, hands and equipment together in one full 460×220 image. Never split the authored action frames or fit separate weapons/fingers/cuffs over them. Source windows, virtual-camera padding and one fixed uniform nearest-neighbor sampling pass are recorded in `ArtReview/First_Person_Frames_v001`; never recenter individual poses by alpha bounds. Hand-only semantic masks preserve equipment, armor and alpha across palettes. Preserve raw sources, prompts, rejected layout attempts, all prior assets and releases.
+
+The shared resolved-event clock remains 665 ms with actual contact at 285 ms. Ready/windup/contact/follow/recovery/ready milestones are 0/90/285/365/570/665 ms; sword Feint adds an anticipation at 90 and retraction at 180 before actual 285-ms contact. Trident Strike uses the gathered-net thrust; Technique uses the separate cast frames. Selected frames predecode before playback; incomplete loading retains the entire previous anchored animation. Do not add a network wait or an independent timer to an attack. Reduced motion, Guard, Focus, damage recoil and existing execution clocks retain their prior behavior. Disposable preview scrubbing consumes the same frame selector without a duel, guest or save.
+
+## Historical v0.14.2
+
+## Anchored First-person Motion v001 — v0.14.2, October 10, 2026
+
+Current local and published source is **v0.14.2**. Snapshot: `releases/Arena_Fighters_v0.14.2_v001`; local evidence: `artifacts/First_Person_Motion_v001/VERIFICATION.json`. Publication is separately verified in `artifacts/Live_Release_v0142_v001/VERIFICATION.json`, commit `c10537d0583c70326ba81f76ecdde676909599f6`, deploy `dep-db59hlajnfac739mq950`. Animate complete v003/v004 holds around the runtime forearm roots: paired main [450,145], offhand [10,235], and two-handed [270,235] in the 460×220 native frame. SVG translation/countertranslation preserves the authored full frame and grip registration. Resting overscan is main [24,12], offhand [-24,12], both [0,12]; weapon-specific motion keeps sleeve cutoff edges outside the viewport throughout interpolation. Do not resume wrist-centered wide rotations or detach weapons from their authored hands. Preserve 665 ms attacks, 43% contact, public-event authority, execution clocks and reduced motion. The disposable art preview can pause/scrub attack frames without affecting a duel or save. No artwork changes are part of this motion revision. All prior assets and releases remain preserved.
 
 ## Historical v0.14.1
 

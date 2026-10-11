@@ -1,5 +1,13 @@
 # Arena Fighters temporary hosting
 
+## Published v0.14.2 — October 10, 2026
+
+The existing [Arena Fighters page](https://www.blackbooktattoo.com/arena-fighters) serves the sealed v0.14.2 motion revision from [the existing Render host](https://blackbook-arena-fighters.onrender.com/). Complete holds pivot near their forearms with overscan hiding the cropped sleeve ends, plus weapon-specific windup, impact and recovery. The disposable art preview includes an attack-frame inspector. All artwork, combat clocks, saved identities and verdict authority remain unchanged.
+
+Deployment `dep-db59hlajnfac739mq950` completed at 19:58:47 UTC from commit `c10537d0583c70326ba81f76ecdde676909599f6` on `codex/temporary-sessions`. Source, sealed release, deployment candidate and staged Git blobs matched before publication. All 400 checked public files matched, including all 335 first-person assets; the published iframe displayed v0.14.2 and completed Guard/Feint lessons. The public axe strike completed and its contact frame was inspected. Separate publication evidence is `artifacts/Live_Release_v0142_v001/VERIFICATION.json`. The Free plan, temporary sessions, manual deployment setting and Squarespace embed configuration remain unchanged. Zero public tournaments were active before publication. Localhost services, private saves and all earlier snapshots remain preserved.
+
+## Historical v0.14.1 publication
+
 ## Published v0.14.1 — October 10, 2026
 
 The existing [Arena Fighters page](https://www.blackbooktattoo.com/arena-fighters) now serves the sealed v0.14.1 release from [the existing Render host](https://blackbook-arena-fighters.onrender.com/). It includes complete first-person holds for all nine weapons, the inward-facing v004 axe, v5 choice-time combat and typed-name preservation. Spectators retain their original two-avatar view. The Free plan, temporary-session mode, manual deployment setting and Squarespace embed configuration remain unchanged.

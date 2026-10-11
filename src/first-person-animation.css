@@ -168,6 +168,12 @@
 
 /* Complete raster holds enter from the camera-side sleeves, rather than
    swivelling around a floating wrist. Overscan hides the source cut edges. */
+.first-person-stage .fp-authored-frame { visibility: hidden; }
+.first-person-stage .fp-viewmodel[data-frame-pose] .fp-mainhand-motion,
+.first-person-stage .fp-viewmodel[data-frame-pose] .fp-offhand-motion { animation: none !important; }
+.first-person-stage .fp-viewmodel[data-frame-pose]:not([data-frame-pose="idle"]) .fp-mainhand,
+.first-person-stage .fp-viewmodel[data-frame-pose]:not([data-frame-pose="idle"]) .fp-offhand { visibility: hidden; }
+.first-person-stage .fp-viewmodel[data-frame-pose]:not([data-frame-pose="idle"]) .fp-authored-frame { visibility: visible; }
 .first-person-stage .fp-viewmodel[data-hold-mode] .fp-mainhand-motion,
 .first-person-stage .fp-viewmodel[data-hold-mode] .fp-offhand-motion {
   transform-origin: 0 0;
